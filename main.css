@@ -6,8 +6,19 @@ body {
 	font-family: 'Roboto', sans-serif;
 }
 
+#container {
+	position: absolute;
+	min-width: 100%;
+	min-height: 100%;
+}
+
 .location-feed {
-	display: block;
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -50px;
+	margin-left: -50px;
 	height: 200px;
 	width: 200px;
 	border: 1px solid black;
