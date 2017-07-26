@@ -15,7 +15,8 @@ function getDataFromAPI(callback) {
 
 function printData(data) {
 	// data.features[0].properties.place
-	$('.container').append(`${data.features[0].properties.place}`);
+	$('#js-location-feed').append(`${data.features[0].properties.place} earthquakes`);
+	$('#js-quake-counter').append(`There has been ${data.features.length}`);
 }
 
 $(runQuery());

@@ -1,0 +1,14 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+.location-feed {
+	display: block;
+	height: 200px;
+	width: 200px;
+	border: 1px solid black;
+}
