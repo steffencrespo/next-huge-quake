@@ -39,6 +39,11 @@ body {
 .controls {
 	display: inline-block;
 	position: absolute;
+	width: 100%;
 	bottom: 10%;
-	left: 50%;
+}
+
+input[type="button"] {
+	height: 50px;
+	width: 100%;
 }
