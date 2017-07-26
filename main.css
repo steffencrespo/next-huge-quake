@@ -23,3 +23,10 @@ body {
 	width: 200px;
 	border: 1px solid black;
 }
+
+.controls {
+	display: inline-block;
+	position: absolute;
+	bottom: 10%;
+	left: 50%;
+}
