@@ -5,6 +5,7 @@ let ENDPOINT_URL;
 
 function runQuery(data) {
 	$('#js-quake-form').on('submit', function(event){
+		event.preventDefault();
 		getDataFromAPI(printData);
 	});
 }
