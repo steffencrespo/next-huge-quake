@@ -1,5 +1,8 @@
-const MIN_MAGNITUDE = '4.7';
-const ENDPOINT_URL = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-02&minmagnitude=${MIN_MAGNITUDE}`;
+const START_TIME = '2014-01-01';
+const END_TIME = '2014-01-02';
+const MIN_MAGNITUDE = '5';
+const ENDPOINT_URL = `https://earthquake.usgs.gov/fdsnws/event/1/query?
+		format=geojson&starttime=${START_TIME}&endtime=${END_TIME}&minmagnitude=${MIN_MAGNITUDE}`;
 
 function runQuery(data) {
 	getDataFromAPI(printData);
