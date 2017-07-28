@@ -1,14 +1,24 @@
-const START_TIME = '2014-01-01';
-const END_TIME = '2014-01-02';
-const MIN_MAGNITUDE = '5';
-const ENDPOINT_URL = `https://earthquake.usgs.gov/fdsnws/event/1/query?
-		format=geojson&starttime=${START_TIME}&endtime=${END_TIME}&minmagnitude=${MIN_MAGNITUDE}`;
+let START_TIME;
+let END_TIME;
+let MIN_MAGNITUDE;
+let ENDPOINT_URL;
 
 function runQuery(data) {
-	getDataFromAPI(printData);
+	$('#js-quake-form').on('submit', function(event){
+		getDataFromAPI(printData);
+	});
 }
 
-function getDataFromAPI(callback) {	
+function setDateRangeAndMagnitude() {
+	START_TIME = $('#js-start-date').val();
+	END_TIME = $('#js-end-date').val();
+	MIN_MAGNITUDE = $('#js-magnitude').val();
+	ENDPOINT_URL = `https://earthquake.usgs.gov/fdsnws/event/1/query?
+		format=geojson&starttime=${START_TIME}&endtime=${END_TIME}&minmagnitude=${MIN_MAGNITUDE}`;
+}
+
+function getDataFromAPI(callback) {
+	setDateRangeAndMagnitude();
 	const settings = {
 		url: ENDPOINT_URL,
 		type: 'GET',
