@@ -4,6 +4,10 @@ let MIN_MAGNITUDE;
 let ENDPOINT_URL;
 
 function runQuery(data) {
+	START_TIME = $('#js-start-date').val('01/01/2017');
+	END_TIME = $('#js-end-date').val('01/02/2017');
+	MIN_MAGNITUDE = $('#js-magnitude').val('5');
+	getDataFromAPI(printData);
 	$('#js-quake-form').on('submit', function(event){
 		event.preventDefault();
 		getDataFromAPI(printData);
@@ -33,7 +37,7 @@ function printData(data) {
 	let allQuakes = '';
 
 	for (let i = 0; i < data.features.length; i++) {
-		allQuakes += `<tr><td>${data.features[i].properties.mag}</td><td>${data.features[i].properties.place}</td></tr>`
+		allQuakes += `<tr id='js-row-${i}'><td>${data.features[i].properties.mag}</td><td>${data.features[i].properties.place}</td></tr>`
 		// allQuakes.push(data.features[i].properties.place);
 	}
 
