@@ -34,9 +34,12 @@ function getDataFromAPI(callback) {
 }
 
 function handleClickOnEarthquakeRow() {
+	// https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us2000a1jq&format=geojson
+	// https://earthquake.usgs.gov/earthquakes/eventpage/us2000a1jq#executive
 	$('#js-quake-feed').on('click', 'tr', function(event) {
 		let earthquakeId = $(this).attr('id');
-		console.log(earthquakeId);
+		earthQuakeDetailsPage = `https://earthquake.usgs.gov/earthquakes/eventpage/${earthquakeId}#executive`;
+		window.open(earthQuakeDetailsPage, '_blank');
 	});
 }
 
@@ -52,11 +55,6 @@ function printHomePageData(data) {
 	// $('#js-location-feed').append(`${data.features[0].properties.place}`);
 	$('#js-quake-feed').html(`${allQuakes}`);
 	// $('#js-quake-counter').append(`There has been ${data.features.length} earthquakes of magnitude ${MIN_MAGNITUDE}+`);
-}
-
-function printEarthquakeDetails() {
-	// https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us2000a1jq&format=geojson
-	// https://earthquake.usgs.gov/earthquakes/eventpage/us2000a1jq#executive
 }
 
 $(runQuery());
