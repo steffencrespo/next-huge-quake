@@ -19,15 +19,16 @@ function getDataFromAPI(callback) {
 
 function printData(data) {
 	// data.features[0].properties.place
-	const allQuakes = [];
+	let allQuakes = '';
 
 	for (let i = 0; i < data.features.length; i++) {
-		allQuakes.push(data.features[i].properties.place);
+		allQuakes += `<tr><td>${data.features[i].properties.mag}</td><td>${data.features[i].properties.place}</td></tr>`
+		// allQuakes.push(data.features[i].properties.place);
 	}
 
 	// $('#js-location-feed').append(`${data.features[0].properties.place}`);
-	$('#js-location-feed').append(`${allQuakes}`);
-	$('#js-quake-counter').append(`There has been ${data.features.length} earthquakes of magnitude ${MIN_MAGNITUDE}+`);
+	$('#js-quake-feed').html(`${allQuakes}`);
+	// $('#js-quake-counter').append(`There has been ${data.features.length} earthquakes of magnitude ${MIN_MAGNITUDE}+`);
 }
 
 $(runQuery());
