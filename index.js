@@ -62,26 +62,20 @@ function handleClickOnEarthquakeRow() {
 }
 
 function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
-	console.log('o')
-	// let earthquakeChosenInfo = {
-	// 	magnitude: earthquakeDetailedData.properties.mag,
-	// 	severityAlert: earthquakeDetailedData.properties.alert,
-	// 	riskOfTsunami: earthquakeDetailedData[0].properties.products.geoserve[0].properties.tsunamiFlag
-	// 	timeOfEvent: earthquakeDetailedData.properties.time,
-	// 	country: earthquakeDetailedData.properties.place,
-	// 	coordinates: earthquakeDetailedData.geometry,
-	// 	depth: earthquakeDetailedData[0].properties.products.origin[0].properties.depth
-	// } 
+	console.log('o');
+	let earthquakeChosenInfo = {
+		magnitude: earthquakeDetailedData.properties.mag,
+		severityAlert: earthquakeDetailedData.properties.alert,
+		riskOfTsunami: earthquakeDetailedData.properties.products.geoserve[0].properties.tsunamiFlag,
+		timeOfEvent: earthquakeDetailedData.properties.time,
+		country: earthquakeDetailedData.properties.place,
+		coordinates: earthquakeDetailedData.geometry,
+		depth: earthquakeDetailedData.properties.products.origin[0].properties.depth
+	} 
 
-	// console.log(earthquakeChosenInfo);
-	/* 
-		time of event
-		country
-		coordinates
-		depth
+	console.log(earthquakeChosenInfo);
 
-
-	*/
+	Object.keys(earthquakeChosenInfo).forEach(key => console.log(key, earthquakeChosenInfo[key]));
 }
 // TODO: This function is intended to call USGS details page, but right now
 // the click listener is set to listen for a click on the EQ row, not the correct behavior
