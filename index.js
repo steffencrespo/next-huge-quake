@@ -16,7 +16,6 @@ function runQuery(data) {
 	_toggleEarthquakePanelContainer(); // hides empty panel container when initialized
 
 	handleClickOnEarthquakeRow();
-	handleCallToEarthquakeUSGSDetails();
 	handleBackButton();
 }
 
