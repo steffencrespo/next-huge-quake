@@ -44,22 +44,36 @@ function handleClickOnEarthquakeRow() {
 	*/
 	$('#js-quake-feed').on('click', 'tr', function(event) {
 		let earthquakeId = $(this).attr('id');
-		let earthquakeDetailedData = $.ajax({
+		let earthquakeDetailedData = [];
+		$.ajax({
 			url: `https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=${earthquakeId}&format=geojson`,
-			type: 'GET'
+			async: false,
+			type: 'GET',
+			success: function(data) {
+				earthquakeDetailedData.push(data);
+			}
 		});
 
 		let earthquakeName = $(this)[0].textContent;
 		_toggleEarthquakesTable();
 		$('#js-quake-panel-title').text(`${earthquakeName}`);
-		_addInfoToEarthquakeDetailsPanel(earthquakeDetailedData);
+		_addInfoToEarthquakeDetailsPanel(earthquakeDetailedData[0]);
 	});
 }
 
 function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
-	let earthquakeChosenInfo = {
-		
-	} 
+	console.log('o')
+	// let earthquakeChosenInfo = {
+	// 	magnitude: earthquakeDetailedData.properties.mag,
+	// 	severityAlert: earthquakeDetailedData.properties.alert,
+	// 	riskOfTsunami: earthquakeDetailedData[0].properties.products.geoserve[0].properties.tsunamiFlag
+	// 	timeOfEvent: earthquakeDetailedData.properties.time,
+	// 	country: earthquakeDetailedData.properties.place,
+	// 	coordinates: earthquakeDetailedData.geometry,
+	// 	depth: earthquakeDetailedData[0].properties.products.origin[0].properties.depth
+	// } 
+
+	// console.log(earthquakeChosenInfo);
 	/* 
 		time of event
 		country
