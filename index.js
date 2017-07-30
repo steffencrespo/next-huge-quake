@@ -12,7 +12,9 @@ function runQuery(data) {
 		event.preventDefault();
 		getDataFromAPI(printHomePageData);
 	});
+
 	handleClickOnEarthquakeRow();
+	handleCallToEarthquakeUSGSDetails();
 }
 
 function setDateRangeAndMagnitude() {
@@ -34,13 +36,49 @@ function getDataFromAPI(callback) {
 }
 
 function handleClickOnEarthquakeRow() {
-	// https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us2000a1jq&format=geojson
-	// https://earthquake.usgs.gov/earthquakes/eventpage/us2000a1jq#executive
+	/* click on earthquake row
+		populate panel with earthquake title
+		display back button to show form again
+		populate panel with earthquake details
+		hide search form
+	*/
 	$('#js-quake-feed').on('click', 'tr', function(event) {
 		let earthquakeId = $(this).attr('id');
-		earthQuakeDetailsPage = `https://earthquake.usgs.gov/earthquakes/eventpage/${earthquakeId}#executive`;
-		window.open(earthQuakeDetailsPage, '_blank');
+		let earthquakeDetailedData = $.ajax({
+			url: `https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=${earthquakeId}&format=geojson`,
+			type: 'GET'
+		});
+
+		let earthquakeName = $(this)[0].textContent;
+		_toggleEarthquakesTable();
+		$('#js-quake-panel-title').text(`${earthquakeName}`);
+		_addInfoToEarthquakeDetailsPanel(earthquakeDetailedData);
 	});
+}
+
+function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
+	let earthquakeChosenInfo = {
+		
+	} 
+	/* 
+		time of event
+		country
+		coordinates
+		depth
+
+
+	*/
+}
+// TODO: This function is intended to call USGS details page, but right now
+// the click listener is set to listen for a click on the EQ row, not the correct behavior
+function handleCallToEarthquakeUSGSDetails() {
+	// https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us2000a1jq&format=geojson
+	// https://earthquake.usgs.gov/earthquakes/eventpage/us2000a1jq#executive
+	// $('#js-quake-feed').on('click', 'tr', function(event) {
+	// 	let earthquakeId = $(this).attr('id');
+	// 	earthQuakeDetailsPage = `https://earthquake.usgs.gov/earthquakes/eventpage/${earthquakeId}#executive`;
+	// 	window.open(earthQuakeDetailsPage, '_blank');
+	// });
 }
 
 function printHomePageData(data) {
@@ -51,6 +89,11 @@ function printHomePageData(data) {
 	}
 
 	$('#js-quake-feed').html(`${allQuakes}`);
+}
+
+function _toggleEarthquakesTable() {
+	let quakeTableContainer = $('#js-quake-table-container');
+	quakeTableContainer.is(':hidden') ? quakeTableContainer.show() : quakeTableContainer.hide();
 }
 
 $(runQuery());
