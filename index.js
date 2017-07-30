@@ -63,6 +63,7 @@ function handleClickOnEarthquakeRow() {
 		_toggleEarthquakesTable(); // hides table
 		$('#js-quake-panel-title').text(`${earthquakeName}`);
 		_addInfoToEarthquakeDetailsPanel(earthquakeDetailedData[0]);
+		_addEarthquakeMap(earthquakeId);
 	});
 }
 
@@ -73,6 +74,11 @@ function handleBackButton() {
 		_toggleEarthquakeSearchForm();
 		_toggleEarthquakePanelContainer();
 	});
+}
+
+function _addEarthquakeMap(quakeId) {
+	let quakeIdURL = `https://earthquake.usgs.gov/earthquakes/eventpage/${quakeId}#map`;
+	$('#js-quake-map').attr('src', quakeIdURL);
 }
 
 function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
