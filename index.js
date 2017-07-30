@@ -13,8 +13,11 @@ function runQuery(data) {
 		getDataFromAPI(printHomePageData);
 	});
 
+	_toggleEarthquakePanelContainer(); // hides empty panel container when initialized
+
 	handleClickOnEarthquakeRow();
 	handleCallToEarthquakeUSGSDetails();
+	handleBackButton();
 }
 
 function setDateRangeAndMagnitude() {
@@ -55,9 +58,19 @@ function handleClickOnEarthquakeRow() {
 		});
 
 		let earthquakeName = $(this)[0].textContent;
-		_toggleEarthquakesTable();
+		_toggleEarthquakePanelContainer(); //display panel container
+		_toggleEarthquakeSearchForm(); //hides search form
+		_toggleEarthquakesTable(); // hides table
 		$('#js-quake-panel-title').text(`${earthquakeName}`);
 		_addInfoToEarthquakeDetailsPanel(earthquakeDetailedData[0]);
+	});
+}
+
+function handleBackButton() {
+	$('#js-quake-panel-back-btn').on('click', function(e){
+		_toggleEarthquakesTable();
+		_toggleEarthquakeSearchForm();
+		_toggleEarthquakePanelContainer();
 	});
 }
 
@@ -104,6 +117,16 @@ function printHomePageData(data) {
 	}
 
 	$('#js-quake-feed').html(`${allQuakes}`);
+}
+
+function _toggleEarthquakeSearchForm() {
+	let searchQuakeForm = $('#js-quake-form-container');
+	searchQuakeForm.is(':hidden') ? searchQuakeForm.show() : searchQuakeForm.hide();	
+}
+
+function _toggleEarthquakePanelContainer() {
+	let quakePanelContainer = $('#js-quake-panel-container');
+	quakePanelContainer.is(':hidden') ? quakePanelContainer.show() : quakePanelContainer.hide();
 }
 
 function _toggleEarthquakesTable() {
