@@ -68,6 +68,7 @@ function handleClickOnEarthquakeRow() {
 
 function handleBackButton() {
 	$('#js-quake-panel-back-btn').on('click', function(e){
+		_cleanEarthquakeDetailsPanel();
 		_toggleEarthquakesTable();
 		_toggleEarthquakeSearchForm();
 		_toggleEarthquakePanelContainer();
@@ -96,6 +97,10 @@ function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 			${key}
 		</li>`
 	));
+}
+
+function _cleanEarthquakeDetailsPanel() {
+	$('#js-quake-panel-list li').remove();
 }
 // TODO: This function is intended to call USGS details page, but right now
 // the click listener is set to listen for a click on the EQ row, not the correct behavior
