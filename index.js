@@ -109,15 +109,6 @@ function _cleanEarthquakeDetailsPanel() {
 }
 // TODO: This function is intended to call USGS details page, but right now
 // the click listener is set to listen for a click on the EQ row, not the correct behavior
-function handleCallToEarthquakeUSGSDetails() {
-	// https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us2000a1jq&format=geojson
-	// https://earthquake.usgs.gov/earthquakes/eventpage/us2000a1jq#executive
-	// $('#js-quake-feed').on('click', 'tr', function(event) {
-	// 	let earthquakeId = $(this).attr('id');
-	// 	earthQuakeDetailsPage = `https://earthquake.usgs.gov/earthquakes/eventpage/${earthquakeId}#executive`;
-	// 	window.open(earthQuakeDetailsPage, '_blank');
-	// });
-}
 
 function printHomePageData(data) {
 	let allQuakes = '';
