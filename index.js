@@ -77,8 +77,12 @@ function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 
 	let resultsList = '<li class="list-group-item"><span class="badge">earthquakeChosenInfo[key]</span>key</li>';
 
-	Object.keys(earthquakeChosenInfo).forEach(key => $('#js-quake-panel-list').append(`<li class="list-group-item"><span class="badge">${earthquakeChosenInfo[key]}</span>${key}</li>`));
-
+	Object.keys(earthquakeChosenInfo).forEach(key => $('#js-quake-panel-list').append(`
+		<li class="list-group-item">
+			<span class="badge">${earthquakeChosenInfo[key]}</span>
+			${key}
+		</li>`
+	));
 }
 // TODO: This function is intended to call USGS details page, but right now
 // the click listener is set to listen for a click on the EQ row, not the correct behavior
