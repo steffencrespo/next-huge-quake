@@ -82,7 +82,6 @@ function _addEarthquakeMap(quakeId) {
 }
 
 function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
-	console.log('o');
 	let earthquakeChosenInfo = {
 		magnitude: earthquakeDetailedData.properties.mag,
 		severityAlert: earthquakeDetailedData.properties.alert,
