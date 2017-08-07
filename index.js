@@ -87,7 +87,6 @@ function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 		riskOfTsunami: ['Risk of Tsunami', earthquakeDetailedData.properties.products.geoserve[0].properties.tsunamiFlag],
 		timeOfEvent: ['Time of Event', earthquakeDetailedData.properties.time],
 		country: ['Country', earthquakeDetailedData.properties.place],
-		coordinates: ['Coordinates', earthquakeDetailedData.geometry],
 		depth: ['Depth', earthquakeDetailedData.properties.products.origin[0].properties.depth]
 	} 
 
