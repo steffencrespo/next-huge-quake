@@ -117,7 +117,7 @@ function printHomePageData(data) {
 	let allQuakes = '';
 
 	for (let i = 0; i < data.features.length; i++) {
-		allQuakes += `<tr id=${data.features[i].id}><td>${data.features[i].properties.mag}</td><td>${data.features[i].properties.place}</td></tr>`;
+		allQuakes += `<tr role="button" id=${data.features[i].id}><td>${data.features[i].properties.mag}</td><td>${data.features[i].properties.place}</td></tr>`;
 	}
 
 	$('#js-quake-feed').html(`${allQuakes}`);
