@@ -84,12 +84,12 @@ function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 	let detailedTimeOfEvent = _convertIntoPSTFromUTC(earthquakeDetailedData.properties.time);
 
 	let earthquakeChosenInfo = {
-		magnitude: ['Magnitude', earthquakeDetailedData.properties.mag],
+		magnitude: ['Magnitude - Richter', earthquakeDetailedData.properties.mag],
 		severityAlert: ['Severity Alert', earthquakeDetailedData.properties.alert],
 		riskOfTsunami: ['Risk of Tsunami', earthquakeDetailedData.properties.products.geoserve[0].properties.tsunamiFlag],
-		timeOfEvent: ['Time of Event', detailedTimeOfEvent],
+		timeOfEvent: ['Time of Event - UTC', detailedTimeOfEvent],
 		country: ['Country', earthquakeDetailedData.properties.place],
-		depth: ['Depth', earthquakeDetailedData.properties.products.origin[0].properties.depth]
+		depth: ['Depth - km', earthquakeDetailedData.properties.products.origin[0].properties.depth]
 	} 
 
 	console.log(earthquakeChosenInfo);
