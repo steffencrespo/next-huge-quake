@@ -118,7 +118,12 @@ function printHomePageData(data) {
 	let quakesCounter = data.features.length;
 
 	for (let i = 0; i < quakesCounter; i++) {
-		allQuakes += `<tr role="button" id=${data.features[i].id}><td>${data.features[i].properties.mag}</td><td>${data.features[i].properties.place}</td></tr>`;
+		allQuakes += `
+			<tr role="button" id=${data.features[i].id}>
+				<td>${data.features[i].properties.mag}</td>
+				<td>${data.features[i].properties.place}</td>
+				<td>${_convertIntoPSTFromUTC(data.features[i].properties.time)}</td> 
+			</tr>`;
 	}
 
 	$('#js-quake-counter').text(quakesCounter);
