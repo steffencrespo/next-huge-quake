@@ -81,11 +81,13 @@ function _addEarthquakeMap(quakeId) {
 }
 
 function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
+	let detailedTimeOfEvent = _convertIntoPSTFromUTC(earthquakeDetailedData.properties.time);
+
 	let earthquakeChosenInfo = {
 		magnitude: ['Magnitude', earthquakeDetailedData.properties.mag],
 		severityAlert: ['Severity Alert', earthquakeDetailedData.properties.alert],
 		riskOfTsunami: ['Risk of Tsunami', earthquakeDetailedData.properties.products.geoserve[0].properties.tsunamiFlag],
-		timeOfEvent: ['Time of Event', earthquakeDetailedData.properties.time],
+		timeOfEvent: ['Time of Event', detailedTimeOfEvent],
 		country: ['Country', earthquakeDetailedData.properties.place],
 		depth: ['Depth', earthquakeDetailedData.properties.products.origin[0].properties.depth]
 	} 
@@ -100,6 +102,10 @@ function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 			${earthquakeChosenInfo[key][0]}
 		</li>`
 	));
+}
+
+function _convertIntoPSTFromUTC(utcTime) {
+	return (new Date(utcTime)).toUTCString();
 }
 
 function _cleanEarthquakeDetailsPanel() {
