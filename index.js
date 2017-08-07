@@ -82,13 +82,13 @@ function _addEarthquakeMap(quakeId) {
 
 function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 	let earthquakeChosenInfo = {
-		magnitude: earthquakeDetailedData.properties.mag,
-		severityAlert: earthquakeDetailedData.properties.alert,
-		riskOfTsunami: earthquakeDetailedData.properties.products.geoserve[0].properties.tsunamiFlag,
-		timeOfEvent: earthquakeDetailedData.properties.time,
-		country: earthquakeDetailedData.properties.place,
-		coordinates: earthquakeDetailedData.geometry,
-		depth: earthquakeDetailedData.properties.products.origin[0].properties.depth
+		magnitude: ['Magnitude', earthquakeDetailedData.properties.mag],
+		severityAlert: ['Severity Alert', earthquakeDetailedData.properties.alert],
+		riskOfTsunami: ['Risk of Tsunami', earthquakeDetailedData.properties.products.geoserve[0].properties.tsunamiFlag],
+		timeOfEvent: ['Time of Event', earthquakeDetailedData.properties.time],
+		country: ['Country', earthquakeDetailedData.properties.place],
+		coordinates: ['Coordinates', earthquakeDetailedData.geometry],
+		depth: ['Depth', earthquakeDetailedData.properties.products.origin[0].properties.depth]
 	} 
 
 	console.log(earthquakeChosenInfo);
@@ -97,8 +97,8 @@ function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 
 	Object.keys(earthquakeChosenInfo).forEach(key => $('#js-quake-panel-list').append(`
 		<li class="list-group-item">
-			<span class="badge">${earthquakeChosenInfo[key]}</span>
-			${key}
+			<span class="badge">${earthquakeChosenInfo[key][1]}</span>
+			${earthquakeChosenInfo[key][0]}
 		</li>`
 	));
 }
