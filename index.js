@@ -93,8 +93,6 @@ function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 		depth: ['Depth - km', earthquakeDetailedData.properties.products.origin[0].properties.depth]
 	} 
 
-	console.log(earthquakeChosenInfo);
-
 	let resultsList = '<li class="list-group-item"><span class="badge">earthquakeChosenInfo[key]</span>key</li>';
 
 	Object.keys(earthquakeChosenInfo).forEach(key => $('#js-quake-panel-list').append(`
