@@ -82,13 +82,14 @@ function _addEarthquakeMap(quakeId) {
 
 function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 	let detailedTimeOfEvent = _convertIntoPSTFromUTC(earthquakeDetailedData.properties.time);
+	let riskOfTsunami = earthquakeDetailedData.properties.products.geoserve[0].properties.tsunamiFlag ? 'yes' : 'no';
 
 	let earthquakeChosenInfo = {
-		magnitude: ['Magnitude - Richter', earthquakeDetailedData.properties.mag],
-		severityAlert: ['Severity Alert', earthquakeDetailedData.properties.alert],
-		riskOfTsunami: ['Risk of Tsunami', earthquakeDetailedData.properties.products.geoserve[0].properties.tsunamiFlag],
 		timeOfEvent: ['Time of Event - UTC', detailedTimeOfEvent],
 		country: ['Country', earthquakeDetailedData.properties.place],
+		severityAlert: ['Severity Alert', earthquakeDetailedData.properties.alert],
+		magnitude: ['Magnitude - Richter', earthquakeDetailedData.properties.mag],
+		riskOfTsunami: ['Risk of Tsunami', riskOfTsunami],
 		depth: ['Depth - km', earthquakeDetailedData.properties.products.origin[0].properties.depth]
 	} 
 
