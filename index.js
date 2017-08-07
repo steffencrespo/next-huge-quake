@@ -115,10 +115,15 @@ function _cleanEarthquakeDetailsPanel() {
 
 function printHomePageData(data) {
 	let allQuakes = '';
+	let quakesCounter = data.features.length;
 
-	for (let i = 0; i < data.features.length; i++) {
+	for (let i = 0; i < quakesCounter; i++) {
 		allQuakes += `<tr role="button" id=${data.features[i].id}><td>${data.features[i].properties.mag}</td><td>${data.features[i].properties.place}</td></tr>`;
 	}
+
+	$('#js-quake-counter').text(quakesCounter);
+	$('#js-quake-search-range').text(`${START_TIME} - ${END_TIME}`);
+	$('#js-quake-magnitude').text(MIN_MAGNITUDE);
 
 	$('#js-quake-feed').html(`${allQuakes}`);
 }
