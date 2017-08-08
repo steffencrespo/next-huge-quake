@@ -6,6 +6,23 @@ body {
 	font-family: 'Roboto', sans-serif;
 }
 
+.container {
+	background-color: #354242;
+}
+
+.panel {
+	/*background-color: #4EBF88;*/
+	background-color: #7FAD80;
+}
+
+.page-header h1 {
+	color: white;
+}
+
+.page-header h1 small {
+	color: #3FC1AA;
+}
+
 #container {
 	position: absolute;
 	min-width: 100%;
