@@ -116,8 +116,10 @@ function _cleanEarthquakeDetailsPanel() {
 function printHomePageData(data) {
 	let allQuakes = '';
 	let quakesCounter = data.features.length;
+	let dateTimeSum = 0;
 
 	for (let i = 0; i < quakesCounter; i++) {
+		dateTimeSum += data.features[i].properties.time;
 		allQuakes += `
 			<tr role="button" id=${data.features[i].id}>
 				<td>${data.features[i].properties.mag}</td>
@@ -126,11 +128,17 @@ function printHomePageData(data) {
 			</tr>`;
 	}
 
+	_generateNextQuakeEstimate(quakesCounter, dateTimeSum);
+
 	$('#js-quake-counter').text(quakesCounter);
 	$('#js-quake-search-range').text(`${START_TIME} - ${END_TIME}`);
 	$('#js-quake-magnitude').text(MIN_MAGNITUDE);
 
 	$('#js-quake-feed').html(`${allQuakes}`);
+}
+
+function _generateNextQuakeEstimate(quakeCount, quakeTotalTimeSum) {
+	console.log(_convertIntoPSTFromUTC(dateTimeSum/quakesCounter));
 }
 
 function _toggleEarthquakeSearchForm() {
