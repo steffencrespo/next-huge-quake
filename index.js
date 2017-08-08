@@ -87,8 +87,8 @@ function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 	let earthquakeChosenInfo = {
 		timeOfEvent: ['Time of Event - UTC', detailedTimeOfEvent],
 		country: ['Country', earthquakeDetailedData.properties.place],
-		severityAlert: ['Severity Alert', earthquakeDetailedData.properties.alert],
-		magnitude: ['Magnitude - Richter', earthquakeDetailedData.properties.mag],
+		severityAlert: ['<a href="https://earthquake.usgs.gov/data/pager/" target="_blank" text-decoration="none">PAGER Earthquake Impact Alert</a>', _detailSeverityAlert(earthquakeDetailedData.properties.alert)],
+		magnitude: ['<a href="https://earthquake.usgs.gov/learn/topics/measure.php" target="_blank" text-decoration="none">Magnitude - Richter</a>', earthquakeDetailedData.properties.mag],
 		riskOfTsunami: ['Risk of Tsunami', riskOfTsunami],
 		depth: ['Depth - km', earthquakeDetailedData.properties.products.origin[0].properties.depth]
 	} 
@@ -101,6 +101,23 @@ function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 			${earthquakeChosenInfo[key][0]}
 		</li>`
 	));
+}
+
+function _detailSeverityAlert(severity) {
+	if (severity == 'green') {
+		return 'little to no danger';
+
+	} else if (severity == 'yellow') {
+		return 'moderate danger';
+	} else if (severity == 'red') {
+		return 'high danger';
+	} else if (severity == 'orange') {
+		return 'significant danger';
+	} else if (severity == 'maroon') {
+		return 'very high danger';
+	} else {
+		return 'severity could not be determined';
+	}
 }
 
 function _convertIntoPSTFromUTC(utcTime) {
