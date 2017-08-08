@@ -128,7 +128,7 @@ function printHomePageData(data) {
 			</tr>`;
 	}
 
-	_generateNextQuakeEstimate(quakesCounter, dateTimeSum);
+	_generateNextQuakeEstimate(dateTimeSum,quakesCounter);
 
 	$('#js-quake-counter').text(quakesCounter);
 	$('#js-quake-search-range').text(`${START_TIME} - ${END_TIME}`);
@@ -137,8 +137,8 @@ function printHomePageData(data) {
 	$('#js-quake-feed').html(`${allQuakes}`);
 }
 
-function _generateNextQuakeEstimate(quakeCount, quakeTotalTimeSum) {
-	console.log(_convertIntoPSTFromUTC(dateTimeSum/quakesCounter));
+function _generateNextQuakeEstimate(quakeTotalTimeSum, quakeCount) {
+	console.log(_convertIntoPSTFromUTC(quakeTotalTimeSum/quakeCount));
 }
 
 function _toggleEarthquakeSearchForm() {
