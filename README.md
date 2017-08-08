@@ -19,8 +19,7 @@ How to use this app
 	![Results list](/images/results-list.png "Results list")
 	As part of the results you also see a brief summary of the amount of quakes found within your parameters ![Brief summary](/images/search-summary.png "Summary")
 4. The details are displayed 
-	You can zoom in and out and move the map ![Zoom map](/images/map-zoom.png "Zoom map")
-	or close the map to see USGS report page ![Close map](/images/close-map.png "Close map") ![See the official page](/images/usgs-page.png "USGS page")
+	You can zoom in and out and move the map or close the map to see USGS report page ![Close map](/images/close-map.png "Close map") ![See the official page](/images/usgs-page.png "USGS page")
 5. To go back to the search, press the Back button
 
 What to expect for the short term future of this app
