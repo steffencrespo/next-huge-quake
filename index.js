@@ -14,7 +14,7 @@ function runQuery(data) {
 		getDataFromAPI(printHomePageData);
 	});
 
-	_toggleEarthquakePanelContainer(); // hides empty panel container when initialized
+	toggleEarthquakePanelContainer(); // hides empty panel container when initialized
 
 	handleClickOnEarthquakeRow();
 	handleBackButton();
@@ -61,7 +61,7 @@ function handleClickOnEarthquakeRow() {
 		});
 
 		let earthquakeName = $(this)[0].textContent;
-		_toggleEarthquakePanelContainer(); //display panel container
+		toggleEarthquakePanelContainer(); //display panel container
 		_toggleEarthquakeSearchForm(); //hides search form
 		_toggleEarthquakesTable(); // hides table
 		$('#js-quake-panel-title').text(`${earthquakeName}`);
@@ -79,7 +79,7 @@ function handleBackButton() {
 		_cleanEarthquakeDetailsPanel();
 		_toggleEarthquakesTable();
 		_toggleEarthquakeSearchForm();
-		_toggleEarthquakePanelContainer();
+		toggleEarthquakePanelContainer();
 	});
 }
 
@@ -174,7 +174,7 @@ function _toggleEarthquakeSearchForm() {
 	searchQuakeForm.is(':hidden') ? searchQuakeForm.show() : searchQuakeForm.hide();	
 }
 
-function _toggleEarthquakePanelContainer() {
+function toggleEarthquakePanelContainer() {
 	let quakePanelContainer = $('#js-quake-panel-container');
 	quakePanelContainer.is(':hidden') ? quakePanelContainer.show() : quakePanelContainer.hide();
 }
