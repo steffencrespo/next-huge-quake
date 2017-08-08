@@ -4,6 +4,7 @@ let MIN_MAGNITUDE;
 let ENDPOINT_URL;
 
 function runQuery(data) {
+	// this is the initializer function, it runs everything required to start the site 
 	START_TIME = $('#js-start-date').val('01/01/2017');
 	END_TIME = $('#js-end-date').val('01/02/2017');
 	MIN_MAGNITUDE = $('#js-magnitude').val('5');
@@ -19,6 +20,7 @@ function runQuery(data) {
 	handleBackButton();
 }
 
+// sets the date range and the magnitude as well as the endpoint for the initial search
 function setDateRangeAndMagnitude() {
 	START_TIME = $('#js-start-date').val();
 	END_TIME = $('#js-end-date').val();
@@ -38,11 +40,13 @@ function getDataFromAPI(callback) {
 }
 
 function handleClickOnEarthquakeRow() {
-	/* click on earthquake row
-		populate panel with earthquake title
-		display back button to show form again
-		populate panel with earthquake details
-		hide search form
+	/* 
+	This function orchestrates the actions triggered by a click on a results row
+		when you click on earthquake row
+		it populates the panel with earthquake title
+		it displays the back button to show the search results again
+		it populates the panel with earthquake details
+		it hides the search form
 	*/
 	$('#js-quake-feed').on('click', 'tr', function(event) {
 		let earthquakeId = $(this).attr('id');
@@ -67,6 +71,10 @@ function handleClickOnEarthquakeRow() {
 }
 
 function handleBackButton() {
+	/*
+	The back button
+		cleans quake details panel and toggles visibility of quakes table, search form and details
+	*/
 	$('#js-quake-panel-back-btn').on('click', function(e){
 		_cleanEarthquakeDetailsPanel();
 		_toggleEarthquakesTable();
@@ -75,11 +83,13 @@ function handleBackButton() {
 	});
 }
 
+// composes the url to get the earthquake map
 function _addEarthquakeMap(quakeId) {
 	let quakeIdURL = `https://earthquake.usgs.gov/earthquakes/eventpage/${quakeId}#map`;
 	$('#js-quake-map').attr('src', quakeIdURL);
 }
 
+// puts together the details of an earthquake and forms the html for display
 function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 	let detailedTimeOfEvent = _convertIntoPSTFromUTC(earthquakeDetailedData.properties.time);
 	let riskOfTsunami = earthquakeDetailedData.properties.products.geoserve[0].properties.tsunamiFlag ? 'yes' : 'no';
@@ -103,6 +113,7 @@ function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 	));
 }
 
+// adds a more human understandable definition to the severity alert
 function _detailSeverityAlert(severity) {
 	if (severity == 'green') {
 		return 'little to no danger';
