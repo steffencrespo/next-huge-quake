@@ -4,6 +4,7 @@ let MIN_MAGNITUDE;
 let ENDPOINT_URL;
 
 function runQuery(data) {
+	toggleNoQuakeFoundAlert();
 	// this is the initializer function, it runs everything required to start the site 
 	START_TIME = $('#js-start-date').val('01/01/2017');
 	END_TIME = $('#js-end-date').val('01/02/2017');
@@ -15,7 +16,6 @@ function runQuery(data) {
 	});
 
 	toggleEarthquakePanelContainer(); // hides empty panel container when initialized
-
 	handleClickOnEarthquakeRow();
 	handleBackButton();
 }
@@ -62,11 +62,11 @@ function handleClickOnEarthquakeRow() {
 
 		let earthquakeName = $(this)[0].textContent;
 		toggleEarthquakePanelContainer(); //display panel container
-		_toggleEarthquakeSearchForm(); //hides search form
-		_toggleEarthquakesTable(); // hides table
+		toggleEarthquakeSearchForm(); //hides search form
+		toggleEarthquakesTable(); // hides table
 		$('#js-quake-panel-title').text(`${earthquakeName}`);
-		_addInfoToEarthquakeDetailsPanel(earthquakeDetailedData[0]);
-		_addEarthquakeMap(earthquakeId);
+		addInfoToEarthquakeDetailsPanel(earthquakeDetailedData[0]);
+		addEarthquakeMap(earthquakeId);
 	});
 }
 
@@ -76,28 +76,28 @@ function handleBackButton() {
 		cleans quake details panel and toggles visibility of quakes table, search form and details
 	*/
 	$('#js-quake-panel-back-btn').on('click', function(e){
-		_cleanEarthquakeDetailsPanel();
-		_toggleEarthquakesTable();
-		_toggleEarthquakeSearchForm();
+		cleanEarthquakeDetailsPanel();
+		toggleEarthquakesTable();
+		toggleEarthquakeSearchForm();
 		toggleEarthquakePanelContainer();
 	});
 }
 
 // composes the url to get the earthquake map
-function _addEarthquakeMap(quakeId) {
+function addEarthquakeMap(quakeId) {
 	let quakeIdURL = `https://earthquake.usgs.gov/earthquakes/eventpage/${quakeId}#map`;
 	$('#js-quake-map').attr('src', quakeIdURL);
 }
 
 // puts together the details of an earthquake and forms the html for display
-function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
-	let detailedTimeOfEvent = _convertIntoPSTFromUTC(earthquakeDetailedData.properties.time);
+function addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
+	let detailedTimeOfEvent = convertIntoPSTFromUTC(earthquakeDetailedData.properties.time);
 	let riskOfTsunami = earthquakeDetailedData.properties.products.geoserve[0].properties.tsunamiFlag ? 'yes' : 'no';
 
 	let earthquakeChosenInfo = {
 		timeOfEvent: ['Time of Event - UTC', detailedTimeOfEvent],
 		country: ['Country', earthquakeDetailedData.properties.place],
-		severityAlert: ['<a href="https://earthquake.usgs.gov/data/pager/" target="_blank" text-decoration="none">PAGER Earthquake Impact Alert</a>', _detailSeverityAlert(earthquakeDetailedData.properties.alert)],
+		severityAlert: ['<a href="https://earthquake.usgs.gov/data/pager/" target="_blank" text-decoration="none">PAGER Earthquake Impact Alert</a>', detailSeverityAlert(earthquakeDetailedData.properties.alert)],
 		magnitude: ['<a href="https://earthquake.usgs.gov/learn/topics/measure.php" target="_blank" text-decoration="none">Magnitude - Richter</a>', earthquakeDetailedData.properties.mag],
 		riskOfTsunami: ['Risk of Tsunami', riskOfTsunami],
 		depth: ['Depth - km', earthquakeDetailedData.properties.products.origin[0].properties.depth]
@@ -114,7 +114,7 @@ function _addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 }
 
 // adds a more human understandable definition to the severity alert
-function _detailSeverityAlert(severity) {
+function detailSeverityAlert(severity) {
 	if (severity == 'green') {
 		return 'little to no danger';
 
@@ -131,11 +131,11 @@ function _detailSeverityAlert(severity) {
 	}
 }
 
-function _convertIntoPSTFromUTC(utcTime) {
+function convertIntoPSTFromUTC(utcTime) {
 	return (new Date(utcTime)).toUTCString();
 }
 
-function _cleanEarthquakeDetailsPanel() {
+function cleanEarthquakeDetailsPanel() {
 	$('#js-quake-panel-list li').remove();
 }
 // TODO: This function is intended to call USGS details page, but right now
@@ -146,30 +146,45 @@ function printHomePageData(data) {
 	let quakesCounter = data.features.length;
 	let dateTimeSum = 0;
 
+	if (quakesCounter < 1) {
+		$('#js-quake-table-container').hide(); //hides quake table
+		toggleNoQuakeFoundAlert();
+		return;
+	}
+
 	for (let i = 0; i < quakesCounter; i++) {
 		dateTimeSum += data.features[i].properties.time;
 		allQuakes += `
 			<tr role="button" id=${data.features[i].id}>
 				<td>${data.features[i].properties.mag}</td>
 				<td>${data.features[i].properties.place}</td>
-				<td>${_convertIntoPSTFromUTC(data.features[i].properties.time)}</td> 
+				<td>${convertIntoPSTFromUTC(data.features[i].properties.time)}</td> 
 			</tr>`;
 	}
 
-	_generateNextQuakeEstimate(dateTimeSum,quakesCounter);
+	generateNextQuakeEstimate(dateTimeSum,quakesCounter);
 
 	$('#js-quake-counter').text(quakesCounter);
 	$('#js-quake-search-range').text(`${START_TIME} - ${END_TIME}`);
 	$('#js-quake-magnitude').text(MIN_MAGNITUDE);
 
 	$('#js-quake-feed').html(`${allQuakes}`);
+
+	$('#js-quake-table-container').show(); //shows quake table
+	$('#js-no-quake-found-alert').hide();
+
 }
 
-function _generateNextQuakeEstimate(quakeTotalTimeSum, quakeCount) {
-	console.log(_convertIntoPSTFromUTC(quakeTotalTimeSum/quakeCount));
+function generateNextQuakeEstimate(quakeTotalTimeSum, quakeCount) {
+	console.log(convertIntoPSTFromUTC(quakeTotalTimeSum/quakeCount));
 }
 
-function _toggleEarthquakeSearchForm() {
+function toggleNoQuakeFoundAlert() {
+	let noQuakeAlert = $('#js-no-quake-found-alert');
+	noQuakeAlert.is(':hidden') ? noQuakeAlert.show() : noQuakeAlert.hide();
+}
+
+function toggleEarthquakeSearchForm() {
 	let searchQuakeForm = $('#js-quake-form-container');
 	searchQuakeForm.is(':hidden') ? searchQuakeForm.show() : searchQuakeForm.hide();	
 }
@@ -179,7 +194,7 @@ function toggleEarthquakePanelContainer() {
 	quakePanelContainer.is(':hidden') ? quakePanelContainer.show() : quakePanelContainer.hide();
 }
 
-function _toggleEarthquakesTable() {
+function toggleEarthquakesTable() {
 	let quakeTableContainer = $('#js-quake-table-container');
 	quakeTableContainer.is(':hidden') ? quakeTableContainer.show() : quakeTableContainer.hide();
 }
