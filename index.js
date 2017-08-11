@@ -4,7 +4,6 @@ let MIN_MAGNITUDE;
 let ENDPOINT_URL;
 
 function runQuery(data) {
-	toggleNoQuakeFoundAlert();
 	// this is the initializer function, it runs everything required to start the site 
 	START_TIME = $('#js-start-date').val('01/01/2017');
 	END_TIME = $('#js-end-date').val('01/02/2017');
@@ -147,8 +146,7 @@ function printHomePageData(data) {
 	let dateTimeSum = 0;
 
 	if (quakesCounter < 1) {
-		$('#js-quake-table-container').hide(); //hides quake table
-		toggleNoQuakeFoundAlert();
+		handleNoQuakesFound();
 		return;
 	}
 
@@ -170,18 +168,21 @@ function printHomePageData(data) {
 
 	$('#js-quake-feed').html(`${allQuakes}`);
 
-	$('#js-quake-table-container').show(); //shows quake table
-	$('#js-no-quake-found-alert').hide();
-
+	handleSearchWithResults();
 }
 
 function generateNextQuakeEstimate(quakeTotalTimeSum, quakeCount) {
 	console.log(convertIntoPSTFromUTC(quakeTotalTimeSum/quakeCount));
 }
 
-function toggleNoQuakeFoundAlert() {
-	let noQuakeAlert = $('#js-no-quake-found-alert');
-	noQuakeAlert.is(':hidden') ? noQuakeAlert.show() : noQuakeAlert.hide();
+function handleNoQuakesFound() {
+	$('#js-quake-table-container').hide(); //hides quake table
+	$('#js-no-quake-found-alert').show();
+}
+
+function handleSearchWithResults() {
+	$('#js-quake-table-container').show(); //shows quake table
+	$('#js-no-quake-found-alert').hide();
 }
 
 function toggleEarthquakeSearchForm() {
