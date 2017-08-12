@@ -72,7 +72,8 @@ function handleClickOnEarthquakeRow() {
 function handleBackButton() {
 	/*
 	The back button
-		cleans quake details panel and toggles visibility of quakes table, search form and details
+		cleans quake details panel and toggles visibility of quakes table
+		search form and details
 	*/
 	$('#js-quake-panel-back-btn').on('click', function(e){
 		cleanEarthquakeDetailsPanel();
