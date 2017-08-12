@@ -95,18 +95,19 @@ function addInfoToEarthquakeDetailsPanel(earthquakeDetailedData) {
 	let riskOfTsunami = earthquakeDetailedData.properties.products.geoserve[0].properties.tsunamiFlag ? 'yes' : 'no';
 
 	let earthquakeChosenInfo = {
-		timeOfEvent: ['Time of Event - UTC', detailedTimeOfEvent],
-		country: ['Country', earthquakeDetailedData.properties.place],
-		severityAlert: ['<a href="https://earthquake.usgs.gov/data/pager/" target="_blank" text-decoration="none">PAGER Earthquake Impact Alert</a>', detailSeverityAlert(earthquakeDetailedData.properties.alert)],
-		magnitude: ['<a href="https://earthquake.usgs.gov/learn/topics/measure.php" target="_blank" text-decoration="none">Magnitude - Richter</a>', earthquakeDetailedData.properties.mag],
-		riskOfTsunami: ['Risk of Tsunami', riskOfTsunami],
-		depth: ['Depth - km', earthquakeDetailedData.properties.products.origin[0].properties.depth]
+		timeOfEvent: ['Time of Event - UTC', detailedTimeOfEvent, 'time'],
+		country: ['Country', earthquakeDetailedData.properties.place, 'globe'],
+		severityAlert: ['<a href="https://earthquake.usgs.gov/data/pager/" target="_blank" text-decoration="none">PAGER Earthquake Impact Alert</a>', detailSeverityAlert(earthquakeDetailedData.properties.alert), 'flash'],
+		magnitude: ['<a href="https://earthquake.usgs.gov/learn/topics/measure.php" target="_blank" text-decoration="none">Magnitude - Richter</a>', earthquakeDetailedData.properties.mag, 'scale'],
+		riskOfTsunami: ['Risk of Tsunami', riskOfTsunami, 'picture'],
+		depth: ['Depth - km', earthquakeDetailedData.properties.products.origin[0].properties.depth, 'sort-by-attributes']
 	} 
 
 	let resultsList = '<li class="list-group-item"><span class="badge">earthquakeChosenInfo[key]</span>key</li>';
 
 	Object.keys(earthquakeChosenInfo).forEach(key => $('#js-quake-panel-list').append(`
 		<li class="list-group-item">
+			<span class="glyphicon glyphicon-${earthquakeChosenInfo[key][2]}" aria-hidden="true"></span>
 			<span class="badge">${earthquakeChosenInfo[key][1]}</span>
 			${earthquakeChosenInfo[key][0]}
 		</li>`
