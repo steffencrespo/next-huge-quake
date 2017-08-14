@@ -7,7 +7,7 @@ function runQuery(data) {
 	// this is the initializer function, it runs everything required to start the site 
 	START_TIME = $('#js-start-date').val('01/01/2017');
 	END_TIME = $('#js-end-date').val('01/02/2017');
-	MIN_MAGNITUDE = $('#js-magnitude').val('5');
+	MIN_MAGNITUDE = $('#js-magnitude').val('6');
 	getDataFromAPI(printHomePageData);
 	$('#js-quake-form').on('submit', function(event){
 		event.preventDefault();
