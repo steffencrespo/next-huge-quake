@@ -30,6 +30,8 @@ function setDateRangeAndMagnitude() {
 
 function getDataFromAPI(callback) {
 	setDateRangeAndMagnitude();
+	$('#js-quake-table-container').hide();
+	$('#js-quake-loading-bar').show();
 	const settings = {
 		url: ENDPOINT_URL,
 		type: 'GET',
@@ -146,6 +148,8 @@ function printHomePageData(data) {
 	let allQuakes = '';
 	let quakesCounter = data.features.length;
 	let dateTimeSum = 0;
+
+	$("#js-quake-loading-bar").hide();
 
 	if (quakesCounter < 1) {
 		handleNoQuakesFound();
