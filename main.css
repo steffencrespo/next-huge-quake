@@ -6,7 +6,7 @@ body {
 	font-family: 'Roboto', sans-serif;
 	/*background-image:url('https://www.ngdc.noaa.gov/hazard/icons/med_res/10/10_203.jpg');*/
 	/*background-image:url('https://1.bp.blogspot.com/-Knf8cHJxlaI/Vt1o6hR9OPI/AAAAAAADZak/IA41vkigs70/s1600/2cb7be92cb8b48b126e0a6d96ff9e5a279492f5f.gif');*/
-	background-image:url('http://mtthwhgn.com/wp-content/uploads/2015/06/anigif_longform-original-951-1432935592-21.gif');
+	background-image:url('./images/goldengate.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
 }
