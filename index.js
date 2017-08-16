@@ -141,8 +141,6 @@ function convertIntoPSTFromUTC(utcTime) {
 function cleanEarthquakeDetailsPanel() {
 	$('#js-quake-panel-list li').remove();
 }
-// TODO: This function is intended to call USGS details page, but right now
-// the click listener is set to listen for a click on the EQ row, not the correct behavior
 
 function printHomePageData(data) {
 	let allQuakes = '';
