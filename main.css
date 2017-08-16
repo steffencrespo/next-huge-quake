@@ -6,9 +6,10 @@ body {
 	font-family: 'Roboto', sans-serif;
 	/*background-image:url('https://www.ngdc.noaa.gov/hazard/icons/med_res/10/10_203.jpg');*/
 	/*background-image:url('https://1.bp.blogspot.com/-Knf8cHJxlaI/Vt1o6hR9OPI/AAAAAAADZak/IA41vkigs70/s1600/2cb7be92cb8b48b126e0a6d96ff9e5a279492f5f.gif');*/
-	background-image:url('./images/goldengate.jpg');
-	background-repeat: no-repeat;
-	background-size: cover;
+	background-image:url('./images/goldengate-hq.jpg');
+	background-repeat: repeat-y;
+	background-size: 100%;
+
 }
 
 .container {
