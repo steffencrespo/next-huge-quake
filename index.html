@@ -12,29 +12,33 @@
   	<div class="row page-header">
   		<h1 class="text-center"> The next big earthquake <small>historical earthquake information</small></h1>
   	</div>
-    <div class="row panel panel-default" id="js-quake-form-container">
-      <form class="navbar-form navbar" role="search" id="js-quake-form">
-        <div class="input-group-addon">
-          <label for="js-magnitude">Minimum Magnitude</label>
-          <input type="number" min="2" max="10" class="form-control" id="js-magnitude" >
-        </div>
-        <div class="input-group-addon">
-          <label for="js-start-date">Start Date</label>
-          <input type="date" class="form-control" id="js-start-date" value="01/01/2017">
-        </div>
-        <div class="input-group-addon">
-          <label for="js-end-date">End Date</label>
-          <input type="date" class="form-control" id="js-end-date" >
-        </div> 
-        <div class="input-group-addon"><button class="btn btn-primary" type="submit">Search</button></div>
-      </form>
+    <div class="container">
+      <div class="row panel panel-default" id="js-quake-form-container">
+        <form class="navbar-form navbar" role="search" id="js-quake-form">
+          <div class="input-group-addon">
+            <label for="js-magnitude">Minimum Magnitude</label>
+            <input type="number" min="2" max="10" class="form-control" id="js-magnitude" >
+          </div>
+          <div class="input-group-addon">
+            <label for="js-start-date">Start Date</label>
+            <input type="date" class="form-control" id="js-start-date" value="01/01/2017">
+          </div>
+          <div class="input-group-addon">
+            <label for="js-end-date">End Date</label>
+            <input type="date" class="form-control" id="js-end-date" >
+          </div> 
+          <div class="input-group-addon"><button class="btn btn-primary" type="submit">Search</button></div>
+        </form>
+      </div>
     </div>
-    <div class="row panel panel-default">
-      <ul class="list-group" role="tablist" style="none">
-        <li class="list-group-item" role="presentation"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Date Range <span class="badge" id="js-quake-search-range"></span></li>
-        <li class="list-group-item" role="presentation"><span class="glyphicon glyphicon-scale" aria-hidden="true"></span> Minimum Magnitude <span class="badge" id="js-quake-magnitude"></span></li>
-        <li class="list-group-item" role="presentation"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Total Earthquakes Found <span class="badge" id="js-quake-counter"></span></li>
-      </ul>
+    <div class="container">
+      <div class="row panel panel-default">
+        <ul class="list-group" role="tablist" style="none">
+          <li class="list-group-item" role="presentation"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Date Range <span class="badge" id="js-quake-search-range"></span></li>
+          <li class="list-group-item" role="presentation"><span class="glyphicon glyphicon-scale" aria-hidden="true"></span> Minimum Magnitude <span class="badge" id="js-quake-magnitude"></span></li>
+          <li class="list-group-item" role="presentation"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Total Earthquakes Found <span class="badge" id="js-quake-counter"></span></li>
+        </ul>
+      </div>
     </div>
     <div class="alert alert-danger" role="alert" id="js-no-quake-found-alert"> Sorry, no earthquakes of this magnitude registered within the date range you entered. Try a lower magnitude or a different time range.</div>
     <div class="row panel panel-default progress" id="js-quake-loading-bar">
@@ -42,19 +46,21 @@
         <span>Loading...</span>
       </div>
     </div>
-    <div class="row panel panel-default" id="js-quake-table-container">
-      <div class="col-xs-12">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <td>Magnitude</td>
-              <td>Location</td>
-              <td>Date & Time</td>
-            </tr>
-          </thead>
-          <tbody id="js-quake-feed">
-          <tbody>
-        </table>
+    <div class="container">
+      <div class="row panel panel-default" id="js-quake-table-container">
+        <div class="col-xs-12">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <td>Magnitude</td>
+                <td>Location</td>
+                <td>Date & Time</td>
+              </tr>
+            </thead>
+            <tbody id="js-quake-feed">
+            <tbody>
+          </table>
+        </div>
       </div>
     </div>
     <div class="row" id="js-quake-panel-container">
