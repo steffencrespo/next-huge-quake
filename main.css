@@ -26,3 +26,8 @@ body {
 .page-header h1 small {
 	color: orange;
 }
+
+.no-padding {
+	padding-left: 0;
+	padding-right: 0;
+}
