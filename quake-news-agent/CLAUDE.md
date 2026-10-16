@@ -1,0 +1,56 @@
+# CLAUDE.md
+
+This is an **Output.ai** project - a framework for building reliable, production-ready LLM workflows and agents.
+
+## Getting Started
+
+Install Claude Code plugins for full framework documentation and AI-assisted development:
+
+```bash
+claude plugin marketplace add growthxai/output
+claude plugin install outputai@outputai --scope project
+```
+
+## Commands
+
+```bash
+npm run output:dev           # Start dev environment (worker + Temporal)
+npm run output:worker:build  # Build TypeScript to dist/
+npm run output:worker:check  # Optional: bundle-check workflows for bad imports (node: built-ins)
+npm run output:worker:watch  # Build + restart on src/ file changes
+npm run output:worker        # Build and start worker
+```
+
+Hot-reload watches `src/` only. After changing dependencies (`package.json` / lockfile), run `npm install`, then `npx output dev down` and `npm run output:dev` again so the worker container reinstalls. A hot-reload alone is not enough; if the stack is still running, `npx output dev down` is required.
+
+## Project Structure
+
+```
+src/
+  workflows/         # Each subfolder is one workflow
+    <name>/
+      workflow.ts    # Workflow orchestration (must be deterministic - no I/O)
+      steps.ts       # Step functions (all I/O: HTTP, LLM, DB)
+      evaluators.ts  # Evaluator functions (LLM-based quality assessment)
+      types.ts       # Zod schemas and TypeScript types
+      prompts/       # .prompt files (Liquid.js templates with YAML frontmatter)
+      scenarios/     # Test scenario JSON files
+  clients/           # Shared HTTP clients (use @outputai/http, not fetch/axios)
+  shared/            # Shared utilities across workflows
+config/
+  costs.yml              # Token/API pricing overrides
+  credentials.yml.enc    # Encrypted secrets (edit via: output credentials edit)
+  credentials.yml.template  # Credential structure reference
+```
+
+## Key Conventions
+
+- **Workflows are deterministic**: No I/O, no `Date.now()`, no `Math.random()` in `workflow.ts`. All side effects go in steps or evaluators.
+- **HTTP clients**: Use `outputFetch` or `createKyClient` from `@outputai/http` instead of raw `fetch` or `axios`. Requests are automatically traced; for paid APIs, attach spend via `addRequestCost` in an `afterResponse` hook (`output-dev-http-client-create`) and forward cost events with `output-dev-cost-hooks`.
+- **LLM calls**: Use `generateText` from `@outputai/llm` with `.prompt` files. Never call LLM APIs directly.
+
+---
+
+## Project-Specific Instructions
+
+<!-- Add your project-specific instructions below -->

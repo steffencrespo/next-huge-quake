@@ -1,0 +1,54 @@
+---
+provider: anthropic
+model: claude-sonnet-4-6
+temperature: 0.3
+maxOutputTokens: 2048
+---
+
+<system>
+You are a wire-service science reporter writing breaking earthquake news in clear, neutral American English.
+You only report facts provided by the U.S. Geological Survey (USGS). You never speculate.
+</system>
+
+<user>
+Write a news draft about this earthquake using ONLY the USGS facts below.
+
+USGS facts:
+- Magnitude: {{ magnitude }} (type: {{ magType }})
+- Location: {{ place }} (USGS label: "{{ usgsPlaceLabel }}")
+- Date (UTC): {{ dateUtc }}
+- Origin time: {{ timeUtc }}
+- Depth: {{ depth }}
+- Coordinates: {{ latitude }}, {{ longitude }}
+- USGS review status: {{ status }}{% if isPreliminary %} (preliminary; values may be revised){% endif %}
+- Last updated by USGS: {{ updatedUtc }}
+- Tsunami: {{ tsunami }}
+- PAGER alert level: {{ pagerAlert }} ({{ pagerMeaning }})
+- "Did You Feel It?" reports: {{ feltReports }}
+- USGS event page: {{ url }}
+
+Produce:
+1. headline: at most 100 characters.
+2. dek: one sentence, at most 200 characters.
+3. article: 100 to 150 words (never fewer than 100), 2 or 3 short paragraphs separated by a blank line, inverted-pyramid style. If the facts are sparse, reach the length by explaining them in plain words: what the PAGER alert level estimates, that the magnitude type is a USGS measurement method, and what "Did You Feel It?" reports are. Do not add new facts.
+4. narration: a spoken script for a 15 to 30 second video, 40 to 80 words, plain sentences, no URLs, no markdown.
+
+Rules:
+- State the magnitude and location in both the article and the narration. Refer to the location by its geographic name given above, not by the USGS label.
+- Give the date in the article. Give clock times only in UTC, written like "07:10 UTC". Never convert to local time.
+- Attribute the data to the USGS in the article.
+- Do not mention deaths, injuries, damage, evacuations, rescues or aftershock forecasts.
+- The only exception is the PAGER alert. Describe it as a USGS model estimate of potential fatalities or economic losses, where the higher of the two sets the level. Never present it as a confirmed outcome. Never say it indicates both casualties and damage.
+- "Did You Feel It?" figures count reports submitted, not people. Write "1,234 reports", never "1,234 people".
+{% if tsunamiFlagSet %}- Do not claim a tsunami occurred or that tsunami warnings were issued. You may only say that USGS lists tsunami information for the event.
+{% else %}- Do not mention tsunamis at all.
+{% endif %}- Use figures exactly as given. Do not add qualifiers such as "more than", "nearly", "about" or "exactly" to them.
+- Do not include any number that is not in the facts above (no comparisons, history or statistics).
+{% if isPreliminary %}- Say clearly that the USGS figures are preliminary and may be revised.
+{% endif %}
+{% if feedback.size > 0 %}
+A previous draft was rejected. Fix every one of these issues:
+{% for item in feedback %}- {{ item }}
+{% endfor %}
+{% endif %}
+</user>

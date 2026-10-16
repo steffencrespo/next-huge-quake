@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(outputai:*)"
+    ]
+  },
+  "enabledPlugins": {
+    "outputai@outputai": true
+  },
+  "extraKnownMarketplaces": {
+    "outputai": {
+      "source": {
+        "source": "github",
+        "repo": "growthxai/output"
+      }
+    }
+  }
+}
