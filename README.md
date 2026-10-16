@@ -135,3 +135,7 @@ See **[quake-news-agent/README.md](quake-news-agent/README.md)** for setup, cred
 Next Huge Quake started in July 2017 as a front-end project. USGS publishes rich earthquake data, but historical searches weren't easy to run on its site. The app made them simple: pick a date range and a minimum magnitude, see a summary of matching earthquakes, and open details such as the epicenter map, magnitude, depth and PAGER alert level.
 
 The original plan was to forecast the next large earthquake from historical data. That goal has been dropped: reliable earthquake prediction isn't possible with current science. The project has moved toward monitoring, reporting and publishing instead. The 2017 website remains online, unchanged.
+
+## License
+
+Next Huge Quake is released under the [MIT License](LICENSE). The license covers this project's own code and documentation. Third-party data (such as USGS earthquake data), dependencies and assets remain under their own terms.
