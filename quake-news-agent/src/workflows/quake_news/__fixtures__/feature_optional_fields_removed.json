@@ -1,0 +1,31 @@
+{
+  "type": "Feature",
+  "properties": {
+    "mag": 8.8,
+    "time": 1753831492483,
+    "tz": null,
+    "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000qw60&format=geojson",
+    "cdi": 9.1,
+    "mmi": 8.732,
+    "sig": 2114,
+    "net": "us",
+    "code": "6000qw60",
+    "ids": ",at00t06p1k,us6000qw60,pt25210002,usauto6000qw60,",
+    "sources": ",at,us,pt,usauto,",
+    "types": ",dyfi,earthquake-name,event-sequence,finite-fault,general-link,general-text,ground-failure,impact-link,impact-text,internal-moment-tensor,internal-origin,losspager,moment-tensor,oaf,origin,phase-data,shakemap,",
+    "nst": 251,
+    "dmin": 1.102,
+    "rms": 0.73,
+    "gap": 30,
+    "type": "earthquake",
+    "title": "M 8.8 - 2025 Kamchatka Peninsula, Russia Earthquake"
+  },
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      160.2395,
+      52.4948
+    ]
+  },
+  "id": "us6000qw60"
+}

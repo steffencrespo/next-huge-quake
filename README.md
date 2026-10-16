@@ -22,6 +22,10 @@ How to use this app
 	You can zoom in and out and move the map or close the map to see USGS report page ![Close map](/images/close-map.png "Close map") ![See the official page](/images/usgs-page.png "USGS page")
 5. To go back to the search, press the Back button
 
+News drafts (M1)
+----------------
+The [`quake-news-agent/`](quake-news-agent/) folder contains an [Output.ai](https://docs.output.ai/) workflow. It takes an earthquake from the USGS catalog and produces a fact-checked English news article and a short narration script. See [quake-news-agent/README.md](quake-news-agent/README.md) for setup and usage.
+
 What to expect for the short term future of this app
 ----------------------------------------------------
 

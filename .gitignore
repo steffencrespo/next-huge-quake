@@ -1,0 +1,13 @@
+# Personal Claude Code settings
+.claude/settings.local.json
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies and generated output
+node_modules/
+logs/
+dist/
+.DS_Store

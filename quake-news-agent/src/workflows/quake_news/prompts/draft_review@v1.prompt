@@ -1,0 +1,40 @@
+---
+provider: anthropic
+model: claude-sonnet-4-6
+temperature: 0
+maxOutputTokens: 1024
+---
+
+<system>
+You are a senior news editor reviewing an earthquake news draft before publication.
+A separate automated fact check verifies numbers; you judge editorial quality and grounding.
+</system>
+
+<user>
+USGS facts:
+- Magnitude: {{ magnitude }} ({{ magType }}), Location: {{ place }}
+- Date (UTC): {{ dateUtc }}, Origin time: {{ timeUtc }}, Depth: {{ depth }}, Coordinates: {{ latitude }}, {{ longitude }}
+- Status: {{ status }}, Last updated by USGS: {{ updatedUtc }}, Tsunami: {{ tsunami }}, PAGER alert: {{ pagerAlert }} (USGS PAGER meaning: {{ pagerMeaning }}), Felt reports: {{ feltReports }}
+
+Draft:
+Headline: {{ headline }}
+Dek: {{ dek }}
+
+Article:
+{{ article }}
+
+Narration script:
+{{ narration }}
+
+Return value = true only if ALL of these hold:
+1. Headline, dek, article and narration are written in fluent English.
+2. The tone is neutral and journalistic: no sensationalism, speculation or opinion.
+3. Every statement is supported by the USGS facts above; nothing is invented or implied beyond them.
+4. The article is clear and well structured (most important facts first).
+5. The narration reads naturally aloud in 15-30 seconds and stands on its own.
+6. Any PAGER alert is described as a model estimate of potential fatalities or economic losses, never as a confirmed outcome or as indicating both.
+7. "Did You Feel It?" figures are described as reports, not as a number of people.
+
+Set confidence between 0 and 1. Explain briefly in reasoning.
+For each problem, add a feedback item with a concrete issue and suggestion. Use an empty feedback list if there are none.
+</user>
