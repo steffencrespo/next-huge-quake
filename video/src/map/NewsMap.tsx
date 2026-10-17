@@ -1,3 +1,5 @@
+import type { StyleSpecification } from 'maplibre-gl';
+import type { MapCredits } from '../copy/credits.js';
 import { AbsoluteFill, useCurrentFrame } from 'remotion';
 import { MAP_ZONE } from '../design/layout.js';
 import { COLORS } from '../design/tokens.js';
@@ -14,10 +16,16 @@ import { StaticBackdrop } from './StaticBackdrop.js';
 export const RINGS_START = 135;
 
 /**
+ * An alternative map style for the live map (M2.2 terrain spike); production renders never pass one. `credits` selects
+ * the on-screen credit lines that match the map drawn.
+ */
+export type NewsMapStyle = { name: string; style: () => StyleSpecification; allowedHosts?: string[]; credits: MapCredits };
+
+/**
  * The map layer of the news video. Live mode: the M2.0 LiveMap (readiness gate, diagnostics) driven by the news
  * camera. Static mode: the no-WebGL backdrop, for design iteration only.
  */
-export const NewsMap: React.FC<{ spec: VideoSpec }> = ( { spec } ) => {
+export const NewsMap: React.FC<{ spec: VideoSpec; mapStyle?: NewsMapStyle }> = ( { spec, mapStyle } ) => {
   const frame = useCurrentFrame();
   const { event, map } = spec;
   const target = { latitude: event.latitude, longitude: event.longitude, approachFrom: map.approachFrom };
@@ -35,7 +43,9 @@ export const NewsMap: React.FC<{ spec: VideoSpec }> = ( { spec } ) => {
       cameraAt={f => newsCameraAt( f, target )}
       epicenter={[ event.longitude, event.latitude ]}
       tiles="local"
-      diagnostics={{ event: event.id, tiles: 'local' }}
+      style={mapStyle?.style}
+      allowedHosts={mapStyle?.allowedHosts}
+      diagnostics={mapStyle ? { event: event.id, tiles: 'local', style: mapStyle.name } : { event: event.id, tiles: 'local' }}
       background={COLORS.background}
       overlay={( marker, f ) => <EpicenterOverlay frame={f} x={marker.x} y={marker.y} start={RINGS_START} />}
     />

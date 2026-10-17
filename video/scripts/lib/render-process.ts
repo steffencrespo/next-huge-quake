@@ -25,11 +25,14 @@ function treeRssKb( rootPid: number ): number {
   return total;
 }
 
-/** Runs `npx <args>` in `cwd`, logging stdout/stderr to `logFile`. Returns exit code, wall time and peak tree RSS. */
-export async function runMeasured( args: string[], cwd: string, logFile: string ) {
+/**
+ * Runs `<command> <args>` (default `npx`) in `cwd`, logging stdout/stderr to `logFile`. Returns exit code, wall time
+ * and peak tree RSS.
+ */
+export async function runMeasured( args: string[], cwd: string, logFile: string, command = 'npx' ) {
   const log = createWriteStream( logFile );
   const started = Date.now();
-  const child = spawn( 'npx', args, { cwd } );
+  const child = spawn( command, args, { cwd } );
   child.stdout.pipe( log );
   child.stderr.pipe( log );
   let peakKb = 0;

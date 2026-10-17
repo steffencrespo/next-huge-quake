@@ -31,6 +31,10 @@ npm run build:geo
 | `npm run render:design` | DesignBoard stills, full size and phone size (`out/design/`) |
 | `npm run render:contact-sheet` | One labeled sheet of the DesignBoard phone stills |
 | `npm run verify -- --dir=news --frames=1050 --report=news-report noto kamchatka preliminaryTest` | Checks the stream, readiness, blank frames, pops and marker drift for each render (`out/news-report.md`) |
+| `npm run prepare:terrain [-- --plan \| --offline]` | Fetches and caches the DEM tiles for the terrain targets (`cache/terrain/`), copies them to `public/terrain/` with a manifest; `--plan` reports tile counts without fetching, `--offline` proves the cache is complete |
+| `npm run render:terrain-b [-- --offline-sandbox]` | M2.2b review: map-only stills (a1 vs b1-cool), full terrain videos with terrain credits, and a local comparison page (`out/m2-2/b/`) |
+| `npm run check:terrain-coverage -- <target>=<log> ...` | Checks that every DEM tile a render requested was prepared |
+| `npm run style:metrics -- --dir=m2-2/b` | Land / shelf / deep-ocean luminance metrics for the terrain style review |
 
 To render one video from any valid spec:
 
@@ -56,8 +60,51 @@ src/
 scripts/         geo/font preparation, render and verification tools
 ```
 
+## Map data and credits
+
+| Data | Source | Terms |
+|---|---|---|
+| Earthquake facts | U.S. Geological Survey (USGS) | Credited on screen ("Source: USGS") and in the closing card |
+| Land, coastline, borders | [Natural Earth](https://www.naturalearthdata.com/) 1:10m via `world-atlas` | Public domain; credited as a courtesy |
+| Terrain and bathymetry (production map of QuakeNews since the M2.2 MVP integration) | [Terrain Tiles](https://registry.opendata.aws/terrain-tiles/) (Mapzen / Tilezen Joerd, AWS Open Data), prepared locally by `npm run prepare:terrain` | Attribution required: [Joerd attribution](https://github.com/tilezen/joerd/blob/master/docs/attribution.md); Canadian data under the [Open Government Licence – Canada](https://open.canada.ca/en/open-government-licence-canada) |
+
+`render-news.ts` writes the complete block to `out/news/<fixture>.credits.txt` next to each MP4; paste it into the public description. Terrain for a new event: `npm run prepare:terrain -- path/to/spec.json` (QuakeNews fails before frame 0 if its tiles are missing).
+
+**On screen**, a video with the terrain map shows "Source: USGS · Terrain: Mapzen" in the footer and "Map data: Natural Earth · Terrain: Mapzen" on the closing card.
+
+**These short lines are not the complete attribution.** Joerd's attribution doc says credit must appear "in a place that is reasonable to the medium", and OGL-Canada asks for its statement plus, where possible, a link to the licence. Every published video that uses the terrain map must therefore carry the complete block from `fullCredits('terrain')` (`src/copy/credits.ts`) in its public description or end credits:
+- Joerd's full required-attribution list, verbatim;
+- Mapzen;
+- the OGL-Canada link.
+
+Technical documentation alone is not sufficient. `npm run copy:review` prints the block.
+
+**Mandatory publishing requirement (accepted at Gate B, 2026-10-17):** the complete verified attribution block must accompany every publicly published terrain video. The future publishing pipeline (M2.4 and later) must attach it automatically and refuse to publish a terrain video without it. Publishing is not implemented yet.
+
+The required list is reproduced in full rather than trimmed to the sources actually used. At the prepared zooms (z0–z8) the tiles come from ETOPO1, GMTED2010 and SRTM, plus NRCAN CDEM in Canada (recorded in `public/terrain/manifest.json`). Per-tile provenance is not tracked, so the complete list is the conservative record.
+
+## Render performance (terrain map)
+
+The reference budgets stay as they were:
+- readiness wait p95 ≤ 250 ms;
+- maximum wait ≤ 5 s;
+- peak memory ≤ 5 GB;
+- wall time ≤ 2× the M2.1 map.
+
+The terrain map is accepted as a **documented, provisional exception** (Gate B, 2026-10-17).
+
+| Measured (b1-cool, offline, GPU, 3 renders) | Range |
+|---|---|
+| Wall time vs M2.1 | 1.97–2.06× (174–183 s vs 88 s) |
+| Readiness wait p95 | 138–301 ms |
+| Maximum wait | 3.7–4.3 s |
+| Peak memory | 4.6–4.9 GB |
+
+- The ocean hillshade is switched off from z6 (`OCEAN_HILLSHADE_MAXZOOM`); it fades to zero first, so this has no visible effect.
+- Performance is revisited only if later milestones show consistent degradation, memory problems or render failures.
+
 ## Not here yet
 
-- **M2.2:** production map styling (terrain, labels).
+- **M2.2:** production map styling. Terrain (M2.2a/b) is opt-in through the `TerrainSpike` composition; labels, framing, marker and the production default switch follow in M2.2c–f.
 - **M2.3:** narration, audio and subtitles.
 - **M2.4:** M1 → VideoSpec integration and publishing.

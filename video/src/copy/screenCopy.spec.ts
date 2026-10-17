@@ -6,6 +6,8 @@ import { contextItemSupported } from '../spec/schema.js';
 import type { VideoSpec } from '../spec/schema.js';
 import { PAGER_CAVEAT, TSUNAMI_CAVEAT } from './caveats.js';
 import { checkScreenText } from './guard.js';
+import { REGIONS } from '../design/layout.js';
+import { TYPE } from '../design/tokens.js';
 import { CARD_LIMITS, allScreenText, buildScreenCopy } from './screenCopy.js';
 
 const specFor = ( fixture: Fixture, mapMode: 'live' | 'static' = 'live', asOfUtc = DEMO_AS_OF_UTC ) => buildVideoSpec( fixture, { asOfUtc, mapMode } );
@@ -112,8 +114,36 @@ describe( 'buildScreenCopy', () => {
   } );
 } );
 
+describe( 'map credits', () => {
+  it( 'keeps the M2.1 credits by default (production unchanged)', () => {
+    const copy = copyFor( 'noto' );
+    expect( copy.chrome.source ).toBe( 'Source: USGS · Map: Natural Earth' );
+    expect( copy.chrome.mapCredit ).toBe( 'Natural Earth' );
+    expect( copy.closing.mapCredit ).toBe( 'Map data: Natural Earth' );
+  } );
+
+  it( 'credits the terrain when the terrain map is drawn', () => {
+    const copy = buildScreenCopy( specFor( FIXTURES.noto ), { mapCredits: 'terrain' } );
+    expect( copy.chrome.source ).toBe( 'Source: USGS · Terrain: Mapzen' );
+    expect( copy.closing.mapCredit ).toBe( 'Map data: Natural Earth · Terrain: Mapzen' );
+    expect( buildScreenCopy( specFor( FIXTURES.noto, 'static' ), { mapCredits: 'terrain' } ).chrome.source ).toBe( 'Source: USGS' );
+  } );
+
+  it( 'fits the credit lines on one line (deterministic width estimate, 0.6 em per Inter character)', () => {
+    const copy = buildScreenCopy( specFor( FIXTURES.noto ), { mapCredits: 'terrain' } );
+    const footerWidth = REGIONS.footer.width - 12 - 14; // red square and gap in SourceFooter
+    expect( copy.chrome.source.length * Number( TYPE.meta.fontSize ) * 0.6 ).toBeLessThanOrEqual( footerWidth );
+    expect( copy.closing.mapCredit!.length * Number( TYPE.fine.fontSize ) * 0.6 ).toBeLessThanOrEqual( REGIONS.closing.width );
+  } );
+} );
+
 describe( 'guard', () => {
   for ( const key of Object.keys( FIXTURES ) as ( keyof typeof FIXTURES )[] ) {
+    it( `passes all ${key} screen copy with terrain credits`, () => {
+      const spec = specFor( FIXTURES[key] );
+      expect( checkScreenText( allScreenText( buildScreenCopy( spec, { mapCredits: 'terrain' } ) ), spec.event ) ).toEqual( [] );
+    } );
+
     it( `passes all ${key} screen copy, including every supported card`, () => {
       const spec = specFor( FIXTURES[key] );
       const cards = allCards( FIXTURES[key] ).flatMap( c => [ c.title, c.value, c.line, c.note ?? '', c.extended ?? '' ] );

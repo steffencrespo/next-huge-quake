@@ -10,6 +10,8 @@
  * - Historical events (by origin time, see isArchive) carry an ARCHIVE indicator from frame 0.
  * - On-screen card text stays short (CARD_LIMITS); longer explanation goes in `extended`, which is never displayed.
  */
+import { ON_SCREEN_CREDITS } from './credits.js';
+import type { MapCredits } from './credits.js';
 import { isArchive, isPreliminary } from '../spec/schema.js';
 import type { ContextItem, QuakeEvent, VideoSpec } from '../spec/schema.js';
 import { PAGER_CAVEAT, TSUNAMI_CAVEAT } from './caveats.js';
@@ -49,7 +51,6 @@ export type ScreenCopy = {
 };
 
 const SEP = ' · ';
-const MAP_CREDIT = 'Natural Earth';
 
 const PAGER_LEVEL: Record<NonNullable<QuakeEvent['pagerAlert']>, string> = {
   green: 'Lowest impact alert level.',
@@ -127,9 +128,17 @@ function contextCard( item: ContextItem, event: QuakeEvent ): ContextCard {
   }
 }
 
-export function buildScreenCopy( spec: VideoSpec ): ScreenCopy {
+export type ScreenCopyOptions = {
+  /**
+   * Which map the video draws, for the credit lines. Defaults to the M2.1 Natural Earth map; 'terrain' is passed only
+   * when a terrain style is rendered (M2.2 TerrainSpike until the production default switches).
+   */
+  mapCredits?: MapCredits;
+};
+
+export function buildScreenCopy( spec: VideoSpec, { mapCredits = 'natural-earth' }: ScreenCopyOptions = {} ): ScreenCopy {
   const { event } = spec;
-  const mapCredit = spec.map.mode === 'live' ? MAP_CREDIT : null;
+  const credits = spec.map.mode === 'live' ? ON_SCREEN_CREDITS[mapCredits] : null;
   const preliminary = preliminaryNotice( event );
   const typeName = magTypeName( event.magType );
   const coordinates = formatCoordinates( event.latitude, event.longitude );
@@ -141,8 +150,8 @@ export function buildScreenCopy( spec: VideoSpec ): ScreenCopy {
     chrome: {
       tag: 'EARTHQUAKE',
       updated,
-      source: mapCredit ? `Source: USGS${SEP}Map: ${mapCredit}` : 'Source: USGS',
-      mapCredit,
+      source: credits ? `Source: USGS${SEP}${credits.footer}` : 'Source: USGS',
+      mapCredit: credits?.providers ?? null,
       archive: isArchive( spec ) ? { badge: 'ARCHIVE', detail: `Earthquake of ${formatDateUtc( event.timeUtc )}` } : null,
       preliminary,
       testData: spec.provenance === 'synthetic-test' ? 'TEST DATA · NOT FOR PUBLICATION' : null
@@ -180,7 +189,7 @@ export function buildScreenCopy( spec: VideoSpec ): ScreenCopy {
       eventId: `Event ID ${event.id}`,
       url: event.url.replace( /^https?:\/\//, '' ),
       updated: event.updatedUtc ? `Last updated ${timestamp( event.updatedUtc )}` : 'Last update time not available',
-      mapCredit: mapCredit ? `Map data: ${mapCredit}` : null,
+      mapCredit: credits?.closing ?? null,
       disclaimers: [
         ...( preliminary ? [ `Preliminary data. ${preliminary.detail}.` ] : [] ),
         'Data may be revised as USGS updates this event.'

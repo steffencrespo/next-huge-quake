@@ -14,7 +14,14 @@
     "vendor:fonts": "tsx scripts/vendor-fonts.ts",
     "render:design": "tsx scripts/render-design.ts",
     "render:contact-sheet": "tsx scripts/render-contact-sheet.ts",
-    "render:news": "tsx scripts/render-news.ts"
+    "render:news": "tsx scripts/render-news.ts",
+    "prepare:terrain": "tsx scripts/prepare-terrain.ts",
+    "render:terrain-spike": "tsx scripts/render-terrain-spike.ts",
+    "check:terrain-coverage": "tsx scripts/check-terrain-coverage.ts",
+    "render:terrain-b": "tsx scripts/render-terrain-b.ts",
+    "style:metrics": "tsx scripts/style-metrics.ts",
+    "render:terrain-c": "tsx scripts/render-terrain-c.ts",
+    "check:labels": "tsx scripts/check-labels.ts"
   },
   "engines": {
     "node": ">=24.3.0"
