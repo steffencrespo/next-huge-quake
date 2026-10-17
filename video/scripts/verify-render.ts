@@ -9,7 +9,12 @@
  * - per-frame map diagnostics (MAPDIAG lines logged by MapSpike during render)
  * - full-resolution stills and contact sheets (PNG written here with zlib)
  *
- * Usage: tsx scripts/verify-render.ts
+ * Usage: tsx scripts/verify-render.ts [options] [render ...]   (no names = every MP4 in out/)
+ *   --frames=N          expected frame count (default 300, the spike length)
+ *   --stills=0,75,179   frames saved as PNG stills (default: the spike's)
+ *   --compare=a:b       extra PSNR / camera-trace comparison between two renders (repeatable)
+ *   --report=name       write out/<name>.md and out/<name>.json instead of report.md / verification.json
+ *   --dir=sub           read renders from out/<sub>/ instead of out/
  */
 import { spawn, execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -21,8 +26,13 @@ import type { Readable } from 'node:stream';
 const WIDTH = 1080;
 const HEIGHT = 1920;
 const FRAME_BYTES = WIDTH * HEIGHT * 3;
-const EXPECTED_FRAMES = 300;
-const STILL_FRAMES = [ 0, 30, 90, 150, 180, 240, 299 ];
+const args = process.argv.slice( 2 );
+const option = ( name: string ) => args.filter( a => a.startsWith( `--${name}=` ) ).map( a => a.slice( name.length + 3 ) );
+const EXPECTED_FRAMES = Number( option( 'frames' )[0] ?? 300 );
+const STILL_FRAMES = option( 'stills' )[0]?.split( ',' ).map( Number ) ?? [ 0, 30, 90, 150, 180, 240, 299 ];
+const EXTRA_PAIRS = option( 'compare' ).map( p => p.split( ':' ) as [ string, string ] );
+const REPORT = option( 'report' )[0] ?? null;
+const SELECTED = args.filter( a => !a.startsWith( '--' ) );
 const SHEET_SCALE = 4;
 const CONTENT_LUMA = 14; // brighter than the ocean color, so "content" means land, lines, overlays or text
 const BLANK_CONTENT_SHARE = 0.005;
@@ -30,6 +40,8 @@ const BLANK_CONTENT_SHARE = 0.005;
 const root = join( dirname( new URL( import.meta.url ).pathname ), '..' );
 const out = join( root, 'out' );
 const framesDir = join( out, 'frames' );
+/** Where renders (<name>.mp4/.log/.metrics.json) are read from; reports and stills still go to out/. */
+const renders = option( 'dir' )[0] ? join( out, option( 'dir' )[0] ) : out;
 mkdirSync( framesDir, { recursive: true } );
 
 // ---------- PNG writer (RGB, 8-bit) ----------
@@ -197,7 +209,7 @@ function psnr( a: Buffer, b: Buffer ): number {
 type Diag = { frame: number; waitMs: number; ready: boolean; contextLost: boolean; errors: string[]; camera: unknown; appliedCenter: number[]; appliedZoom: number; marker: number[]; markerDriftPx: number; roundTripErrorDeg: number };
 
 function readDiagnostics( name: string ): Diag[] {
-  const log = join( out, `${name}.log` );
+  const log = join( renders, `${name}.log` );
   if ( !existsSync( log ) ) {
     return [];
   }
@@ -225,7 +237,7 @@ function probe( file: string ) {
 }
 
 async function analyze( name: string ) {
-  const file = join( out, `${name}.mp4` );
+  const file = join( renders, `${name}.mp4` );
   const stream = probe( file );
   const dir = join( framesDir, name );
   mkdirSync( dir, { recursive: true } );
@@ -252,7 +264,7 @@ async function analyze( name: string ) {
 
   const diag = readDiagnostics( name );
   const waits = diag.map( d => d.waitMs );
-  const metricsPath = join( out, `${name}.metrics.json` );
+  const metricsPath = join( renders, `${name}.metrics.json` );
   const metrics = existsSync( metricsPath ) ? JSON.parse( readFileSync( metricsPath, 'utf8' ) ) : null;
   return {
     name,
@@ -283,8 +295,8 @@ async function analyze( name: string ) {
 
 async function comparePair( a: string, b: string ) {
   const psnrs: number[] = [];
-  const left = decodeFrames( join( out, `${a}.mp4` ) );
-  const right = decodeFrames( join( out, `${b}.mp4` ) );
+  const left = decodeFrames( join( renders, `${a}.mp4` ) );
+  const right = decodeFrames( join( renders, `${b}.mp4` ) );
   for ( ;; ) {
     const [ x, y ] = await Promise.all( [ left.next(), right.next() ] );
     if ( x.done || y.done ) {
@@ -304,7 +316,9 @@ async function comparePair( a: string, b: string ) {
 }
 
 // ---------- main ----------
-const names = readdirSync( out ).filter( f => f.endsWith( '.mp4' ) ).map( f => f.replace( /\.mp4$/, '' ) ).sort();
+const names = SELECTED.length > 0 ?
+  SELECTED :
+  readdirSync( renders ).filter( f => f.endsWith( '.mp4' ) ).map( f => f.replace( /\.mp4$/, '' ) ).sort();
 const results = [];
 for ( const name of names ) {
   console.log( `analyzing ${name}` );
@@ -319,6 +333,7 @@ for ( const event of [ 'noto', 'kamchatka' ] ) {
   }
   pairs.push( [ 'gl-mode', `${event}-local-angle-1`, `${event}-local-swangle-1` ] );
 }
+pairs.push( ...EXTRA_PAIRS.map( ( [ a, b ] ) => [ 'compare', a, b ] as [ string, string, string ] ) );
 const comparisons = [];
 for ( const [ kind, a, b ] of pairs ) {
   if ( byName.has( a ) && byName.has( b ) ) {
@@ -349,13 +364,13 @@ const rowsMd = results.map( r => {
 } );
 const cmpMd = comparisons.map( c => `| ${c.kind} | ${c.a} vs ${c.b} | ${c.frames} | ${c.md5IdenticalFrames} | ${fmt( c.minPsnr, 1 )} (frame ${c.worstFrame}) | ${fmt( c.meanFinitePsnr, 1 )} | ${c.cameraTraceIdentical ? 'yes' : 'no'} |` );
 
-const report = `# M2.0 map spike — verification report
+const report = `# Render verification report
 
 Generated by \`scripts/verify-render.ts\`. Stills: \`out/frames/<render>/frame-NNN.png\`; contact sheets: \`out/frames/<event>-contact-sheet.png\` (rows: local/angle, local/swangle, remote/angle; columns: frames ${STILL_FRAMES.join( ', ' )}).
 
 ## Renders
 
-Columns: stream check; stability (all 300 frames ready, no map errors, no context loss, no blank frames); diagnostics frames/notReady/errors/contextLost; blank frames (content share < ${BLANK_CONTENT_SHARE * 100}%); pop/flash candidates (frame-to-frame difference > max(8, 6× median)); readiness wait p50/p95/max in ms (after applying each frame's camera); max marker drift in px between the rendered overlay and \`map.project(epicenter)\` after readiness; wall time (s); ms per frame (wall time / 300, concurrency 4); peak RSS of the whole render process tree (MB).
+Columns: stream check; stability (all ${EXPECTED_FRAMES} frames ready, no map errors, no context loss, no blank frames); diagnostics frames/notReady/errors/contextLost; blank frames (content share < ${BLANK_CONTENT_SHARE * 100}%); pop/flash candidates (frame-to-frame difference > max(8, 6× median)); readiness wait p50/p95/max in ms (after applying each frame's camera); max marker drift in px between the rendered overlay and \`map.project(epicenter)\` after readiness; wall time (s); ms per frame (wall time / ${EXPECTED_FRAMES}, concurrency 4); peak RSS of the whole render process tree (MB).
 
 | Render | Stream | Stable | Diag f/nr/err/ctx | Blank | Pops | Wait p50/p95/max | Drift px | Wall s | ms/frame | Peak MB |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -369,6 +384,6 @@ PSNR over full-resolution RGB per frame (∞ = bit-identical). "Camera trace" co
 |---|---|---|---|---|---|---|
 ${cmpMd.join( '\n' )}
 `;
-writeFileSync( join( out, 'report.md' ), report );
-writeFileSync( join( out, 'verification.json' ), JSON.stringify( { results: results.map( ( { md5: _m, sheet: _s, diagnostics: { cameraTrace: _c, ...diagnostics }, ...rest } ) => ( { ...rest, diagnostics } ) ), comparisons }, null, 2 ) );
+writeFileSync( join( out, REPORT ? `${REPORT}.md` : 'report.md' ), report );
+writeFileSync( join( out, REPORT ? `${REPORT}.json` : 'verification.json' ), JSON.stringify( { results: results.map( ( { md5: _m, sheet: _s, diagnostics: { cameraTrace: _c, ...diagnostics }, ...rest } ) => ( { ...rest, diagnostics } ) ), comparisons }, null, 2 ) );
 console.log( report );
