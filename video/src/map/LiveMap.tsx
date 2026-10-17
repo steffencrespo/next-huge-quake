@@ -9,7 +9,7 @@
  * - One MAPDIAG line per frame is logged for scripts/verify-render.ts.
  */
 import * as maplibregl from 'maplibre-gl';
-import type { Map as MapLibreMap, PaddingOptions } from 'maplibre-gl';
+import type { Map as MapLibreMap, PaddingOptions, RequestParameters, ResourceType, StyleSpecification } from 'maplibre-gl';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AbsoluteFill, cancelRender, continueRender, delayRender, staticFile, useCurrentFrame } from 'remotion';
 import type { CameraState } from '../spike/camera.js';
@@ -21,6 +21,7 @@ const HEIGHT = 1920;
 const INIT_TIMEOUT_MS = 120_000;
 const FRAME_TIMEOUT_MS = 30_000;
 const DIAG_PREFIX = 'MAPDIAG ';
+const TILE_REQUEST_PREFIX = 'TILEREQ ';
 
 maplibregl.setWorkerUrl( new URL( staticFile( 'maplibre/maplibre-gl-worker.mjs' ), window.location.href ).href );
 maplibregl.setWorkerCount( 2 );
@@ -35,10 +36,22 @@ export type LiveMapProps = {
   /** [longitude, latitude] */
   epicenter: [ number, number ];
   tiles: TileMode;
+  /**
+   * Overrides `tiles` with a custom style (M2.2 terrain spike). With a style, every request must stay on the page
+   * origin or one of `allowedHosts`; any other request is recorded as a map error, so the frame gate fails the render.
+   * Raster-DEM tile requests are logged as TILEREQ lines for scripts/check-terrain-coverage.ts.
+   */
+  style?: () => StyleSpecification;
+  allowedHosts?: string[];
   /** Extra fields for the MAPDIAG line (e.g. event and tiles), logged after `frame`. */
   diagnostics?: Record<string, unknown>;
   /** Drawn above `children` once the marker is known for this frame. */
-  overlay?: ( marker: Marker, frame: number ) => React.ReactNode;
+  overlay?: ( marker: Marker, frame: number, tracked?: Marker[] ) => React.ReactNode;
+  /**
+   * Extra [longitude, latitude] points projected with `map.project` after each frame's camera (e.g. label anchors,
+   * M2.2c). Passed to `overlay` once they belong to the current frame, and logged in the MAPDIAG line as `tracked`.
+   */
+  trackPoints?: [ number, number ][];
   /** Layers between the map and the overlay (e.g. a vignette). */
   children?: React.ReactNode;
   background?: string;
@@ -64,27 +77,48 @@ function waitForFrameReady( map: MapLibreMap, timeoutMs: number ): Promise<numbe
   } );
 }
 
-export const LiveMap: React.FC<LiveMapProps> = ( { cameraAt, epicenter, tiles, diagnostics = {}, overlay, children, background = '#000' } ) => {
+/** Request guard for custom styles: same-origin (or allowed) requests only; DEM tile requests are logged. */
+function guardRequests( allowedHosts: string[], errors: { current: string[] } ) {
+  return ( url: string, resourceType?: ResourceType ): RequestParameters => {
+    const parsed = new URL( url, window.location.href );
+    // Custom protocols (e.g. local-dem://) are served by in-page handlers that fetch from the page origin.
+    const local = parsed.origin === window.location.origin || ![ 'http:', 'https:' ].includes( parsed.protocol );
+    if ( !local && !allowedHosts.includes( parsed.host ) ) {
+      errors.current.push( `off-origin request blocked by policy: ${url}` );
+      // Never let it reach the network: point it at a path the static server does not have.
+      return { url: new URL( '/__blocked-off-origin-request__', window.location.href ).href };
+    }
+    const dem = /(terrain|terrarium)\/(\d+\/\d+\/\d+)\.png$/.exec( url );
+    if ( resourceType === 'Tile' && dem ) {
+      console.log( TILE_REQUEST_PREFIX + dem[2] );
+    }
+    return { url };
+  };
+}
+
+export const LiveMap: React.FC<LiveMapProps> = ( { cameraAt, epicenter, tiles, style: customStyle, allowedHosts = [], diagnostics = {}, overlay, trackPoints, children, background = '#000' } ) => {
   const frame = useCurrentFrame();
   const containerRef = useRef<HTMLDivElement>( null );
   const [ map, setMap ] = useState<MapLibreMap | null>( null );
   const [ marker, setMarker ] = useState<Marker | null>( null );
+  const [ tracked, setTracked ] = useState<{ frame: number; points: Marker[] } | null>( null );
   const errors = useRef<string[]>( [] );
   const contextLost = useRef( false );
   const [ initHandle ] = useState( () => delayRender( 'map-init', { timeoutInMilliseconds: INIT_TIMEOUT_MS } ) );
-  const props = useRef( { cameraAt, epicenter, diagnostics } );
-  props.current = { cameraAt, epicenter, diagnostics };
+  const props = useRef( { cameraAt, epicenter, diagnostics, trackPoints } );
+  props.current = { cameraAt, epicenter, diagnostics, trackPoints };
 
   useEffect( () => {
     let instance: MapLibreMap | undefined;
     let cancelled = false;
     ( async () => {
-      const style = tiles === 'local' ? localStyle() : await remoteStyle();
+      const style = customStyle ? customStyle() : tiles === 'local' ? localStyle() : await remoteStyle();
       if ( cancelled || !containerRef.current ) {
         return;
       }
-      // Padding is not a constructor option; the first frame's jumpTo applies it.
-      const { padding: _padding, ...camera } = props.current.cameraAt( frame );
+      // Padding is not a constructor option: set it before the style loads, so the first tile requests already use
+      // the first frame's full camera (M2.2a: without it, a one-frame render loaded tiles for an unpadded view).
+      const { padding, ...camera } = props.current.cameraAt( frame );
       const mapInstance = new maplibregl.Map( {
         container: containerRef.current,
         style,
@@ -94,9 +128,13 @@ export const LiveMap: React.FC<LiveMapProps> = ( { cameraAt, epicenter, tiles, d
         fadeDuration: 0,
         pixelRatio: 1,
         maxPitch: 60,
-        canvasContextAttributes: { antialias: true, preserveDrawingBuffer: true }
+        canvasContextAttributes: { antialias: true, preserveDrawingBuffer: true },
+        ...( customStyle ? { transformRequest: guardRequests( allowedHosts, errors ) } : {} )
       } );
       instance = mapInstance;
+      if ( padding ) {
+        mapInstance.setPadding( padding );
+      }
       mapInstance.on( 'error', e => errors.current.push( String( e.error?.message ?? e.error ?? 'unknown map error' ) ) );
       mapInstance.getCanvas().addEventListener( 'webglcontextlost', () => {
         contextLost.current = true;
@@ -120,10 +158,16 @@ export const LiveMap: React.FC<LiveMapProps> = ( { cameraAt, epicenter, tiles, d
     const handle = delayRender( `map-frame-${frame}`, { timeoutInMilliseconds: FRAME_TIMEOUT_MS + 5_000 } );
     const { cameraAt: cameraFor, epicenter: point, diagnostics: extra } = props.current;
     const camera = cameraFor( frame );
-    errors.current = [];
+    // Errors are never cleared: any error fails the render, including errors raised while the map was initializing,
+    // before the first frame (M2.2a: clearing here discarded 404s of tiles requested during map load).
     map.jumpTo( camera );
     const projected = map.project( point );
     setMarker( { x: projected.x, y: projected.y } );
+    const points = ( props.current.trackPoints ?? [] ).map( p => {
+      const q = map.project( p );
+      return { x: q.x, y: q.y };
+    } );
+    setTracked( { frame, points } );
 
     let active = true;
     waitForFrameReady( map, FRAME_TIMEOUT_MS ).then( waitMs => {
@@ -148,6 +192,7 @@ export const LiveMap: React.FC<LiveMapProps> = ( { cameraAt, epicenter, tiles, d
         appliedZoom: map.getZoom(),
         marker: [ projected.x, projected.y ],
         markerDriftPx: Math.hypot( after.x - projected.x, after.y - projected.y ),
+        ...( points.length > 0 ? { tracked: points.map( q => [ q.x, q.y ] ) } : {} ),
         roundTripErrorDeg: Math.hypot( roundTrip.lng - point[0], roundTrip.lat - point[1] )
       };
       console.log( DIAG_PREFIX + JSON.stringify( diag ) );
@@ -168,7 +213,7 @@ export const LiveMap: React.FC<LiveMapProps> = ( { cameraAt, epicenter, tiles, d
     <AbsoluteFill style={{ backgroundColor: background }}>
       <div ref={containerRef} style={{ position: 'absolute', width: WIDTH, height: HEIGHT }} />
       {children}
-      {marker && overlay ? overlay( marker, frame ) : null}
+      {marker && overlay ? overlay( marker, frame, tracked?.frame === frame ? tracked.points : undefined ) : null}
     </AbsoluteFill>
   );
 };

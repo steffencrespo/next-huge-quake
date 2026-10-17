@@ -1,11 +1,13 @@
 /**
  * Writes every on-screen string for each fixture, scene by scene, to out/copy-review.md for editorial review.
- * Also runs the copy guard and reports its result.
+ * Also runs the copy guard and reports its result, and lists the map credits: the on-screen lines for each map style
+ * and the complete attribution that must accompany a published video.
  *
  * Usage: tsx scripts/export-copy.ts
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { ON_SCREEN_CREDITS, fullCredits } from '../src/copy/credits.js';
 import { checkScreenText } from '../src/copy/guard.js';
 import { allScreenText, buildScreenCopy } from '../src/copy/screenCopy.js';
 import type { ContextCard } from '../src/copy/screenCopy.js';
@@ -81,6 +83,15 @@ for ( const [ key, fixture ] of Object.entries( FIXTURES ) ) {
     ...copy.closing.disclaimers.map( d => `- ${d}` ), ''
   );
 }
+
+lines.push(
+  '## Map credits', '',
+  'On-screen lines per map style (the terrain lines apply only when a terrain style is rendered; production QuakeNews keeps the Natural Earth lines until M2.2f):', '',
+  ...Object.entries( ON_SCREEN_CREDITS ).map( ( [ style, c ] ) => `- ${style}: footer "Source: USGS · ${c.footer}"; closing "${c.closing}"` ), '',
+  '### Complete attribution for the video description (terrain map)', '',
+  'Every published video that uses the terrain map must carry this block in its public description (or end credits). The short on-screen lines are not the complete attribution.', '',
+  '```', fullCredits( 'terrain' ), '```', ''
+);
 
 const file = join( out, 'copy-review.md' );
 writeFileSync( file, lines.join( '\n' ) );

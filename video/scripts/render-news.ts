@@ -11,6 +11,7 @@
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { fullCredits } from '../src/copy/credits.js';
 import { DEMO_AS_OF_UTC, FIXTURES } from '../src/fixtures/index.js';
 import type { FixtureKey } from '../src/fixtures/index.js';
 import { buildVideoSpec } from '../src/spec/build.js';
@@ -43,6 +44,8 @@ async function run( fixture: FixtureKey, stillsOnly: boolean ) {
   const propsFile = join( out, `${fixture}.spec.json` );
   writeFileSync( propsFile, JSON.stringify( { spec }, null, 2 ) );
   const mp4 = join( out, `${fixture}.mp4` );
+  // The complete attribution for the public description (terrain map credits), next to the MP4.
+  writeFileSync( join( out, `${fixture}.credits.txt` ), `${fullCredits( 'terrain' )}\n` );
 
   if ( !stillsOnly ) {
     const result = await runMeasured(

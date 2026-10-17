@@ -2,6 +2,8 @@ import { Composition, Still } from 'remotion';
 import { DesignBoard } from './compositions/DesignBoard.js';
 import type { DesignBoardProps } from './compositions/DesignBoard.js';
 import { QuakeNews, calculateQuakeNewsMetadata, quakeNewsSchema } from './compositions/QuakeNews.js';
+import { TerrainSpike, calculateTerrainSpikeMetadata } from './compositions/TerrainSpike.js';
+import type { TerrainSpikeProps } from './compositions/TerrainSpike.js';
 import { DEMO_AS_OF_UTC, FIXTURES } from './fixtures/index.js';
 import { buildVideoSpec } from './spec/build.js';
 import { totalFrames } from './spec/timeline.js';
@@ -33,6 +35,16 @@ export const Root: React.FC = () => (
       fps={FPS}
       durationInFrames={DURATION_FRAMES}
       defaultProps={{ event: 'noto', tiles: 'local' } satisfies MapSpikeProps}
+    />
+    <Composition
+      id="TerrainSpike"
+      component={TerrainSpike}
+      calculateMetadata={calculateTerrainSpikeMetadata}
+      width={1080}
+      height={1920}
+      fps={defaultSpec.format.fps}
+      durationInFrames={totalFrames( defaultSpec )}
+      defaultProps={{ fixture: 'noto', style: 'terrain', chrome: false } satisfies TerrainSpikeProps}
     />
     <Still
       id="DesignBoard"

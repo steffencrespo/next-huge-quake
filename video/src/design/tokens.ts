@@ -28,6 +28,28 @@ export const COLORS = {
   onAmber: '#1A1200'
 } as const;
 
+/**
+ * Terrain map palette (M2.2b, `b1-cool`, chosen at checkpoint B1): blue-grey land on a navy ocean. Value hierarchy:
+ * land > continental shelf > deep ocean; the coastline is the brightest map edge. Ramps are [elevation in m, color].
+ * Used by src/map/terrainStyle.ts; tokens.spec.ts checks the hierarchy and credit-text contrast over the map.
+ */
+export const MAP_COLORS = {
+  /** Background and the shelf (0 to -200 m); also the bathymetry's -200 m stop, so the seam is invisible. */
+  shelf: '#0A1D31',
+  /** Deeper than -200 m, darkening with depth; nearly flat below -3000 m (abyssal plains, survey tracks). */
+  deep: [ [ -1000, '#08182A' ], [ -3000, '#050F1F' ], [ -6000, '#030914' ], [ -9000, '#02040A' ] ] as [ number, string ][],
+  land: '#232C38',
+  /** Transparent at or below 150 m, so the DEM never draws a second coastline. */
+  landTint: [ [ 150, 'rgba(0, 0, 0, 0)' ], [ 600, 'rgba(64, 72, 84, 0.45)' ], [ 1500, 'rgba(86, 94, 106, 0.55)' ], [ 3000, 'rgba(116, 124, 136, 0.65)' ], [ 5000, 'rgba(150, 158, 170, 0.75)' ] ] as [ number, string ][],
+  landShadow: 'rgba(0, 0, 0, 0.7)',
+  landHighlight: 'rgba(190, 210, 235, 0.30)',
+  oceanShadow: 'rgba(0, 0, 0, 0.5)',
+  oceanHighlight: 'rgba(140, 170, 210, 0.08)',
+  coast: '#B4CDE6',
+  coastGlow: '#3D6A9E',
+  border: '#C9D2DE'
+} as const;
+
 /** PAGER level swatches. Used only as a color chip next to the level name. */
 export const PAGER_COLORS = { green: '#2FB45A', yellow: '#F2D23C', orange: '#F28C28', red: '#E5242B' } as const;
 

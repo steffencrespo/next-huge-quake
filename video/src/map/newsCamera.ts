@@ -35,8 +35,17 @@ export const FRAMED_PADDING_BOTTOM = CANVAS.height - 2 * ( MAP_ZONE.y + MAP_ZONE
 
 const lerp = ( a: number, b: number, t: number ) => a + ( b - a ) * t;
 
-export function newsCameraAt( frame: number, target: CameraTarget ): MapCamera {
-  const t = NEWS_TIMING;
+/**
+ * Optional timing overrides. `pushEnd` ends the slow push earlier and holds afterwards (M2.2c experiment: a still
+ * camera while labels are shown). Without options the camera is exactly the M2.1 camera.
+ */
+export type NewsCameraOptions = { pushEnd?: number };
+
+/** The M2.2c camera-hold experiment: the push completes at frame 300 and the camera holds after it. */
+export const HOLD_CAMERA: NewsCameraOptions = { pushEnd: 300 };
+
+export function newsCameraAt( frame: number, target: CameraTarget, options: NewsCameraOptions = {} ): MapCamera {
+  const t = { ...NEWS_TIMING, ...options };
   const [ startLon, startLat ] = startCenter( target );
   const rotate = easeInOutCubic( progress( frame, t.rotateStart, t.rotateEnd ) );
   const zoomIn = easeInOutCubic( progress( frame, t.zoomStart, t.zoomEnd ) );
