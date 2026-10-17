@@ -2,14 +2,19 @@
   "name": "next-huge-quake-video",
   "version": "0.0.1",
   "private": true,
-  "description": "Remotion video renderer for Next Huge Quake (M2.0 map-rendering spike)",
+  "description": "Remotion video renderer for Next Huge Quake: VideoSpec-driven earthquake news videos",
   "type": "module",
   "scripts": {
     "build:geo": "tsx scripts/build-geo.ts",
     "studio": "remotion studio",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "verify": "tsx scripts/verify-render.ts"
+    "verify": "tsx scripts/verify-render.ts",
+    "copy:review": "tsx scripts/export-copy.ts",
+    "vendor:fonts": "tsx scripts/vendor-fonts.ts",
+    "render:design": "tsx scripts/render-design.ts",
+    "render:contact-sheet": "tsx scripts/render-contact-sheet.ts",
+    "render:news": "tsx scripts/render-news.ts"
   },
   "engines": {
     "node": ">=24.3.0"
@@ -19,9 +24,12 @@
     "maplibre-gl": "6.14.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "remotion": "4.0.536"
+    "remotion": "4.0.536",
+    "zod": "4.5.4"
   },
   "devDependencies": {
+    "@fontsource/barlow-condensed": "5.3.0",
+    "@fontsource/inter": "5.3.0",
     "@types/react": "19.3.0",
     "@types/topojson-client": "3.1.5",
     "topojson-client": "3.1.0",

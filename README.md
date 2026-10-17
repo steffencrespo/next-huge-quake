@@ -88,7 +88,7 @@ The 2017 website is plain HTML, CSS, JavaScript, jQuery and Bootstrap, and it ca
 | Milestone | Scope | Status |
 | --- | --- | --- |
 | **M1** | USGS earthquake data to a validated English news draft and narration script | Done |
-| **M2** | Narrated short videos with Remotion and text-to-speech | Planned |
+| **M2** | Narrated short videos with Remotion and text-to-speech ([`video/`](video/README.md)) | In progress: map rendering and the silent video foundation done; maps, narration and integration next |
 | **M3** | Editorial approval of drafts and videos | Planned |
 | **M4** | Publishing approved videos to YouTube Shorts | Planned |
 | **M5** | Automated USGS monitoring that starts the news workflow only for eligible events | Planned |

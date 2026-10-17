@@ -7,14 +7,14 @@ const RING_MAX_RADIUS = 430;
 
 /**
  * Epicenter marker and stylized rings. The rings are decorative: fixed pixel radius and timing,
- * not scaled to magnitude, distance or shaking intensity.
+ * not scaled to magnitude, distance or shaking intensity. `start` defaults to the spike's timing.
  */
-export const EpicenterOverlay: React.FC<{ frame: number; x: number; y: number }> = ( { frame, x, y } ) => {
-  const appear = interpolate( frame, [ TIMING.ringsStart - 30, TIMING.ringsStart ], [ 0, 1 ], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } );
+export const EpicenterOverlay: React.FC<{ frame: number; x: number; y: number; start?: number }> = ( { frame, x, y, start = TIMING.ringsStart } ) => {
+  const appear = interpolate( frame, [ start - 30, start ], [ 0, 1 ], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } );
   if ( appear === 0 ) {
     return null;
   }
-  const local = frame - TIMING.ringsStart;
+  const local = frame - start;
   const rings = Array.from( { length: RING_COUNT }, ( _, i ) => {
     const phase = local - i * ( RING_PERIOD / RING_COUNT );
     if ( phase < 0 ) {
