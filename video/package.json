@@ -14,6 +14,7 @@
     "vendor:fonts": "tsx scripts/vendor-fonts.ts",
     "render:design": "tsx scripts/render-design.ts",
     "render:contact-sheet": "tsx scripts/render-contact-sheet.ts",
+    "build:package": "tsx scripts/build-from-package.ts",
     "render:news": "tsx scripts/render-news.ts",
     "prepare:terrain": "tsx scripts/prepare-terrain.ts",
     "render:terrain-spike": "tsx scripts/render-terrain-spike.ts",

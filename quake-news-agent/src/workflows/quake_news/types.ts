@@ -9,7 +9,9 @@ export const workflowInputSchema = z.object( {
   minMagnitude: z.number().min( 0 ).max( 10 ).default( DEFAULT_MIN_MAGNITUDE )
     .describe( 'Minimum magnitude when selecting the strongest recent earthquake' ),
   days: z.number().int().min( 1 ).max( 30 ).default( DEFAULT_DAYS )
-    .describe( 'Look-back window in days when selecting the strongest recent earthquake' )
+    .describe( 'Look-back window in days when selecting the strongest recent earthquake' ),
+  asOfUtc: z.iso.datetime().optional()
+    .describe( 'When the video is produced for (ISO 8601 UTC). When set, the output includes a videoPackage result.' )
 } );
 
 export const quakeFactsSchema = z.object( {
@@ -77,13 +79,32 @@ export const attemptSchema = z.object( {
   reviewPassed: z.boolean()
 } );
 
+/**
+ * Hand-off to the video pipeline (M2.4a). It carries only facts and the validated narration, and mirrors the
+ * VideoSpec event shape without importing it. A package is built only from a draft whose validation passed.
+ */
+export const videoPackageSchema = z.object( {
+  provenance: z.literal( 'usgs-live' ),
+  approachFrom: z.enum( [ 'west', 'east' ] ),
+  asOfUtc: z.string().describe( 'When the video is produced for, ISO 8601 UTC; supplied by the caller' ),
+  event: quakeFactsSchema.extend( { status: z.enum( [ 'reviewed', 'automatic', 'unknown' ] ) } ),
+  narration: z.string().min( 1 ).describe( 'The validated M1 narration, unchanged' )
+} );
+
+export const videoPackageResultSchema = z.discriminatedUnion( 'status', [
+  z.object( { status: z.literal( 'ready' ), package: videoPackageSchema } ),
+  z.object( { status: z.literal( 'rejected' ), reason: z.string() } )
+] );
+
 export const workflowOutputSchema = z.discriminatedUnion( 'status', [
   z.object( {
     status: z.literal( 'draft' ),
     facts: quakeFactsSchema,
     draft: newsDraftSchema,
     validation: validationReportSchema,
-    attempts: z.array( attemptSchema )
+    attempts: z.array( attemptSchema ),
+    videoPackage: videoPackageResultSchema.optional()
+      .describe( 'Present only when the caller supplied asOfUtc. Rejected results carry no content.' )
   } ),
   z.object( {
     status: z.literal( 'no_candidate' ),
@@ -100,4 +121,6 @@ export type NewsDraft = z.infer<typeof newsDraftSchema>;
 export type FactCheckReport = z.infer<typeof factCheckReportSchema>;
 export type Review = z.infer<typeof reviewSchema>;
 export type ValidationReport = z.infer<typeof validationReportSchema>;
+export type VideoPackage = z.infer<typeof videoPackageSchema>;
+export type VideoPackageResult = z.infer<typeof videoPackageResultSchema>;
 export type WorkflowOutput = z.infer<typeof workflowOutputSchema>;

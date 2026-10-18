@@ -76,3 +76,23 @@ describe( 'quake_news workflow', () => {
     expect( Object.keys( checkDraft( facts, { ...draft, article: 'x' } ) ).sort() ).toEqual( Object.keys( factCheck( true ) ).sort() );
   } );
 } );
+
+describe( 'quake_news workflow video package', () => {
+  const run = async ( input: Parameters<typeof quakeNews>[0] ) => {
+    vi.clearAllMocks();
+    vi.mocked( steps.fetchEarthquake ).mockResolvedValue( { status: 'found', criteria, facts } );
+    vi.mocked( steps.writeDraft ).mockResolvedValue( draft );
+    vi.mocked( steps.factCheckDraft ).mockResolvedValue( factCheck( true ) );
+    vi.mocked( reviewDraft ).mockResolvedValue( review( true ) as never );
+    return quakeNews( input );
+  };
+
+  it( 'omits videoPackage unless asOfUtc is given', async () => {
+    expect( await run( { eventId: 'us6000m0xl' } ) ).not.toHaveProperty( 'videoPackage' );
+  } );
+
+  it( 'adds a videoPackage when asOfUtc is given', async () => {
+    const result = await run( { eventId: 'us6000m0xl', asOfUtc: '2026-10-18T12:00:00.000Z' } );
+    expect( result.status === 'draft' && result.videoPackage?.status ).toBe( 'ready' );
+  } );
+} );
