@@ -100,6 +100,33 @@ npx output workflow run quake_news no_candidate        # M9.5+ in the last day â
 npx output workflow debug <workflow-id>                # trace tree (add --format json for full detail)
 ```
 
+### `quake_video` (M2.4d): event to rendered video
+
+`quake_video` runs `quake_news` as a child workflow and, only if its validation passed, builds the video with the `video/` CLIs: spec, ElevenLabs narration with captions (one attempt; existing audio for the same text is reused), missing terrain tiles, and the MP4 with its credits. It stops with the video ready for human approval and publishes nothing. A failed validation, a deleted event or no candidate stops before any video stage.
+
+Rendering needs the host (Chrome/GPU, `video/` files and `video/.env.local`), so the worker runs on the host and only the supporting services run in Docker:
+
+```bash
+C=node_modules/@outputai/cli/dist/assets/docker/docker-compose-dev.yml
+docker compose -f $C --project-directory . --env-file .env up -d redis postgresql temporal temporal-ui
+docker compose -f $C --project-directory . --env-file .env up -d --no-deps api
+npm run output:worker:host    # worker on the host, one activity at a time (renders are serial)
+```
+
+Run it (this spends Anthropic and ElevenLabs credits). Use the deterministic workflow ID `quake_video-<eventId>`: Temporal rejects a second start while that run is in progress. A repeat after it finishes starts a new run, which asks Anthropic again but reuses the existing narration (no second ElevenLabs charge). A later USGS update to the same event needs a new video version and a new ID:
+
+```bash
+curl -s localhost:3001/workflow/start -H 'content-type: application/json' -d '{
+  "workflowName": "quake_video", "workflowId": "quake_video-us6000u18k",
+  "input": { "eventId": "us6000u18k", "asOfUtc": "2026-10-18T18:00:00.000Z" } }'
+npx output workflow result quake_video-us6000u18k
+npx output workflow run quake_video no_candidate   # free check: M9.5+ in the last day
+```
+
+The result has the event ID, `status` (`ready_for_approval`, `no_candidate`, `rejected` or `failed`), the output paths under `video/out/`, the validated text for the editor, and per-stage durations. `VIDEO_DIR` overrides the location of `video/` (default: the `video/` folder next to `quake-news-agent/`).
+
+Status of `quake_video`: the full chain (child `quake_news`, validation gate, spec, narration, terrain, render, `ready_for_approval`), the rejection path, the single TTS attempt and serial execution were verified through Temporal with the Anthropic API mocked and the video scripts stubbed. A fully real unattended run has not been completed: the Kamchatka Short used the real `quake_news` result, but its video stages were run by hand after a path bug (since fixed) stopped the workflow at `build_spec`.
+
 Traces are written to `logs/runs/quake_news/`. The Temporal UI is at http://localhost:8080.
 
 ## Tests
