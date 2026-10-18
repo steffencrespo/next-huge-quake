@@ -9,6 +9,9 @@
 import { AbsoluteFill, Sequence, staticFile, useCurrentFrame } from 'remotion';
 import type { CalculateMetadataFunction } from 'remotion';
 import { z } from 'zod';
+import { Captions, SoundtrackAudio } from '../audio/SoundtrackLayers.js';
+import { soundtrackSchema } from '../audio/soundtrack.js';
+import type { Soundtrack } from '../audio/soundtrack.js';
 import { TestDataWatermark } from '../components/Chrome.js';
 import { Scrim } from '../components/Scrim.js';
 import { buildScreenCopy } from '../copy/screenCopy.js';
@@ -28,7 +31,7 @@ import type { SceneKind, VideoSpec } from '../spec/schema.js';
 import { sceneRanges } from '../spec/timeline.js';
 import { resolveQuakeNewsMetadata } from './quakeNewsMetadata.js';
 
-export const quakeNewsSchema = z.object( { spec: videoSpecSchema } );
+export const quakeNewsSchema = z.object( { spec: videoSpecSchema, soundtrack: soundtrackSchema.optional() } );
 export type QuakeNewsProps = z.infer<typeof quakeNewsSchema>;
 
 /** Fails before frame 0 when the spec is invalid or the terrain tiles its camera path needs are not prepared. */
@@ -41,7 +44,7 @@ export const calculateQuakeNewsMetadata: CalculateMetadataFunction<QuakeNewsProp
     }
     assertTerrainAvailable( spec, await response.json() );
   }
-  return { ...metadata, props: { spec } };
+  return { ...metadata, props: { spec, soundtrack: props.soundtrack } };
 };
 
 /** One scene with its scene-relative frame (inside a Sequence, useCurrentFrame is relative). */
@@ -63,7 +66,7 @@ const SceneSlot: React.FC<{ kind: SceneKind; copy: ScreenCopy; durationInFrames:
  * The video body. `mapStyle` selects the map drawn; the footer and closing credits match it (default: the M2.1 map).
  * Production (QuakeNews) passes the b1-cool terrain.
  */
-export const QuakeNewsView: React.FC<{ spec: VideoSpec; mapStyle?: NewsMapStyle }> = ( { spec, mapStyle } ) => {
+export const QuakeNewsView: React.FC<{ spec: VideoSpec; mapStyle?: NewsMapStyle; soundtrack?: Soundtrack }> = ( { spec, mapStyle, soundtrack } ) => {
   useBundledFonts();
   const frame = useCurrentFrame();
   const copy = buildScreenCopy( spec, { mapCredits: mapStyle?.credits } );
@@ -77,9 +80,11 @@ export const QuakeNewsView: React.FC<{ spec: VideoSpec; mapStyle?: NewsMapStyle 
           <SceneSlot kind={range.kind} copy={copy} durationInFrames={range.durationInFrames} />
         </Sequence>
       ) )}
+      {soundtrack ? <Captions soundtrack={soundtrack} /> : null}
+      {soundtrack ? <SoundtrackAudio soundtrack={soundtrack} /> : null}
       {copy.chrome.testData ? <TestDataWatermark text={copy.chrome.testData} /> : null}
     </AbsoluteFill>
   );
 };
 
-export const QuakeNews: React.FC<QuakeNewsProps> = ( { spec } ) => <QuakeNewsView spec={spec} mapStyle={productionMapStyle} />;
+export const QuakeNews: React.FC<QuakeNewsProps> = ( { spec, soundtrack } ) => <QuakeNewsView spec={spec} mapStyle={productionMapStyle} soundtrack={soundtrack} />;

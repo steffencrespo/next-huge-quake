@@ -9,8 +9,10 @@
  * Usage: tsx scripts/render-news.ts [--stills-only] [fixture ...]   (default: noto kamchatka preliminaryTest)
  * Verify: tsx scripts/verify-render.ts --dir=news --frames=1050 --report=news-report noto kamchatka preliminaryTest
  */
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { notoSoundtrack } from '../src/audio/noto.js';
+import type { Soundtrack } from '../src/audio/soundtrack.js';
 import { fullCredits } from '../src/copy/credits.js';
 import { DEMO_AS_OF_UTC, FIXTURES } from '../src/fixtures/index.js';
 import type { FixtureKey } from '../src/fixtures/index.js';
@@ -18,6 +20,9 @@ import { buildVideoSpec } from '../src/spec/build.js';
 import type { VideoSpec } from '../src/spec/schema.js';
 import { sceneRanges, totalFrames } from '../src/spec/timeline.js';
 import { pad3, runMeasured, saveFrame } from './lib/render-process.js';
+
+/** Fixtures with an approved narration and music (M2.3). Others render silent. */
+const SOUNDTRACKS: Partial<Record<FixtureKey, Soundtrack>> = { noto: notoSoundtrack };
 
 const root = join( dirname( new URL( import.meta.url ).pathname ), '..' );
 const out = join( root, 'out', 'news' );
@@ -42,10 +47,22 @@ function stillFrames( spec: VideoSpec ): { frame: number; label: string }[] {
 async function run( fixture: FixtureKey, stillsOnly: boolean ) {
   const spec = buildVideoSpec( FIXTURES[fixture], { asOfUtc: DEMO_AS_OF_UTC } );
   const propsFile = join( out, `${fixture}.spec.json` );
-  writeFileSync( propsFile, JSON.stringify( { spec }, null, 2 ) );
+  const soundtrack = SOUNDTRACKS[fixture];
+  if ( soundtrack ) {
+    // Audio lives in assets/audio (not in git); Remotion serves it from public/audio.
+    mkdirSync( join( root, 'public', 'audio' ), { recursive: true } );
+    for ( const file of [ soundtrack.narrationFile, soundtrack.musicFile ] ) {
+      const source = join( root, 'assets', file );
+      if ( !existsSync( source ) ) {
+        throw new Error( `missing audio file ${source}` );
+      }
+      copyFileSync( source, join( root, 'public', file ) );
+    }
+  }
+  writeFileSync( propsFile, JSON.stringify( { spec, soundtrack }, null, 2 ) );
   const mp4 = join( out, `${fixture}.mp4` );
   // The complete attribution for the public description (terrain map credits), next to the MP4.
-  writeFileSync( join( out, `${fixture}.credits.txt` ), `${fullCredits( 'terrain' )}\n` );
+  writeFileSync( join( out, `${fixture}.credits.txt` ), `${fullCredits( 'terrain' )}${soundtrack ? `\nMusic: ${soundtrack.musicCredit}` : ''}\n` );
 
   if ( !stillsOnly ) {
     const result = await runMeasured(
