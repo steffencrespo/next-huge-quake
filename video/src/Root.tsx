@@ -8,6 +8,8 @@ import { DEMO_AS_OF_UTC, FIXTURES } from './fixtures/index.js';
 import { buildVideoSpec } from './spec/build.js';
 import { totalFrames } from './spec/timeline.js';
 import { DURATION_FRAMES, FPS } from './spike/camera.js';
+import { ScienceShort, calculateScienceShortMetadata, scienceShortSchema } from './edu/ScienceShort.js';
+import { TOTAL_FRAMES } from './edu/geo.js';
 import { MapSpike } from './spike/MapSpike.js';
 import type { MapSpikeProps } from './spike/MapSpike.js';
 
@@ -46,6 +48,7 @@ export const Root: React.FC = () => (
       durationInFrames={totalFrames( defaultSpec )}
       defaultProps={{ fixture: 'noto', style: 'terrain', chrome: false } satisfies TerrainSpikeProps}
     />
+    <Composition id="WhyEarthquakes" component={ScienceShort} schema={scienceShortSchema} calculateMetadata={calculateScienceShortMetadata} width={1080} height={1920} fps={30} durationInFrames={TOTAL_FRAMES} defaultProps={{}} />
     <Still
       id="DesignBoard"
       component={DesignBoard}

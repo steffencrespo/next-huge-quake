@@ -86,7 +86,7 @@ export type Speech = { mp3: Uint8Array; alignment: Alignment; durationSeconds: n
  * Generates the narration for `text` (sent unchanged), checks the alignment against it, measures the real audio
  * duration and rejects audio that cannot fit the video. Never truncates or speeds up audio.
  */
-export async function generateSpeech( text: string, config: TtsConfig, fetchFn: typeof fetch = fetch ): Promise<Speech> {
+export async function generateSpeech( text: string, config: TtsConfig, fetchFn: typeof fetch = fetch, limitSeconds?: number ): Promise<Speech> {
   const url = `${config.baseUrl ?? DEFAULT_BASE_URL}/v1/text-to-speech/${encodeURIComponent( config.voiceId )}/with-timestamps?output_format=${OUTPUT_FORMAT}`;
   let response: Response;
   try {
@@ -106,7 +106,7 @@ export async function generateSpeech( text: string, config: TtsConfig, fetchFn: 
   if ( !body.success ) {
     throw new Error( 'ElevenLabs response has no audio_base64' );
   }
-  return speechFromAudio( text, Uint8Array.from( Buffer.from( body.data.audio_base64, 'base64' ) ), body.data.alignment );
+  return speechFromAudio( text, Uint8Array.from( Buffer.from( body.data.audio_base64, 'base64' ) ), body.data.alignment, limitSeconds );
 }
 
 /**
@@ -114,11 +114,12 @@ export async function generateSpeech( text: string, config: TtsConfig, fetchFn: 
  * captions. Throws NarrationTooLongError (carrying the speech) when the audio does not fit the video. Used by
  * generateSpeech and to re-check kept audio without a new request.
  */
-export function speechFromAudio( text: string, mp3: Uint8Array, rawAlignment: unknown ): Speech {
+export function speechFromAudio( text: string, mp3: Uint8Array, rawAlignment: unknown, limitSeconds?: number ): Speech {
   const alignment = validateAlignment( rawAlignment, text );
   const durationSeconds = mp3DurationSeconds( mp3 );
   const speech = { mp3, alignment, durationSeconds, captions: alignmentToCaptions( alignment ) };
-  const limit = maxNarrationSeconds();
+  // The default limit is the 35 s news video; other videos (the educational Shorts) pass their own per-clip limit.
+  const limit = limitSeconds ?? maxNarrationSeconds();
   if ( durationSeconds > limit ) {
     throw new NarrationTooLongError(
       `narration audio is ${durationSeconds.toFixed( 2 )} s, over the ${limit} s limit ` +
