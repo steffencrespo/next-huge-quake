@@ -127,6 +127,30 @@ The result has the event ID, `status` (`ready_for_approval`, `no_candidate`, `re
 
 Status of `quake_video`: the full chain (child `quake_news`, validation gate, spec, narration, terrain, render, `ready_for_approval`), the rejection path, the single TTS attempt and serial execution were verified through Temporal with the Anthropic API mocked and the video scripts stubbed. A fully real unattended run has not been completed: the Kamchatka Short used the real `quake_news` result, but its video stages were run by hand after a path bug (since fixed) stopped the workflow at `build_spec`.
 
+### `quake_monitor` (M5): automatic discovery
+
+A long-lived workflow polls USGS every 5 minutes for M5.5+ earthquakes and, when enabled, starts `quake_video` for the best eligible new event. It never publishes. **It is a dry run by default** (`MONITOR_DRY_RUN` is on unless set to exactly `false`): it records what it would start and starts nothing.
+
+Selection (all thresholds are `MONITOR_*` settings, see `.env.example`):
+- eligible: M6.0 or more, or M5.5-5.9 with PAGER yellow/orange/red or USGS significance >= 600; origin between 2 minutes and 12 hours ago; preliminary data is accepted (M1 labels it and still validates the text);
+- the best event of a poll is the one with the highest USGS significance, then magnitude;
+- an event that is not eligible yet (no PAGER, too young) is re-evaluated at every poll while no workflow has started for it;
+- once a workflow has started for an event, it is never started again automatically, whatever USGS updates, and a failed workflow is not restarted;
+- on the very first poll, events older than 30 minutes are recorded as baseline and never started (no backlog);
+- at most `MONITOR_MAX_STARTS_PER_DAY` (default 2) starts per UTC day and one `quake_video` at a time (the worker also runs one activity at a time, so renders never overlap).
+
+State is `state/monitor.json` (git-ignored, atomic writes, a corrupt file stops the poll instead of being replaced). Each event is `observed`, `baseline`, `would_start`, `starting`, `started`, `ready_for_approval`, `rejected`, `no_candidate` or `failed`. A start is written to the state file before the workflow is started, and an unclear start response is checked against Temporal before anything is retried. Dry-run observations (`would_start`) stay startable when real mode is switched on.
+
+```bash
+# start (with the host worker running, see above); stop with terminate
+curl -s localhost:3001/workflow/start -H 'content-type: application/json' \
+  -d '{"workflowName":"quake_monitor","workflowId":"quake_monitor","input":{}}'
+npx output workflow terminate quake_monitor
+cat state/monitor.json        # what was seen, selected, started and the outcomes
+```
+
+Polling pauses while a video renders, because the worker runs one activity at a time. Paid autonomous operation has **not** been enabled: it needs one fully real, unattended `quake_video` run first (the Temporal checks so far used mocked Anthropic and stubbed video scripts).
+
 Traces are written to `logs/runs/quake_news/`. The Temporal UI is at http://localhost:8080.
 
 ## Tests

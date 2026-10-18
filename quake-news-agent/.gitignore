@@ -33,3 +33,6 @@ yarn-debug.log*
 # OS specific
 Thumbs.db
 .DS_Store
+
+# Monitor state (quake_monitor)
+state/
