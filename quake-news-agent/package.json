@@ -8,6 +8,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc -p tsconfig.test.json",
+    "session": "sh scripts/session.sh",
+    "discover": "tsc -p ./ && node dist/discovery/cli.js",
     "output:worker:install": "npm install",
     "output:worker:build": "rm -rf dist/* && tsc -p ./ && output-copy-assets",
     "output:worker:start": "output-worker",
