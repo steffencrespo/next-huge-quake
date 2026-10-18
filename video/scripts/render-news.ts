@@ -12,6 +12,7 @@
 import { copyFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { notoSoundtrack } from '../src/audio/noto.js';
+import { panamaSoundtrack } from '../src/audio/panama.js';
 import type { Soundtrack } from '../src/audio/soundtrack.js';
 import { fullCredits } from '../src/copy/credits.js';
 import { DEMO_AS_OF_UTC, FIXTURES } from '../src/fixtures/index.js';
@@ -22,7 +23,10 @@ import { sceneRanges, totalFrames } from '../src/spec/timeline.js';
 import { pad3, runMeasured, saveFrame } from './lib/render-process.js';
 
 /** Fixtures with an approved narration and music (M2.3). Others render silent. */
-const SOUNDTRACKS: Partial<Record<FixtureKey, Soundtrack>> = { noto: notoSoundtrack };
+const SOUNDTRACKS: Partial<Record<FixtureKey, Soundtrack>> = { noto: notoSoundtrack, panama: panamaSoundtrack };
+
+/** Production time for a real, current event; the demo fixtures use the fixed DEMO_AS_OF_UTC. */
+const AS_OF: Partial<Record<FixtureKey, string>> = { panama: '2026-10-17T22:00:00.000Z' };
 
 const root = join( dirname( new URL( import.meta.url ).pathname ), '..' );
 const out = join( root, 'out', 'news' );
@@ -45,7 +49,7 @@ function stillFrames( spec: VideoSpec ): { frame: number; label: string }[] {
 }
 
 async function run( fixture: FixtureKey, stillsOnly: boolean ) {
-  const spec = buildVideoSpec( FIXTURES[fixture], { asOfUtc: DEMO_AS_OF_UTC } );
+  const spec = buildVideoSpec( FIXTURES[fixture], { asOfUtc: AS_OF[fixture] ?? DEMO_AS_OF_UTC } );
   const propsFile = join( out, `${fixture}.spec.json` );
   const soundtrack = SOUNDTRACKS[fixture];
   if ( soundtrack ) {

@@ -103,6 +103,10 @@ The terrain map is accepted as a **documented, provisional exception** (Gate B, 
 - The ocean hillshade is switched off from z6 (`OCEAN_HILLSHADE_MAXZOOM`); it fades to zero first, so this has no visible effect.
 - Performance is revisited only if later milestones show consistent degradation, memory problems or render failures.
 
+## Editorial note: the ARCHIVE badge
+
+ARCHIVE marks historical or retrospective content only. Ordinary reports about recent earthquakes should not carry it. The first Panama video (event us6000u18k, a week old) shipped with the badge by explicit approval; badge logic is not changed yet, so a future recent-event video needs a decision on how to suppress it.
+
 ## Not here yet
 
 - **M2.2:** production map styling. Terrain (M2.2a/b) is opt-in through the `TerrainSpike` composition; labels, framing, marker and the production default switch follow in M2.2c–f.

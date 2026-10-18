@@ -7,3 +7,5 @@ public/maplibre/
 cache/
 public/terrain/
 public/audio/
+# Narration and music files (licensed, kept local; see README "Map data and credits")
+assets/
