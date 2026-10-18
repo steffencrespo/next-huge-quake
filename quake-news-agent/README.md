@@ -125,7 +125,7 @@ npx output workflow run quake_video no_candidate   # free check: M9.5+ in the la
 
 The result has the event ID, `status` (`ready_for_approval`, `no_candidate`, `rejected` or `failed`), the output paths under `video/out/`, the validated text for the editor, and per-stage durations. `VIDEO_DIR` overrides the location of `video/` (default: the `video/` folder next to `quake-news-agent/`).
 
-Status of `quake_video`: the full chain (child `quake_news`, validation gate, spec, narration, terrain, render, `ready_for_approval`), the rejection path, the single TTS attempt and serial execution were verified through Temporal with the Anthropic API mocked and the video scripts stubbed. A fully real unattended run has not been completed: the Kamchatka Short used the real `quake_news` result, but its video stages were run by hand after a path bug (since fixed) stopped the workflow at `build_spec`.
+Status of `quake_video`: one fully real, unattended run has succeeded (Pakistan M5.7, `us6000u2y1`): real Anthropic, one ElevenLabs request, real terrain preparation and a real render, entirely through Temporal, ending `ready_for_approval` in about 4.3 minutes. Earlier Temporal checks of the rejection path, the single TTS attempt and serial execution used mocked Anthropic and stubbed video scripts. One successful run is not a track record: failure paths with real services (for example a narration over the length limit) have not been exercised.
 
 ### `quake_monitor` (M5): automatic discovery
 
@@ -149,7 +149,7 @@ npx output workflow terminate quake_monitor
 cat state/monitor.json        # what was seen, selected, started and the outcomes
 ```
 
-Polling pauses while a video renders, because the worker runs one activity at a time. Paid autonomous operation has **not** been enabled: it needs one fully real, unattended `quake_video` run first (the Temporal checks so far used mocked Anthropic and stubbed video scripts).
+Polling pauses while a video renders, because the worker runs one activity at a time. Paid autonomous operation has **not** been enabled: the monitor is a dry run until it is explicitly switched on with `MONITOR_DRY_RUN=false`, ideally after watching dry-run output on real data.
 
 Traces are written to `logs/runs/quake_news/`. The Temporal UI is at http://localhost:8080.
 

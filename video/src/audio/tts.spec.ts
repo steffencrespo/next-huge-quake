@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { alignmentToCaptions, validateAlignment } from './captions.js';
 import type { Alignment } from './captions.js';
 import { mp3DurationSeconds } from './mp3.js';
-import { MAX_NARRATION_SECONDS, NarrationTooLongError, generateSpeech, speechFromAudio, loadTtsConfig, parseEnvFile } from './tts.js';
+import { DEFAULT_END_MARGIN_SECONDS, MAX_NARRATION_SECONDS, endMarginSeconds, maxNarrationSeconds, NarrationTooLongError, generateSpeech, speechFromAudio, loadTtsConfig, parseEnvFile } from './tts.js';
 
 const config = { apiKey: 'sk_test_SECRET', voiceId: 'voice123', modelId: 'model_x' };
 const TEXT = 'A powerful magnitude 7.7 earthquake struck southern Panama on October 9, according to the USGS. The depth was 13 kilometers. Reviewed.';
@@ -122,6 +122,16 @@ describe( 'generateSpeech', () => {
     // Kept audio is re-checked offline: still too long here, and accepted once it fits.
     expect( () => speechFromAudio( TEXT, error.speech.mp3, alignmentFor( TEXT ) ) ).toThrow( NarrationTooLongError );
     expect( speechFromAudio( TEXT, mp3Frames( 400 ), alignmentFor( TEXT ) ).durationSeconds ).toBeLessThan( MAX_NARRATION_SECONDS );
+  } );
+} );
+
+describe( 'narration end margin', () => {
+  it( 'defaults to 2.7 s and can be set with NARRATION_END_MARGIN_SECONDS', () => {
+    expect( endMarginSeconds( {} ) ).toBe( DEFAULT_END_MARGIN_SECONDS );
+    expect( maxNarrationSeconds( {} ) ).toBe( 30.8 );
+    expect( maxNarrationSeconds( { NARRATION_END_MARGIN_SECONDS: '2.0' } ) ).toBe( 31.5 );
+    expect( () => endMarginSeconds( { NARRATION_END_MARGIN_SECONDS: '1.9' } ) ).toThrow( 'from 2 to 10' );
+    expect( () => endMarginSeconds( { NARRATION_END_MARGIN_SECONDS: 'x' } ) ).toThrow( 'NARRATION_END_MARGIN_SECONDS' );
   } );
 } );
 

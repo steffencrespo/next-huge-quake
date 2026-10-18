@@ -11,7 +11,7 @@ import { basename, dirname, join, resolve } from 'node:path';
 import { mp3DurationSeconds } from '../../src/audio/mp3.js';
 import { soundtrackSchema } from '../../src/audio/soundtrack.js';
 import type { Soundtrack } from '../../src/audio/soundtrack.js';
-import { END_MARGIN_SECONDS } from '../../src/audio/tts.js';
+import { endMarginSeconds } from '../../src/audio/tts.js';
 import { fullCredits } from '../../src/copy/credits.js';
 import { missingTerrainTiles, needsTerrain, requiredTerrainTiles, terrainMissingMessage } from '../../src/map/terrainPreflight.js';
 import { videoSpecSchema } from '../../src/spec/schema.js';
@@ -97,9 +97,10 @@ export function resolveRenderInputs( { specFile, soundtrackFile, narrationFile, 
       problems.push( `soundtrack narration '${soundtrack.narrationFile}' does not belong to event ${spec.event.id} (expected audio/${spec.event.id}-narration.mp3)` );
     }
     const videoSeconds = totalFrames( spec ) / spec.format.fps;
-    const limit = videoSeconds - soundtrack.narrationStart - END_MARGIN_SECONDS;
+    const margin = endMarginSeconds();
+    const limit = videoSeconds - soundtrack.narrationStart - margin;
     if ( soundtrack.narrationDuration > limit ) {
-      problems.push( `narration (${soundtrack.narrationDuration} s from ${soundtrack.narrationStart} s) leaves less than ${END_MARGIN_SECONDS} s before the end of the ${videoSeconds} s video` );
+      problems.push( `narration (${soundtrack.narrationDuration} s from ${soundtrack.narrationStart} s) leaves less than ${margin} s before the end of the ${videoSeconds} s video` );
     }
   }
   if ( spec && needsTerrain( spec ) ) {
