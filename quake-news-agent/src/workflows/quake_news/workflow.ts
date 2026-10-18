@@ -2,6 +2,7 @@ import { workflow } from '@outputai/core';
 import { fetchEarthquake, factCheckDraft, writeDraft } from './steps.js';
 import { reviewDraft } from './evaluators.js';
 import { combineValidation, revisionFeedback } from './validation.js';
+import { toVideoPackage } from './videoPackage.js';
 import { workflowInputSchema, workflowOutputSchema } from './types.js';
 import type { NewsDraft, Review, ValidationReport, WorkflowOutput } from './types.js';
 
@@ -42,7 +43,8 @@ export default workflow( {
       feedback = revisionFeedback( validation );
     }
 
-    return { status: 'draft', facts, draft: draft!, validation: validation!, attempts };
+    const output: WorkflowOutput = { status: 'draft', facts, draft: draft!, validation: validation!, attempts };
+    return input.asOfUtc ? { ...output, videoPackage: toVideoPackage( output, { asOfUtc: input.asOfUtc } ) } : output;
   },
   options: {
     activityOptions: {
