@@ -17,9 +17,9 @@ import type { Caption } from './soundtrack.js';
 
 export const VIDEO_SECONDS = 35;
 export const NARRATION_START_SECONDS = 1.5;
-/** Time after the voice for the music swell and the 2 s fade-out (see MIX in soundtrack.ts). */
-export const END_MARGIN_SECONDS = 3;
-export const MAX_NARRATION_SECONDS = VIDEO_SECONDS - NARRATION_START_SECONDS - END_MARGIN_SECONDS;
+/** Time after the voice for the music swell and the 2 s fade-out (see MIX in soundtrack.ts); 3 s until the Kamchatka run (M2.4d). */
+export const END_MARGIN_SECONDS = 2.7;
+export const MAX_NARRATION_SECONDS = Math.round( ( VIDEO_SECONDS - NARRATION_START_SECONDS - END_MARGIN_SECONDS ) * 1000 ) / 1000;
 export const OUTPUT_FORMAT = 'mp3_44100_128';
 const DEFAULT_BASE_URL = 'https://api.elevenlabs.io';
 
@@ -50,6 +50,13 @@ export function parseEnvFile( text: string ): Record<string, string> {
 
 const responseSchema = z.object( { audio_base64: z.string().min( 1 ), alignment: z.unknown() } );
 
+/** The audio was generated (and paid for) but does not fit the video. Carries it so the caller can keep it for review. */
+export class NarrationTooLongError extends Error {
+  constructor( message: string, readonly speech: Speech ) {
+    super( message );
+  }
+}
+
 export type Speech = { mp3: Uint8Array; alignment: Alignment; durationSeconds: number; captions: Caption[] };
 
 /**
@@ -76,14 +83,24 @@ export async function generateSpeech( text: string, config: TtsConfig, fetchFn: 
   if ( !body.success ) {
     throw new Error( 'ElevenLabs response has no audio_base64' );
   }
-  const alignment = validateAlignment( body.data.alignment, text );
-  const mp3 = Uint8Array.from( Buffer.from( body.data.audio_base64, 'base64' ) );
+  return speechFromAudio( text, Uint8Array.from( Buffer.from( body.data.audio_base64, 'base64' ) ), body.data.alignment );
+}
+
+/**
+ * Validates already generated audio and its alignment against the text, measures the real duration and builds the
+ * captions. Throws NarrationTooLongError (carrying the speech) when the audio does not fit the video. Used by
+ * generateSpeech and to re-check kept audio without a new request.
+ */
+export function speechFromAudio( text: string, mp3: Uint8Array, rawAlignment: unknown ): Speech {
+  const alignment = validateAlignment( rawAlignment, text );
   const durationSeconds = mp3DurationSeconds( mp3 );
+  const speech = { mp3, alignment, durationSeconds, captions: alignmentToCaptions( alignment ) };
   if ( durationSeconds > MAX_NARRATION_SECONDS ) {
-    throw new Error(
+    throw new NarrationTooLongError(
       `narration audio is ${durationSeconds.toFixed( 2 )} s, over the ${MAX_NARRATION_SECONDS} s limit ` +
-      `(${VIDEO_SECONDS} s video, ${NARRATION_START_SECONDS} s start, ${END_MARGIN_SECONDS} s ending margin); shorten the narration`
+      `(${VIDEO_SECONDS} s video, ${NARRATION_START_SECONDS} s start, ${END_MARGIN_SECONDS} s ending margin); shorten the narration`,
+      speech
     );
   }
-  return { mp3, alignment, durationSeconds, captions: alignmentToCaptions( alignment ) };
+  return speech;
 }

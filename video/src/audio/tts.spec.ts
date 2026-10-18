@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { alignmentToCaptions, validateAlignment } from './captions.js';
 import type { Alignment } from './captions.js';
 import { mp3DurationSeconds } from './mp3.js';
-import { MAX_NARRATION_SECONDS, generateSpeech, loadTtsConfig, parseEnvFile } from './tts.js';
+import { MAX_NARRATION_SECONDS, NarrationTooLongError, generateSpeech, speechFromAudio, loadTtsConfig, parseEnvFile } from './tts.js';
 
 const config = { apiKey: 'sk_test_SECRET', voiceId: 'voice123', modelId: 'model_x' };
 const TEXT = 'A powerful magnitude 7.7 earthquake struck southern Panama on October 9, according to the USGS. The depth was 13 kilometers. Reviewed.';
@@ -115,7 +115,13 @@ describe( 'generateSpeech', () => {
 
   it( 'rejects audio that does not fit the video instead of truncating it', async () => {
     const frames = Math.ceil( ( MAX_NARRATION_SECONDS + 0.5 ) / FRAME_SECONDS );
-    await expect( generateSpeech( TEXT, config, reply( okBody( frames ) ) ) ).rejects.toThrow( /over the 30\.5 s limit/ );
+    const error = await generateSpeech( TEXT, config, reply( okBody( frames ) ) ).then( () => null, e => e );
+    expect( error ).toBeInstanceOf( NarrationTooLongError );
+    expect( error.message ).toMatch( /over the 30\.8 s limit/ );
+    expect( error.speech.mp3.length ).toBeGreaterThan( 0 ); // paid audio is kept for review
+    // Kept audio is re-checked offline: still too long here, and accepted once it fits.
+    expect( () => speechFromAudio( TEXT, error.speech.mp3, alignmentFor( TEXT ) ) ).toThrow( NarrationTooLongError );
+    expect( speechFromAudio( TEXT, mp3Frames( 400 ), alignmentFor( TEXT ) ).durationSeconds ).toBeLessThan( MAX_NARRATION_SECONDS );
   } );
 } );
 

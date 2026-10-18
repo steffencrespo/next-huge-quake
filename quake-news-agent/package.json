@@ -13,6 +13,7 @@
     "output:worker:start": "output-worker",
     "output:worker:check": "output-worker --check",
     "output:worker": "npm run output:worker:build && npm run output:worker:start",
+    "output:worker:host": "set -a; [ -f .env ] && . ./.env; set +a; OUTPUT_CATALOG_ID=${OUTPUT_CATALOG_ID:-main} TEMPORAL_ADDRESS=localhost:7233 TEMPORAL_MAX_CONCURRENT_ACTIVITY_TASK_EXECUTIONS=1 npm run output:worker",
     "output:worker:watch": "npx nodemon --watch src --ext ts,js,json,prompt,md --ignore 'dist/**' --ignore '**/*.spec.*' --ignore '**/*.test.*' --exec 'npm run output:worker'",
     "output:dev": "output dev"
   },

@@ -27,15 +27,21 @@ The project began in 2017 as a web app for searching historical earthquakes. Tha
   - An LLM editor also reviews the draft, but its approval can never override a failed fact check.
 - **Automatic event selection:** take a specific USGS event ID, or pick the strongest recent earthquake above a configurable magnitude (default 5.5). If nothing qualifies, the workflow returns a clear "no candidate" result instead of an error.
 
+### Implemented since M1 (see [`video/`](video/README.md))
+
+- **Narrated 35-second vertical videos** rendered with Remotion and React: terrain map, data scenes, ElevenLabs narration with the Daniel — Radio news host voice, music and phrase-level captions, plus the full map and music credits.
+- **Automatic narration timing:** ElevenLabs returns character-level timestamps, and the captions are built from them.
+- **Event to video in one run:** the Output.ai workflow `quake_video` takes a USGS event through M1, then builds the video. It stops with the MP4 ready for review and publishes nothing. It runs with the worker on the host (see [`quake-news-agent/`](quake-news-agent/README.md)).
+- Two YouTube Shorts have been **published manually** after human review: the first (Panama, hand-written narration) <https://youtube.com/shorts/8Fwauogd6vY>, and the second (Kamchatka M6.9, narration generated and validated by the M1 workflow) <https://youtube.com/shorts/5YK84uxNRQY>. Both were uploaded by hand; publishing is not automated.
+
 ### Planned
 
-- Rendering narrated short videos.
-- Human approval before anything is published.
-- Publishing to YouTube Shorts.
-- Automated USGS monitoring.
+- Human approval before anything is published. Today this is a manual review of the MP4 and its credits.
+- Publishing to YouTube Shorts through the API.
+- Automated USGS monitoring ([ADR 0001](docs/decisions/0001-m5-earthquake-monitoring.md); no poller exists yet, so a person starts each run).
 - Showing news and videos on the existing website.
 
-See the [roadmap](#roadmap) for details. None of these exist yet.
+See the [roadmap](#roadmap) for details.
 
 ## Architecture
 
@@ -49,8 +55,8 @@ flowchart LR
         Review -. "one retry with feedback" .-> Write
     end
     Review --> Draft["Validated article<br/>+ narration script"]
-    Draft -.-> Video["Narrated video<br/>(planned)"]
-    Video -.-> Approve{{"Human approval<br/>(planned)"}}
+    Draft --> Video["Narrated video<br/>(implemented, M2)"]
+    Video -.-> Approve{{"Human approval<br/>(manual for now)"}}
     Approve -.-> Publish["YouTube Shorts and website<br/>(planned)"]
 ```
 
@@ -70,15 +76,20 @@ The workflow runs on Temporal through Output.ai. Every step is durable and retri
 | [Zod](https://zod.dev/) and [Vitest](https://vitest.dev/) | Schema validation for inputs, outputs and LLM responses; automated tests |
 | [Docker](https://docs.docker.com/) | Local development environment (Temporal, PostgreSQL, Redis, worker) |
 
-**Planned for future milestones**
+**Implemented in M2**
 
 | Technology | Role |
 | --- | --- |
 | [Remotion](https://www.remotion.dev/docs/) and [React](https://react.dev/) | Rendering videos from code |
-| Text-to-speech (provider not selected yet) | Narration audio for videos |
+| [ElevenLabs](https://elevenlabs.io/docs) (M2.4b) | Narration with the Daniel — Radio news host voice, generated automatically with timestamp alignment for captions |
+
+**Planned for future milestones**
+
+| Technology | Role |
+| --- | --- |
 | [YouTube Data API](https://developers.google.com/youtube/v3) | YouTube Shorts uploads |
 | Automated USGS monitoring | Polling every 5 minutes, with deduplication by event ID and saved processing state |
-| Editorial approval | Human review before any public publication |
+| Editorial approval | Human review before any public publication (manual for now) |
 | Website integration | Showing published news and videos on the existing site |
 
 The 2017 website is plain HTML, CSS, JavaScript, jQuery and Bootstrap, and it calls the USGS API directly from the browser.
@@ -88,7 +99,7 @@ The 2017 website is plain HTML, CSS, JavaScript, jQuery and Bootstrap, and it ca
 | Milestone | Scope | Status |
 | --- | --- | --- |
 | **M1** | USGS earthquake data to a validated English news draft and narration script | Done |
-| **M2** | Narrated short videos with Remotion and text-to-speech ([`video/`](video/README.md)) | In progress: map rendering and the silent video foundation done; maps, narration and integration next |
+| **M2** | Narrated short videos with Remotion and text-to-speech ([`video/`](video/README.md)) | Videos done (terrain, narration, captions, music); `quake_video` (M2.4d) chains them from a USGS event. Orchestration verified through Temporal with simulated external services; the second Short was made with the same stages run partly by hand. A fully real, unattended run is still pending |
 | **M3** | Editorial approval of drafts and videos | Planned |
 | **M4** | Publishing approved videos to YouTube Shorts | Planned |
 | **M5** | Automated USGS monitoring that starts the news workflow only for eligible events | Planned |
