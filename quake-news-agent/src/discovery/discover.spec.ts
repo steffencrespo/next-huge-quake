@@ -21,7 +21,7 @@ describe( 'discover', () => {
     feature( { id: 'old', mag: 6.5, time: hoursAgo( 49 ), sig: 700 } )
   ];
 
-  it( 'ranks by USGS significance and recommends at most the daily limit', () => {
+  it( 'ranks by USGS significance and shortlists at most the configured size', () => {
     const rows = run( features );
     const verdicts = Object.fromEntries( rows.map( r => [ r.id, r.verdict ] ) );
     expect( verdicts ).toMatchObject( { populated: 'recommended', remote: 'recommended', strong2: 'eligible', weak: 'not_eligible', young: 'not_eligible', old: 'not_eligible' } );
@@ -33,7 +33,7 @@ describe( 'discover', () => {
     const rows = byId( run( features ) );
     expect( rows.populated.why ).toBe( 'PAGER orange' );
     expect( rows.remote.why ).toBe( 'M6.9 >= M6' );
-    expect( rows.strong2.why ).toContain( 'beyond the 2-per-day limit' );
+    expect( rows.strong2.why ).toContain( 'beyond the shortlist of 2' );
     expect( rows.weak.why ).toContain( 'needs PAGER yellow or worse, or significance >= 600' );
     expect( rows.young.why ).toBe( 'younger than 2 min' );
     expect( rows.old.why ).toBe( 'older than 48 h' );
@@ -53,8 +53,8 @@ describe( 'discover', () => {
   it( 'prints a readable shortlist with the next step but starts nothing', () => {
     const text = formatReport( run( features ), config, NOW );
     expect( text ).toContain( 'last 48 h' );
-    expect( text ).toMatch( /RECOMMENDED\s+populated\s+M5\.7\s+2026-10-17 16:00 UTC\s+20\.0 h\s+orange\s+sig 800/ );
-    expect( text ).toContain( 'Recommended: populated, remote.' );
+    expect( text ).toMatch( /SHORTLIST\s+populated\s+M5\.7\s+2026-10-17 16:00 UTC\s+20\.0 h\s+orange\s+sig 800/ );
+    expect( text ).toContain( 'Shortlist (suggestion only, not a spending cap): populated, remote.' );
     expect( text ).toContain( 'session -- produce populated' );
   } );
 } );

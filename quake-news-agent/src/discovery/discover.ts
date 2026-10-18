@@ -44,8 +44,10 @@ const eligibleBecause = ( { facts, sig }: Observation, config: MonitorConfig ): 
 };
 
 /**
- * Ranks the feed's events (highest USGS significance first) and marks each one. The first `maxStartsPerDay` eligible
- * events that have no video yet are recommended; events with a video (by ID or any alias) are only listed as produced.
+ * Ranks the feed's events (highest USGS significance first) and marks each one. The shortlist is the first
+ * `maxStartsPerDay` eligible events that have no video yet (the monitor's daily-start setting reused as a shortlist
+ * size). It is a suggestion only: nothing counts or enforces it, and producing an event always needs your own command.
+ * Events with a video (by ID or any alias) are only listed as produced.
  */
 export function discover( features: unknown[], producedIds: ReadonlySet<string>, config: MonitorConfig, nowMs: number ): Row[] {
   const observations: Observation[] = [];
@@ -71,7 +73,7 @@ export function discover( features: unknown[], producedIds: ReadonlySet<string>,
     } else {
       verdict = recommended < config.maxStartsPerDay ? 'recommended' : 'eligible';
       recommended += verdict === 'recommended' ? 1 : 0;
-      why = eligibleBecause( obs, config ) + ( verdict === 'eligible' ? ` (beyond the ${config.maxStartsPerDay}-per-day limit)` : '' );
+      why = eligibleBecause( obs, config ) + ( verdict === 'eligible' ? ` (eligible, but beyond the shortlist of ${config.maxStartsPerDay})` : '' );
     }
     return {
       id: obs.facts.id,
@@ -116,12 +118,12 @@ export function loadProducedIds( { videoOutDir, stateFile }: { videoOutDir: stri
 }
 
 const pad = ( text: string, width: number ) => text.length >= width ? text : text + ' '.repeat( width - text.length );
-const LABEL: Record<Verdict, string> = { recommended: 'RECOMMENDED', eligible: 'eligible', produced: 'produced', not_eligible: '-' };
+const LABEL: Record<Verdict, string> = { recommended: 'SHORTLIST', eligible: 'eligible', produced: 'produced', not_eligible: '-' };
 
 /** A short, readable shortlist. Events that are neither eligible nor produced are listed last and only briefly. */
 export function formatReport( rows: Row[], config: MonitorConfig, nowMs: number ): string {
   const header = `USGS earthquakes M${config.minMagnitude}+ in the last ${config.maxAgeHours} h, as of ${new Date( nowMs ).toISOString().slice( 0, 16 ).replace( 'T', ' ' )} UTC (${rows.length} found)`;
-  const rules = `Eligible: M${config.strongMagnitude}+, or M${config.minMagnitude}-${config.strongMagnitude - 0.1} with PAGER yellow or worse or significance >= ${config.significanceFloor}; at least ${config.minAgeMinutes} min old. Ranked by USGS significance.`;
+  const rules = `Eligible: M${config.strongMagnitude}+, or M${config.minMagnitude}-${config.strongMagnitude - 0.1} with PAGER yellow or worse or significance >= ${config.significanceFloor}; at least ${config.minAgeMinutes} min old. Ranked by USGS significance; the shortlist holds at most ${config.maxStartsPerDay}.`;
   const lines = rows.map( row => [
     pad( LABEL[row.verdict], 12 ),
     pad( row.id, 15 ),
@@ -136,6 +138,6 @@ export function formatReport( rows: Row[], config: MonitorConfig, nowMs: number 
   const picks = rows.filter( r => r.verdict === 'recommended' );
   const next = picks.length === 0 ?
     'No new event deserves a video right now.' :
-    `Recommended: ${picks.map( r => r.id ).join( ', ' )}. Nothing has been started. To produce one, see "Manual operation" in the README (npm run session -- produce ${picks[0].id}).`;
+    `Shortlist (suggestion only, not a spending cap): ${picks.map( r => r.id ).join( ', ' )}. Nothing has been started; producing an event needs your explicit command, see "Manual operation" in the README (npm run session -- produce ${picks[0].id}).`;
   return [ header, rules, '', ...( lines.length > 0 ? lines : [ '(no earthquakes in this window)' ] ), '', next ].join( '\n' );
 }

@@ -135,7 +135,7 @@ For now nothing runs in the background: discovery and production are started by 
 # 1. Discover (free: one USGS request; needs no Docker, Temporal or worker)
 npm run discover                 # last 48 h; add  -- --hours 168  for a wider look
 ```
-It lists M5.5+ earthquakes ranked by USGS significance with the monitor's own eligibility rules (M6.0+, or M5.5-5.9 with PAGER yellow or worse or significance >= 600; at least 2 minutes old; thresholds are the `MONITOR_*` settings). Events that already have a video (a package under `video/out/packages/` or a monitor record, matched by ID and aliases) are shown as `produced` and never recommended. At most the daily limit (2) are marked `RECOMMENDED`. It starts nothing.
+It lists M5.5+ earthquakes ranked by USGS significance with the monitor's own eligibility rules (M6.0+, or M5.5-5.9 with PAGER yellow or worse or significance >= 600; at least 2 minutes old; thresholds are the `MONITOR_*` settings). Events that already have a video (a package under `video/out/packages/` or a monitor record, matched by ID and aliases) are shown as `produced` and never recommended. The best few (at most `MONITOR_MAX_STARTS_PER_DAY`, default 2) are marked `SHORTLIST`. That number is only the shortlist size: it is a suggestion, not a spending cap, and nothing counts or enforces it. It starts nothing.
 
 ```bash
 # 2. Approve a candidate yourself, then bring up the services (Docker Desktop must be open)
@@ -149,7 +149,7 @@ npm run session -- result us6000xxxx    # paths, stage durations and the validat
 # 4. When finished
 npm run session -- stop          # stops the worker and this project's Docker services (data is kept)
 ```
-`produce` runs the existing `quake_video` workflow with the workflow ID `quake_video-<eventId>` and refuses an event that already has output. Review the video, then upload it by hand, with `credits.txt` and the production-technology credit in the description. `npm run session -- status` shows the services and the worker.
+`produce` is the only step that spends money, and it only runs when you type it: there is no daily quota, so the discipline is yours. Before any paid work it makes a free check and refuses (spending nothing) if the event, under its own ID **or any alias USGS lists for it**, already has a video package, was started or finished by the monitor (`state/monitor.json`), or already has a `quake_video-<id>` workflow in Temporal; it also refuses when USGS or Temporal cannot be checked. You can run the check alone with `npm run discover -- --check <eventId>`. It then runs the existing `quake_video` workflow with the workflow ID `quake_video-<eventId>`. Review the video, then upload it by hand, with `credits.txt` and the production-technology credit in the description. `npm run session -- status` shows the services and the worker.
 
 ### `quake_monitor` (M5): automatic discovery
 

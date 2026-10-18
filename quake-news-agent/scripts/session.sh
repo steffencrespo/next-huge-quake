@@ -3,7 +3,8 @@
 #   sh scripts/session.sh start         start the Docker services Temporal needs (Docker Desktop must be open)
 #   sh scripts/session.sh worker        run the host worker in this terminal (Ctrl-C stops it); one worker at a time
 #   sh scripts/session.sh status        Docker services, worker and API
-#   sh scripts/session.sh produce <id>  start quake_video for an approved event (SPENDS: Anthropic and one ElevenLabs request)
+#   sh scripts/session.sh produce <id>  start quake_video for an event you approved (SPENDS: Anthropic and one ElevenLabs request);
+#                                       first checks, for free, that it is not already produced or started under any alias
 #   sh scripts/session.sh result <id>   show the workflow's result
 #   sh scripts/session.sh stop          stop the worker and this project's Docker services (data and volumes are kept)
 set -eu
@@ -40,6 +41,8 @@ case "${1:-}" in
     if [ -e "../video/out/packages/$id" ]; then echo "$id already has output in video/out/packages; refusing to overwrite it." >&2; exit 1; fi
     api_up || { echo "API is not answering: run 'sh scripts/session.sh start' first." >&2; exit 1; }
     worker_running || { echo "No worker is running: start one with 'sh scripts/session.sh worker'." >&2; exit 1; }
+    # Free safety check before any paid work: no video, monitor record or Temporal workflow under this ID or any alias.
+    npm run --silent discover -- --check "$id" || { echo "Not starting. Nothing was spent." >&2; exit 1; }
     echo "Starting quake_video for $id (paid: Anthropic requests and one ElevenLabs request)."
     curl -s "$API/workflow/start" -H 'content-type: application/json' \
       -d "{\"workflowName\":\"quake_video\",\"workflowId\":\"quake_video-$id\",\"input\":{\"eventId\":\"$id\",\"asOfUtc\":\"$(date -u +%Y-%m-%dT%H:%M:%S.000Z)\"}}"
@@ -54,7 +57,7 @@ case "${1:-}" in
     docker info >/dev/null 2>&1 && dc stop || true
     ;;
   *)
-    sed -n '2,9p' "$0" | sed 's/^# \{0,1\}//'
+    sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//'
     [ -z "${1:-}" ] || exit 2
     ;;
 esac
