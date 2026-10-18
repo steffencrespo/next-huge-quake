@@ -34,7 +34,7 @@ The project began in 2017 as a web app for searching historical earthquakes. Tha
 - **Event to video in one run:** the Output.ai workflow `quake_video` takes a USGS event through M1, then builds the video. It stops with the MP4 ready for review and publishes nothing. It runs with the worker on the host (see [`quake-news-agent/`](quake-news-agent/README.md)).
 - Two YouTube Shorts have been **published manually** after human review: the first (Panama, hand-written narration) <https://youtube.com/shorts/8Fwauogd6vY>, and the second (Kamchatka M6.9, narration generated and validated by the M1 workflow) <https://youtube.com/shorts/5YK84uxNRQY>. Both were uploaded by hand; publishing is not automated.
 
-- **USGS monitoring (M5, dry run by default):** the Output.ai workflow `quake_monitor` polls USGS every 5 minutes, deduplicates by event ID, and can start `quake_video` for significant new earthquakes under a daily limit ([ADR 0001](docs/decisions/0001-m5-earthquake-monitoring.md)). Paid production is still off: one fully real, unattended `quake_video` run has succeeded (Pakistan M5.7), but the monitor is a dry run until explicitly enabled.
+- **USGS monitoring (M5, dry run by default):** the Output.ai workflow `quake_monitor` polls USGS every 5 minutes, deduplicates by event ID, and can start `quake_video` for significant new earthquakes under a daily limit ([ADR 0001](docs/decisions/0001-m5-earthquake-monitoring.md)). Until it is hosted always-on, discovery and production are manual and on demand (`npm run discover`, see [`quake-news-agent/`](quake-news-agent/README.md)). Paid production is still off: one fully real, unattended `quake_video` run has succeeded (Pakistan M5.7), but the monitor is a dry run until explicitly enabled.
 
 ### Planned
 

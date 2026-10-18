@@ -127,6 +127,30 @@ The result has the event ID, `status` (`ready_for_approval`, `no_candidate`, `re
 
 Status of `quake_video`: one fully real, unattended run has succeeded (Pakistan M5.7, `us6000u2y1`): real Anthropic, one ElevenLabs request, real terrain preparation and a real render, entirely through Temporal, ending `ready_for_approval` in about 4.3 minutes. Earlier Temporal checks of the rejection path, the single TTS attempt and serial execution used mocked Anthropic and stubbed video scripts. One successful run is not a track record: failure paths with real services (for example a narration over the length limit) have not been exercised.
 
+### Manual operation (no always-on monitor)
+
+For now nothing runs in the background: discovery and production are started by hand, once or twice a day, and the services are stopped when you finish. The continuous `quake_monitor` below stays in the repository for later hosting.
+
+```bash
+# 1. Discover (free: one USGS request; needs no Docker, Temporal or worker)
+npm run discover                 # last 48 h; add  -- --hours 168  for a wider look
+```
+It lists M5.5+ earthquakes ranked by USGS significance with the monitor's own eligibility rules (M6.0+, or M5.5-5.9 with PAGER yellow or worse or significance >= 600; at least 2 minutes old; thresholds are the `MONITOR_*` settings). Events that already have a video (a package under `video/out/packages/` or a monitor record, matched by ID and aliases) are shown as `produced` and never recommended. At most the daily limit (2) are marked `RECOMMENDED`. It starts nothing.
+
+```bash
+# 2. Approve a candidate yourself, then bring up the services (Docker Desktop must be open)
+npm run session -- start         # Temporal, Postgres, Redis, UI and API in Docker
+npm run session -- worker        # in its own terminal; Ctrl-C stops it; refuses a second worker
+
+# 3. Produce the approved event (SPENDS: Anthropic requests and one ElevenLabs request; about 4-5 minutes)
+npm run session -- produce us6000xxxx
+npm run session -- result us6000xxxx    # paths, stage durations and the validated text; nothing is published
+
+# 4. When finished
+npm run session -- stop          # stops the worker and this project's Docker services (data is kept)
+```
+`produce` runs the existing `quake_video` workflow with the workflow ID `quake_video-<eventId>` and refuses an event that already has output. Review the video, then upload it by hand, with `credits.txt` and the production-technology credit in the description. `npm run session -- status` shows the services and the worker.
+
 ### `quake_monitor` (M5): automatic discovery
 
 A long-lived workflow polls USGS every 5 minutes for M5.5+ earthquakes and, when enabled, starts `quake_video` for the best eligible new event. It never publishes. **It is a dry run by default** (`MONITOR_DRY_RUN` is on unless set to exactly `false`): it records what it would start and starts nothing.
