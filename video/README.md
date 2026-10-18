@@ -81,6 +81,16 @@ Technical documentation alone is not sufficient. `npm run copy:review` prints th
 
 **Mandatory publishing requirement (accepted at Gate B, 2026-10-17):** the complete verified attribution block must accompany every publicly published terrain video. The future publishing pipeline (M2.4 and later) must attach it automatically and refuse to publish a terrain video without it. Publishing is not implemented yet.
 
+**Production technology credit (requirement for the publishing integration, recorded 2026-10-18):** the automatically generated YouTube description (publication metadata) must also include, after the existing mandatory credits and without changing them:
+
+```
+Production Technology
+Automated news and video production powered by Output.ai
+https://output.ai
+```
+
+It belongs in the description only: not in the on-screen credits and not in the Remotion composition. Automatic description generation does not exist yet (today only `credits.txt`, the attribution block, is produced), so this is recorded for the upcoming publishing step rather than added to `credits.txt`.
+
 The required list is reproduced in full rather than trimmed to the sources actually used. At the prepared zooms (z0–z8) the tiles come from ETOPO1, GMTED2010 and SRTM, plus NRCAN CDEM in Canada (recorded in `public/terrain/manifest.json`). Per-tile provenance is not tracked, so the complete list is the conservative record.
 
 ## Render performance (terrain map)
