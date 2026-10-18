@@ -34,11 +34,13 @@ The project began in 2017 as a web app for searching historical earthquakes. Tha
 - **Event to video in one run:** the Output.ai workflow `quake_video` takes a USGS event through M1, then builds the video. It stops with the MP4 ready for review and publishes nothing. It runs with the worker on the host (see [`quake-news-agent/`](quake-news-agent/README.md)).
 - Two YouTube Shorts have been **published manually** after human review: the first (Panama, hand-written narration) <https://youtube.com/shorts/8Fwauogd6vY>, and the second (Kamchatka M6.9, narration generated and validated by the M1 workflow) <https://youtube.com/shorts/5YK84uxNRQY>. Both were uploaded by hand; publishing is not automated.
 
+- **USGS monitoring (M5, dry run by default):** the Output.ai workflow `quake_monitor` polls USGS every 5 minutes, deduplicates by event ID, and can start `quake_video` for significant new earthquakes under a daily limit ([ADR 0001](docs/decisions/0001-m5-earthquake-monitoring.md)). It is off for paid production until one fully real, unattended `quake_video` run has succeeded; that has not happened yet.
+
 ### Planned
 
 - Human approval before anything is published. Today this is a manual review of the MP4 and its credits.
 - Publishing to YouTube Shorts through the API.
-- Automated USGS monitoring ([ADR 0001](docs/decisions/0001-m5-earthquake-monitoring.md); no poller exists yet, so a person starts each run).
+- Switching on **paid** autonomous operation of the USGS monitor (see below).
 - Showing news and videos on the existing website.
 
 See the [roadmap](#roadmap) for details.
@@ -88,7 +90,7 @@ The workflow runs on Temporal through Output.ai. Every step is durable and retri
 | Technology | Role |
 | --- | --- |
 | [YouTube Data API](https://developers.google.com/youtube/v3) | YouTube Shorts uploads |
-| Automated USGS monitoring | Polling every 5 minutes, with deduplication by event ID and saved processing state |
+| Paid autonomous operation of the monitor | The polling monitor exists (dry run by default); enabling real starts is planned |
 | Editorial approval | Human review before any public publication (manual for now) |
 | Website integration | Showing published news and videos on the existing site |
 
@@ -102,7 +104,7 @@ The 2017 website is plain HTML, CSS, JavaScript, jQuery and Bootstrap, and it ca
 | **M2** | Narrated short videos with Remotion and text-to-speech ([`video/`](video/README.md)) | Videos done (terrain, narration, captions, music); `quake_video` (M2.4d) chains them from a USGS event. Orchestration verified through Temporal with simulated external services; the second Short was made with the same stages run partly by hand. A fully real, unattended run is still pending |
 | **M3** | Editorial approval of drafts and videos | Planned |
 | **M4** | Publishing approved videos to YouTube Shorts | Planned |
-| **M5** | Automated USGS monitoring that starts the news workflow only for eligible events | Planned |
+| **M5** | Automated USGS monitoring that starts the video workflow only for eligible events | Implemented, dry run by default; paid autonomous mode waits for a fully real unattended run |
 | **M6** | Showing news and videos on the existing website | Planned |
 
 The roadmap may change as the project evolves. Publishing to any public platform will always require human approval.
