@@ -1,0 +1,39 @@
+{
+  "type": "Feature",
+  "properties": {
+    "mag": 7.7,
+    "place": "12 km WSW of Pitaloza Arriba, Panama",
+    "time": 1791568566036,
+    "updated": 1792272096558,
+    "tz": null,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u18k",
+    "felt": 1954,
+    "cdi": 7.9,
+    "mmi": 7.936,
+    "alert": "orange",
+    "status": "reviewed",
+    "tsunami": 0,
+    "sig": 1790,
+    "net": "us",
+    "code": "6000u18k",
+    "ids": ",pt26282000,us6000u18k,usauto6000u18k,",
+    "sources": ",pt,us,usauto,",
+    "types": ",dyfi,event-sequence,finite-fault,general-text,ground-failure,internal-moment-tensor,losspager,moment-tensor,oaf,origin,phase-data,shakemap,",
+    "nst": 108,
+    "dmin": 1.82,
+    "rms": 0.84,
+    "gap": 45,
+    "magType": "mww",
+    "type": "earthquake",
+    "title": "M 7.7 - 12 km WSW of Pitaloza Arriba, Panama"
+  },
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      -80.769,
+      7.5868,
+      12.647
+    ]
+  },
+  "id": "us6000u18k"
+}

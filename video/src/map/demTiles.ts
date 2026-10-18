@@ -26,7 +26,7 @@ export type SelectionOptions = {
  * ideal-zoom area near the globe's limb, and the ideal zoom limited to the unpitched view (a one-frame render at
  * frame 165 requests ideal-zoom tiles in the pitched far field). So this stays deliberately simple and conservative.
  */
-export const DEFAULT_SELECTION: SelectionOptions = { margin: 1.0, coarserLevels: 1 };
+export const DEFAULT_SELECTION: SelectionOptions = { margin: 1.3, coarserLevels: 1 };
 const VIEW = { width: 1080, height: 1920 };
 const MAX_LAT = 85.0511287798;
 

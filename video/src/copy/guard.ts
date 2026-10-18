@@ -53,6 +53,8 @@ export function allowedNumbers( event: QuakeEvent ): Set<string> {
     ...dateTokens( event.updatedUtc ),
     ...( event.feltReports === null ? [] : [ String( event.feltReports ), event.feltReports.toLocaleString( 'en-US' ) ] ),
     ...idDigits,
+    // USGS place names carry a distance ("12 km WSW of ..."); it is shown verbatim, so it is an event fact.
+    ...( event.place.match( NUMBER ) ?? [] ),
     ...TEMPLATE_CONSTANTS
   ] );
 }
