@@ -13,13 +13,36 @@ import { z } from 'zod';
 import { alignmentToCaptions, validateAlignment } from './captions.js';
 import type { Alignment } from './captions.js';
 import { mp3DurationSeconds } from './mp3.js';
+import { MIX } from './soundtrack.js';
 import type { Caption } from './soundtrack.js';
 
 export const VIDEO_SECONDS = 35;
 export const NARRATION_START_SECONDS = 1.5;
 /** Time after the voice for the music swell and the 2 s fade-out (see MIX in soundtrack.ts); 3 s until the Kamchatka run (M2.4d). */
-export const END_MARGIN_SECONDS = 2.7;
-export const MAX_NARRATION_SECONDS = Math.round( ( VIDEO_SECONDS - NARRATION_START_SECONDS - END_MARGIN_SECONDS ) * 1000 ) / 1000;
+export const DEFAULT_END_MARGIN_SECONDS = 2.7;
+
+/**
+ * The ending margin: NARRATION_END_MARGIN_SECONDS, else the default. It must be at least the music fade-out (MIX.fadeOut,
+ * 2 s), so the closing fade is preserved and the narration always ends before the video does, and at most 10 s. The
+ * same value is used when generating and when rendering, since both read the environment of the process that runs them.
+ */
+export function endMarginSeconds( env: Record<string, string | undefined> = process.env ): number {
+  const raw = env.NARRATION_END_MARGIN_SECONDS;
+  if ( raw === undefined || raw.trim() === '' ) {
+    return DEFAULT_END_MARGIN_SECONDS;
+  }
+  const value = Number( raw );
+  if ( !Number.isFinite( value ) || value < MIX.fadeOut || value > 10 ) {
+    throw new Error( `NARRATION_END_MARGIN_SECONDS must be a number from ${MIX.fadeOut} to 10 (got "${raw}")` );
+  }
+  return value;
+}
+
+export const maxNarrationSeconds = ( env: Record<string, string | undefined> = process.env ): number =>
+  Math.round( ( VIDEO_SECONDS - NARRATION_START_SECONDS - endMarginSeconds( env ) ) * 1000 ) / 1000;
+
+export const END_MARGIN_SECONDS = DEFAULT_END_MARGIN_SECONDS;
+export const MAX_NARRATION_SECONDS = maxNarrationSeconds( {} );
 export const OUTPUT_FORMAT = 'mp3_44100_128';
 const DEFAULT_BASE_URL = 'https://api.elevenlabs.io';
 
@@ -95,10 +118,11 @@ export function speechFromAudio( text: string, mp3: Uint8Array, rawAlignment: un
   const alignment = validateAlignment( rawAlignment, text );
   const durationSeconds = mp3DurationSeconds( mp3 );
   const speech = { mp3, alignment, durationSeconds, captions: alignmentToCaptions( alignment ) };
-  if ( durationSeconds > MAX_NARRATION_SECONDS ) {
+  const limit = maxNarrationSeconds();
+  if ( durationSeconds > limit ) {
     throw new NarrationTooLongError(
-      `narration audio is ${durationSeconds.toFixed( 2 )} s, over the ${MAX_NARRATION_SECONDS} s limit ` +
-      `(${VIDEO_SECONDS} s video, ${NARRATION_START_SECONDS} s start, ${END_MARGIN_SECONDS} s ending margin); shorten the narration`,
+      `narration audio is ${durationSeconds.toFixed( 2 )} s, over the ${limit} s limit ` +
+      `(${VIDEO_SECONDS} s video, ${NARRATION_START_SECONDS} s start, ${endMarginSeconds()} s ending margin); shorten the narration`,
       speech
     );
   }

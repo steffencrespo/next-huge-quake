@@ -8,6 +8,8 @@
  * character count (credits are billed per character), and makes no request.
  *
  * Config (environment or video/.env.local): ELEVENLABS_API_KEY, ELEVENLABS_VOICE_ID, ELEVENLABS_MODEL_ID.
+ * Optional, from the environment only: NARRATION_END_MARGIN_SECONDS (default 2.7, from 2 to 10) sets the time kept after the
+ * narration; the audio limit is 35 - 1.5 - margin. The render CLI checks the same value, so set it for both.
  * Writes, under out/audio/<eventId>/ (git-ignored): narration.mp3, alignment.json, captions.json, soundtrack.json.
  * soundtrack.json matches the M2.3 Soundtrack schema (music: the Legendary track already in assets/audio).
  */
