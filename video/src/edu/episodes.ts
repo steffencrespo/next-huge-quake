@@ -15,7 +15,7 @@ export const estimateSeconds = ( text: string ) => text.length / SPEECH_CPS + 0.
 /** The approved Like/Subscribe line from Episode 01; reused as is (same text, voice and model, so no new audio). */
 export const CTA_LINE = { id: 'cta', text: 'Like and subscribe to Next Huge Quake for more earthquake science.' };
 
-function plan( lines: { id: string; text: string; gap?: number }[], first = 0.8 ): ScriptLine[] {
+export function plan( lines: { id: string; text: string; gap?: number }[], first = 0.8 ): ScriptLine[] {
   let t = first;
   return lines.map( line => {
     const start = Math.round( t * 10 ) / 10;
@@ -25,7 +25,7 @@ function plan( lines: { id: string; text: string; gap?: number }[], first = 0.8 
 }
 
 export type EpisodeId = 'predict' | 'magnitude' | 'ring';
-export type EpisodeMeta = { id: EpisodeId; number: number; compositionId: string; title: string; baseSeconds: number; script: ScriptLine[] };
+export type EpisodeMeta = { id: string; number: number; compositionId: string; title: string; baseSeconds: number; script: ScriptLine[] };
 
 export const EPISODES: Record<EpisodeId, EpisodeMeta> = {
   predict: {

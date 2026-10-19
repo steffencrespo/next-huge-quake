@@ -1,7 +1,8 @@
 /**
  * Educational Shorts 02 to 04 (predict, magnitude, ring): narration library, credit estimate, generation and rendering.
  *
- * Usage: tsx scripts/edu-batch.ts <command> [--episode=predict|magnitude|ring|all] [--budget=2000]
+ * Usage: tsx scripts/edu-batch.ts <command> [--series=edu|historic] [--episode=<id>|all] [--budget=2000]
+ *   --series=historic: Historic Earthquakes 01-03 (chile1960, japan2011, sanfrancisco1906); own credit ledger.
  *   plan      (default) per line: reused from the narration library or new; characters and estimated credits. No request.
  *   generate  requests ONLY the lines the library does not hold, one at a time, stops at the first failure or when the
  *             batch budget would be exceeded, and records every request in out/edu/credit-ledger.json. Paid.
@@ -19,6 +20,7 @@ import { alignmentToCaptions } from '../src/audio/captions.js';
 import { OUTPUT_FORMAT, generateSpeech, loadTtsConfig, parseEnvFile, speechFromAudio } from '../src/audio/tts.js';
 import type { TtsConfig } from '../src/audio/tts.js';
 import { EPISODE_LIST, EPISODES, episodeSeconds } from '../src/edu/episodes.js';
+import { HISTORIC, HISTORIC_LIST } from '../src/historic/episodes.js';
 import type { EpisodeMeta } from '../src/edu/episodes.js';
 import { clipKey, normalizeText, openLibrary } from '../src/edu/library.js';
 import type { ClipIdentity } from '../src/edu/library.js';
@@ -32,7 +34,9 @@ const command = args.find( a => !a.startsWith( '--' ) ) ?? 'plan';
 const flag = ( name: string ) => args.find( a => a.startsWith( `--${name}=` ) )?.split( '=' )[1];
 const episodeArg = flag( 'episode' ) ?? 'all';
 const BUDGET = Number( flag( 'budget' ) ?? 2000 );
-const episodes: EpisodeMeta[] = episodeArg === 'all' ? EPISODE_LIST : [ EPISODES[episodeArg as keyof typeof EPISODES] ];
+const series = flag( 'series' ) ?? 'edu';
+const pool = series === 'historic' ? HISTORIC : EPISODES;
+const episodes: EpisodeMeta[] = episodeArg === 'all' ? ( series === 'historic' ? HISTORIC_LIST : EPISODE_LIST ) : [ ( pool as Record<string, EpisodeMeta> )[episodeArg] ];
 if ( episodes.some( e => !e ) ) {
   throw new Error( `unknown episode '${episodeArg}'` );
 }
@@ -40,7 +44,7 @@ if ( episodes.some( e => !e ) ) {
 const MUSIC_FILE = 'audio/legendary-kulakovka.mp3';
 const MUSIC_CREDIT = '"Legendary" by Kulakovka, Pixabay Content License. Source: https://pixabay.com/music/orchestral-legendary-608531/';
 const library = openLibrary( join( root, 'assets', 'audio', 'edu', 'library' ) );
-const ledgerFile = join( root, 'out', 'edu', 'credit-ledger.json' );
+const ledgerFile = join( root, 'out', 'edu', series === 'historic' ? 'credit-ledger-historic.json' : 'credit-ledger.json' );
 type LedgerEntry = { at: string; episode: string; line: string; key: string; characters: number };
 const readLedger = (): LedgerEntry[] => ( existsSync( ledgerFile ) ? JSON.parse( readFileSync( ledgerFile, 'utf8' ) ) : [] );
 
@@ -148,6 +152,28 @@ function buildAudio( ep: EpisodeMeta ) {
   return audio;
 }
 
+/** Attribution record for a Historic Earthquakes Short (public description). The Joerd/terrain block is not needed: these maps use Natural Earth vector data, not terrain tiles. */
+const SOURCES: Record<string, string[]> = {
+  chile1960: [ 'USGS Earthquake Catalog (ComCat): 1960 Great Chilean (Valdivia) earthquake, M9.5. https://earthquake.usgs.gov/', 'USGS Hawaiian Volcano Observatory: 1960 tsunami travel times and Hilo deaths. https://www.usgs.gov/center-news/golden-anniversary-chilean-earthquake-comes-early' ],
+  japan2011: [ 'USGS Earthquake Catalog (ComCat) and event page: 2011 Great Tohoku Earthquake, M9.1 Mww. https://earthquake.usgs.gov/earthquakes/eventpage/official20110311054624120_30', 'Japan Meteorological Agency: tsunami warning improvements after 2011. https://www.data.jma.go.jp/eqev/data/en/tsunami/LessonsLearned_Improvements_brochure.pdf' ],
+  sanfrancisco1906: [ 'USGS Earthquake Catalog (ComCat) and USGS 1906 San Francisco earthquake pages. https://earthquake.usgs.gov/earthquakes/events/1906calif/18april/', 'National Park Service (1906 earthquake history).' ]
+};
+function historicCredits( ep: EpisodeMeta ): string[] {
+  return [
+    'Music: ' + MUSIC_CREDIT,
+    'Narration: ElevenLabs text-to-speech (voice: Daniel).',
+    'Sound effects: synthesized for this video.',
+    'Map data: Natural Earth (public domain), 1:50m land and 1:110m land via world-atlas.',
+    ...( SOURCES[ep.id] ?? [] ).map( x => 'Source: ' + x ),
+    'Maps, wave routes and arcs, fault traces, cross-sections, skyline and fire graphics are illustrations, not data or archival footage.',
+    '',
+    'Production Technology',
+    'Automated news and video production powered by Output.ai',
+    'https://output.ai',
+    ''
+  ];
+}
+
 function render( ep: EpisodeMeta, withAudio: boolean ) {
   const out = join( root, 'out', 'edu', withAudio ? 'final' : 'preview', `${ep.id}.mp4` );
   mkdirSync( dirname( out ), { recursive: true } );
@@ -186,7 +212,7 @@ function render( ep: EpisodeMeta, withAudio: boolean ) {
       throw new Error( `render failed (exit ${result.status})` );
     }
     if ( withAudio ) {
-      writeFileSync( out.replace( /\.mp4$/, '.credits.txt' ), [ 'Music: ' + MUSIC_CREDIT, 'Narration: ElevenLabs text-to-speech.', 'Sound effects: synthesized for this video.', '' ].join( '\n' ) );
+      writeFileSync( out.replace( /\.mp4$/, '.credits.txt' ), ( series === 'historic' ? historicCredits( ep ) : [ 'Music: ' + MUSIC_CREDIT, 'Narration: ElevenLabs text-to-speech.', 'Sound effects: synthesized for this video.', '' ] ).join( '\n' ) );
     }
     console.log( `wrote ${out}` );
   } finally {

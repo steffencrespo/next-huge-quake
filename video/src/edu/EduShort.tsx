@@ -12,7 +12,7 @@ import { useBundledFonts } from '../design/useBundledFonts.js';
 import { useCurrentFrame, useVideoConfig } from 'remotion';
 import { Captions, Cta } from './ScienceShort.js';
 import { EPISODES, beatsFor, episodeSeconds, placeholderCaptions } from './episodes.js';
-import type { Beats, EpisodeId } from './episodes.js';
+import type { Beats, EpisodeId, EpisodeMeta } from './episodes.js';
 import { eduAudioSchema } from './narration.js';
 import type { EduAudio } from './narration.js';
 import { EXTRA_SFX, SFX_FILES } from './sfx.js';
@@ -25,13 +25,13 @@ export type SfxCue = { sfx: SfxName; at: number; dur: number; volume: number | (
 export const SFX_PATHS: Record<SfxName, string> = { rumble: SFX_FILES.rumble, boom: SFX_FILES.boom, tick: EXTRA_SFX.tick.file, whoosh: EXTRA_SFX.whoosh.file, riser: EXTRA_SFX.riser.file };
 
 export type EpisodeVisuals = React.FC<{ t: number; b: Beats }>;
-export type EpisodeDefinition = { id: EpisodeId; Visuals: EpisodeVisuals; cues: ( b: Beats ) => SfxCue[] };
+export type EpisodeDefinition = { id: EpisodeId | string; meta?: EpisodeMeta; Visuals: EpisodeVisuals; cues: ( b: Beats ) => SfxCue[] };
 
 export const eduShortSchema = z.object( { audio: eduAudioSchema.optional() } );
 export type EduShortProps = z.infer<typeof eduShortSchema>;
 
-export const calculateEduMetadata = ( id: EpisodeId ): CalculateMetadataFunction<EduShortProps> => ( { props } ) => ( {
-  durationInFrames: episodeSeconds( EPISODES[id], props.audio ) * FPS
+export const calculateEduMetadata = ( id: EpisodeId | EpisodeMeta ): CalculateMetadataFunction<EduShortProps> => ( { props } ) => ( {
+  durationInFrames: episodeSeconds( typeof id === 'string' ? EPISODES[id as EpisodeId] : id, props.audio ) * FPS
 } );
 
 const Layers: React.FC<{ audio: EduAudio; cues: SfxCue[]; total: number }> = ( { audio, cues, total } ) => {
@@ -54,7 +54,7 @@ const Layers: React.FC<{ audio: EduAudio; cues: SfxCue[]; total: number }> = ( {
 };
 
 export function makeEduShort( def: EpisodeDefinition ): React.FC<EduShortProps> {
-  const meta = EPISODES[def.id];
+  const meta = def.meta ?? EPISODES[def.id as EpisodeId];
   const Short: React.FC<EduShortProps> = ( { audio } ) => {
     useBundledFonts();
     const frame = useCurrentFrame();
