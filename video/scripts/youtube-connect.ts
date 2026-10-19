@@ -1,13 +1,14 @@
 /**
  * YouTube Publisher M1: authenticates with the channel (read-only) and prints a connection report. Changes nothing on YouTube.
  *
- * Usage: tsx scripts/youtube-connect.ts [--credentials=<client_secret.json>]
+ * Usage: tsx scripts/youtube-connect.ts [--credentials=<client_secret.json>] [--write]
+ * --write upgrades the stored authorization to upload/manage scopes (M2). Consent only: still no write to YouTube happens here.
  * The credentials file is taken from --credentials, then YOUTUBE_CREDENTIALS_FILE, then the copy stored from an earlier run,
  * then a macOS file chooser, then a typed path. It is copied to ~/.config/next-huge-quake/youtube/ (outside Git).
  */
 import { execFileSync } from 'node:child_process';
 import { createInterface } from 'node:readline/promises';
-import { AuthError, configDir, getAccessToken, loadClient, loadToken } from '../src/publisher/auth.js';
+import { AuthError, READ_SCOPES, WRITE_SCOPES, configDir, getAccessToken, loadClient, loadToken } from '../src/publisher/auth.js';
 import { getMyChannels, listMyPlaylists } from '../src/publisher/youtube.js';
 
 function chooseFile(): string | undefined {
@@ -35,23 +36,24 @@ async function main() {
     if ( !path ) throw new AuthError( 'No credentials file selected.' );
     client = loadClient( path );
   }
-  const accessToken = await getAccessToken( client!, { openUrl, log: console.log } );
+  const write = process.argv.includes( '--write' );
+  const accessToken = await getAccessToken( client!, { openUrl, log: console.log, scopes: write ? WRITE_SCOPES : READ_SCOPES } );
 
   const channels = await getMyChannels( accessToken );
   if ( channels.length === 0 ) throw new AuthError( 'This Google account has no YouTube channel. If the channel is a Brand Account, choose it on the consent screen.' );
   const playlists = await listMyPlaylists( accessToken );
   const token = loadToken();
 
-  console.log( '\nYouTube connection report (read-only)' );
+  console.log( '\nYouTube connection report (reads only; changes nothing)' );
   for ( const c of channels ) {
     console.log( `  Channel:   ${ c.title }${ c.customUrl ? ` (${ c.customUrl })` : '' }` );
     console.log( `  Channel ID: ${ c.id }   videos: ${ c.videoCount ?? '?' }` );
   }
   console.log( `  Playlists: ${ playlists.length }` );
   for ( const p of playlists ) console.log( `    ${ p.id }  ${ p.title }  [${ p.itemCount ?? '?' } items, ${ p.privacy ?? '?' }]` );
-  console.log( `  Scope:     read-only` );
+  console.log( `  Scope:     ${ token?.scope.replaceAll( 'https://www.googleapis.com/auth/', '' ) }` );
   console.log( `  Stored in: ${ configDir() } (outside Git)` );
-  if ( token ) console.log( `  Authorized ${ token.obtainedAt }. Testing-mode consent expires after 7 days: rerun this command to renew.` );
+  if ( token ) console.log( `  Authorized ${ token.obtainedAt }. Testing-mode consent expires after 7 days: rerun this command (with --write if publishing) to renew.` );
 }
 
 main().catch( error => {
