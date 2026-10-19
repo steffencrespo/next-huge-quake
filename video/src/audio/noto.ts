@@ -1,3 +1,4 @@
+import { DEFAULT_MUSIC, MUSIC } from './music.js';
 import type { Soundtrack } from './soundtrack.js';
 
 /**
@@ -8,10 +9,10 @@ import type { Soundtrack } from './soundtrack.js';
  */
 export const notoSoundtrack: Soundtrack = {
   narrationFile: 'audio/noto-narration.mp3',
-  musicFile: 'audio/legendary-kulakovka.mp3',
+  musicFile: MUSIC[DEFAULT_MUSIC].file,
   narrationStart: 1.5,
   narrationDuration: 30.75,
-  musicCredit: '"Legendary" by Kulakovka, Pixabay Content License. Source: https://pixabay.com/music/orchestral-legendary-608531/',
+  musicCredit: MUSIC[DEFAULT_MUSIC].credit,
   captions: [
     { text: 'On January first, twenty twenty-four,', start: 0.05, end: 2.4 },
     { text: 'a powerful magnitude seven point five earthquake', start: 2.84, end: 5.92 },

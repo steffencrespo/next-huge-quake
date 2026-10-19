@@ -50,9 +50,12 @@ export function schedulePreflight( m: Manifest, state: State, existing: VideoInf
   if ( rec?.status === 'scheduled' ) problems.push( `Already scheduled for ${ rec.publishAt }.` );
   if ( !isApproved( m ) || rec?.contentHash !== contentHash( m ) ) problems.push( 'Manifest is not approved or differs from what was uploaded.' );
   if ( !m.publishAtLocal ) { problems.push( 'No publishAtLocal in the manifest.' ); return { problems, warnings: [] }; }
-  if ( !isEditorialSlot( m.publishAtLocal ) ) problems.push( `${ m.publishAtLocal } is not a Tue/Thu/Sat 18:00 America/Sao_Paulo slot.` );
+  const ex = m.scheduleException;
+  if ( ex && ( !ex.reason?.trim() || !( ex.minLeadMinutes >= 60 ) ) ) problems.push( 'scheduleException needs a reason and minLeadMinutes >= 60.' );
+  if ( !ex && !isEditorialSlot( m.publishAtLocal ) ) problems.push( `${ m.publishAtLocal } is not a Tue/Thu/Sat 18:00 America/Sao_Paulo slot.` );
   const at = localToUtc( m.publishAtLocal );
-  if ( at.getTime() - now.getTime() < MIN_LEAD_MS ) problems.push( 'Publication time is less than 24 hours away.' );
+  const lead = ex ? ex.minLeadMinutes * 60000 : MIN_LEAD_MS;
+  if ( at.getTime() - now.getTime() < lead ) problems.push( ex ? `Publication time is less than ${ ex.minLeadMinutes } minutes away (exception lead).` : 'Publication time is less than 24 hours away.' );
   const clash = scheduledVideos( existing, now ).find( v => v.id !== rec?.videoId && new Date( v.publishAt! ).getTime() === at.getTime() );
   if ( clash ) problems.push( `Slot already booked by ${ clash.id } "${ clash.title }".` );
   return { problems, warnings: [] };

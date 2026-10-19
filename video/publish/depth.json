@@ -1,0 +1,55 @@
+{
+  "id": "depth",
+  "file": "out/edu/final/depth.mp4",
+  "creditsFile": "out/edu/final/depth.credits.txt",
+  "generated": {
+    "title": "Why Does Earthquake Depth Matter?",
+    "description": "Every earthquake begins at a point underground called the focus. Shallow earthquakes start within about 70 kilometers of the surface; deep ones can start hundreds of kilometers down.\n\nSeismic waves spread out and weaken as they travel, so for the same magnitude a deep focus usually means weaker shaking at the surface, while a shallow focus puts the surface much closer and shaking can be violent. That's why shallow earthquakes can be especially damaging.\n\nDepth isn't everything: magnitude, soil, and building quality matter too.\n\nPart of the Earthquake Science Explained series. Subscribe to Next Huge Quake for more earthquake science.\n\n#Shorts #earthquake #geology",
+    "tags": [
+      "earthquake",
+      "earthquakes",
+      "earthquake depth",
+      "focus",
+      "hypocenter",
+      "shallow earthquake",
+      "seismic waves",
+      "earthquake shaking",
+      "geology",
+      "earthquake science",
+      "earthquake science explained",
+      "shorts"
+    ]
+  },
+  "approved": {
+    "title": "Why Does Earthquake Depth Matter?",
+    "description": "Every earthquake begins at a point underground called the focus. Shallow earthquakes start within about 70 kilometers of the surface; deep ones can start hundreds of kilometers down.\n\nSeismic waves spread out and weaken as they travel, so for the same magnitude a deep focus usually means weaker shaking at the surface, while a shallow focus puts the surface much closer and shaking can be violent. That's why shallow earthquakes can be especially damaging.\n\nDepth isn't everything: magnitude, soil, and building quality matter too.\n\nPart of the Earthquake Science Explained series. Subscribe to Next Huge Quake for more earthquake science.\n\n#Shorts #earthquake #geology",
+    "tags": [
+      "earthquake",
+      "earthquakes",
+      "earthquake depth",
+      "focus",
+      "hypocenter",
+      "shallow earthquake",
+      "seismic waves",
+      "earthquake shaking",
+      "geology",
+      "earthquake science",
+      "earthquake science explained",
+      "shorts"
+    ]
+  },
+  "categoryId": "27",
+  "language": "en",
+  "madeForKids": false,
+  "playlistId": "PLDquHuxZZySw",
+  "publishAtLocal": "2026-10-19T04:00",
+  "scheduleException": {
+    "reason": "One-video live API test of scheduled publishing; exempt from Tue/Thu/Sat 18:00 cadence and 24 h lead.",
+    "minLeadMinutes": 120
+  },
+  "approval": {
+    "status": "approved",
+    "approvedAt": "2026-10-19T03:54:56.580Z",
+    "contentHash": "e354a5e879b1a7676108c21df47c86f203208273dfad6483c9db9ee0ed238184"
+  }
+}

@@ -20,6 +20,9 @@ import { alignmentToCaptions } from '../src/audio/captions.js';
 import { OUTPUT_FORMAT, generateSpeech, loadTtsConfig, parseEnvFile, speechFromAudio } from '../src/audio/tts.js';
 import type { TtsConfig } from '../src/audio/tts.js';
 import { EPISODE_LIST, EPISODES, episodeSeconds } from '../src/edu/episodes.js';
+import { DEFAULT_MUSIC, MUSIC } from '../src/audio/music.js';
+import type { MusicKey } from '../src/audio/music.js';
+import { DEPTH } from '../src/edu/ep05.js';
 import { HISTORIC, HISTORIC_LIST } from '../src/historic/episodes.js';
 import type { EpisodeMeta } from '../src/edu/episodes.js';
 import { clipKey, normalizeText, openLibrary } from '../src/edu/library.js';
@@ -35,16 +38,22 @@ const flag = ( name: string ) => args.find( a => a.startsWith( `--${name}=` ) )?
 const episodeArg = flag( 'episode' ) ?? 'all';
 const BUDGET = Number( flag( 'budget' ) ?? 2000 );
 const series = flag( 'series' ) ?? 'edu';
-const pool = series === 'historic' ? HISTORIC : EPISODES;
-const episodes: EpisodeMeta[] = episodeArg === 'all' ? ( series === 'historic' ? HISTORIC_LIST : EPISODE_LIST ) : [ ( pool as Record<string, EpisodeMeta> )[episodeArg] ];
+const pool = series === 'depth' ? { depth: DEPTH } : series === 'historic' ? HISTORIC : EPISODES;
+const episodes: EpisodeMeta[] = episodeArg === 'all' ? ( series === 'depth' ? [ DEPTH ] : series === 'historic' ? HISTORIC_LIST : EPISODE_LIST ) : [ ( pool as Record<string, EpisodeMeta> )[episodeArg] ];
 if ( episodes.some( e => !e ) ) {
   throw new Error( `unknown episode '${episodeArg}'` );
 }
 
-const MUSIC_FILE = 'audio/legendary-kulakovka.mp3';
-const MUSIC_CREDIT = '"Legendary" by Kulakovka, Pixabay Content License. Source: https://pixabay.com/music/orchestral-legendary-608531/';
+/** Music choices come from src/audio/music.ts (YouTube Audio Library only; the retired Pixabay track is never used). */
+const musicKey = flag( 'music' ) ?? DEFAULT_MUSIC;
+const needMusic = () => {
+  if ( !( musicKey in MUSIC ) ) {
+    throw new Error( `unknown --music=${ musicKey }; choose ${ Object.keys( MUSIC ).join( ' | ' ) }` );
+  }
+  return MUSIC[musicKey as MusicKey];
+};
 const library = openLibrary( join( root, 'assets', 'audio', 'edu', 'library' ) );
-const ledgerFile = join( root, 'out', 'edu', series === 'historic' ? 'credit-ledger-historic.json' : 'credit-ledger.json' );
+const ledgerFile = join( root, 'out', 'edu', series === 'historic' ? 'credit-ledger-historic.json' : series === 'depth' ? 'credit-ledger-depth.json' : 'credit-ledger.json' );
 type LedgerEntry = { at: string; episode: string; line: string; key: string; characters: number };
 const readLedger = (): LedgerEntry[] => ( existsSync( ledgerFile ) ? JSON.parse( readFileSync( ledgerFile, 'utf8' ) ) : [] );
 
@@ -132,7 +141,7 @@ function voicedRmsDb( mp3: string ): number {
 }
 const gainFor = ( db: number, target: number ) => Math.round( Math.min( 1.4, Math.max( 0.7, 10 ** ( ( target - db ) / 20 ) ) ) * 100 ) / 100;
 
-const audioFile = ( ep: EpisodeMeta ) => join( root, 'out', 'edu', ep.id, 'audio.json' );
+const audioFile = ( ep: EpisodeMeta ) => join( root, 'out', 'edu', ep.id, `audio-${ musicKey }.json` );
 function buildAudio( ep: EpisodeMeta ) {
   const missing = ep.script.filter( l => !library.has( identity( l.text ) ) );
   if ( missing.length > 0 ) {
@@ -145,7 +154,7 @@ function buildAudio( ep: EpisodeMeta ) {
     const speech = speechFromAudio( l.text, readFileSync( p.mp3 ), JSON.parse( readFileSync( p.alignment, 'utf8' ) ), MAX_CLIP_SECONDS );
     return { id: l.id, file: `audio/edu/${p.key}.mp3`, duration: speech.durationSeconds, captions: alignmentToCaptions( speech.alignment ), gain: gainFor( levels[i], target ) };
   } );
-  const audio = eduAudioSchema.parse( { ...placeClips( ep.script, clips ), musicFile: MUSIC_FILE, musicCredit: MUSIC_CREDIT } );
+  const audio = eduAudioSchema.parse( { ...placeClips( ep.script, clips ), musicFile: needMusic().file, musicCredit: needMusic().credit } );
   mkdirSync( dirname( audioFile( ep ) ), { recursive: true } );
   writeFileSync( audioFile( ep ), `${JSON.stringify( audio, null, 2 )}\n` );
   console.log( `${ep.id}: narration ${audio.narrationStart}-${audio.narrationEnd} s, ${audio.captions.length} captions, video ${episodeSeconds( ep, audio )} s` );
@@ -156,16 +165,17 @@ function buildAudio( ep: EpisodeMeta ) {
 const SOURCES: Record<string, string[]> = {
   chile1960: [ 'USGS Earthquake Catalog (ComCat): 1960 Great Chilean (Valdivia) earthquake, M9.5. https://earthquake.usgs.gov/', 'USGS Hawaiian Volcano Observatory: 1960 tsunami travel times and Hilo deaths. https://www.usgs.gov/center-news/golden-anniversary-chilean-earthquake-comes-early' ],
   japan2011: [ 'USGS Earthquake Catalog (ComCat) and event page: 2011 Great Tohoku Earthquake, M9.1 Mww. https://earthquake.usgs.gov/earthquakes/eventpage/official20110311054624120_30', 'Japan Meteorological Agency: tsunami warning improvements after 2011. https://www.data.jma.go.jp/eqev/data/en/tsunami/LessonsLearned_Improvements_brochure.pdf' ],
+  depth: [ 'USGS depth classes (shallow 0-70 km, intermediate 70-300 km, deep 300-700 km) and the relation of focal depth to surface shaking. https://www.usgs.gov/programs/earthquake-hazards' ],
   sanfrancisco1906: [ 'USGS Earthquake Catalog (ComCat) and USGS 1906 San Francisco earthquake pages. https://earthquake.usgs.gov/earthquakes/events/1906calif/18april/', 'National Park Service (1906 earthquake history).' ]
 };
 function historicCredits( ep: EpisodeMeta ): string[] {
   return [
-    'Music: ' + MUSIC_CREDIT,
+    'Music: ' + needMusic().credit,
     'Narration: ElevenLabs text-to-speech (voice: Daniel).',
     'Sound effects: synthesized for this video.',
-    'Map data: Natural Earth (public domain), 1:50m land and 1:110m land via world-atlas.',
+    ...( ep.id === 'depth' ? [] : [ 'Map data: Natural Earth (public domain), 1:50m land and 1:110m land via world-atlas.' ] ),
     ...( SOURCES[ep.id] ?? [] ).map( x => 'Source: ' + x ),
-    'Maps, wave routes and arcs, fault traces, cross-sections, skyline and fire graphics are illustrations, not data or archival footage.',
+    ep.id === 'depth' ? 'Cross-sections, wave rings and the city are schematic illustrations, not to scale, not data or footage (the depth ruler is to scale).' : 'Maps, wave routes and arcs, fault traces, cross-sections, skyline and fire graphics are illustrations, not data or archival footage.',
     '',
     'Production Technology',
     'Automated news and video production powered by Output.ai',
@@ -175,7 +185,7 @@ function historicCredits( ep: EpisodeMeta ): string[] {
 }
 
 function render( ep: EpisodeMeta, withAudio: boolean ) {
-  const out = join( root, 'out', 'edu', withAudio ? 'final' : 'preview', `${ep.id}.mp4` );
+  const out = join( root, 'out', 'edu', withAudio ? 'final' : 'preview', `${ep.id}${ withAudio ? `-${ musicKey }` : '' }.mp4` );
   mkdirSync( dirname( out ), { recursive: true } );
   const staged: string[] = [];
   const stage = ( rel: string, bytes: Buffer ) => {
@@ -193,6 +203,7 @@ function render( ep: EpisodeMeta, withAudio: boolean ) {
   try {
     let props = {};
     if ( withAudio ) {
+      needMusic();
       const audio = existsSync( audioFile( ep ) ) ? eduAudioSchema.parse( JSON.parse( readFileSync( audioFile( ep ), 'utf8' ) ) ) : buildAudio( ep );
       props = { audio };
       for ( const c of audio.clips ) {
@@ -212,7 +223,7 @@ function render( ep: EpisodeMeta, withAudio: boolean ) {
       throw new Error( `render failed (exit ${result.status})` );
     }
     if ( withAudio ) {
-      writeFileSync( out.replace( /\.mp4$/, '.credits.txt' ), ( series === 'historic' ? historicCredits( ep ) : [ 'Music: ' + MUSIC_CREDIT, 'Narration: ElevenLabs text-to-speech.', 'Sound effects: synthesized for this video.', '' ] ).join( '\n' ) );
+      writeFileSync( out.replace( /\.mp4$/, '.credits.txt' ), ( series === 'historic' || series === 'depth' ? historicCredits( ep ) : [ 'Music: ' + needMusic().credit, 'Narration: ElevenLabs text-to-speech.', 'Sound effects: synthesized for this video.', '', 'Production Technology', 'Automated news and video production powered by Output.ai', 'https://output.ai', '' ] ).join( '\n' ) );
     }
     console.log( `wrote ${out}` );
   } finally {

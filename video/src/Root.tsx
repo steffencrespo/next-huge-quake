@@ -14,6 +14,7 @@ import { calculateEduMetadata, eduShortSchema } from './edu/EduShort.js';
 import { Predict } from './edu/ep02.js';
 import { RingOfFire } from './edu/ep04.js';
 import { Magnitude } from './edu/ep03.js';
+import { DEPTH, EarthquakeDepth } from './edu/ep05.js';
 import { HistoricChile1960 } from './historic/chile1960.js';
 import { HistoricJapan2011 } from './historic/japan2011.js';
 import { HistoricSanFrancisco1906 } from './historic/sanfrancisco1906.js';
@@ -60,6 +61,7 @@ export const Root: React.FC = () => (
     <Composition id="WhyCantWePredict" component={Predict} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( 'predict' )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="RingOfFire" component={RingOfFire} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( 'ring' )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="MagnitudeSixVsSeven" component={Magnitude} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( 'magnitude' )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
+    <Composition id="EarthquakeDepth" component={EarthquakeDepth} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( DEPTH )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="HistoricChile1960" component={HistoricChile1960} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( HISTORIC.chile1960 )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="HistoricJapan2011" component={HistoricJapan2011} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( HISTORIC.japan2011 )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="HistoricSanFrancisco1906" component={HistoricSanFrancisco1906} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( HISTORIC.sanfrancisco1906 )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />

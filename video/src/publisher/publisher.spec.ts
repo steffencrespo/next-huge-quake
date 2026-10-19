@@ -64,6 +64,8 @@ describe( 'safety checks', () => {
     expect( uploadPreflight( approved( m() ), {}, [] ).problems ).toEqual( [] );
     const state = { chile1960: { status: 'uploaded', videoId: 'abc', contentHash: 'h', fileSize: 1, updatedAt: '' } } as const;
     expect( uploadPreflight( approved( m() ), state, [] ).problems.join() ).toMatch( /Already uploaded/ );
+    const unscheduled = { chile1960: { ...state.chile1960, status: 'playlisted' } } as const; // e.g. a video whose schedule was removed in Studio
+    expect( uploadPreflight( approved( m() ), unscheduled, [] ).problems.join() ).toMatch( /Already playlisted/ );
     const dupe = video( { id: 'old', title: 'Chile 1960: the strongest earthquake ever recorded!' } );
     expect( likelyDuplicates( m(), [ dupe ] ) ).toHaveLength( 1 );
     expect( uploadPreflight( approved( m() ), {}, [ dupe ] ).problems.join() ).toMatch( /duplicate/ );
@@ -84,5 +86,15 @@ describe( 'safety checks', () => {
     expect( schedulePreflight( a, state, [ booked ], now ).problems.join() ).toMatch( /already booked/ );
     expect( schedulePreflight( approved( { ...a, publishAtLocal: '2026-10-28T18:00' } ), state, [], now ).problems.join() ).toMatch( /not a Tue/ );
     expect( schedulePreflight( a, {}, [], now ).problems.join() ).toMatch( /not uploaded/ );
+  } );
+  it( 'a scheduleException relaxes cadence and lead only for the manifest that carries it', () => {
+    const now = new Date( '2026-10-19T03:00:00Z' );
+    const plain = approved( { ...m(), publishAtLocal: '2026-10-19T03:55' } );
+    const state = { chile1960: { status: 'playlisted', videoId: 'me', contentHash: contentHash( plain ), fileSize: 1, updatedAt: '' } } as const;
+    expect( schedulePreflight( plain, state, [], now ).problems.join() ).toMatch( /not a Tue.*24 hours/s );
+    const ex = approved( { ...plain, scheduleException: { reason: 'live API test', minLeadMinutes: 120 } } );
+    const state2 = { chile1960: { ...state.chile1960, contentHash: contentHash( ex ) } };
+    expect( schedulePreflight( ex, state2, [], new Date( '2026-10-19T03:00:00Z' ) ).problems ).toEqual( [] );
+    expect( schedulePreflight( ex, state2, [], new Date( '2026-10-19T05:30:00Z' ) ).problems.join() ).toMatch( /120 minutes/ );
   } );
 } );

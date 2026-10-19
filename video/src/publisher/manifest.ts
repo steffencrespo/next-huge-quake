@@ -35,6 +35,8 @@ export interface Manifest {
   playlistId: string;
   /** Editorial calendar slot, America/Sao_Paulo wall-clock "YYYY-MM-DDTHH:mm". Optional until scheduling. */
   publishAtLocal?: string;
+  /** One-video override of the Tue/Thu/Sat 18:00 cadence and the 24 h lead time (live API test). Absent on every normal manifest. */
+  scheduleException?: { reason: string; minLeadMinutes: number };
   approval?: { status: 'approved'; approvedAt: string; contentHash: string };
 }
 
