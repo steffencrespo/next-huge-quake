@@ -1,3 +1,4 @@
+import { DEFAULT_MUSIC, MUSIC } from './music.js';
 import type { Soundtrack } from './soundtrack.js';
 
 /**
@@ -9,10 +10,10 @@ import type { Soundtrack } from './soundtrack.js';
  */
 export const panamaSoundtrack: Soundtrack = {
   narrationFile: 'audio/panama-narration.mp3',
-  musicFile: 'audio/legendary-kulakovka.mp3',
+  musicFile: MUSIC[DEFAULT_MUSIC].file,
   narrationStart: 1.5,
   narrationDuration: 29.73,
-  musicCredit: '"Legendary" by Kulakovka, Pixabay Content License. Source: https://pixabay.com/music/orchestral-legendary-608531/',
+  musicCredit: MUSIC[DEFAULT_MUSIC].credit,
   captions: [
     { text: 'On October ninth,', start: 0.05, end: 1.45 },
     { text: 'a powerful earthquake struck southern Panama,', start: 1.456, end: 4.46 },

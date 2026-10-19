@@ -16,12 +16,13 @@ import { alignmentToCaptions } from '../src/audio/captions.js';
 import { generateSpeech, loadTtsConfig, parseEnvFile, speechFromAudio } from '../src/audio/tts.js';
 import { MAX_CLIP_SECONDS, SCRIPT, eduAudioSchema, placeClips, scriptCharacters } from '../src/edu/narration.js';
 import type { ClipInput } from '../src/edu/narration.js';
+import { DEFAULT_MUSIC, MUSIC } from '../src/audio/music.js';
 
 const root = join( dirname( new URL( import.meta.url ).pathname ), '..' );
 const args = process.argv.slice( 2 );
 const cacheDir = join( root, 'assets', 'audio', 'edu', 'why-earthquakes' );
-const MUSIC_FILE = 'audio/legendary-kulakovka.mp3';
-const MUSIC_CREDIT = '"Legendary" by Kulakovka, Pixabay Content License. Source: https://pixabay.com/music/orchestral-legendary-608531/';
+const MUSIC_FILE = MUSIC[DEFAULT_MUSIC].file;
+const MUSIC_CREDIT = MUSIC[DEFAULT_MUSIC].credit;
 
 /** Average level (dB) of the voiced part of a clip, measured on a decoded copy (Remotion's bundled ffmpeg). */
 function voicedRmsDb( mp3: string ): number {

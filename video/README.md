@@ -45,6 +45,8 @@ npm run build:geo
 | `npx tsx scripts/generate-edu-narration.ts` | Dry run: prints the script, character count and which clips are cached. Add `--generate` to request only missing clips from ElevenLabs (one request per line, cached in `assets/audio/edu/`; never regenerates a cached clip without `--force`) and write `out/edu/audio.json` |
 | `npx tsx scripts/render-edu.ts` | Renders `out/edu/why-earthquakes-v2.mp4` with narration, the music in `assets/audio/` and synthesized effects, plus its `credits.txt`. Calls no paid service |
 
+Music comes from `src/audio/music.ts` (default: "Deified", YouTube Audio Library; `--music=<key>` on `edu-batch` picks another). The Pixabay track "Legendary" is retired after a Content ID block and a test keeps it out of the renderers.
+
 Without props the composition is silent with placeholder captions (`npm run studio`). The music credit goes in the public description (see `credits.txt`), together with the Production Technology block above.
 
 To render one video from any valid spec:

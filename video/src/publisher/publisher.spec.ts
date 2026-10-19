@@ -85,4 +85,14 @@ describe( 'safety checks', () => {
     expect( schedulePreflight( approved( { ...a, publishAtLocal: '2026-10-28T18:00' } ), state, [], now ).problems.join() ).toMatch( /not a Tue/ );
     expect( schedulePreflight( a, {}, [], now ).problems.join() ).toMatch( /not uploaded/ );
   } );
+  it( 'a scheduleException relaxes cadence and lead only for the manifest that carries it', () => {
+    const now = new Date( '2026-10-19T03:00:00Z' );
+    const plain = approved( { ...m(), publishAtLocal: '2026-10-19T03:55' } );
+    const state = { chile1960: { status: 'playlisted', videoId: 'me', contentHash: contentHash( plain ), fileSize: 1, updatedAt: '' } } as const;
+    expect( schedulePreflight( plain, state, [], now ).problems.join() ).toMatch( /not a Tue.*24 hours/s );
+    const ex = approved( { ...plain, scheduleException: { reason: 'live API test', minLeadMinutes: 120 } } );
+    const state2 = { chile1960: { ...state.chile1960, contentHash: contentHash( ex ) } };
+    expect( schedulePreflight( ex, state2, [], new Date( '2026-10-19T03:00:00Z' ) ).problems ).toEqual( [] );
+    expect( schedulePreflight( ex, state2, [], new Date( '2026-10-19T05:30:00Z' ) ).problems.join() ).toMatch( /120 minutes/ );
+  } );
 } );
