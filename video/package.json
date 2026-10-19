@@ -24,7 +24,8 @@
     "render:terrain-b": "tsx scripts/render-terrain-b.ts",
     "style:metrics": "tsx scripts/style-metrics.ts",
     "render:terrain-c": "tsx scripts/render-terrain-c.ts",
-    "check:labels": "tsx scripts/check-labels.ts"
+    "check:labels": "tsx scripts/check-labels.ts",
+    "youtube:connect": "tsx scripts/youtube-connect.ts"
   },
   "engines": {
     "node": ">=24.3.0"
