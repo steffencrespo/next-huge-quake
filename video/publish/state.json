@@ -90,5 +90,13 @@
     "updatedAt": "2026-10-19T19:31:12.969Z",
     "videoId": "ORW7Shvj0f8",
     "playlistItemId": "UExaUk5TWEVISXJfQS41NkI0NEY2RDEwNTU3Q0M2"
+  },
+  "vanuatu-m60-us6000u3bc": {
+    "status": "published",
+    "contentHash": "069b02a1d9382e6f4276fe094c7d5ade249d25d512c2999383489bba1698755d",
+    "fileSize": 13752174,
+    "updatedAt": "2026-10-19T21:19:44.874Z",
+    "videoId": "rGqvg0bx3to",
+    "playlistItemId": "UExQc1I3NGxJaFdnSS41MjE1MkI0OTQ2QzJGNzNG"
   }
 }
