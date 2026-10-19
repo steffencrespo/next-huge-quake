@@ -78,7 +78,7 @@ export function validateManifest( m: Manifest ): string[] {
   try { credits = readCredits( m ); } catch ( e ) { problems.push( ( e as Error ).message ); }
   if ( credits ) {
     need( /Production Technology/.test( credits ) && /Output\.ai/.test( credits ) && credits.includes( 'https://output.ai' ), 'Credits lack the Production Technology / Output.ai block.' );
-    if ( /terrain|Mapzen|Joerd/i.test( credits ) ) need( /Joerd/.test( credits ) && /Mapzen/.test( credits ) && /OGL/.test( credits ), 'Terrain video credits lack the full terrain attribution block.' );
+    if ( /terrain|Mapzen|Joerd/i.test( credits ) ) need( /Joerd/.test( credits ) && /Mapzen/.test( credits ) && /Open Government Licence – Canada/.test( credits ) && credits.includes( 'https://open.canada.ca/en/open-government-licence-canada' ), 'Terrain video credits lack the full terrain attribution block.' );
     need( /^Source:/m.test( credits ) || /^Music:/m.test( credits ), 'Credits file has no Source/Music lines.' );
   }
   const t = m.approved;
