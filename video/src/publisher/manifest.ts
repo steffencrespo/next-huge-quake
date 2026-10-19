@@ -14,6 +14,7 @@ export const PLAYLISTS = {
   historic: 'PLKnoffH2oH5s',
   science: 'PLDquHuxZZySw',
   latest: 'PLPsR74lIhWgI',
+  kids: 'PLZRNSXEHIr_A',
 } as const;
 
 export class ManifestError extends Error {}

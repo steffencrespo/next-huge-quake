@@ -86,7 +86,7 @@ export async function findPlaylistItems( playlistId: string, videoId: string, ac
 export interface UploadMetadata {
   title: string; description: string; tags: string[]; categoryId: string; language: string; madeForKids: boolean;
 }
-/** Always private. Nothing in this module can set a video public; the only way it becomes public is a scheduled publishAt. */
+/** Uploads are always private. A video becomes public only by a scheduled publishAt or the explicit one-video publishNow below. */
 const insertBody = ( m: UploadMetadata ) => ( {
   snippet: { title: m.title, description: m.description, tags: m.tags, categoryId: m.categoryId, defaultLanguage: m.language, defaultAudioLanguage: m.language },
   status: { privacyStatus: 'private', selfDeclaredMadeForKids: m.madeForKids, embeddable: true },
@@ -131,6 +131,24 @@ export async function sendUpload( uploadUrl: string, bytes: Buffer, offset: numb
 export async function insertPlaylistItem( playlistId: string, videoId: string, accessToken: string ): Promise<{ id: string; videoId: string; playlistId: string }> {
   const body = await call( 'POST', 'playlistItems', { part: 'snippet' }, accessToken, { snippet: { playlistId, resourceId: { kind: 'youtube#video', videoId } } } );
   return { id: body.id, videoId: body.snippet?.resourceId?.videoId, playlistId: body.snippet?.playlistId };
+}
+
+/** Creates a public playlist. Callers check for an existing one with the same title first (listMyPlaylists). */
+export async function createPlaylist( title: string, description: string, accessToken: string ): Promise<Playlist> {
+  const body = await call( 'POST', 'playlists', { part: 'snippet,status' }, accessToken, { snippet: { title, description, defaultLanguage: 'en' }, status: { privacyStatus: 'public' } } );
+  return { id: body.id, title: body.snippet?.title, itemCount: 0, privacy: body.status?.privacyStatus, channelId: body.snippet?.channelId };
+}
+
+/** Makes one private, unscheduled video public immediately (one-video exception to the scheduled cadence). Other status fields are carried over. */
+export async function publishNow( videoId: string, accessToken: string ): Promise<VideoInfo> {
+  const current = await get( 'videos', { part: 'status', id: videoId }, accessToken );
+  const status = current.items?.[ 0 ]?.status;
+  if ( !status ) throw new Error( 'Video not found when publishing.' );
+  if ( status.privacyStatus !== 'private' || status.publishAt ) throw new Error( `Refusing to publish: video is ${ status.privacyStatus }${ status.publishAt ? ' with a schedule' : '' }, expected private and unscheduled.` );
+  const body = await call( 'PUT', 'videos', { part: 'status' }, accessToken, { id: videoId, status: {
+    privacyStatus: 'public', selfDeclaredMadeForKids: status.selfDeclaredMadeForKids, embeddable: status.embeddable, license: status.license, publicStatsViewable: status.publicStatsViewable,
+  } } );
+  return toVideoInfo( { id: videoId, status: body.status } );
 }
 
 /** Sets publishAt on an existing private video. status is replaced wholesale by videos.update, so the current values are carried over. */

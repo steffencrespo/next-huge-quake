@@ -25,6 +25,8 @@
     "style:metrics": "tsx scripts/style-metrics.ts",
     "render:terrain-c": "tsx scripts/render-terrain-c.ts",
     "check:labels": "tsx scripts/check-labels.ts",
+    "render:kids": "tsx scripts/render-kids.ts",
+    "plan:kids-narration": "tsx scripts/kids-narration-plan.ts",
     "youtube:connect": "tsx scripts/youtube-connect.ts",
     "youtube:publish": "tsx scripts/youtube-publish.ts"
   },
