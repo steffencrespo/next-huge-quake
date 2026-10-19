@@ -186,6 +186,40 @@ async function schedule() {
   console.log( 'Scheduled and verified.' );
 }
 
+const KIDS_PLAYLIST = { title: 'Earthquake Science for Kids', description: 'Short, friendly earthquake science for children aged 7 to 11, from Next Huge Quake.' };
+
+/** Creates the public kids playlist unless one with this title already exists. Prints its id; add it to PLAYLISTS in manifest.ts. */
+async function createKidsPlaylist() {
+  const at = await token( true );
+  assertAuthorizedChannel( await yt.getMyChannels( at ) );
+  const found = ( await yt.listMyPlaylists( at ) ).filter( p => p.title === KIDS_PLAYLIST.title );
+  if ( found.length ) { console.log( `Already exists: ${ found.map( p => `${ p.id } [${ p.privacy }]` ).join( ', ' ) }. Nothing created.` ); return; }
+  console.log( `${ confirm ? 'CREATING' : 'DRY RUN (add --confirm to create)' } public playlist "${ KIDS_PLAYLIST.title }"` );
+  if ( !confirm ) return;
+  const p = await yt.createPlaylist( KIDS_PLAYLIST.title, KIDS_PLAYLIST.description, at );
+  if ( p.privacy !== 'public' || p.title !== KIDS_PLAYLIST.title ) throw new Error( `Playlist response does not match (${ p.id }). Check YouTube Studio.` );
+  console.log( `Created playlist ${ p.id } (public). Add it to PLAYLISTS in src/publisher/manifest.ts.` );
+}
+
+/** One-video immediate publication: private -> public. Only for a video this tool uploaded, approved and playlisted. */
+async function publishNowCommand() {
+  const m = need( rest[ 0 ] );
+  const rec = loadState()[ m.id ];
+  const problems: string[] = [];
+  if ( !isApproved( m ) ) problems.push( 'Manifest is not approved or changed after approval.' );
+  if ( rec?.status !== 'playlisted' || !rec.videoId ) problems.push( `State is "${ rec?.status ?? 'none' }"; expected an uploaded and playlisted video.` );
+  else if ( rec.contentHash !== contentHash( m ) ) problems.push( 'Manifest differs from what was uploaded.' );
+  if ( problems.length ) throw new Error( `Preflight failed:\n  - ${ problems.join( '\n  - ' ) }` );
+  const at = await token( true );
+  assertAuthorizedChannel( await yt.getMyChannels( at ) );
+  console.log( `${ confirm ? 'PUBLISHING NOW' : 'DRY RUN (add --confirm to publish)' }: ${ rec.videoId } (${ m.approved.title }) private -> public` );
+  if ( !confirm ) return;
+  const v = await yt.publishNow( rec.videoId!, at );
+  if ( v.privacy !== 'public' ) throw new Error( 'Publish response does not show public. Run inspect.' );
+  saveRecord( m.id, { status: 'published' } );
+  console.log( `Public: https://youtu.be/${ rec.videoId }` );
+}
+
 async function queue() {
   const at = await token( false );
   assertAuthorizedChannel( await yt.getMyChannels( at ) );
@@ -198,7 +232,7 @@ async function queue() {
   for ( const v of unsched ) console.log( `  [${ v.privacy }] ${ v.id }  ${ v.title }` );
 }
 
-const commands: Record<string, () => unknown> = { preview, approve, upload, inspect, schedule, queue };
+const commands: Record<string, () => unknown> = { preview, approve, upload, inspect, schedule, queue, 'create-kids-playlist': createKidsPlaylist, 'publish-now': publishNowCommand };
 const run = commands[ process.argv[ 2 ] ?? 'preview' ];
 if ( !run ) { console.error( `Usage: youtube-publish <${ Object.keys( commands ).join( '|' ) }> [id] [--confirm]` ); process.exit( 2 ); }
 Promise.resolve().then( run ).catch( error => { console.error( `\nFailed: ${ error instanceof Error ? error.message : 'unknown error' }` ); process.exit( 1 ); } );

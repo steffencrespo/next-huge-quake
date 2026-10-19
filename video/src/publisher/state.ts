@@ -6,12 +6,13 @@
  *   uploaded   videos.insert finished; videoId known. Private.
  *   playlisted the video is verified in its playlist.
  *   scheduled  publishAt was set.
+ *   published  made public immediately (publish-now exception).
  */
 import { existsSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 export interface UploadRecord {
-  status: 'uploading' | 'uploaded' | 'playlisted' | 'scheduled';
+  status: 'uploading' | 'uploaded' | 'playlisted' | 'scheduled' | 'published';
   contentHash: string;
   fileSize: number;
   uploadUrl?: string;
