@@ -6,6 +6,7 @@
  *   upload   <id> [--confirm]   PRIVATE upload + playlist assignment (resumes an interrupted upload; never restarts it)
  *   inspect  <id>               read the uploaded video back and compare it with the manifest
  *   schedule <id> [--confirm]   set publishAt (the only way a video becomes public); separate from upload
+ *   update-metadata <id> [--confirm]   correct title/description of an uploaded video in place (text only)
  *   queue                       scheduled and private videos currently on the channel
  *
  * Write commands need the write authorization: `npm run youtube:connect -- --write`. They never open a browser themselves.
@@ -220,6 +221,32 @@ async function publishNowCommand() {
   console.log( `Public: https://youtu.be/${ rec.videoId }` );
 }
 
+/** Corrects the title/description of a video this tool already uploaded, in place. Only text changes; privacy, audience, playlist and state status are kept. */
+async function updateMetadataCommand() {
+  const m = need( rest[ 0 ] );
+  const rec = loadState()[ m.id ];
+  const problems = validateManifest( m );
+  if ( confirm && !isApproved( m ) ) problems.push( 'Manifest is not approved or changed after approval. Review the dry run, then run approve.' );
+  if ( !rec?.videoId || ![ 'playlisted', 'scheduled', 'published' ].includes( rec.status ) ) problems.push( `State is "${ rec?.status ?? 'none' }"; expected an uploaded video.` );
+  if ( problems.length ) throw new Error( `Preflight failed:\n  - ${ problems.join( '\n  - ' ) }` );
+  const at = await token( true );
+  assertAuthorizedChannel( await yt.getMyChannels( at ) );
+  const live = ( await yt.listChannelVideos( at ) ).find( v => v.id === rec.videoId );
+  if ( !live ) throw new Error( `Video ${ rec.videoId } not found on the channel.` );
+  const description = composeDescription( m );
+  const liveText = await yt.getVideoText( rec.videoId!, at );
+  console.log( `${ confirm ? 'UPDATING' : 'DRY RUN (add --confirm to write)' }: ${ rec.videoId } [${ live.privacy }, state ${ rec.status }]` );
+  console.log( `  title:       ${ JSON.stringify( liveText.title ) }\n           ->  ${ JSON.stringify( m.approved.title ) }` );
+  console.log( `  description: ${ liveText.description === description ? 'unchanged' : 'changes (current text below, then new text)' }` );
+  if ( liveText.description !== description ) console.log( `--- current ---\n${ liveText.description }\n--- new ---\n${ description }\n---` );
+  if ( !confirm ) return;
+  await yt.updateVideoText( rec.videoId!, m.approved.title, description, at );
+  const back = await yt.getVideoText( rec.videoId!, at );
+  if ( back.title !== m.approved.title || back.description !== description ) throw new Error( 'Read-back does not match the manifest. Run inspect.' );
+  saveRecord( m.id, { status: rec.status, contentHash: contentHash( m ) } );
+  console.log( `Updated and verified by read-back: https://youtu.be/${ rec.videoId }` );
+}
+
 async function queue() {
   const at = await token( false );
   assertAuthorizedChannel( await yt.getMyChannels( at ) );
@@ -232,7 +259,7 @@ async function queue() {
   for ( const v of unsched ) console.log( `  [${ v.privacy }] ${ v.id }  ${ v.title }` );
 }
 
-const commands: Record<string, () => unknown> = { preview, approve, upload, inspect, schedule, queue, 'create-kids-playlist': createKidsPlaylist, 'publish-now': publishNowCommand };
+const commands: Record<string, () => unknown> = { preview, approve, upload, inspect, schedule, queue, 'create-kids-playlist': createKidsPlaylist, 'publish-now': publishNowCommand, 'update-metadata': updateMetadataCommand };
 const run = commands[ process.argv[ 2 ] ?? 'preview' ];
 if ( !run ) { console.error( `Usage: youtube-publish <${ Object.keys( commands ).join( '|' ) }> [id] [--confirm]` ); process.exit( 2 ); }
 Promise.resolve().then( run ).catch( error => { console.error( `\nFailed: ${ error instanceof Error ? error.message : 'unknown error' }` ); process.exit( 1 ); } );

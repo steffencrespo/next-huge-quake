@@ -13,7 +13,7 @@ import { kidsCredits } from '../src/kids/credits.js';
 const root = join( dirname( new URL( import.meta.url ).pathname ), '..' );
 const final = process.argv.includes( '--final' );
 const v2 = process.argv.includes( '--v2' );
-const defaultName = v2 ? 'why-does-the-earth-shake-v2.mp4' : final ? 'why-does-the-earth-shake-final.mp4' : 'why-does-the-earth-shake-silent-preview.mp4';
+const defaultName = `why-does-the-earth-shake${ v2 ? '-v2' : '' }${ final ? ( v2 ? '' : '-final' ) : '-silent-preview' }.mp4`;
 const out = resolve( process.argv.find( a => a.startsWith( '--out=' ) )?.slice( 6 ) ?? join( root, 'out', 'kids', defaultName ) );
 mkdirSync( dirname( out ), { recursive: true } );
 

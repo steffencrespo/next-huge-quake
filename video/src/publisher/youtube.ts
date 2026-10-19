@@ -151,6 +151,21 @@ export async function publishNow( videoId: string, accessToken: string ): Promis
   return toVideoInfo( { id: videoId, status: body.status } );
 }
 
+export async function getVideoText( videoId: string, accessToken: string ): Promise<{ title: string; description: string }> {
+  const sn = ( await get( 'videos', { part: 'snippet', id: videoId }, accessToken ) ).items?.[ 0 ]?.snippet;
+  if ( !sn ) throw new Error( 'Video not found.' );
+  return { title: sn.title, description: sn.description };
+}
+
+/** Replaces only the title and description of an existing video. videos.update replaces the whole snippet, so every other snippet field is carried over; status is not sent. */
+export async function updateVideoText( videoId: string, title: string, description: string, accessToken: string ): Promise<{ title: string; description: string }> {
+  const current = await get( 'videos', { part: 'snippet', id: videoId }, accessToken );
+  const sn = current.items?.[ 0 ]?.snippet;
+  if ( !sn ) throw new Error( 'Video not found when updating its text.' );
+  const body = await call( 'PUT', 'videos', { part: 'snippet' }, accessToken, { id: videoId, snippet: { ...sn, title, description } } );
+  return { title: body.snippet?.title, description: body.snippet?.description };
+}
+
 /** Sets publishAt on an existing private video. status is replaced wholesale by videos.update, so the current values are carried over. */
 export async function scheduleVideo( videoId: string, publishAtIso: string, accessToken: string ): Promise<VideoInfo> {
   const current = await get( 'videos', { part: 'status', id: videoId }, accessToken );
