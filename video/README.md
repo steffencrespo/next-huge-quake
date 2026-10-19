@@ -55,6 +55,21 @@ npx remotion render QuakeNews out/video.mp4 --gl=angle --props=path/to/spec.json
 
 The props file is `{ "spec": <VideoSpec> }`. An invalid spec, or copy that fails the guard, fails the render before frame 0.
 
+## Historic Earthquakes (Batch 01-03)
+
+`src/historic/` holds three Shorts for the Historic Earthquakes playlist: `HistoricChile1960`, `HistoricJapan2011`, `HistoricSanFrancisco1906`. They reuse the educational shell (`src/edu/EduShort.tsx`: captions, CTA, ducked music, narration beats, library) and add regional Mercator maps (`regionmap.ts`, Natural Earth 1:50m land), a schematic subduction section and data cards (`kit.tsx`). The Pacific view of 01 reuses the Equal Earth map of the Ring of Fire episode.
+
+```bash
+npx tsx scripts/edu-batch.ts plan     --series=historic   # lines, cache hits, estimated credits; no request
+npx tsx scripts/edu-batch.ts preview  --series=historic   # silent renders with timed placeholder captions -> out/edu/preview/
+npx tsx scripts/edu-batch.ts generate --series=historic   # paid: only missing clips; ledger in out/edu/credit-ledger-historic.json
+npx tsx scripts/edu-batch.ts final    --series=historic   # narration, music, effects -> out/edu/final/
+```
+
+Verified facts (sources): USGS ComCat (magnitudes, times, epicentres: 1960 M9.5, 2011 M9.1 Mww, 1906 M7.9 Mw); USGS 1906 event pages (rupture of the northernmost 296 mi / 477 km, about 20 ft offset near Point Reyes per Lawson, toll undercount factor 3 to 4, Lawson 1908, Reid 1910); USGS Hawaiian Volcano Observatory (1960 tsunami about 15 h to Hawaii, about 22 h to Japan); USGS Tohoku summary (15,703 dead at the time of its writing, 37.88 m maximum run-up at Miyako); JMA (revised tsunami warning system in service 2013-03-07).
+
+Illustrative, not data: rupture bands, the Japan Trench line, the San Andreas trace, tsunami routes and wave arcs, cross-sections, the skyline and fire graphic, the fence diagram. Each is labelled on screen. The maps are vector maps, not the terrain-tile renderer used by QuakeNews.
+
 ## Structure
 
 ```
