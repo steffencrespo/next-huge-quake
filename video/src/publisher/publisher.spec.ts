@@ -5,7 +5,8 @@ import { assertAuthorizedChannel, likelyDuplicates, schedulePreflight, uploadPre
 import { isEditorialSlot, localToUtc, proposeSlots, toApiTimestamp } from './schedule.js';
 import type { VideoInfo } from './youtube.js';
 
-const m = (): Manifest => ( { ...loadManifest( 'chile1960' ) } );
+/** The committed manifests are already approved; tests start from the unapproved form. */
+const m = (): Manifest => ( { ...loadManifest( 'chile1960' ), approval: undefined } );
 const video = ( over: Partial<VideoInfo> ): VideoInfo => ( { id: 'v', title: 't', description: '', tags: [], ...over } );
 const approved = ( x: Manifest ): Manifest => ( { ...x, approval: { status: 'approved', approvedAt: 'now', contentHash: contentHash( x ) } } );
 
