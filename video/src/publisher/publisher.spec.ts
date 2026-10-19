@@ -64,6 +64,8 @@ describe( 'safety checks', () => {
     expect( uploadPreflight( approved( m() ), {}, [] ).problems ).toEqual( [] );
     const state = { chile1960: { status: 'uploaded', videoId: 'abc', contentHash: 'h', fileSize: 1, updatedAt: '' } } as const;
     expect( uploadPreflight( approved( m() ), state, [] ).problems.join() ).toMatch( /Already uploaded/ );
+    const unscheduled = { chile1960: { ...state.chile1960, status: 'playlisted' } } as const; // e.g. a video whose schedule was removed in Studio
+    expect( uploadPreflight( approved( m() ), unscheduled, [] ).problems.join() ).toMatch( /Already playlisted/ );
     const dupe = video( { id: 'old', title: 'Chile 1960: the strongest earthquake ever recorded!' } );
     expect( likelyDuplicates( m(), [ dupe ] ) ).toHaveLength( 1 );
     expect( uploadPreflight( approved( m() ), {}, [ dupe ] ).problems.join() ).toMatch( /duplicate/ );
