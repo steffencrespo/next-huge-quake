@@ -10,6 +10,10 @@ import { totalFrames } from './spec/timeline.js';
 import { DURATION_FRAMES, FPS } from './spike/camera.js';
 import { ScienceShort, calculateScienceShortMetadata, scienceShortSchema } from './edu/ScienceShort.js';
 import { TOTAL_FRAMES } from './edu/geo.js';
+import { calculateEduMetadata, eduShortSchema } from './edu/EduShort.js';
+import { Predict } from './edu/ep02.js';
+import { RingOfFire } from './edu/ep04.js';
+import { Magnitude } from './edu/ep03.js';
 import { MapSpike } from './spike/MapSpike.js';
 import type { MapSpikeProps } from './spike/MapSpike.js';
 
@@ -49,6 +53,9 @@ export const Root: React.FC = () => (
       defaultProps={{ fixture: 'noto', style: 'terrain', chrome: false } satisfies TerrainSpikeProps}
     />
     <Composition id="WhyEarthquakes" component={ScienceShort} schema={scienceShortSchema} calculateMetadata={calculateScienceShortMetadata} width={1080} height={1920} fps={30} durationInFrames={TOTAL_FRAMES} defaultProps={{}} />
+    <Composition id="WhyCantWePredict" component={Predict} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( 'predict' )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
+    <Composition id="RingOfFire" component={RingOfFire} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( 'ring' )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
+    <Composition id="MagnitudeSixVsSeven" component={Magnitude} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( 'magnitude' )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Still
       id="DesignBoard"
       component={DesignBoard}
