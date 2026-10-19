@@ -21,7 +21,7 @@ import { Arrow, Bubble, Face, Mascot, SkyBackdrop, Star, popEase } from './parts
 const FPS = 30;
 const META = KIDS_EPISODE;
 
-export const kidsShortSchema = z.object( { audio: kidsAudioSchema.optional() } );
+export const kidsShortSchema = z.object( { audio: kidsAudioSchema.optional(), v2: z.boolean().optional() } );
 export type KidsShortProps = z.infer<typeof kidsShortSchema>;
 export const calculateKidsMetadata: CalculateMetadataFunction<KidsShortProps> = ( { props } ) => ( { durationInFrames: episodeSeconds( META, props.audio ) * FPS } );
 
@@ -215,6 +215,53 @@ const Waves: React.FC<SceneProps> = ( { t, o, b } ) => {
   );
 };
 
+// ---------- 4b. V2: waves spread from an underground source, seen as a ground cross-section ----------
+
+const SRC = { x: 540, y: 1080 };
+const SURFACE = 740;
+const V2_HOUSES = [ { x: 230, c: K.pink }, { x: 540, c: K.blue }, { x: 850, c: K.sun } ];
+
+const WavesV2: React.FC<SceneProps> = ( { t, o, b } ) => {
+  const t0 = at( b, 'waves', 0.4 );
+  const intro = popEase( ( t - at( b, 'energy', 0 ) ) / 0.6 );
+  const colors = [ K.pink, K.sun, K.blue ];
+  const rings = Array.from( { length: 7 }, ( _, k ) => ( { k, r: ( t - t0 - k * GAP ) * SPEED } ) ).filter( g => g.r > 0 && g.r < 700 );
+  const wiggles = V2_HOUSES.map( h => rings.reduce( ( s, g ) => s + clamp( 1 - Math.abs( g.r - Math.hypot( h.x - SRC.x, SURFACE - SRC.y ) ) / 70 ) * clamp( 1 - g.r / 760 ), 0 ) );
+  const shakeLine = prog( t, at( b, 'shake', 0.2 ), 0.4 );
+  const pulse = 1 + Math.sin( t * 9 ) * 0.08;
+  const label = prog( t, at( b, 'energy', 0.2 ), 0.4 ) * clamp( ( at( b, 'shake', 0 ) - t ) / 0.4 + 0.3 );
+  return (
+    <g opacity={o}>
+      <g transform={`translate(0 ${f1( ( 1 - Math.min( 1, intro ) ) * 120 )})`}>
+        <clipPath id="xsec"><rect x={60} y={470} width={960} height={860} rx={60} /></clipPath>
+        <g clipPath="url(#xsec)">
+          <rect x={60} y={470} width={960} height={SURFACE - 470} fill="#d9f3ff" />
+          <rect x={60} y={SURFACE} width={960} height={1330 - SURFACE} fill={K.soil} />
+          <rect x={60} y={SURFACE + 140} width={960} height={110} fill="#b87740" opacity={0.55} />
+          <rect x={60} y={SURFACE + 400} width={960} height={190} fill="#9a6232" opacity={0.6} />
+          {[ [ 150, 880 ], [ 330, 960 ], [ 760, 900 ], [ 900, 1010 ], [ 200, 1190 ], [ 860, 1230 ], [ 420, 1260 ] ].map( ( [ x, y ], i ) => <ellipse key={i} cx={x} cy={y} rx={22} ry={14} fill="#e0b27c" stroke={K.ink} strokeWidth={4} /> )}
+          {rings.map( g => <circle key={g.k} cx={SRC.x} cy={SRC.y} r={g.r} fill="none" stroke={colors[g.k % 3]} strokeWidth={26 - g.r / 40} opacity={clamp( 1 - g.r / 740 ) * 0.95} /> )}
+          <rect x={60} y={SURFACE - 26} width={960} height={26} fill={K.grass} />
+        </g>
+        <line x1={60} x2={1020} y1={SURFACE} y2={SURFACE} stroke={K.ink} strokeWidth={8} />
+        <rect x={60} y={470} width={960} height={860} rx={60} fill="none" stroke={K.ink} strokeWidth={9} />
+        {V2_HOUSES.map( ( h, i ) => <House key={i} x={h.x} y={SURFACE - 8} c={h.c} wiggle={clamp( wiggles[i] * 1.2 )} t={t} /> )}
+        <g transform={`translate(${SRC.x} ${SRC.y}) scale(${f1( pulse * 1.6 )})`}>
+          <polygon points="-18,-62 12,-22 -6,-14 22,30 -4,22 8,66 -32,10 -10,16 -34,-24 -14,-18" fill={K.pink} stroke={K.ink} strokeWidth={7} strokeLinejoin="round" />
+        </g>
+        <g opacity={label}>
+          <Arrow x={SRC.x} y={SRC.y + 140 - Math.sin( t * 5 ) * 6} dir={-1} vertical color={K.sun} size={90} />
+          <rect x={150} y={1240} width={780} height={92} rx={46} fill={K.white} stroke={K.ink} strokeWidth={7} />
+          <text x={540} y={1305} textAnchor="middle" fontFamily={FONT.ui} fontWeight={900} fontSize={52} fill={K.ink}>SHAKE STARTS HERE</text>
+        </g>
+      </g>
+      <Bubble x={540} y={410} size={56} color={K.purple} opacity={prog( t, at( b, 'waves', 0 ), 0.4 )}>SEISMIC WAVES</Bubble>
+      <Bubble x={540} y={1400} size={50} opacity={prog( t, at( b, 'waves', 1.6 ), 0.5 ) * ( 1 - shakeLine )}>like ripples in a pond</Bubble>
+      <Bubble x={540} y={1400} size={68} color={K.pink} rotate={Math.sin( t * 20 ) * 3} opacity={shakeLine}>WIGGLE, WIGGLE!</Bubble>
+    </g>
+  );
+};
+
 // ---------- 5. scientists learn from the waves ----------
 
 const SEISMO: string = ( () => {
@@ -293,7 +340,7 @@ const KidsCaptions: React.FC<{ t: number; captions: { text: string; start: numbe
   );
 };
 
-export const KidsWhyEarthShakes: React.FC<KidsShortProps> = ( { audio } ) => {
+export const KidsWhyEarthShakes: React.FC<KidsShortProps> = ( { audio, v2 } ) => {
   useBundledFonts();
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
@@ -308,7 +355,7 @@ export const KidsWhyEarthShakes: React.FC<KidsShortProps> = ( { audio } ) => {
         <Hook t={t} b={b} o={span( t, b, 'hook', 'puzzle' )} />
         <Puzzle t={t} b={b} o={span( t, b, 'puzzle', 'stuck' )} />
         <Blocks t={t} b={b} tSlip={wordStart( b, audio, 'snap', /snap/i, 0.5 )} o={span( t, b, 'stuck', 'waves' )} />
-        <Waves t={t} b={b} o={span( t, b, 'waves', 'learn' )} />
+        {v2 ? <WavesV2 t={t} b={b} o={span( t, b, 'waves', 'learn' )} /> : <Waves t={t} b={b} o={span( t, b, 'waves', 'learn' )} />}
         <Learn t={t} b={b} o={span( t, b, 'learn', 'cta' )} />
       </svg>
       {tagO > 0.01 ? (

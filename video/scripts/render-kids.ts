@@ -1,5 +1,5 @@
 /**
- * Renders the kids Short: tsx scripts/render-kids.ts [--final] [--out=<file.mp4>]
+ * Renders the kids Short: tsx scripts/render-kids.ts [--final] [--v2] [--out=<file.mp4>]
  * Without --final: the silent preview with placeholder captions. With --final: narration, music and captions from
  * out/kids/audio.json (see generate-kids-narration.ts). Stages audio under public/audio/kids/ (never overwriting
  * different content), removes only what it staged, and writes <out>.credits.txt. Calls no paid service.
@@ -12,13 +12,14 @@ import { kidsCredits } from '../src/kids/credits.js';
 
 const root = join( dirname( new URL( import.meta.url ).pathname ), '..' );
 const final = process.argv.includes( '--final' );
-const defaultName = final ? 'why-does-the-earth-shake-final.mp4' : 'why-does-the-earth-shake-silent-preview.mp4';
+const v2 = process.argv.includes( '--v2' );
+const defaultName = `why-does-the-earth-shake${ v2 ? '-v2' : '' }${ final ? ( v2 ? '' : '-final' ) : '-silent-preview' }.mp4`;
 const out = resolve( process.argv.find( a => a.startsWith( '--out=' ) )?.slice( 6 ) ?? join( root, 'out', 'kids', defaultName ) );
 mkdirSync( dirname( out ), { recursive: true } );
 
 const created: string[] = [];
 try {
-  const args = [ 'remotion', 'render', 'KidsWhyEarthShakes', out, '--overwrite' ];
+  const args = [ 'remotion', 'render', v2 ? 'KidsWhyEarthShakesV2' : 'KidsWhyEarthShakes', out, '--overwrite' ];
   if ( final ) {
     const audioFile = join( root, 'out', 'kids', 'audio.json' );
     if ( !existsSync( audioFile ) ) {
@@ -42,7 +43,7 @@ try {
       created.push( target );
     }
     const props = join( dirname( out ), `${basename( out, '.mp4' )}.props.json` );
-    writeFileSync( props, JSON.stringify( { audio } ) );
+    writeFileSync( props, JSON.stringify( { audio, ...( v2 ? { v2 } : {} ) } ) );
     args.push( `--props=${props}` );
   }
   const result = spawnSync( 'npx', args, { cwd: root, stdio: 'inherit' } );
