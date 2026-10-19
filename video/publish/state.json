@@ -1,0 +1,29 @@
+{
+  "chile1960": {
+    "status": "scheduled",
+    "contentHash": "a02d708f99a820195c3d452f62c35680cfaf515c06d0b2fa318dd79286243b5c",
+    "fileSize": 7398941,
+    "updatedAt": "2026-10-19T03:30:51.747Z",
+    "videoId": "dNEuJ35fV_A",
+    "playlistItemId": "UExLbm9mZkgyb0g1cy41NkI0NEY2RDEwNTU3Q0M2",
+    "publishAt": "2026-10-27T21:00:00Z"
+  },
+  "japan2011": {
+    "status": "scheduled",
+    "contentHash": "cdb80c55751d7c095fa1f54dca73482ba5693bc2afc0d8f1bcb7f558c8f7f951",
+    "fileSize": 7283252,
+    "updatedAt": "2026-10-19T03:30:55.138Z",
+    "videoId": "RmuWF2ckd6g",
+    "playlistItemId": "UExLbm9mZkgyb0g1cy4yODlGNEE0NkRGMEEzMEQy",
+    "publishAt": "2026-10-29T21:00:00Z"
+  },
+  "sanfrancisco1906": {
+    "status": "scheduled",
+    "contentHash": "688e759824624a05c33f2dbd4ba1b188e2207e130d46c18dda90442adc06018c",
+    "fileSize": 7331750,
+    "updatedAt": "2026-10-19T03:30:57.905Z",
+    "videoId": "_GSo7e72kcs",
+    "playlistItemId": "UExLbm9mZkgyb0g1cy4wMTcyMDhGQUE4NTIzM0Y5",
+    "publishAt": "2026-10-31T21:00:00Z"
+  }
+}

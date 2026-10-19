@@ -12,8 +12,21 @@ import { createServer } from 'node:http';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 
-/** Read-only. Write scopes are requested in a later milestone, with a fresh consent. */
-export const SCOPES = [ 'https://www.googleapis.com/auth/youtube.readonly' ];
+const READONLY_SCOPE = 'https://www.googleapis.com/auth/youtube.readonly';
+const UPLOAD_SCOPE = 'https://www.googleapis.com/auth/youtube.upload';
+const MANAGE_SCOPE = 'https://www.googleapis.com/auth/youtube.force-ssl';
+
+/** M1 connection: read-only. */
+export const READ_SCOPES = [ READONLY_SCOPE ];
+/** M2 publishing: upload videos (youtube.upload), and manage them, playlists and reads (youtube.force-ssl). Requires a fresh consent. */
+export const WRITE_SCOPES = [ UPLOAD_SCOPE, MANAGE_SCOPE ];
+
+/** True when the granted scopes cover every required one (force-ssl includes read access). */
+export function scopesSatisfy( granted: string, required: string[] ): boolean {
+  const have = new Set( granted.split( ' ' ).filter( Boolean ) );
+  if ( have.has( MANAGE_SCOPE ) ) have.add( READONLY_SCOPE );
+  return required.every( s => have.has( s ) );
+}
 
 const AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
 const FALLBACK_TOKEN_URL = 'https://oauth2.googleapis.com/token';
@@ -85,7 +98,7 @@ function toStored( body: any, previous?: StoredToken ): StoredToken {
 }
 
 /** Browser consent through a loopback redirect on a random local port, with PKCE and a state check. */
-async function authorizeInBrowser( client: ClientCredentials, openUrl: ( url: string ) => void ): Promise<StoredToken> {
+async function authorizeInBrowser( client: ClientCredentials, scopes: string[], openUrl: ( url: string ) => void ): Promise<StoredToken> {
   const verifier = randomBytes( 32 ).toString( 'base64url' );
   const challenge = createHash( 'sha256' ).update( verifier ).digest( 'base64url' );
   const state = randomBytes( 16 ).toString( 'base64url' );
@@ -112,7 +125,7 @@ async function authorizeInBrowser( client: ClientCredentials, openUrl: ( url: st
   code.catch( () => {} );
 
   const authUrl = `${ AUTH_URL }?${ new URLSearchParams( {
-    client_id: client.clientId, redirect_uri: redirectUri, response_type: 'code', scope: SCOPES.join( ' ' ),
+    client_id: client.clientId, redirect_uri: redirectUri, response_type: 'code', scope: scopes.join( ' ' ),
     code_challenge: challenge, code_challenge_method: 'S256', state, access_type: 'offline', prompt: 'consent',
   } ) }`;
   try {
@@ -124,15 +137,28 @@ async function authorizeInBrowser( client: ClientCredentials, openUrl: ( url: st
   }
 }
 
-export interface AccessOptions { openUrl: ( url: string ) => void; log: ( line: string ) => void }
+export interface AccessOptions {
+  openUrl: ( url: string ) => void;
+  log: ( line: string ) => void;
+  /** Scopes the caller needs; default read-only. */
+  scopes?: string[];
+  /** false: never open a browser; throw when a (re)authorization would be needed. Used by dry runs and every write command. */
+  interactive?: boolean;
+}
 
 /**
  * Returns a valid access token: reuses the stored one, refreshes it, or runs the browser flow.
- * A refresh token rejected with invalid_grant (Testing mode: 7 days; or revoked) falls back to a new consent.
+ * A stored token whose scopes do not cover `scopes` is never reused (scope upgrade = new consent), but it is only replaced
+ * after the new consent succeeds, so a cancelled upgrade leaves the working read-only token in place.
+ * A refresh token rejected with invalid_grant (Testing mode: 7 days; or revoked) requires a new consent.
  */
-export async function getAccessToken( client: ClientCredentials, { openUrl, log }: AccessOptions ): Promise<string> {
+export async function getAccessToken( client: ClientCredentials, { openUrl, log, scopes = READ_SCOPES, interactive = true }: AccessOptions ): Promise<string> {
+  const needConsent = ( why: string ): never => { throw new AuthError( `${ why } Run "npm run youtube:connect${ scopes === READ_SCOPES ? '' : ' -- --write' }" to authorize.` ); };
   let token = loadToken();
-  if ( token && token.scope !== SCOPES.join( ' ' ) && !SCOPES.every( s => token!.scope.split( ' ' ).includes( s ) ) ) token = undefined;
+  if ( token && !scopesSatisfy( token.scope, scopes ) ) {
+    if ( !interactive ) needConsent( 'The stored authorization lacks the required YouTube permissions.' );
+    token = undefined;
+  }
   if ( token && token.expiresAt - Date.now() > 60_000 ) return token.accessToken;
   if ( token?.refreshToken ) {
     try {
@@ -141,11 +167,13 @@ export async function getAccessToken( client: ClientCredentials, { openUrl, log 
       return token.accessToken;
     } catch ( error ) {
       if ( !( error instanceof AuthError ) || !error.message.includes( 'invalid_grant' ) ) throw error;
+      if ( !interactive ) needConsent( 'Stored authorization expired or was revoked (Testing-mode refresh tokens last 7 days).' );
       log( 'Stored authorization expired or was revoked (Testing-mode refresh tokens last 7 days). Re-authorizing.' );
     }
   }
-  log( 'Opening your browser for Google authorization (read-only YouTube access)...' );
-  token = await authorizeInBrowser( client, openUrl );
+  if ( !interactive ) needConsent( 'No stored authorization.' );
+  log( `Opening your browser for Google authorization (${ scopes === READ_SCOPES ? 'read-only' : 'upload and manage' } YouTube access)...` );
+  token = await authorizeInBrowser( client, scopes, openUrl );
   saveToken( token );
   return token.accessToken;
 }
