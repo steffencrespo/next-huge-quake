@@ -13,7 +13,7 @@ import { useBundledFonts } from '../design/useBundledFonts.js';
 import { beatsFor, episodeSeconds, placeholderCaptions } from '../edu/episodes.js';
 import type { Beats } from '../edu/episodes.js';
 import { at, clamp, f1, prog, span, vis } from '../edu/kit.js';
-import { KIDS_EPISODE, KIDS_PALETTE as K } from './config.js';
+import { KIDS_EPISODE, KIDS_EPISODE_SHORT, KIDS_PALETTE as K } from './config.js';
 import { kidsAudioSchema, kidsMusicGain, wordStart } from './audio.js';
 import type { KidsAudio } from './audio.js';
 import { Arrow, Bubble, Face, Mascot, SkyBackdrop, Star, popEase } from './parts.js';
@@ -21,14 +21,14 @@ import { Arrow, Bubble, Face, Mascot, SkyBackdrop, Star, popEase } from './parts
 const FPS = 30;
 const META = KIDS_EPISODE;
 
-export const kidsShortSchema = z.object( { audio: kidsAudioSchema.optional(), v2: z.boolean().optional() } );
+export const kidsShortSchema = z.object( { audio: kidsAudioSchema.optional(), v2: z.boolean().optional(), short: z.boolean().optional() } );
 export type KidsShortProps = z.infer<typeof kidsShortSchema>;
-export const calculateKidsMetadata: CalculateMetadataFunction<KidsShortProps> = ( { props } ) => ( { durationInFrames: episodeSeconds( META, props.audio ) * FPS } );
+export const calculateKidsMetadata: CalculateMetadataFunction<KidsShortProps> = ( { props } ) => ( { durationInFrames: episodeSeconds( props.short ? KIDS_EPISODE_SHORT : META, props.audio ) * FPS } );
 
 type SceneProps = { t: number; o: number; b: Beats };
 
 /** Narration clips with the quiet music bed underneath. No sound effects: the pacing and the voice carry the video. */
-const Layers: React.FC<{ audio: KidsAudio; total: number }> = ( { audio, total } ) => (
+export const Layers: React.FC<{ audio: KidsAudio; total: number }> = ( { audio, total } ) => (
   <>
     <Audio src={staticFile( audio.musicFile )} volume={f => kidsMusicGain( f / FPS, audio.narrationStart, audio.narrationEnd, total )} />
     {audio.clips.map( clip => (
@@ -41,12 +41,23 @@ const Layers: React.FC<{ audio: KidsAudio; total: number }> = ( { audio, total }
 
 // ---------- 1. hook ----------
 
-const Hook: React.FC<SceneProps> = ( { t, o, b } ) => {
+const Hook: React.FC<SceneProps & { short?: boolean }> = ( { t, o, b, short } ) => {
   const enter = popEase( t / 0.7 );
+  const jitter = short ? Math.sin( t * 38 ) * 7 * clamp( 1 - t / 2.5 ) : 0;
   return (
-    <g opacity={o}>
-      <Bubble x={540} y={420} size={104} scale={enter}>WHY DOES THE</Bubble>
-      <Bubble x={540} y={540} size={132} color={K.pink} scale={enter}>EARTH SHAKE?</Bubble>
+    <g opacity={o} transform={`translate(${f1( jitter )} ${f1( jitter * 0.6 )})`}>
+      {short ? (
+        <>
+          <Bubble x={540} y={380} size={76} scale={enter}>THE GROUND BENEATH</Bubble>
+          <Bubble x={540} y={470} size={76} scale={enter}>YOUR FEET IS MOVING</Bubble>
+          <Bubble x={540} y={610} size={140} color={K.pink} scale={enter}>RIGHT NOW!</Bubble>
+        </>
+      ) : (
+        <>
+          <Bubble x={540} y={420} size={104} scale={enter}>WHY DOES THE</Bubble>
+          <Bubble x={540} y={540} size={132} color={K.pink} scale={enter}>EARTH SHAKE?</Bubble>
+        </>
+      )}
       <Mascot x={540} y={960} r={250 * Math.min( 1, enter )} t={t} mood={t > at( b, 'hook', 1.4 ) ? 'wow' : 'happy'} tilt={Math.sin( t * 2.4 ) * 4} />
       {[ [ 220, 800, 0 ], [ 860, 760, 1 ], [ 800, 1180, 2 ], [ 250, 1150, 3 ] ].map( ( [ x, y, i ] ) => (
         <Bubble key={i} x={x} y={y + Math.sin( t * 2 + i ) * 14} size={110} color={[ K.orange, K.purple, K.teal, K.blue ][i]} rotate={[ -14, 12, -8, 16 ][i]}>?</Bubble>
@@ -303,7 +314,7 @@ const Learn: React.FC<SceneProps> = ( { t, o, b } ) => {
 
 // ---------- 6. closing card ----------
 
-const Closing: React.FC<{ t: number; start: number }> = ( { t, start } ) => {
+export const Closing: React.FC<{ t: number; start: number }> = ( { t, start } ) => {
   const local = t - start;
   if ( local < 0 ) {
     return null;
@@ -328,7 +339,7 @@ const Closing: React.FC<{ t: number; start: number }> = ( { t, start } ) => {
 
 // ---------- captions and shell ----------
 
-const KidsCaptions: React.FC<{ t: number; captions: { text: string; start: number; end: number }[] }> = ( { t, captions } ) => {
+export const KidsCaptions: React.FC<{ t: number; captions: { text: string; start: number; end: number }[] }> = ( { t, captions } ) => {
   const c = captions.find( x => t >= x.start && t < x.end );
   if ( !c ) {
     return null;
@@ -340,19 +351,20 @@ const KidsCaptions: React.FC<{ t: number; captions: { text: string; start: numbe
   );
 };
 
-export const KidsWhyEarthShakes: React.FC<KidsShortProps> = ( { audio, v2 } ) => {
+export const KidsWhyEarthShakes: React.FC<KidsShortProps> = ( { audio, v2, short } ) => {
+  const meta = short ? KIDS_EPISODE_SHORT : META;
   useBundledFonts();
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
   const t = frame / FPS;
-  const b = beatsFor( META, audio );
+  const b = beatsFor( meta, audio );
   const ctaStart = b.cta.start - 0.2;
   const tagO = vis( t, b.puzzle.start, ctaStart, 0.5 );
   return (
     <AbsoluteFill style={{ background: K.skyTop }}>
       <SkyBackdrop t={t} />
       <svg width={1080} height={1920} style={{ position: 'absolute', left: 0, top: 0 }}>
-        <Hook t={t} b={b} o={span( t, b, 'hook', 'puzzle' )} />
+        <Hook t={t} b={b} short={short} o={span( t, b, 'hook', 'puzzle' )} />
         <Puzzle t={t} b={b} o={span( t, b, 'puzzle', 'stuck' )} />
         <Blocks t={t} b={b} tSlip={wordStart( b, audio, 'snap', /snap/i, 0.5 )} o={span( t, b, 'stuck', 'waves' )} />
         {v2 ? <WavesV2 t={t} b={b} o={span( t, b, 'waves', 'learn' )} /> : <Waves t={t} b={b} o={span( t, b, 'waves', 'learn' )} />}
@@ -365,7 +377,7 @@ export const KidsWhyEarthShakes: React.FC<KidsShortProps> = ( { audio, v2 } ) =>
       ) : null}
       <Closing t={t} start={ctaStart} />
       {audio ? <Layers audio={audio} total={durationInFrames / FPS} /> : null}
-      <KidsCaptions t={t} captions={audio?.captions ?? placeholderCaptions( META.script )} />
+      <KidsCaptions t={t} captions={audio?.captions ?? placeholderCaptions( meta.script )} />
     </AbsoluteFill>
   );
 };

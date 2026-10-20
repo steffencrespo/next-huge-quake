@@ -114,5 +114,21 @@
     "updatedAt": "2026-10-20T15:11:19.204Z",
     "videoId": "dKiNmtRZWMs",
     "playlistItemId": "UExQc1I3NGxJaFdnSS4wOTA3OTZBNzVEMTUzOTMy"
+  },
+  "kids-why-earth-shakes-short": {
+    "status": "published",
+    "contentHash": "8ca3add4ed7e12c0067e9e9c8833857b1f0844f52b5d5481794cd9d62677f304",
+    "fileSize": 10425632,
+    "updatedAt": "2026-10-20T22:57:01.255Z",
+    "videoId": "5dcL_LgoofE",
+    "playlistItemId": "UExaUk5TWEVISXJfQS4wMTcyMDhGQUE4NTIzM0Y5"
+  },
+  "kids-drop-cover-hold": {
+    "status": "published",
+    "contentHash": "842a01b60885bff3cfec6c50c34981a4a4b49650984a3f36b18c264a1a975e01",
+    "fileSize": 11015761,
+    "updatedAt": "2026-10-20T22:57:04.082Z",
+    "videoId": "_uDam2PueZk",
+    "playlistItemId": "UExaUk5TWEVISXJfQS41MjE1MkI0OTQ2QzJGNzNG"
   }
 }
