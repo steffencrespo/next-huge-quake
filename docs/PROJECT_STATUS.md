@@ -49,7 +49,7 @@ Next free regular slots: Tue 2026-11-03, Thu 11-05, Sat 11-07 (18:00 America/Sao
 
 ## 4. Open PRs and dependencies
 
-None. PRs #31 (kids Shorts and Vanuatu M6.3 records) and #32 (Panama D4 record) are merged, so every published video above has a manifest and a `state.json` record on `master`. `video/experiments/` (pacing and HookD code) remains untracked and is in no PR.
+None. PRs #31 (kids Shorts and Vanuatu M6.3 records) and #32 (Panama D4 record) are merged, so every video managed by the current publisher has its manifest and `state.json` record on `master`. The earlier hand-uploaded videos (ep 01, first Panama, Kamchatka) predate the publisher and have no manifests. `video/experiments/` (pacing and HookD code) remains untracked and is in no PR.
 
 ## 5. Current experiments
 
