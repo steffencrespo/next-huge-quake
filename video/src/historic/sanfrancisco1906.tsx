@@ -71,7 +71,7 @@ const NorCalMap: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
 
 // ---------- top-down strike-slip ----------
 
-const StrikeSlip: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
+export const StrikeSlip: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
   const o = vis( t, b.strike.start - 0.2, b.offset.end + 0.3, 0.45 );
   if ( o <= 0.01 ) {
     return null;
