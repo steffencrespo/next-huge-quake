@@ -1,6 +1,6 @@
 # Project status
 
-Snapshot of `master` at `4b373cc` (PR #33), **2026-10-21**. Taken from the code, publish manifests, `video/publish/state.json` and a public-visibility check of the listed videos. This is a maintained snapshot, not an authority: the code, the repository history and verified external service state (for example YouTube) take precedence, so where this file or a README disagrees with them, they win and the document should be corrected. Priorities live in [ROADMAP.md](ROADMAP.md); decisions in [DECISION_LOG.md](DECISION_LOG.md).
+Snapshot of `master` at `bb0596d` (PR #32), **2026-10-21**. Taken from the code, publish manifests, `video/publish/state.json` and a public-visibility check of the listed videos. This is a maintained snapshot, not an authority: the code, the repository history and verified external service state (for example YouTube) take precedence, so where this file or a README disagrees with them, they win and the document should be corrected. Priorities live in [ROADMAP.md](ROADMAP.md); decisions in [DECISION_LOG.md](DECISION_LOG.md).
 
 Last recorded test baseline (PR #33): `video` 243 tests, `quake-news-agent` 126, typecheck clean. Not re-run for this docs-only snapshot.
 
@@ -41,17 +41,15 @@ Local `state.json` is not refreshed from YouTube. Public visibility below was ch
 | Magnitude (`magnitude-r2`, 10-22), Ring of Fire (`ring-r2`, 10-24) | scheduled | Not public yet, as expected |
 | Chile 1960 (10-27), Japan 2011 (10-29), San Francisco 1906 (10-31), all `-r2` | scheduled | Not public yet, as expected |
 | Non-r2 historic uploads (`chile1960`, `japan2011`, `sanfrancisco1906`) | `playlisted`, superseded by r2 | Not public |
-| Vanuatu M6.0 (`us6000u3bc`), Vanuatu M6.3, Panama M7.7 Quick Version | published | Yes (M6.0 and Panama D4 checked). M6.3 and Panama D4 manifests are in open PRs #31 and #32 |
-| Kids: *Why Does the Earth Shake?* (V1, V2), *Drop, Cover, Hold On!*, short cut | published | V1 and V2 manifests on master; the rest are in PR #31 |
+| Vanuatu M6.0 (`us6000u3bc`), Vanuatu M6.3, Panama M7.7 Quick Version | published | Yes (M6.0 and Panama D4 checked). Manifests merged in PRs #31 and #32 |
+| Kids: *Why Does the Earth Shake?* (V1, V2), *Drop, Cover, Hold On!*, short cut | published | Manifests on master (short cut and *Drop, Cover, Hold On!* via PR #31) |
 | Earlier by hand, no manifest | "Why Do Earthquakes Happen?" (ep 01), first Panama, Kamchatka | Published |
 
 Next free regular slots: Tue 2026-11-03, Thu 11-05, Sat 11-07 (18:00 America/Sao_Paulo).
 
 ## 4. Open PRs and dependencies
 
-- **#31** Kids ep 01 short version and ep 02, plus the Vanuatu M6.3 manifest and `state.json` records. Content is already live on YouTube.
-- **#32** Panama M7.7 Quick Version (D4 pacing experiment) manifest and `state.json`. Stacked on #31; retarget to master after #31 merges. The pacing experiment code (`video/experiments/`) is untracked and not in any PR.
-- Until both merge, `master` lacks manifests for videos that are already public. Merging #31 then #32 touches `state.json`, so expect conflicts with anything else that edits it.
+None. PRs #31 (kids Shorts and Vanuatu M6.3 records) and #32 (Panama D4 record) are merged, so every published video above has a manifest and a `state.json` record on `master`. `video/experiments/` (pacing and HookD code) remains untracked and is in no PR.
 
 ## 5. Current experiments
 
@@ -61,10 +59,9 @@ Next free regular slots: Tue 2026-11-03, Thu 11-05, Sat 11-07 (18:00 America/Sao
 
 ## 6. Immediate next steps
 
-1. Review and merge this docs PR, then #31 and #32 (in that order).
-2. Reconcile `state.json` with YouTube using `inspect` (`depth` and `predict-r2` are stale).
-3. Decide what to do about analytics: the OAuth token lacks the analytics scope.
-4. Choose the next Myth vs Fact topic or hold, after reviewing audience data.
+1. Reconcile `state.json` with YouTube using `inspect` (`depth` and `predict-r2` are stale).
+2. Decide what to do about analytics: the OAuth token lacks the analytics scope.
+3. Choose the next Myth vs Fact topic or hold, after reviewing audience data.
 
 ## 7. Known limitations and follow-ups
 
