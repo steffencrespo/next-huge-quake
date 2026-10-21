@@ -9,6 +9,8 @@ Next Huge Quake is an evolving open-source project. It turns official earthquake
 3. Render short narrated videos for social platforms.
 4. Publish only after a person approves.
 
+Project tracking lives in [`docs/`](docs/): [Project status](docs/PROJECT_STATUS.md), [Roadmap](docs/ROADMAP.md) and [Decision log](docs/DECISION_LOG.md).
+
 The project began in 2017 as a web app for searching historical earthquakes. That app is still live on [GitHub Pages](https://steffencrespo.github.io/next-huge-quake/).
 
 > **Monitoring, not prediction.** Next Huge Quake reports earthquakes after they happen, using data published by the USGS. It does not predict earthquakes, and nothing in this project should be read as a forecast.
@@ -29,40 +31,42 @@ The project began in 2017 as a web app for searching historical earthquakes. Tha
 
 ### Implemented since M1 (see [`video/`](video/README.md))
 
-- **Narrated 35-second vertical videos** rendered with Remotion and React: terrain map, data scenes, ElevenLabs narration with the Daniel — Radio news host voice, music and phrase-level captions, plus the full map and music credits.
-- **Automatic narration timing:** ElevenLabs returns character-level timestamps, and the captions are built from them.
+- **Narrated vertical Shorts** rendered with Remotion and React: terrain map, data scenes, ElevenLabs narration with character-level timestamps for phrase captions, music and full map credits.
 - **Event to video in one run:** the Output.ai workflow `quake_video` takes a USGS event through M1, then builds the video. It stops with the MP4 ready for review and publishes nothing. It runs with the worker on the host (see [`quake-news-agent/`](quake-news-agent/README.md)).
-- Two YouTube Shorts have been **published manually** after human review: the first (Panama, hand-written narration) <https://youtube.com/shorts/8Fwauogd6vY>, and the second (Kamchatka M6.9, narration generated and validated by the M1 workflow) <https://youtube.com/shorts/5YK84uxNRQY>. Both were uploaded by hand; publishing is not automated.
+- **Other editorial formats**, hand-scripted and hand-verified with separate Remotion tooling (not Output.ai): Earthquake Explained, Historic Disasters, Kids educational content, and a first Myth vs Fact episode.
+- **YouTube publisher** (`video/src/publisher/`): a CLI that uploads privately, assigns playlists, schedules (Tuesday, Thursday, Saturday at 18:00 America/Sao_Paulo) or publishes immediately. Each video needs approved text; any later edit invalidates the approval. Descriptions carry the required credits.
+- **USGS monitoring (M5, dry run by default):** the Output.ai workflow `quake_monitor` polls USGS every 5 minutes, deduplicates by event ID, and can start `quake_video` for significant new earthquakes under a daily limit ([ADR 0001](docs/decisions/0001-m5-earthquake-monitoring.md)). Paid autonomous operation is not enabled; discovery and production are manual and on demand (`npm run discover`).
 
-- **USGS monitoring (M5, dry run by default):** the Output.ai workflow `quake_monitor` polls USGS every 5 minutes, deduplicates by event ID, and can start `quake_video` for significant new earthquakes under a daily limit ([ADR 0001](docs/decisions/0001-m5-earthquake-monitoring.md)). Until it is hosted always-on, discovery and production are manual and on demand (`npm run discover`, see [`quake-news-agent/`](quake-news-agent/README.md)). Paid production is still off: one fully real, unattended `quake_video` run has succeeded (Pakistan M5.7), but the monitor is a dry run until explicitly enabled.
+Publication always follows human review. Many Shorts are live on YouTube; see [Project status](docs/PROJECT_STATUS.md) for the catalog.
 
-### Planned
+### Not implemented yet
 
-- Human approval before anything is published. Today this is a manual review of the MP4 and its credits.
-- Publishing to YouTube Shorts through the API.
-- Switching on **paid** autonomous operation of the USGS monitor (see below).
+- A workflow-level approval step (approval is currently a publisher gate).
+- Always-on, paid autonomous monitoring.
+- YouTube Analytics feedback and catalog-aware content selection.
 - Showing news and videos on the existing website.
 
-See the [roadmap](#roadmap) for details.
+See the [roadmap](docs/ROADMAP.md).
 
 ## Architecture
 
 ```mermaid
 flowchart LR
     USGS[("USGS Earthquake API")] --> Fetch["Fetch and normalize<br/>event data"]
-    subgraph M1["AI news workflow (implemented, M1)"]
+    subgraph OA["Output.ai workflows (breaking news)"]
         Fetch --> Write["Write draft<br/>(Claude)"]
         Write --> Check["Deterministic<br/>fact check"]
         Check --> Review["Editorial review<br/>(Claude)"]
         Review -. "one retry with feedback" .-> Write
+        Review --> Video["quake_video:<br/>narration + Remotion render"]
     end
-    Review --> Draft["Validated article<br/>+ narration script"]
-    Draft --> Video["Narrated video<br/>(implemented, M2)"]
-    Video -.-> Approve{{"Human approval<br/>(manual for now)"}}
-    Approve -.-> Publish["YouTube Shorts and website<br/>(planned)"]
+    Edu["Explained, historic, kids,<br/>Myth vs Fact<br/>(Remotion tooling, hand-scripted)"] --> Approve
+    Video --> Approve{{"Human approval"}}
+    Approve --> Publish["YouTube publisher CLI"]
+    Publish -.-> Site["Website<br/>(planned)"]
 ```
 
-The workflow runs on Temporal through Output.ai. Every step is durable and retried automatically. Each run produces a trace with the USGS request, the LLM prompts and responses, token usage and cost.
+The breaking-news path runs on Temporal through Output.ai. Every step is durable and retried automatically, and each run produces a trace with the USGS request, the LLM prompts and responses, token usage and cost. The other formats and the publisher are not Output.ai workflows today.
 
 ### Technology stack
 
@@ -85,14 +89,13 @@ The workflow runs on Temporal through Output.ai. Every step is durable and retri
 | [Remotion](https://www.remotion.dev/docs/) and [React](https://react.dev/) | Rendering videos from code |
 | [ElevenLabs](https://elevenlabs.io/docs) (M2.4b) | Narration with the Daniel — Radio news host voice, generated automatically with timestamp alignment for captions |
 
-**Planned for future milestones**
+**Implemented outside the workflows**
 
 | Technology | Role |
 | --- | --- |
-| [YouTube Data API](https://developers.google.com/youtube/v3) | YouTube Shorts uploads |
-| Paid autonomous operation of the monitor | The polling monitor exists (dry run by default); enabling real starts is planned |
-| Editorial approval | Human review before any public publication (manual for now) |
-| Website integration | Showing published news and videos on the existing site |
+| [YouTube Data API](https://developers.google.com/youtube/v3) | Publisher: upload, playlists, scheduling (no Analytics scope yet) |
+
+**Not implemented yet:** website integration, a YouTube Analytics feedback loop and always-on paid monitoring.
 
 The 2017 website is plain HTML, CSS, JavaScript, jQuery and Bootstrap, and it calls the USGS API directly from the browser.
 
@@ -101,13 +104,27 @@ The 2017 website is plain HTML, CSS, JavaScript, jQuery and Bootstrap, and it ca
 | Milestone | Scope | Status |
 | --- | --- | --- |
 | **M1** | USGS earthquake data to a validated English news draft and narration script | Done |
-| **M2** | Narrated short videos with Remotion and text-to-speech ([`video/`](video/README.md)) | Videos done (terrain, narration, captions, music); `quake_video` (M2.4d) chains them from a USGS event; one fully real unattended run succeeded (Pakistan M5.7, about 4.3 minutes, `ready_for_approval`) |
-| **M3** | Editorial approval of drafts and videos | Planned |
-| **M4** | Publishing approved videos to YouTube Shorts | Planned |
-| **M5** | Automated USGS monitoring that starts the video workflow only for eligible events | Implemented, dry run by default; paid autonomous mode is not enabled yet |
-| **M6** | Showing news and videos on the existing website | Planned |
+| **M2** | Narrated short videos with Remotion and text-to-speech ([`video/`](video/README.md)) | Done; `quake_video` chains a USGS event to a video ready for approval |
+| **M3** | Editorial approval of drafts and videos | Partly met: manual approval gate in the publisher, no workflow step |
+| **M4** | Publishing approved videos to YouTube | Implemented as a CLI publisher, outside Output.ai |
+| **M5** | Automated USGS monitoring | Implemented, dry run by default; paid autonomous mode not enabled |
+| **M6** | Showing news and videos on the existing website | Not started |
 
-The roadmap may change as the project evolves. Publishing to any public platform will always require human approval.
+Details, editorial formats and future capabilities are in [docs/ROADMAP.md](docs/ROADMAP.md). Publishing to any public platform requires human approval.
+
+## Project documentation
+
+- [Project status](docs/PROJECT_STATUS.md): what is implemented, published, scheduled and open.
+- [Roadmap](docs/ROADMAP.md): priorities, milestones, formats and future capabilities.
+- [Decision log](docs/DECISION_LOG.md): product and editorial decisions. Architecture decisions are ADRs in [docs/decisions/](docs/decisions/).
+
+Keeping them current:
+
+- Update **Project status** when the implementation state changes materially (a merge, a publication, a new workflow).
+- Update the **Roadmap** when priorities or milestones change.
+- Update the **Decision log** when an important product or editorial decision is approved or reversed.
+- Write an **ADR** for a significant technical architecture decision.
+- Claude Code sessions should read these documents before proposing new implementation work.
 
 ## Getting started
 
@@ -139,7 +156,7 @@ See **[quake-news-agent/README.md](quake-news-agent/README.md)** for setup, cred
 
 - **Source:** all earthquake data comes from the [USGS Earthquake Hazards Program](https://earthquake.usgs.gov/). Recent events may be preliminary, and the USGS revises magnitudes, locations and other values as it reviews them. Drafts for events that haven't been reviewed must say the figures are preliminary.
 - **Estimates, not outcomes:** a [PAGER](https://earthquake.usgs.gov/data/pager/) alert level is a model estimate of possible fatalities or economic losses, not a report of actual impact. Likewise, the USGS tsunami flag only means tsunami information is linked to the event; it doesn't confirm a tsunami. Drafts are checked to describe both this way.
-- **Automated checks have limits:** the fact check catches contradictions and unsupported claims it can detect, but it can't guarantee every sentence is correct. For example, it doesn't yet check numbers written out in words. Generated drafts are meant for human editorial review before publication.
+- **Automated checks have limits:** the fact check catches contradictions and unsupported claims it can detect, but it can't guarantee every sentence is correct. For example, it doesn't yet check numbers written out in words. The fact check covers the breaking-news path only; other formats are verified by hand against sources. Generated drafts are meant for human editorial review before publication.
 - **No forecasting:** the project doesn't predict earthquakes or estimate future risk.
 - **Not an official channel:** Next Huge Quake is an independent project and isn't affiliated with the USGS. For safety information, follow official agencies and local authorities.
 
