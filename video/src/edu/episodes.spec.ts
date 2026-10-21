@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CTA_LINE, EPISODE_LIST, episodeSeconds, placeholderCaptions, plannedBeats } from './episodes.js';
+import { CTA_LINE, EPISODE_LIST, EPISODES, episodeSeconds, placeholderCaptions, plannedBeats } from './episodes.js';
 import { placeClips } from './narration.js';
 
 describe( 'educational episodes 02 to 04', () => {
@@ -20,5 +20,13 @@ describe( 'educational episodes 02 to 04', () => {
     expect( plannedBeats( ep.script ).cta.start ).toBe( ep.script.at( -1 )!.start );
     const placed = placeClips( ep.script, ep.script.map( l => ( { id: l.id, file: `audio/edu/${l.id}.mp3`, duration: 2, captions: [ { text: l.text, start: 0, end: 2 } ] } ) ) );
     expect( placed.clips.length ).toBe( ep.script.length );
+  } );
+} );
+
+describe( 'paced episode length', () => {
+  const audio = ( pacing?: string ) => ( { ...placeClips( EPISODES.predict.script, EPISODES.predict.script.map( l => ( { id: l.id, file: `audio/edu/${l.id}.mp3`, duration: 2, captions: [ { text: l.text, start: 0, end: 2 } ] } ) ), { gap: 0.04 } ), musicFile: 'audio/m.mp3', musicCredit: 'm', pacing } );
+  it( 'keeps the storyboard length as a floor for natural pacing only', () => {
+    expect( episodeSeconds( EPISODES.predict, audio() ) ).toBe( EPISODES.predict.baseSeconds );
+    expect( episodeSeconds( EPISODES.predict, audio( 'fast' ) ) ).toBeLessThan( EPISODES.predict.baseSeconds );
   } );
 } );

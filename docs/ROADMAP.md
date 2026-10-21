@@ -38,6 +38,10 @@ Numbering follows the README and is kept as established. Two sub-projects reuse 
 
 Only Breaking Quakes runs through Output.ai today.
 
+## In progress
+
+- **Fast narration preset.** The Panama D4 pacing (1.2x speech, pitch preserved, shortened pauses, re-timed captions) is implemented as an optional `fast` preset for educational formats (including Myth vs Fact) and for news narration. It is on a branch and not merged. A comparison preview of the California Short exists; the preset is not the default until a person approves it. For Breaking Quakes it re-times the narration and captions only: the 35 s scene structure D4 also shortened is not ported.
+
 ## Future capabilities
 
 None of these exist yet.

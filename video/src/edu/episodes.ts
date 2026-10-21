@@ -95,7 +95,8 @@ export const audioBeats = ( audio: EduAudio ): Beats =>
 export const beatsFor = ( meta: EpisodeMeta, audio?: EduAudio ): Beats => ( audio ? audioBeats( audio ) : plannedBeats( meta.script ) );
 
 export const lastBeatEnd = ( beats: Beats ) => Math.max( ...Object.values( beats ).map( b => b.end ) );
-export const episodeSeconds = ( meta: EpisodeMeta, audio?: EduAudio ) => Math.max( meta.baseSeconds, Math.ceil( lastBeatEnd( beatsFor( meta, audio ) ) + ( meta.tailSeconds ?? TAIL_SECONDS ) ) );
+/** A paced episode is as long as its narration plus tail: the natural-pacing storyboard length (`baseSeconds`) is not a floor. */
+export const episodeSeconds = ( meta: EpisodeMeta, audio?: EduAudio ) => Math.max( audio?.pacing ? 0 : meta.baseSeconds, Math.ceil( lastBeatEnd( beatsFor( meta, audio ) ) + ( meta.tailSeconds ?? TAIL_SECONDS ) ) );
 
 /** Timed placeholder captions (no audio yet): each line split into short phrases, spread over its planned time. */
 export function placeholderCaptions( script: ScriptLine[] ): { text: string; start: number; end: number }[] {

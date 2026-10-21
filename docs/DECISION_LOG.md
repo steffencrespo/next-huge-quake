@@ -39,6 +39,7 @@ Dates are given only where the repository or PR history establishes them. "Not r
 | Increase to five Shorts per week | Proposed | n/a | A future experiment only. Not approved and not scheduled |
 | Optimize for retention and quality over upload volume | Approved | Not recorded | Basis for measuring before raising frequency |
 | Measure YouTube performance before increasing frequency | Approved | Not recorded | No analytics tooling exists yet |
+| Faster narration becomes the default pacing for future Shorts, subject to human review: about 1.2x speech speed, pitch preserved, short natural pauses (the Panama D4 experiment) | Approved direction; **not yet adopted** | 2026-10-21 | Implemented as an optional `fast` preset (`video/src/audio/pacing.ts`), not merged. It becomes the default only after the California comparison preview is approved. Existing videos are not re-rendered |
 | Myth vs Fact 06 published on 2026-10-21 outside the Tue/Thu/Sat cadence, as an approved editorial experiment | Approved | 2026-10-21 | PR #33; <https://youtu.be/8Zke9Kf1128>. No other video was moved |
 
 ## Attribution, licensing and assets

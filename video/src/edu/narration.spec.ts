@@ -17,6 +17,13 @@ describe( 'educational narration', () => {
     expect( placed.narrationEnd ).toBeCloseTo( 57.3, 5 );
   } );
 
+  it( 'places paced clips back to back with a fixed gap, ignoring the storyboard starts after the first', () => {
+    const placed = placeClips( SCRIPT, clips( 2 ), { gap: 0.04 } );
+    expect( placed.clips[0].start ).toBe( SCRIPT[0].start );
+    expect( placed.clips[1].start ).toBeCloseTo( SCRIPT[0].start + 2.04, 5 );
+    expect( placed.narrationEnd ).toBeCloseTo( SCRIPT[0].start + SCRIPT.length * 2 + ( SCRIPT.length - 1 ) * 0.04, 5 );
+  } );
+
   it( 'pushes a clip back when the previous one overruns and extends the video when needed', () => {
     const long = clips( 2.5 );
     long[0].duration = 8;

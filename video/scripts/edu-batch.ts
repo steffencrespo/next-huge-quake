@@ -9,6 +9,9 @@
  *   audio     builds out/edu/<episode>/audio.json (placement, captions, music) once every line exists. No request.
  *   preview   silent render with timed placeholder captions to out/edu/preview/<episode>.mp4. No audio, no request.
  *   final     renders out/edu/final/<episode>.mp4 with narration, music and effects from the library. No request.
+ * Add --pace=fast to `audio` or `final` for the fast narration preset (src/audio/pacing.ts, from the Panama D4 experiment): the
+ * cached clips are sped up with ffmpeg (pitch kept), pauses shortened and captions re-timed, and the clips are placed back to
+ * back, so the scenes that follow the voice tighten too. Outputs get a -fast suffix; library clips and natural renders are untouched.
  * The library (assets/audio/edu/library/) is seeded from Episode 01's cache on every run (copies; the originals stay).
  * One credit is billed per character for eleven_multilingual_v2, which is what the estimates use; the ledger records
  * the characters actually sent, and the account balance in the ElevenLabs dashboard is the authority.
@@ -17,8 +20,10 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { alignmentToCaptions } from '../src/audio/captions.js';
+import { clipGap, pacingPreset } from '../src/audio/pacing.js';
 import { OUTPUT_FORMAT, generateSpeech, loadTtsConfig, parseEnvFile, speechFromAudio } from '../src/audio/tts.js';
 import type { TtsConfig } from '../src/audio/tts.js';
+import type { Caption } from '../src/audio/soundtrack.js';
 import { EPISODE_LIST, EPISODES, episodeSeconds } from '../src/edu/episodes.js';
 import { DEFAULT_MUSIC, MUSIC } from '../src/audio/music.js';
 import type { MusicKey } from '../src/audio/music.js';
@@ -31,6 +36,7 @@ import type { ClipIdentity } from '../src/edu/library.js';
 import { MAX_CLIP_SECONDS, SCRIPT as EP01_SCRIPT, eduAudioSchema, placeClips } from '../src/edu/narration.js';
 import type { ClipInput } from '../src/edu/narration.js';
 import { EXTRA_SFX, SFX_FILES, boom, rumble, wavBytes } from '../src/edu/sfx.js';
+import { paceNarration } from './lib/pace-audio.js';
 
 const root = join( dirname( new URL( import.meta.url ).pathname ), '..' );
 const args = process.argv.slice( 2 );
@@ -39,6 +45,9 @@ const flag = ( name: string ) => args.find( a => a.startsWith( `--${name}=` ) )?
 const episodeArg = flag( 'episode' ) ?? 'all';
 const BUDGET = Number( flag( 'budget' ) ?? 2000 );
 const series = flag( 'series' ) ?? 'edu';
+const pace = flag( 'pace' ) ? pacingPreset( flag( 'pace' )! ) : undefined;
+const paceSuffix = pace ? `-${ pace.name }` : '';
+const pacedDir = join( root, 'out', 'edu', 'paced', pace?.name ?? '' );
 const pool = series === 'myth' ? { california: CALIFORNIA } : series === 'depth' ? { depth: DEPTH } : series === 'historic' ? HISTORIC : EPISODES;
 const episodes: EpisodeMeta[] = episodeArg === 'all' ? ( series === 'myth' ? [ CALIFORNIA ] : series === 'depth' ? [ DEPTH ] : series === 'historic' ? HISTORIC_LIST : EPISODE_LIST ) : [ ( pool as Record<string, EpisodeMeta> )[episodeArg] ];
 if ( episodes.some( e => !e ) ) {
@@ -142,7 +151,18 @@ function voicedRmsDb( mp3: string ): number {
 }
 const gainFor = ( db: number, target: number ) => Math.round( Math.min( 1.4, Math.max( 0.7, 10 ** ( ( target - db ) / 20 ) ) ) * 100 ) / 100;
 
-const audioFile = ( ep: EpisodeMeta ) => join( root, 'out', 'edu', ep.id, `audio-${ musicKey }.json` );
+const audioFile = ( ep: EpisodeMeta ) => join( root, 'out', 'edu', ep.id, `audio-${ musicKey }${ paceSuffix }.json` );
+
+/** The clip sped up and tightened by the pacing preset (cached in out/edu/paced/<preset>/; the library clip is not touched). */
+function pacedClip( key: string, mp3: string, captions: Caption[] ) {
+  const out = join( pacedDir, `${ key }${ paceSuffix }.mp3` );
+  const meta = join( pacedDir, `${ key }${ paceSuffix }.json` );
+  if ( !existsSync( out ) || !existsSync( meta ) ) {
+    const result = paceNarration( { root, source: mp3, captions, preset: pace!, outMp3: out } );
+    writeFileSync( meta, `${ JSON.stringify( result ) }\n` );
+  }
+  return JSON.parse( readFileSync( meta, 'utf8' ) ) as { duration: number; captions: Caption[]; sourceDuration: number };
+}
 function buildAudio( ep: EpisodeMeta ) {
   const missing = ep.script.filter( l => !library.has( identity( l.text ) ) );
   if ( missing.length > 0 ) {
@@ -153,9 +173,16 @@ function buildAudio( ep: EpisodeMeta ) {
   const clips: ClipInput[] = ep.script.map( ( l, i ) => {
     const p = library.paths( identity( l.text ) );
     const speech = speechFromAudio( l.text, readFileSync( p.mp3 ), JSON.parse( readFileSync( p.alignment, 'utf8' ) ), MAX_CLIP_SECONDS );
-    return { id: l.id, file: `audio/edu/${p.key}.mp3`, duration: speech.durationSeconds, captions: alignmentToCaptions( speech.alignment ), gain: gainFor( levels[i], target ) };
+    const captions = alignmentToCaptions( speech.alignment );
+    const gain = gainFor( levels[i], target );
+    if ( pace ) {
+      mkdirSync( pacedDir, { recursive: true } );
+      const fast = pacedClip( p.key, p.mp3, captions );
+      return { id: l.id, file: `audio/edu/${p.key}${paceSuffix}.mp3`, duration: fast.duration, captions: fast.captions, gain };
+    }
+    return { id: l.id, file: `audio/edu/${p.key}.mp3`, duration: speech.durationSeconds, captions, gain };
   } );
-  const audio = eduAudioSchema.parse( { ...placeClips( ep.script, clips ), musicFile: needMusic().file, musicCredit: needMusic().credit } );
+  const audio = eduAudioSchema.parse( { ...placeClips( ep.script, clips, pace ? { gap: clipGap( pace ) } : {} ), musicFile: needMusic().file, musicCredit: needMusic().credit, ...( pace ? { pacing: pace.name } : {} ) } );
   mkdirSync( dirname( audioFile( ep ) ), { recursive: true } );
   writeFileSync( audioFile( ep ), `${JSON.stringify( audio, null, 2 )}\n` );
   console.log( `${ep.id}: narration ${audio.narrationStart}-${audio.narrationEnd} s, ${audio.captions.length} captions, video ${episodeSeconds( ep, audio )} s` );
@@ -187,7 +214,7 @@ function historicCredits( ep: EpisodeMeta ): string[] {
 }
 
 function render( ep: EpisodeMeta, withAudio: boolean ) {
-  const out = join( root, 'out', 'edu', withAudio ? 'final' : 'preview', `${ep.id}${ withAudio ? `-${ musicKey }` : '' }.mp4` );
+  const out = join( root, 'out', 'edu', withAudio ? 'final' : 'preview', `${ep.id}${ withAudio ? `-${ musicKey }${ paceSuffix }` : '' }.mp4` );
   mkdirSync( dirname( out ), { recursive: true } );
   const staged: string[] = [];
   const stage = ( rel: string, bytes: Buffer ) => {
@@ -209,7 +236,8 @@ function render( ep: EpisodeMeta, withAudio: boolean ) {
       const audio = existsSync( audioFile( ep ) ) ? eduAudioSchema.parse( JSON.parse( readFileSync( audioFile( ep ), 'utf8' ) ) ) : buildAudio( ep );
       props = { audio };
       for ( const c of audio.clips ) {
-        stage( c.file, readFileSync( join( library.dir, `${c.file.split( '/' ).pop()}` ) ) );
+        const name = c.file.split( '/' ).pop()!;
+        stage( c.file, readFileSync( pace && name.endsWith( `${ paceSuffix }.mp3` ) ? join( pacedDir, name ) : join( library.dir, name ) ) );
       }
       stage( audio.musicFile, readFileSync( join( root, 'assets', audio.musicFile ) ) );
       stage( SFX_FILES.rumble, wavBytes( rumble() ) );
