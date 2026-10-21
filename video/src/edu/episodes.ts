@@ -25,7 +25,7 @@ export function plan( lines: { id: string; text: string; gap?: number }[], first
 }
 
 export type EpisodeId = 'predict' | 'magnitude' | 'ring';
-export type EpisodeMeta = { id: string; number: number; compositionId: string; title: string; baseSeconds: number; script: ScriptLine[] };
+export type EpisodeMeta = { id: string; number: number; compositionId: string; title: string; baseSeconds: number; script: ScriptLine[]; /** Time kept after the last spoken word; defaults to TAIL_SECONDS. */ tailSeconds?: number };
 
 export const EPISODES: Record<EpisodeId, EpisodeMeta> = {
   predict: {
@@ -95,7 +95,7 @@ export const audioBeats = ( audio: EduAudio ): Beats =>
 export const beatsFor = ( meta: EpisodeMeta, audio?: EduAudio ): Beats => ( audio ? audioBeats( audio ) : plannedBeats( meta.script ) );
 
 export const lastBeatEnd = ( beats: Beats ) => Math.max( ...Object.values( beats ).map( b => b.end ) );
-export const episodeSeconds = ( meta: EpisodeMeta, audio?: EduAudio ) => Math.max( meta.baseSeconds, Math.ceil( lastBeatEnd( beatsFor( meta, audio ) ) + TAIL_SECONDS ) );
+export const episodeSeconds = ( meta: EpisodeMeta, audio?: EduAudio ) => Math.max( meta.baseSeconds, Math.ceil( lastBeatEnd( beatsFor( meta, audio ) ) + ( meta.tailSeconds ?? TAIL_SECONDS ) ) );
 
 /** Timed placeholder captions (no audio yet): each line split into short phrases, spread over its planned time. */
 export function placeholderCaptions( script: ScriptLine[] ): { text: string; start: number; end: number }[] {

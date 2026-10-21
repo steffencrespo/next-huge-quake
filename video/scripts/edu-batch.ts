@@ -1,7 +1,7 @@
 /**
  * Educational Shorts 02 to 04 (predict, magnitude, ring): narration library, credit estimate, generation and rendering.
  *
- * Usage: tsx scripts/edu-batch.ts <command> [--series=edu|historic] [--episode=<id>|all] [--budget=2000]
+ * Usage: tsx scripts/edu-batch.ts <command> [--series=edu|historic|depth|myth] [--episode=<id>|all] [--budget=2000]
  *   --series=historic: Historic Earthquakes 01-03 (chile1960, japan2011, sanfrancisco1906); own credit ledger.
  *   plan      (default) per line: reused from the narration library or new; characters and estimated credits. No request.
  *   generate  requests ONLY the lines the library does not hold, one at a time, stops at the first failure or when the
@@ -23,6 +23,7 @@ import { EPISODE_LIST, EPISODES, episodeSeconds } from '../src/edu/episodes.js';
 import { DEFAULT_MUSIC, MUSIC } from '../src/audio/music.js';
 import type { MusicKey } from '../src/audio/music.js';
 import { DEPTH } from '../src/edu/ep05.js';
+import { CALIFORNIA } from '../src/edu/ep06.js';
 import { HISTORIC, HISTORIC_LIST } from '../src/historic/episodes.js';
 import type { EpisodeMeta } from '../src/edu/episodes.js';
 import { clipKey, normalizeText, openLibrary } from '../src/edu/library.js';
@@ -38,8 +39,8 @@ const flag = ( name: string ) => args.find( a => a.startsWith( `--${name}=` ) )?
 const episodeArg = flag( 'episode' ) ?? 'all';
 const BUDGET = Number( flag( 'budget' ) ?? 2000 );
 const series = flag( 'series' ) ?? 'edu';
-const pool = series === 'depth' ? { depth: DEPTH } : series === 'historic' ? HISTORIC : EPISODES;
-const episodes: EpisodeMeta[] = episodeArg === 'all' ? ( series === 'depth' ? [ DEPTH ] : series === 'historic' ? HISTORIC_LIST : EPISODE_LIST ) : [ ( pool as Record<string, EpisodeMeta> )[episodeArg] ];
+const pool = series === 'myth' ? { california: CALIFORNIA } : series === 'depth' ? { depth: DEPTH } : series === 'historic' ? HISTORIC : EPISODES;
+const episodes: EpisodeMeta[] = episodeArg === 'all' ? ( series === 'myth' ? [ CALIFORNIA ] : series === 'depth' ? [ DEPTH ] : series === 'historic' ? HISTORIC_LIST : EPISODE_LIST ) : [ ( pool as Record<string, EpisodeMeta> )[episodeArg] ];
 if ( episodes.some( e => !e ) ) {
   throw new Error( `unknown episode '${episodeArg}'` );
 }
@@ -53,7 +54,7 @@ const needMusic = () => {
   return MUSIC[musicKey as MusicKey];
 };
 const library = openLibrary( join( root, 'assets', 'audio', 'edu', 'library' ) );
-const ledgerFile = join( root, 'out', 'edu', series === 'historic' ? 'credit-ledger-historic.json' : series === 'depth' ? 'credit-ledger-depth.json' : 'credit-ledger.json' );
+const ledgerFile = join( root, 'out', 'edu', series === 'historic' ? 'credit-ledger-historic.json' : series === 'depth' ? 'credit-ledger-depth.json' : series === 'myth' ? 'credit-ledger-myth.json' : 'credit-ledger.json' );
 type LedgerEntry = { at: string; episode: string; line: string; key: string; characters: number };
 const readLedger = (): LedgerEntry[] => ( existsSync( ledgerFile ) ? JSON.parse( readFileSync( ledgerFile, 'utf8' ) ) : [] );
 
@@ -165,6 +166,7 @@ function buildAudio( ep: EpisodeMeta ) {
 const SOURCES: Record<string, string[]> = {
   chile1960: [ 'USGS Earthquake Catalog (ComCat): 1960 Great Chilean (Valdivia) earthquake, M9.5. https://earthquake.usgs.gov/', 'USGS Hawaiian Volcano Observatory: 1960 tsunami travel times and Hilo deaths. https://www.usgs.gov/center-news/golden-anniversary-chilean-earthquake-comes-early' ],
   japan2011: [ 'USGS Earthquake Catalog (ComCat) and event page: 2011 Great Tohoku Earthquake, M9.1 Mww. https://earthquake.usgs.gov/earthquakes/eventpage/official20110311054624120_30', 'Japan Meteorological Agency: tsunami warning improvements after 2011. https://www.data.jma.go.jp/eqev/data/en/tsunami/LessonsLearned_Improvements_brochure.pdf' ],
+  california: [ 'USGS FAQ: Will California eventually fall into the ocean? https://www.usgs.gov/faqs/will-california-eventually-fall-ocean', 'USGS: Earthquake Facts & Earthquake Fantasy (plate motion about 46 mm per year; Los Angeles and San Francisco neighbors in about 15 million years at this rate). https://www.usgs.gov/programs/earthquake-hazards/earthquake-facts-earthquake-fantasy' ],
   depth: [ 'USGS depth classes (shallow 0-70 km, intermediate 70-300 km, deep 300-700 km) and the relation of focal depth to surface shaking. https://www.usgs.gov/programs/earthquake-hazards' ],
   sanfrancisco1906: [ 'USGS Earthquake Catalog (ComCat) and USGS 1906 San Francisco earthquake pages. https://earthquake.usgs.gov/earthquakes/events/1906calif/18april/', 'National Park Service (1906 earthquake history).' ]
 };
@@ -175,7 +177,7 @@ function historicCredits( ep: EpisodeMeta ): string[] {
     'Sound effects: synthesized for this video.',
     ...( ep.id === 'depth' ? [] : [ 'Map data: Natural Earth (public domain), 1:50m land and 1:110m land via world-atlas.' ] ),
     ...( SOURCES[ep.id] ?? [] ).map( x => 'Source: ' + x ),
-    ep.id === 'depth' ? 'Cross-sections, wave rings and the city are schematic illustrations, not to scale, not data or footage (the depth ruler is to scale).' : 'Maps, wave routes and arcs, fault traces, cross-sections, skyline and fire graphics are illustrations, not data or archival footage.',
+    ep.id === 'california' ? 'The fault trace, plate arrows, the accelerated Los Angeles move and the strike-slip diagram are schematic illustrations, not to scale, not data or footage.' : ep.id === 'depth' ? 'Cross-sections, wave rings and the city are schematic illustrations, not to scale, not data or footage (the depth ruler is to scale).' : 'Maps, wave routes and arcs, fault traces, cross-sections, skyline and fire graphics are illustrations, not data or archival footage.',
     '',
     'Production Technology',
     'Automated news and video production powered by Output.ai',
@@ -223,7 +225,7 @@ function render( ep: EpisodeMeta, withAudio: boolean ) {
       throw new Error( `render failed (exit ${result.status})` );
     }
     if ( withAudio ) {
-      writeFileSync( out.replace( /\.mp4$/, '.credits.txt' ), ( series === 'historic' || series === 'depth' ? historicCredits( ep ) : [ 'Music: ' + needMusic().credit, 'Narration: ElevenLabs text-to-speech.', 'Sound effects: synthesized for this video.', '', 'Production Technology', 'Automated news and video production powered by Output.ai', 'https://output.ai', '' ] ).join( '\n' ) );
+      writeFileSync( out.replace( /\.mp4$/, '.credits.txt' ), ( series === 'historic' || series === 'depth' || series === 'myth' ? historicCredits( ep ) : [ 'Music: ' + needMusic().credit, 'Narration: ElevenLabs text-to-speech.', 'Sound effects: synthesized for this video.', '', 'Production Technology', 'Automated news and video production powered by Output.ai', 'https://output.ai', '' ] ).join( '\n' ) );
     }
     console.log( `wrote ${out}` );
   } finally {
