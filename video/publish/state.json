@@ -130,5 +130,13 @@
     "updatedAt": "2026-10-20T22:57:04.082Z",
     "videoId": "_uDam2PueZk",
     "playlistItemId": "UExaUk5TWEVISXJfQS41MjE1MkI0OTQ2QzJGNzNG"
+  },
+  "myth-california-ocean": {
+    "status": "published",
+    "contentHash": "9eafcd97bddf46ca48be6cd934a2e3ce1c5b4ea5236cf5986fa6d4cd8ccad44c",
+    "fileSize": 5047346,
+    "updatedAt": "2026-10-21T21:18:39.743Z",
+    "videoId": "8Zke9Kf1128",
+    "playlistItemId": "UExEcXVIdXhaWnlTdy45NDk1REZENzhEMzU5MDQz"
   }
 }
