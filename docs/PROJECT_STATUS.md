@@ -1,6 +1,6 @@
 # Project status
 
-Snapshot of `master` at `4b373cc` (PR #33), **2026-10-21**. Taken from the code, publish manifests, `video/publish/state.json` and a public-visibility check of the listed videos. Where a README disagrees, trust this file, then the code. Priorities live in [ROADMAP.md](ROADMAP.md); decisions in [DECISION_LOG.md](DECISION_LOG.md).
+Snapshot of `master` at `4b373cc` (PR #33), **2026-10-21**. Taken from the code, publish manifests, `video/publish/state.json` and a public-visibility check of the listed videos. This is a maintained snapshot, not an authority: the code, the repository history and verified external service state (for example YouTube) take precedence, so where this file or a README disagrees with them, they win and the document should be corrected. Priorities live in [ROADMAP.md](ROADMAP.md); decisions in [DECISION_LOG.md](DECISION_LOG.md).
 
 Last recorded test baseline (PR #33): `video` 243 tests, `quake-news-agent` 126, typecheck clean. Not re-run for this docs-only snapshot.
 
