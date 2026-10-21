@@ -24,6 +24,8 @@ export type PacingPreset = {
   /** Silence detection, as used for the original captions. */
   silenceDb: number;
   minSilence: number;
+  /** Keep the pauses the episode script declares on purpose (ScriptLine.gap) instead of tightening them to the sentence gap. */
+  keepPauses?: boolean;
 };
 
 /** Recovered from video/experiments/pacing/build.mts, variant D4 (published Panama M7.7 Quick Version). */
@@ -33,7 +35,9 @@ export const EDGE_KEEP_SECONDS = 0.03;
 /** Gap to leave between two back-to-back paced clips so the pause between sentences is `sentenceGap` in total. */
 export const clipGap = ( preset: PacingPreset ) => Math.max( 0, preset.sentenceGap - 2 * EDGE_KEEP_SECONDS );
 
-export const PACING_PRESETS: Record<string, PacingPreset> = { fast: FAST_PACING };
+/** `fast` with the storyboard's declared pauses kept (e.g. the MYTH to FACT reveal and the punchline). */
+export const FAST_BEATS_PACING: PacingPreset = { ...FAST_PACING, name: 'fast-beats', keepPauses: true };
+export const PACING_PRESETS: Record<string, PacingPreset> = { fast: FAST_PACING, 'fast-beats': FAST_BEATS_PACING };
 
 export const pacingPreset = ( name: string ): PacingPreset => {
   const preset = PACING_PRESETS[name];

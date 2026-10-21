@@ -182,7 +182,7 @@ function buildAudio( ep: EpisodeMeta ) {
     }
     return { id: l.id, file: `audio/edu/${p.key}.mp3`, duration: speech.durationSeconds, captions, gain };
   } );
-  const audio = eduAudioSchema.parse( { ...placeClips( ep.script, clips, pace ? { gap: clipGap( pace ) } : {} ), musicFile: needMusic().file, musicCredit: needMusic().credit, ...( pace ? { pacing: pace.name } : {} ) } );
+  const audio = eduAudioSchema.parse( { ...placeClips( ep.script, clips, pace ? { gap: clipGap( pace ), keepPauses: pace.keepPauses } : {} ), musicFile: needMusic().file, musicCredit: needMusic().credit, ...( pace ? { pacing: pace.name } : {} ) } );
   mkdirSync( dirname( audioFile( ep ) ), { recursive: true } );
   writeFileSync( audioFile( ep ), `${JSON.stringify( audio, null, 2 )}\n` );
   console.log( `${ep.id}: narration ${audio.narrationStart}-${audio.narrationEnd} s, ${audio.captions.length} captions, video ${episodeSeconds( ep, audio )} s` );

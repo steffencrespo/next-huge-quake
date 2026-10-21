@@ -20,7 +20,7 @@ export function plan( lines: { id: string; text: string; gap?: number }[], first
   return lines.map( line => {
     const start = Math.round( t * 10 ) / 10;
     t = start + estimateSeconds( line.text ) + ( line.gap ?? 0.55 );
-    return { id: line.id, text: line.text, start };
+    return { id: line.id, text: line.text, start, ...( line.gap !== undefined ? { gap: line.gap } : {} ) };
   } );
 }
 

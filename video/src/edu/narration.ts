@@ -10,7 +10,8 @@ import { z } from 'zod';
 import { captionSchema } from '../audio/soundtrack.js';
 import type { Caption } from '../audio/soundtrack.js';
 
-export type ScriptLine = { id: string; text: string; start: number };
+/** `gap` is a pause the storyboard asks for after the line (seconds); only set where an episode declares one on purpose. */
+export type ScriptLine = { id: string; text: string; start: number; gap?: number };
 
 /** Final script. `start` is when the line should begin (seconds), matching the storyboard scene it belongs to. */
 export const SCRIPT: ScriptLine[] = [
@@ -60,9 +61,9 @@ export type ClipInput = { id: string; file: string; duration: number; captions: 
 /**
  * Places the clips on the timeline in script order. Spoken lines are never overlapped or cut: they are pushed back instead.
  * With `gap` (paced clips) each clip starts `gap` seconds after the previous one ends and the storyboard start times only
- * position the first.
+ * position the first. With `keepPauses` a pause the script declares after a line (`ScriptLine.gap`) is kept at its length.
  */
-export function placeClips( script: ScriptLine[], clips: ClipInput[], options: { gap?: number } = {} ): Pick<EduAudio, 'clips' | 'captions' | 'narrationStart' | 'narrationEnd'> {
+export function placeClips( script: ScriptLine[], clips: ClipInput[], options: { gap?: number; keepPauses?: boolean } = {} ): Pick<EduAudio, 'clips' | 'captions' | 'narrationStart' | 'narrationEnd'> {
   if ( script.length !== clips.length ) {
     throw new Error( `expected ${script.length} clips, got ${clips.length}` );
   }
@@ -77,7 +78,7 @@ export function placeClips( script: ScriptLine[], clips: ClipInput[], options: {
     if ( clip.duration > MAX_CLIP_SECONDS ) {
       throw new Error( `clip '${line.id}' is ${clip.duration.toFixed( 2 )} s, over ${MAX_CLIP_SECONDS} s; shorten the line` );
     }
-    const start = i === 0 ? line.start : options.gap !== undefined ? previousEnd + options.gap : Math.max( line.start, previousEnd + MIN_GAP_SECONDS );
+    const start = i === 0 ? line.start : options.gap !== undefined ? previousEnd + Math.max( options.gap, options.keepPauses ? script[i - 1].gap ?? 0 : 0 ) : Math.max( line.start, previousEnd + MIN_GAP_SECONDS );
     placed.push( { id: clip.id, file: clip.file, start: round( start ), duration: round( clip.duration ), gain: clip.gain ?? 1 } );
     for ( const c of clip.captions ) {
       captions.push( { text: c.text, start: round( start + c.start ), end: round( start + c.end ) } );
