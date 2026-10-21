@@ -50,9 +50,9 @@ describe( 'videoSpecSchema', () => {
     reject( { ...withCaption, scenes: [ { ...withCaption.scenes[0], caption: 'BREAKING' }, ...withCaption.scenes.slice( 1 ) ] } );
   } );
 
-  it( 'rejects a total duration outside 30-45 s', () => {
+  it( 'rejects a total duration outside 24-45 s', () => {
     const short = valid();
-    short.scenes[1].frames = 100;
+    short.scenes[1].frames = 10;
     reject( short );
     const long = valid();
     long.scenes[1].frames = 1000;

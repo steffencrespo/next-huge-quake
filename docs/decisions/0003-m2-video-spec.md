@@ -25,7 +25,7 @@ The renderer must stay independent of M1 (Output.ai + Temporal), so that M2.4 ca
    - ISO UTC times;
    - USGS event IDs and `earthquake.usgs.gov` URLs;
    - `deleted` events are rejected;
-   - total duration of 30–45 s;
+   - total duration of 30–45 s (lowered to 24–45 s when paced narration shortened news videos; see `video/README.md`, "Narration pacing");
    - a context card is allowed only when its fact exists. A tsunami card needs the flag to be set: "not set" is never shown, because it could be read as "no tsunami".
 5. **Preliminary status is derived, never stored.** The rule is `status !== 'reviewed'`, the same as M1's `describeFacts`. Preliminary videos show a badge for their whole length, and every video ends with "Data may be revised".
 6. **Historical events show an ARCHIVE indicator from frame 0.**

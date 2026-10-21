@@ -12,7 +12,8 @@ export const SPEC_VERSION = '1.0';
 export const FPS = 30;
 export const WIDTH = 1080;
 export const HEIGHT = 1920;
-export const MIN_DURATION_FRAMES = 30 * FPS;
+/** 24 s: paced narration (src/audio/pacing.ts) makes a news video shorter than the original 30 s floor. */
+export const MIN_DURATION_FRAMES = 24 * FPS;
 export const MAX_DURATION_FRAMES = 45 * FPS;
 export const MAX_CONTEXT_ITEMS = 3;
 /** An earthquake whose origin time is older than this, relative to the spec's asOfUtc, is shown as ARCHIVE. */

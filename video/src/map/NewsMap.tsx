@@ -8,6 +8,7 @@ import { EpicenterOverlay } from '../spike/EpicenterOverlay.js';
 import { LiveMap } from './LiveMap.js';
 import { newsCameraAt } from './newsCamera.js';
 import { StaticBackdrop } from './StaticBackdrop.js';
+import { totalFrames } from '../spec/timeline.js';
 
 /**
  * Marker and decorative rings fade in from frame 105 as the camera arrives (fixed timing and size, never scaled to
@@ -40,7 +41,7 @@ export const NewsMap: React.FC<{ spec: VideoSpec; mapStyle?: NewsMapStyle }> = (
   }
   return (
     <LiveMap
-      cameraAt={f => newsCameraAt( f, target )}
+      cameraAt={f => newsCameraAt( f, target, { pushEnd: totalFrames( spec ) - spec.scenes[3].frames } )}
       epicenter={[ event.longitude, event.latitude ]}
       tiles="local"
       style={mapStyle?.style}

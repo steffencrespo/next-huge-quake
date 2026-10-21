@@ -39,10 +39,17 @@ export const clipGap = ( preset: PacingPreset ) => Math.max( 0, preset.sentenceG
 export const FAST_BEATS_PACING: PacingPreset = { ...FAST_PACING, name: 'fast-beats', keepPauses: true };
 export const PACING_PRESETS: Record<string, PacingPreset> = { fast: FAST_PACING, 'fast-beats': FAST_BEATS_PACING };
 
+/** The pacing newly produced Shorts use. `natural` (no processing) is still available for re-renders of existing videos. */
+export const DEFAULT_PACING = 'fast-beats';
+export const NATURAL_PACING = 'natural';
+
+/** Preset for a `--pace` value: the default when omitted, undefined for `natural`. */
+export const resolvePacing = ( name: string | undefined ): PacingPreset | undefined => ( ( name ?? DEFAULT_PACING ) === NATURAL_PACING ? undefined : pacingPreset( name ?? DEFAULT_PACING ) );
+
 export const pacingPreset = ( name: string ): PacingPreset => {
   const preset = PACING_PRESETS[name];
   if ( !preset ) {
-    throw new Error( `unknown pacing '${name}'; choose ${Object.keys( PACING_PRESETS ).join( ' | ' )}` );
+    throw new Error( `unknown pacing '${name}'; choose ${[ ...Object.keys( PACING_PRESETS ), NATURAL_PACING ].join( ' | ' )}` );
   }
   return preset;
 };

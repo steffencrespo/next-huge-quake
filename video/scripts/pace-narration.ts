@@ -1,16 +1,17 @@
 /**
  * Applies a pacing preset to the narration of a news video (generate-narration output). No request, no render.
  *
- * Usage: tsx scripts/pace-narration.ts <soundtrack.json> [--narration=<mp3>] [--pace=fast] [--out=<dir>]
+ * Usage: tsx scripts/pace-narration.ts <soundtrack.json> [--narration=<mp3>] [--pace=fast-beats|fast] [--out=<dir>]
  *   soundtrack.json  Soundtrack with timed captions; narration.mp3 is expected next to it
  *   --out            default: next to soundtrack.json
  * Writes narration.<pace>.mp3 and soundtrack.<pace>.json (new narrationDuration, captions re-timed). Render it with:
  *   tsx scripts/render-package.ts <spec.json> <out>/soundtrack.<pace>.json --narration=<out>/narration.<pace>.mp3
- * The scene frames of the spec are not changed, so the video keeps its length and the narration ends earlier.
+ * render-package does this itself (and re-times the scenes) by default; use this CLI to inspect or reuse the paced narration alone.
+ * The scene frames of a spec are not changed here.
  */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
-import { pacingPreset } from '../src/audio/pacing.js';
+import { DEFAULT_PACING, pacingPreset } from '../src/audio/pacing.js';
 import { soundtrackSchema } from '../src/audio/soundtrack.js';
 import { paceNarration } from './lib/pace-audio.js';
 
@@ -19,12 +20,12 @@ const args = process.argv.slice( 2 );
 const option = ( name: string ) => args.find( arg => arg.startsWith( `--${name}=` ) )?.slice( name.length + 3 );
 const file = args.find( arg => !arg.startsWith( '--' ) );
 if ( !file ) {
-  console.error( 'usage: tsx scripts/pace-narration.ts <soundtrack.json> [--narration=<mp3>] [--pace=fast] [--out=<dir>]' );
+  console.error( 'usage: tsx scripts/pace-narration.ts <soundtrack.json> [--narration=<mp3>] [--pace=fast-beats|fast] [--out=<dir>]' );
   process.exit( 2 );
 }
 
 try {
-  const preset = pacingPreset( option( 'pace' ) ?? 'fast' );
+  const preset = pacingPreset( option( 'pace' ) ?? DEFAULT_PACING );
   const soundtrackFile = resolve( file );
   const soundtrack = soundtrackSchema.parse( JSON.parse( readFileSync( soundtrackFile, 'utf8' ) ) );
   const source = resolve( option( 'narration' ) ?? join( dirname( soundtrackFile ), 'narration.mp3' ) );

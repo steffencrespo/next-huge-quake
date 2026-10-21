@@ -9,9 +9,11 @@
  *   audio     builds out/edu/<episode>/audio.json (placement, captions, music) once every line exists. No request.
  *   preview   silent render with timed placeholder captions to out/edu/preview/<episode>.mp4. No audio, no request.
  *   final     renders out/edu/final/<episode>.mp4 with narration, music and effects from the library. No request.
- * Add --pace=fast to `audio` or `final` for the fast narration preset (src/audio/pacing.ts, from the Panama D4 experiment): the
- * cached clips are sped up with ffmpeg (pitch kept), pauses shortened and captions re-timed, and the clips are placed back to
- * back, so the scenes that follow the voice tighten too. Outputs get a -fast suffix; library clips and natural renders are untouched.
+ * `audio` and `final` use the default narration pacing, fast-beats (src/audio/pacing.ts, from the Panama D4 experiment): the
+ * cached clips are sped up 1.2x with ffmpeg (pitch kept), pauses shortened except those the script declares on purpose, and
+ * captions re-timed; clips are placed back to back, so the scenes that follow the voice tighten too. Outputs get a
+ * -fast-beats suffix. --pace=natural gives the original timing and file names; --pace=fast tightens every pause. Library
+ * clips and natural renders are never touched.
  * The library (assets/audio/edu/library/) is seeded from Episode 01's cache on every run (copies; the originals stay).
  * One credit is billed per character for eleven_multilingual_v2, which is what the estimates use; the ledger records
  * the characters actually sent, and the account balance in the ElevenLabs dashboard is the authority.
@@ -20,7 +22,7 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { alignmentToCaptions } from '../src/audio/captions.js';
-import { clipGap, pacingPreset } from '../src/audio/pacing.js';
+import { clipGap, resolvePacing } from '../src/audio/pacing.js';
 import { OUTPUT_FORMAT, generateSpeech, loadTtsConfig, parseEnvFile, speechFromAudio } from '../src/audio/tts.js';
 import type { TtsConfig } from '../src/audio/tts.js';
 import type { Caption } from '../src/audio/soundtrack.js';
@@ -45,7 +47,7 @@ const flag = ( name: string ) => args.find( a => a.startsWith( `--${name}=` ) )?
 const episodeArg = flag( 'episode' ) ?? 'all';
 const BUDGET = Number( flag( 'budget' ) ?? 2000 );
 const series = flag( 'series' ) ?? 'edu';
-const pace = flag( 'pace' ) ? pacingPreset( flag( 'pace' )! ) : undefined;
+const pace = resolvePacing( flag( 'pace' ) );
 const paceSuffix = pace ? `-${ pace.name }` : '';
 const pacedDir = join( root, 'out', 'edu', 'paced', pace?.name ?? '' );
 const pool = series === 'myth' ? { california: CALIFORNIA } : series === 'depth' ? { depth: DEPTH } : series === 'historic' ? HISTORIC : EPISODES;
