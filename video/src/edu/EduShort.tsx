@@ -25,7 +25,8 @@ export type SfxCue = { sfx: SfxName; at: number; dur: number; volume: number | (
 export const SFX_PATHS: Record<SfxName, string> = { rumble: SFX_FILES.rumble, boom: SFX_FILES.boom, tick: EXTRA_SFX.tick.file, whoosh: EXTRA_SFX.whoosh.file, riser: EXTRA_SFX.riser.file };
 
 export type EpisodeVisuals = React.FC<{ t: number; b: Beats }>;
-export type EpisodeDefinition = { id: EpisodeId | string; meta?: EpisodeMeta; Visuals: EpisodeVisuals; cues: ( b: Beats ) => SfxCue[] };
+/** `Cta` replaces the full-screen closing card (an episode may use a compact one); `start` is when the CTA line begins. */
+export type EpisodeDefinition = { id: EpisodeId | string; meta?: EpisodeMeta; Visuals: EpisodeVisuals; cues: ( b: Beats ) => SfxCue[]; Cta?: React.FC<{ frame: number; start: number }> };
 
 export const eduShortSchema = z.object( { audio: eduAudioSchema.optional() } );
 export type EduShortProps = z.infer<typeof eduShortSchema>;
@@ -64,7 +65,7 @@ export function makeEduShort( def: EpisodeDefinition ): React.FC<EduShortProps> 
     return (
       <AbsoluteFill style={{ background: COLORS.background }}>
         <def.Visuals t={t} b={b} />
-        <Cta frame={frame} start={b.cta.start - 1} />
+        {def.Cta ? <def.Cta frame={frame} start={b.cta.start} /> : <Cta frame={frame} start={b.cta.start - 1} />}
         <Captions t={t} captions={audio?.captions ?? placeholderCaptions( meta.script )} />
         {audio ? <Layers audio={audio} cues={def.cues( b )} total={durationInFrames / FPS} /> : null}
       </AbsoluteFill>
