@@ -107,6 +107,30 @@
     "videoId": "EmEl2XM5Pp8",
     "playlistItemId": "UExaUk5TWEVISXJfQS4yODlGNEE0NkRGMEEzMEQy"
   },
+  "vanuatu-m63-us6000u3jl": {
+    "status": "published",
+    "contentHash": "9a6b33656dea056c16a3b3b8e563db22bc5475adabf1c42ff985f20b4d9756e5",
+    "fileSize": 13852703,
+    "updatedAt": "2026-10-20T15:11:19.204Z",
+    "videoId": "dKiNmtRZWMs",
+    "playlistItemId": "UExQc1I3NGxJaFdnSS4wOTA3OTZBNzVEMTUzOTMy"
+  },
+  "kids-why-earth-shakes-short": {
+    "status": "published",
+    "contentHash": "8ca3add4ed7e12c0067e9e9c8833857b1f0844f52b5d5481794cd9d62677f304",
+    "fileSize": 10425632,
+    "updatedAt": "2026-10-20T22:57:01.255Z",
+    "videoId": "5dcL_LgoofE",
+    "playlistItemId": "UExaUk5TWEVISXJfQS4wMTcyMDhGQUE4NTIzM0Y5"
+  },
+  "kids-drop-cover-hold": {
+    "status": "published",
+    "contentHash": "842a01b60885bff3cfec6c50c34981a4a4b49650984a3f36b18c264a1a975e01",
+    "fileSize": 11015761,
+    "updatedAt": "2026-10-20T22:57:04.082Z",
+    "videoId": "_uDam2PueZk",
+    "playlistItemId": "UExaUk5TWEVISXJfQS41MjE1MkI0OTQ2QzJGNzNG"
+  },
   "myth-california-ocean": {
     "status": "published",
     "contentHash": "9eafcd97bddf46ca48be6cd934a2e3ce1c5b4ea5236cf5986fa6d4cd8ccad44c",

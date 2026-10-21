@@ -1,7 +1,7 @@
 /**
  * Narration for "Why Does the Earth Shake?" (kids series) with ElevenLabs, one clip per script line.
  *
- * Usage: tsx scripts/generate-kids-narration.ts [--generate] [--budget=<credits>]
+ * Usage: tsx scripts/generate-kids-narration.ts [--ep=short|safety] [--generate] [--budget=<credits>]
  * Without --generate it is a dry run (no request). With --generate it requests only clips that are not cached for the
  * same text, voice and model, stops at the first failure, refuses to start when the new characters exceed the budget,
  * and never regenerates a cached clip. The voice is the kids Max voice from src/kids/config.ts, not the ELEVENLABS_VOICE_ID
@@ -16,16 +16,24 @@ import { generateSpeech, loadTtsConfig, parseEnvFile, speechFromAudio } from '..
 import { MAX_CLIP_SECONDS, placeClips } from '../src/edu/narration.js';
 import type { ClipInput } from '../src/edu/narration.js';
 import { normalizeText } from '../src/edu/library.js';
-import { KIDS_EPISODE, KIDS_MUSIC, KIDS_VOICE } from '../src/kids/config.js';
+import { KIDS_EPISODE, KIDS_EPISODES, KIDS_MUSIC, KIDS_VOICE } from '../src/kids/config.js';
+import type { KidsEpKey } from '../src/kids/config.js';
 import { kidsAudioSchema } from '../src/kids/audio.js';
 import { creditsPerCharacter } from '../src/kids/credits.js';
 
 const root = join( dirname( new URL( import.meta.url ).pathname ), '..' );
 const args = process.argv.slice( 2 );
-const cacheDir = join( root, 'assets', 'audio', 'kids', 'narration' );
+const epArg = args.find( a => a.startsWith( '--ep=' ) )?.slice( 5 );
+if ( epArg && !( epArg in KIDS_EPISODES ) ) {
+  throw new Error( `unknown --ep=${epArg}; expected one of ${Object.keys( KIDS_EPISODES ).join( ', ' )}` );
+}
+const ep = epArg as KidsEpKey | undefined;
+const cacheDir = join( root, 'assets', 'audio', 'kids', ep ? `narration-${ep}` : 'narration' );
+const clipFile = ( id: string ) => ep ? `audio/kids/${ep}-${id}.mp3` : `audio/kids/${id}.mp3`;
+const audioOut = join( root, 'out', 'kids', ep ? `${ep}.audio.json` : 'audio.json' );
 const MODEL = 'eleven_multilingual_v2';
 const budget = Number( args.find( a => a.startsWith( '--budget=' ) )?.slice( 9 ) ?? 643 );
-const SCRIPT = KIDS_EPISODE.script;
+const SCRIPT = ( ep ? KIDS_EPISODES[ep] : KIDS_EPISODE ).script;
 
 const mp3Path = ( id: string ) => join( cacheDir, `${id}.mp3` );
 const alignmentPath = ( id: string ) => join( cacheDir, `${id}.alignment.json` );
@@ -87,12 +95,12 @@ try {
   const target = [ ...levels ].sort( ( a, b ) => a - b )[Math.floor( levels.length / 2 )];
   const clips: ClipInput[] = SCRIPT.map( ( line, i ) => {
     const speech = speechFromAudio( normalizeText( line.text ), readFileSync( mp3Path( line.id ) ), JSON.parse( readFileSync( alignmentPath( line.id ), 'utf8' ) ), MAX_CLIP_SECONDS );
-    return { id: line.id, file: `audio/kids/${line.id}.mp3`, duration: speech.durationSeconds, captions: alignmentToCaptions( speech.alignment ), gain: gainFor( levels[i], target ) };
+    return { id: line.id, file: clipFile( line.id ), duration: speech.durationSeconds, captions: alignmentToCaptions( speech.alignment ), gain: gainFor( levels[i], target ) };
   } );
-  const audio = kidsAudioSchema.parse( { ...placeClips( SCRIPT, clips ), musicFile: KIDS_MUSIC.file, musicCredit: KIDS_MUSIC.credit } );
+  const audio = kidsAudioSchema.parse( { ...placeClips( ep === 'short' ? SCRIPT.map( ( l, i ) => ( i === 0 ? l : { ...l, start: 0 } ) ) : SCRIPT, clips ), musicFile: KIDS_MUSIC.file, musicCredit: KIDS_MUSIC.credit } );
   mkdirSync( join( root, 'out', 'kids' ), { recursive: true } );
-  writeFileSync( join( root, 'out', 'kids', 'audio.json' ), `${JSON.stringify( audio, null, 2 )}\n` );
-  console.log( `characters requested this run: ${spent} (about ${Math.ceil( spent * creditsPerCharacter( MODEL ) )} credits)\nnarration ${audio.narrationStart}-${audio.narrationEnd} s, ${audio.captions.length} captions\nwrote out/kids/audio.json` );
+  writeFileSync( audioOut, `${JSON.stringify( audio, null, 2 )}\n` );
+  console.log( `characters requested this run: ${spent} (about ${Math.ceil( spent * creditsPerCharacter( MODEL ) )} credits)\nnarration ${audio.narrationStart}-${audio.narrationEnd} s, ${audio.captions.length} captions\nwrote ${audioOut}` );
 } catch ( error ) {
   console.error( `narration failed: ${error instanceof Error ? error.message : String( error )}` );
   process.exit( 1 );

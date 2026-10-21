@@ -17,6 +17,7 @@ import { Magnitude } from './edu/ep03.js';
 import { DEPTH, EarthquakeDepth } from './edu/ep05.js';
 import { CALIFORNIA, MythCaliforniaOcean } from './edu/ep06.js';
 import { KidsWhyEarthShakes, calculateKidsMetadata, kidsShortSchema } from './kids/KidsShort.js';
+import { KidsDropCoverHold, calculateSafetyMetadata } from './kids/SafetyShort.js';
 import { HistoricChile1960 } from './historic/chile1960.js';
 import { HistoricJapan2011 } from './historic/japan2011.js';
 import { HistoricSanFrancisco1906 } from './historic/sanfrancisco1906.js';
@@ -67,6 +68,8 @@ export const Root: React.FC = () => (
     <Composition id="MythCaliforniaOcean" component={MythCaliforniaOcean} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( CALIFORNIA )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="KidsWhyEarthShakes" component={KidsWhyEarthShakes} schema={kidsShortSchema} calculateMetadata={calculateKidsMetadata} width={1080} height={1920} fps={30} durationInFrames={1560} defaultProps={{}} />
     <Composition id="KidsWhyEarthShakesV2" component={KidsWhyEarthShakes} schema={kidsShortSchema} calculateMetadata={calculateKidsMetadata} width={1080} height={1920} fps={30} durationInFrames={1560} defaultProps={{ v2: true }} />
+    <Composition id="KidsWhyEarthShakesShort" component={KidsWhyEarthShakes} schema={kidsShortSchema} calculateMetadata={calculateKidsMetadata} width={1080} height={1920} fps={30} durationInFrames={1260} defaultProps={{ v2: true, short: true }} />
+    <Composition id="KidsDropCoverHold" component={KidsDropCoverHold} schema={kidsShortSchema} calculateMetadata={calculateSafetyMetadata} width={1080} height={1920} fps={30} durationInFrames={1260} defaultProps={{}} />
     <Composition id="HistoricChile1960" component={HistoricChile1960} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( HISTORIC.chile1960 )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="HistoricJapan2011" component={HistoricJapan2011} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( HISTORIC.japan2011 )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="HistoricSanFrancisco1906" component={HistoricSanFrancisco1906} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( HISTORIC.sanfrancisco1906 )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />

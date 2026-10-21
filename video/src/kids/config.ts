@@ -3,7 +3,7 @@
  * The voice, the soundtrack and the palette live here only; nothing in this file changes MUSIC, DEFAULT_MUSIC or the
  * ELEVENLABS_* environment defaults used by the other workflows.
  */
-import { CTA_LINE_KIDS, KIDS_SCRIPT } from './script.js';
+import { CTA_LINE_KIDS, KIDS_SCRIPT, KIDS_SCRIPT_SAFETY, KIDS_SCRIPT_SHORT } from './script.js';
 import type { EpisodeMeta } from '../edu/episodes.js';
 
 /** "Max - USA Energetic Animated Cartoon". Passed to the TTS config explicitly when narration is approved; never written to .env.local. */
@@ -36,3 +36,15 @@ export const KIDS_EPISODE: EpisodeMeta = {
 };
 
 export { CTA_LINE_KIDS };
+
+export const KIDS_EPISODE_SHORT: EpisodeMeta = {
+  id: 'kids-01-short', number: 1, compositionId: 'KidsWhyEarthShakesShort', title: 'Why Does the Earth Shake?', baseSeconds: 35, script: KIDS_SCRIPT_SHORT
+};
+
+export const KIDS_EPISODE_SAFETY: EpisodeMeta = {
+  id: 'kids-02', number: 2, compositionId: 'KidsDropCoverHold', title: 'What Should You Do During an Earthquake?', baseSeconds: 35, script: KIDS_SCRIPT_SAFETY
+};
+
+/** Episodes selectable with --ep= in the narration and render scripts; the unlisted default is the original V1/V2 episode. */
+export const KIDS_EPISODES = { short: KIDS_EPISODE_SHORT, safety: KIDS_EPISODE_SAFETY } as const;
+export type KidsEpKey = keyof typeof KIDS_EPISODES;
