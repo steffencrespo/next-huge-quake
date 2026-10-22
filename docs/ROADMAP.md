@@ -40,6 +40,19 @@ Numbering follows the README and is kept as established. Two sub-projects reuse 
 
 Only Breaking Quakes runs through Output.ai today.
 
+## Editorial backlog
+
+Ideas approved in principle, in priority order. Nothing here is in production unless its status says so. Each is an experiment under the editorial strategy: it states a hypothesis, needs human approval before publication, and may go outside the regular schedule only if separately approved.
+
+**1. SIX SEVEN: Earthquake Edition (high priority, time-sensitive; target production Oct 21–25, 2026).** Status: approved idea, not yet in production. Working title: "Everyone Says SIX SEVEN… But What If It's an Earthquake?" Sequence: an energetic "SIX SEVEN!" opener using the viral meme, an abrupt cut to a dramatic seismic visual ("Magnitude 6.7? That's no joke."), one surprising and scientifically accurate fact about magnitude 6.7 earthquakes, then a memorable closing visual or punchline. About 12–18 s, but storytelling quality comes before duration.
+- *Hypothesis (untested):* a recognizable meme may bring in viewers who would not watch earthquake science, potentially improving Stayed to watch and introducing the channel to a broader audience.
+- *Guidelines:* fast, humorous and visually striking; scientifically accurate, with the M6.7 fact chosen and sourced from USGS before scripting; do not imply that a fictional earthquake occurred; no real victims or disasters as jokes; original or properly licensed audio and visuals only (the meme's own source audio is third-party, so use original narration and sound); reuse existing components where practical.
+- *Overlap check:* the catalog has "Magnitude 6 vs 7: How Much Stronger?" (scheduled Thu 2026-10-22), which explains the logarithmic scale. This idea differs: the meme hook and one concrete M6.7 fact, not the scale. No other catalog or backlog entry covers it.
+
+**2. SIX SEVEN vs FOUR TWO: Earthquake Edition (lower priority).** Compare M6.7 and M4.2; an M6.7 releases about 5,600 times the energy (10^(1.5 × 2.5)). Overlaps the scale episode above, so it needs a distinct angle, and it depends on how the first SIX SEVEN short performs.
+
+**3. When Gen Alpha Discovers Earthquake Magnitudes (lower priority).** A humorous educational Short on magnitude numbers. Same overlap caveat with the scale episode; decide after the first SIX SEVEN short.
+
 ## Future capabilities
 
 None of these exist yet.
