@@ -45,5 +45,10 @@
   "categoryId": "27",
   "language": "en",
   "madeForKids": false,
-  "playlistId": "PLDquHuxZZySw"
+  "playlistId": "PLDquHuxZZySw",
+  "publishAtLocal": "2026-10-25T18:00",
+  "scheduleException": {
+    "reason": "Separately approved Experiment-Driven Publishing release (approved 2026-10-22): a Sunday slot outside the Tue/Thu/Sat cadence. The 24 h lead time is kept.",
+    "minLeadMinutes": 1440
+  }
 }
