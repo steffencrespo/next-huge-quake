@@ -31,6 +31,10 @@ const LOOP_DELTA = 0.1;
 /** Silence after the last word before the video loops. */
 export const LOOP_TAIL = 1.0;
 const FAR = 1000;
+/** Narration lines in loop order (all from the published episode's claims, see ep06claims.ts). */
+export const LOOP_LINES = [ 'fact2', 'punch', 'hook', 'fact', 'plates', 'slide', 'rate', 'how' ] as const;
+/** On-screen qualifier under the cold-open card: the 15-million-year figure is a projection, not a forecast. */
+export const COLD_OPEN_QUALIFIER = 'If today’s plate motion simply continued · schematic';
 const never = { start: -10, end: -9 };
 
 export const loopSeconds = ( b: Beats ) => b.how.end + LOOP_TAIL;
@@ -66,7 +70,7 @@ const ColdOpen: React.FC<{ t: number; b: Beats }> = ( { t, b } ) => {
           <g opacity={punch}><Txt x={540} y={1210} size={34} weight={700} color="#e0a43c">Well… in about 15 million years.</Txt></g>
         </g>
       </g>
-      <Txt x={540} y={1272} size={28} weight={700} color={COLORS.text} opacity={punch * 0.9}>If today’s plate motion simply continued · schematic</Txt>
+      <Txt x={540} y={1272} size={28} weight={700} color={COLORS.text} opacity={punch * 0.9}>{COLD_OPEN_QUALIFIER}</Txt>
     </svg>
   );
 };

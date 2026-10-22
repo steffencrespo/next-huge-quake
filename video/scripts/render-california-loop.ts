@@ -1,7 +1,7 @@
 /**
  * EXPERIMENT: renders the California cold open + seamless loop candidate from cached narration only. No request.
  *
- * Usage: tsx scripts/render-california-loop.ts [--audio-only]
+ * Usage: tsx scripts/render-california-loop.ts [--audio-only | --credits-only]
  * Takes the nine cached California clips from the narration library, cuts the "Fact two:" and "Fact one:" lead-ins at the
  * word boundary the character alignment gives, paces each clip with fast-beats, places them in the loop order and renders
  * MythCaliforniaLoop to out/edu/final/california-loop.mp4 (the file is overwritten; keep a copy to compare versions). The published episode, manifests and library are not touched.
@@ -15,6 +15,8 @@ import { MUSIC } from '../src/audio/music.js';
 import { FAST_BEATS_PACING, clipGap } from '../src/audio/pacing.js';
 import { OUTPUT_FORMAT, loadTtsConfig, parseEnvFile } from '../src/audio/tts.js';
 import { CALIFORNIA } from '../src/edu/ep06.js';
+import { FANTASY_URL, FAQ_URL } from '../src/edu/ep06claims.js';
+import { LOOP_LINES } from '../src/edu/ep06loop.js';
 import { openLibrary } from '../src/edu/library.js';
 import { eduAudioSchema, placeClips } from '../src/edu/narration.js';
 import type { ClipInput } from '../src/edu/narration.js';
@@ -30,14 +32,38 @@ const ffmpeg = ( args: string[] ) => {
   }
 };
 
+/** Attribution for the public description (appended verbatim by the publisher). Same sources and music as the published episode. */
+function writeCredits() {
+  const file = join( root, 'out', 'edu', 'final', 'california-loop.credits.txt' );
+  mkdirSync( dirname( file ), { recursive: true } );
+  writeFileSync( file, [
+    `Music: ${ MUSIC.deified.credit }`,
+    'Narration: ElevenLabs text-to-speech (voice: Daniel).',
+    'Sound effects: synthesized for this video.',
+    'Map data: Natural Earth (public domain), 1:50m land and 1:110m land via world-atlas.',
+    `Source: USGS FAQ: Will California eventually fall into the ocean? ${ FAQ_URL }`,
+    `Source: USGS: Earthquake Facts & Earthquake Fantasy (plate motion about 46 mm per year; Los Angeles and San Francisco neighbors in about 15 million years at this rate). ${ FANTASY_URL }`,
+    'The fault trace, plate arrows, the accelerated Los Angeles move and the strike-slip diagram are schematic illustrations, not to scale, not data or footage. The 15-million-year figure is a USGS straight-line projection at today’s plate-motion rate, not a forecast.',
+    '',
+    'Production Technology',
+    'Automated news and video production powered by Output.ai',
+    'https://output.ai',
+    ''
+  ].join( '\n' ) );
+  console.log( `wrote ${ file }` );
+}
+if ( process.argv.includes( '--credits-only' ) ) {
+  writeCredits();
+  process.exit( 0 );
+}
+
 const envFile = join( root, '.env.local' );
 const config = loadTtsConfig( { ...( existsSync( envFile ) ? parseEnvFile( readFileSync( envFile, 'utf8' ) ) : {} ), ...process.env } );
 const library = openLibrary( join( root, 'assets', 'audio', 'edu', 'library' ) );
 
 /** Loop order, and where a lead-in is cut: the clip starts at the first word of `from` (the text after the lead-in). */
-const ORDER: { id: string; from?: string }[] = [
-  { id: 'fact2', from: 'Los' }, { id: 'punch' }, { id: 'hook' }, { id: 'fact', from: 'there’s' }, { id: 'plates' }, { id: 'slide' }, { id: 'rate' }, { id: 'how' }
-];
+const CUT_AT: Record<string, string> = { fact2: 'Los', fact: 'there’s' };
+const ORDER = LOOP_LINES.map( id => ( { id: id as string, from: CUT_AT[id] } ) );
 
 /** Gain per clip as the published episode uses it (levels matched to the median); read from the natural-pacing audio plan. */
 function gains(): Record<string, number> {
@@ -121,6 +147,7 @@ try {
     throw new Error( `render failed (exit ${ r.status })` );
   }
   console.log( `wrote ${ out }` );
+  writeCredits();
 } finally {
   staged.forEach( f => rmSync( f, { force: true } ) );
 }
