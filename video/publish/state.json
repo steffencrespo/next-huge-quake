@@ -155,5 +155,14 @@
     "videoId": "rVSj_PvFPmE",
     "playlistItemId": "UExEcXVIdXhaWnlTdy5GNjNDRDREMDQxOThCMDQ2",
     "publishAt": "2026-10-23T21:00:00Z"
+  },
+  "six-seven-earthquake": {
+    "status": "scheduled",
+    "contentHash": "e071a4059a6c8acc2d38aef09f33fce5ca6f73029d6dc07bc9ef341476d759dd",
+    "fileSize": 3007214,
+    "updatedAt": "2026-10-22T03:41:58.539Z",
+    "videoId": "i8mfyBetegY",
+    "playlistItemId": "UExEcXVIdXhaWnlTdy40NzZCMERDMjVEN0RFRThB",
+    "publishAt": "2026-10-25T21:00:00Z"
   }
 }
