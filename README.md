@@ -117,6 +117,7 @@ Details, editorial formats and future capabilities are in [docs/ROADMAP.md](docs
 - [Project status](docs/PROJECT_STATUS.md): what is implemented, published, scheduled and open.
 - [Roadmap](docs/ROADMAP.md): priorities, milestones, formats and future capabilities.
 - [Decision log](docs/DECISION_LOG.md): product and editorial decisions. Architecture decisions are ADRs in [docs/decisions/](docs/decisions/).
+- [Experiment journal](docs/EXPERIMENT_JOURNAL.md): experiments, observations and lessons, with editorial impressions kept apart from measured audience data.
 
 Keeping them current:
 
@@ -124,6 +125,7 @@ Keeping them current:
 - Update the **Roadmap** when priorities or milestones change.
 - Update the **Decision log** when an important product or editorial decision is approved or reversed.
 - Write an **ADR** for a significant technical architecture decision.
+- Add an **Experiment journal** entry after a meaningful experiment, an unexpected finding or a significant lesson, not for routine commits.
 - Claude Code sessions should read these documents before proposing new implementation work.
 
 ## Getting started
