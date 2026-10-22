@@ -1,10 +1,14 @@
 import { z } from '@outputai/core';
 import { videoPackageSchema, workflowInputSchema } from '../quake_news/types.js';
+import { publishOutputSchema } from '../quake_publish/types.js';
 
 export const STAGES = [ 'quake_news', 'build_spec', 'narration', 'terrain', 'render' ] as const;
 
 export const workflowInputSchemaVideo = workflowInputSchema.extend( {
-  asOfUtc: z.iso.datetime().describe( 'When the video is produced for (ISO 8601 UTC). Supplied by the caller; the workflow never reads the clock.' )
+  asOfUtc: z.iso.datetime().describe( 'When the video is produced for (ISO 8601 UTC). Supplied by the caller; the workflow never reads the clock.' ),
+  fastTrack: z.object( {
+    detectedAtUtc: z.string().nullable().describe( 'When the monitor first saw the event' )
+  } ).optional().describe( 'Set only by the monitor for Fast Track candidates: after the render, quake_publish decides and may publish' )
 } );
 
 export const stageSchema = z.object( {
@@ -32,7 +36,8 @@ export const videoWorkflowOutputSchema = z.discriminatedUnion( 'status', [
     eventId: z.string(),
     outputs: outputPathsSchema,
     news: z.object( { headline: z.string(), dek: z.string(), article: z.string(), narration: z.string() } )
-      .describe( 'The validated M1 text, for the editor. Nothing has been published.' ),
+      .describe( 'The validated M1 text, for the editor.' ),
+    fastTrack: publishOutputSchema.optional().describe( 'Fast Track outcome; absent for normal runs, which publish nothing' ),
     ...common
   } ),
   z.object( { status: z.literal( 'no_candidate' ), reason: z.string(), ...common } ),

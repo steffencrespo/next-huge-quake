@@ -1,5 +1,8 @@
 import { step, z } from '@outputai/core';
 import { queryUsgsList } from '../../clients/usgs.js';
+import { loadFastTrackConfig } from '../../fast_track/config.js';
+import { isPaused, ledgerStore } from '../../fast_track/ledger.js';
+import { fastTrackStart } from '../../fast_track/start.js';
 import { outputApi } from './api.js';
 import { loadMonitorConfig } from './config.js';
 import { runPoll } from './poll.js';
@@ -21,7 +24,11 @@ export const pollAndSelect = step( {
       now: () => Date.now(),
       fetchFeed: startTimeUtc => queryUsgsList( { startTimeUtc, minMagnitude: config.minMagnitude } ),
       store: fileStore(),
-      api: outputApi
+      api: outputApi,
+      fastTrack: ( obs, record, nowMs ) => {
+        const fast = loadFastTrackConfig( process.env );
+        return fastTrackStart( obs, record, nowMs, fast, isPaused( fast.pauseFile ), ledgerStore() );
+      }
     }, config );
   },
   options: { activityOptions: { startToCloseTimeout: '3m', retry: { maximumAttempts: 1 } } }

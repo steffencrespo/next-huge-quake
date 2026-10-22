@@ -5,7 +5,7 @@ export const monitorInputSchema = z.object( {} );
 export const pollSummarySchema = z.object( {
   ok: z.boolean(),
   error: z.string().nullable(),
-  decision: z.enum( [ 'none', 'dry_run_would_start', 'started', 'start_unconfirmed', 'capped', 'busy', 'attempts_exhausted', 'poll_failed' ] ),
+  decision: z.enum( [ 'none', 'dry_run_would_start', 'started', 'start_unconfirmed', 'capped', 'budget_capped', 'busy', 'attempts_exhausted', 'poll_failed' ] ),
   eventId: z.string().nullable(),
   dryRun: z.boolean(),
   fetched: z.number(),

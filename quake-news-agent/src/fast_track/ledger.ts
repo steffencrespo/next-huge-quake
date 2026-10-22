@@ -78,6 +78,6 @@ export function updateLedgerEvent( store: LedgerStore, eventId: string, patch: P
   return next;
 }
 
-/** The emergency pause: while this file exists the fast track starts nothing paid and publishes nothing. */
+/** The emergency pause: while this file exists nothing is produced as a fast-track candidate and nothing is published. */
 export const pauseFilePath = ( configured: string | null ): string => configured ?? join( defaultStateDir(), 'FAST_TRACK_PAUSED' );
 export const isPaused = ( configured: string | null ): boolean => existsSync( pauseFilePath( configured ) );

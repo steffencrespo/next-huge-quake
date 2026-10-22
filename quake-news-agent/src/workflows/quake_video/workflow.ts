@@ -1,6 +1,7 @@
 import { workflow } from '@outputai/core';
 import quakeNews from '../quake_news/workflow.js';
-import { buildSpec, clock, generateNarration, prepareTerrain, renderVideo } from './steps.js';
+import quakePublish from '../quake_publish/workflow.js';
+import { buildSpec, checkFastTrackNarration, clock, generateNarration, prepareTerrain, renderVideo } from './steps.js';
 import { videoWorkflowOutputSchema, workflowInputSchemaVideo } from './types.js';
 import type { StageRecord, VideoWorkflowOutput } from './types.js';
 
@@ -64,6 +65,10 @@ export default workflow( {
       return fail( 'build_spec', error );
     }
     try {
+      if ( input.fastTrack ) {
+        // Fail closed: the fast-track budget assumes a bounded narration length; refuse before the paid request.
+        await checkFastTrackNarration( { eventId, narration: result.package.narration } );
+      }
       narration = await generateNarration( { eventId, narration: result.package.narration } );
       record( 'narration', narration );
     } catch ( error ) {
@@ -81,19 +86,37 @@ export default workflow( {
       return fail( 'render', error );
     }
 
+    const outputs = {
+      package: built.package,
+      spec: built.spec,
+      script: built.script,
+      narration: narration.narration,
+      soundtrack: narration.soundtrack,
+      mp4: render.mp4,
+      credits: render.credits
+    };
+    // Fast Track: the policy decides on fresh USGS data. A refusal or failure leaves this run ready for approval.
+    let fastTrack;
+    if ( input.fastTrack ) {
+      const timing = {
+        detectedAtUtc: input.fastTrack.detectedAtUtc,
+        productionStartedAtUtc: new Date( begin ).toISOString(),
+        renderCompletedAtUtc: new Date( ( await clock() ).ms ).toISOString()
+      };
+      try {
+        fastTrack = await quakePublish( { eventId, produced: result.package.event, narration: result.package.narration, credits: render.credits, mp4: render.mp4, timing } );
+      } catch ( error ) {
+        const none = { originToDetectionMs: null, detectionToProductionMs: null, productionToRenderMs: null, renderToUploadMs: null, uploadToPublicMs: null, originToPublicMs: null };
+        fastTrack = { status: 'failed' as const, eventId, manifestId: null, videoId: null, tier: null, reasons: [ `quake_publish: ${rootMessage( error )}` ], timestamps: {}, latency: none };
+      }
+    }
+
     return {
       status: 'ready_for_approval',
       eventId,
-      outputs: {
-        package: built.package,
-        spec: built.spec,
-        script: built.script,
-        narration: narration.narration,
-        soundtrack: narration.soundtrack,
-        mp4: render.mp4,
-        credits: render.credits
-      },
+      outputs,
       news: news.draft,
+      ...( fastTrack ? { fastTrack } : {} ),
       stages,
       totalMs: await totalMs()
     };

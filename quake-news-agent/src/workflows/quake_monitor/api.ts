@@ -1,5 +1,5 @@
 import { outputFetch } from '@outputai/http';
-import type { Inspection, Outcome, PollDeps } from './poll.js';
+import type { Inspection, Outcome, PollDeps, StartInput } from './poll.js';
 
 const baseUrl = () => ( process.env.OUTPUT_API_URL ?? 'http://localhost:3001' ).replace( /\/$/, '' );
 const OUTCOMES: readonly Outcome[] = [ 'ready_for_approval', 'rejected', 'no_candidate', 'failed' ];
@@ -13,7 +13,7 @@ const json = async ( response: Response ): Promise<Record<string, unknown>> => {
 };
 
 /** Starts quake_video through the Output API with a deterministic workflow ID (Temporal rejects a duplicate while it runs). */
-export async function startQuakeVideo( workflowId: string, input: { eventId: string; asOfUtc: string } ): Promise<void> {
+export async function startQuakeVideo( workflowId: string, input: StartInput ): Promise<void> {
   const response = await outputFetch( `${baseUrl()}/workflow/start`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },

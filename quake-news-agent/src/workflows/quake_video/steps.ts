@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { FatalError, step, z } from '@outputai/core';
+import { loadFastTrackConfig } from '../../fast_track/config.js';
 import { runVideoScript, videoDir } from '../../shared/run_cli.js';
 import {
   buildSpecInputSchema,
@@ -122,4 +123,26 @@ export const renderVideo = step( {
     return { ms: elapsed( started ), detail: null, mp4: result.mp4, credits: result.credits };
   },
   options: { activityOptions: { startToCloseTimeout: '30m', retry: { maximumAttempts: 1 } } }
+} );
+
+/**
+ * Fast Track only: refuses (before the paid ElevenLabs request) a narration longer than the configured bound the
+ * budget was reserved for, or any narration when the budget settings are incomplete.
+ */
+export const checkFastTrackNarration = step( {
+  name: 'check_fast_track_narration',
+  description: 'Fast Track: refuse a narration the reserved budget does not cover',
+  inputSchema: eventStepInputSchema.required( { narration: true } ),
+  outputSchema: z.object( { chars: z.number() } ),
+  fn: async ( { narration } ) => {
+    const { budget, budgetProblems } = loadFastTrackConfig( process.env );
+    if ( !budget ) {
+      throw new FatalError( `fast-track budget is not configured: ${budgetProblems.join( '; ' )}` );
+    }
+    if ( narration.length > budget.maxNarrationChars ) {
+      throw new FatalError( `narration has ${narration.length} characters; the fast-track budget covers ${budget.maxNarrationChars}` );
+    }
+    return { chars: narration.length };
+  },
+  options: { activityOptions: { startToCloseTimeout: '1m', retry: { maximumAttempts: 1 } } }
 } );
