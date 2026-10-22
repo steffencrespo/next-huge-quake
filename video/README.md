@@ -1,6 +1,6 @@
 # Next Huge Quake: video renderer
 
-This package renders vertical earthquake news videos (1080×1920, 30 fps, H.264, about 35 s) with [Remotion](https://www.remotion.dev/) and [MapLibre GL JS](https://maplibre.org/).
+This package renders vertical earthquake news videos (1080×1920, 30 fps, H.264, about 28 to 35 s) with [Remotion](https://www.remotion.dev/) and [MapLibre GL JS](https://maplibre.org/).
 
 The only input is a **VideoSpec**: validated USGS facts plus scene timing, with no free-form text. Every on-screen string comes from fixed, reviewed templates. The package does not depend on the M1 news agent (Output.ai and Temporal).
 
@@ -71,6 +71,17 @@ npx tsx scripts/edu-batch.ts final    --series=historic   # narration, music, ef
 Verified facts (sources): USGS ComCat (magnitudes, times, epicentres: 1960 M9.5, 2011 M9.1 Mww, 1906 M7.9 Mw); USGS 1906 event pages (rupture of the northernmost 296 mi / 477 km, about 20 ft offset near Point Reyes per Lawson, toll undercount factor 3 to 4, Lawson 1908, Reid 1910); USGS Hawaiian Volcano Observatory (1960 tsunami about 15 h to Hawaii, about 22 h to Japan); USGS Tohoku summary (15,703 dead at the time of its writing, 37.88 m maximum run-up at Miyako); JMA (revised tsunami warning system in service 2013-03-07).
 
 Illustrative, not data: rupture bands, the Japan Trench line, the San Andreas trace, tsunami routes and wave arcs, cross-sections, the skyline and fire graphic, the fence diagram. Each is labelled on screen. The maps are vector maps, not the terrain-tile renderer used by QuakeNews.
+
+## Narration pacing
+
+New Shorts use the **fast-beats** pacing by default (approved 2026-10-21, from the Panama D4 experiment; `src/audio/pacing.ts`): speech at 1.2x with the pitch preserved (ffmpeg `atempo`), pauses between phrases shortened (sentence end 0.1 s, colon, ellipsis or dash 0.2 s, other breaks 0.15 s), and captions re-timed to match. Pauses an episode script declares on purpose (`gap` in `plan()`, for example the MYTH to FACT reveal) are kept at their length. It processes cached or generated audio with ffmpeg and makes no request.
+
+| Format | Where it applies | Opt out |
+|---|---|---|
+| News (`render-package`, so `quake_video`) | Narration is paced, and the scenes follow it: Hook and Closing keep their length, Context gets 3.1 s per card (as in the Panama D4 timing) and Facts the rest, and the video ends 3.77 s after the voice (a 29.7 s narration gives the old 35 s, a 22.6 s one about 28 s). The camera push ends with the context scene. Paced inputs are written next to the video (`spec.paced.json`, `soundtrack.paced.json`, `narration.paced.mp3`); the generated narration is not changed | `--pace=natural` |
+| Educational, historic, depth and Myth vs Fact (`edu-batch audio` / `final`) | Cached clips are paced and placed back to back; outputs are named `<episode>-<music>-fast-beats.mp4` and the natural file is never overwritten. The storyboard length (`baseSeconds`) is no longer a floor | `--pace=natural` |
+
+`--pace=fast` tightens every pause, declared ones too. `npx tsx scripts/pace-narration.ts <soundtrack.json>` writes paced narration and soundtrack alone, to inspect. Not covered: the kids series, which has its own narration scripts. Videos already published or scheduled were rendered at natural pacing and are not re-rendered; re-running `render-package` or `edu-batch final` for an old episode now gives the paced version unless `--pace=natural` is passed.
 
 ## Structure
 

@@ -88,6 +88,17 @@ describe( 'resolveRenderInputs', () => {
     expect( () => resolveRenderInputs( inputs( { st: soundtrack( { captions: [ { text: 'x', start: 0, end: 40 } ] } ) } ) ) ).toThrow( 'past the narration' );
   } );
 
+  it( 'keeps the narration-fits-the-video guard on shorter specs (24 s minimum)', () => {
+    const shorter = ( frames: number ) => {
+      const spec = buildVideoSpec( panama, { asOfUtc: AS_OF, mapMode: 'static' } );
+      spec.scenes[1].frames -= frames;
+      return spec;
+    };
+    expect( resolveRenderInputs( inputs( { spec: shorter( 270 ) } ) ).spec.scenes[1].frames ).toBe( 90 ); // 26 s: valid
+    expect( () => resolveRenderInputs( inputs( { spec: shorter( 270 ), st: soundtrack( { narrationStart: 14 } ) } ) ) ).toThrow( 'before the end' ); // voice would run into the end
+    expect( () => resolveRenderInputs( inputs( { spec: shorter( 360 ) } ) ) ).toThrow( 'outside' ); // 23 s: below the minimum
+  } );
+
   it( 'requires prepared terrain for live maps', () => {
     const live = buildVideoSpec( panama, { asOfUtc: AS_OF } );
     expect( () => resolveRenderInputs( inputs( { spec: live } ) ) ).toThrow( 'public/terrain/manifest.json is missing' );
