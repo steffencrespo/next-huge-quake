@@ -50,5 +50,10 @@
   "scheduleException": {
     "reason": "Separately approved Experiment-Driven Publishing release (approved 2026-10-21): a Friday slot outside the Tue/Thu/Sat cadence. The 24 h lead time is kept.",
     "minLeadMinutes": 1440
+  },
+  "approval": {
+    "status": "approved",
+    "approvedAt": "2026-10-22T01:30:36.748Z",
+    "contentHash": "8de73f0d54275f33916384b477db18f93aa2c3c9aee777875afd737d882b4743"
   }
 }
