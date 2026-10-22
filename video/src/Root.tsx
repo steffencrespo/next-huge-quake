@@ -16,6 +16,7 @@ import { RingOfFire } from './edu/ep04.js';
 import { Magnitude } from './edu/ep03.js';
 import { DEPTH, EarthquakeDepth } from './edu/ep05.js';
 import { CALIFORNIA, MythCaliforniaOcean } from './edu/ep06.js';
+import { MythCaliforniaLoop, calculateLoopMetadata } from './edu/ep06loop.js';
 import { KidsWhyEarthShakes, calculateKidsMetadata, kidsShortSchema } from './kids/KidsShort.js';
 import { KidsDropCoverHold, calculateSafetyMetadata } from './kids/SafetyShort.js';
 import { HistoricChile1960 } from './historic/chile1960.js';
@@ -65,6 +66,7 @@ export const Root: React.FC = () => (
     <Composition id="RingOfFire" component={RingOfFire} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( 'ring' )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="MagnitudeSixVsSeven" component={Magnitude} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( 'magnitude' )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="EarthquakeDepth" component={EarthquakeDepth} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( DEPTH )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
+    <Composition id="MythCaliforniaLoop" component={MythCaliforniaLoop} schema={eduShortSchema} calculateMetadata={calculateLoopMetadata} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="MythCaliforniaOcean" component={MythCaliforniaOcean} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( CALIFORNIA )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="KidsWhyEarthShakes" component={KidsWhyEarthShakes} schema={kidsShortSchema} calculateMetadata={calculateKidsMetadata} width={1080} height={1920} fps={30} durationInFrames={1560} defaultProps={{}} />
     <Composition id="KidsWhyEarthShakesV2" component={KidsWhyEarthShakes} schema={kidsShortSchema} calculateMetadata={calculateKidsMetadata} width={1080} height={1920} fps={30} durationInFrames={1560} defaultProps={{ v2: true }} />

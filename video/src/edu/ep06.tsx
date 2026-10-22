@@ -73,7 +73,7 @@ const Arrow: React.FC<{ x1: number; y1: number; x2: number; y2: number; color: s
 };
 
 /** MYTH card slams in word by word; FACT one slams in, strikes the myth through and levels the map. */
-const Cards: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
+export const Cards: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
   const o = vis( t, -1, b.plates.start + 0.25, 0.4 );
   if ( o <= 0.01 ) {
     return null;
@@ -106,7 +106,8 @@ const Cards: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
 };
 
 /** One California map for the whole video: tips toward the sea during the myth, then zooms with the explanation. */
-const CaMap: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
+/** `note` scales the "schematic" footnote under the map (1 by default); the loop version fades it out so it does not overlap the accelerated-move label. */
+export const CaMap: React.FC<{ t: number; b: B; note?: number }> = ( { t, b, note = 1 } ) => {
   const end = b.cta.start + 1.2;
   const o = vis( t, -1, end, 0.5 );
   if ( o <= 0.01 ) {
@@ -162,13 +163,13 @@ const CaMap: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
       <svg width={1080} height={1920} style={{ position: 'absolute', left: 0, top: 0 }}>
         <Pill x={690} y={MAP.y + 52} text="SAN ANDREAS FAULT SYSTEM" color={AMBER} size={28} opacity={prog( t, b.plates.start + 1.2, 0.5 ) * ( 1 - z2 )} />
         <Pill x={540} y={MAP.y + MAP.h - 44} text={`SCHEMATIC · ACCELERATED · ${years} MILLION YEARS`} color={FACT} size={26} opacity={cities * z2} />
-        <Txt x={84} y={MAP.y + MAP.h - 18} size={26} weight={600} anchor="start" color={COLORS.textSupport} opacity={trace * ( 1 - z2 )}>Fault trace, arrows and motion are schematic</Txt>
+        <Txt x={84} y={MAP.y + MAP.h - 18} size={26} weight={600} anchor="start" color={COLORS.textSupport} opacity={trace * ( 1 - z2 ) * note}>Fault trace, arrows and motion are schematic</Txt>
       </svg>
     </div>
   );
 };
 
-const Rate: React.FC<{ t: number; b: B }> = ( { t, b } ) => (
+export const Rate: React.FC<{ t: number; b: B }> = ( { t, b } ) => (
   <Card x={90} y={1010} w={900} label="PACIFIC PLATE vs NORTH AMERICAN PLATE" value="≈ 46 MM / YEAR" note="northwest · about the rate fingernails grow" color={AMBER} opacity={vis( t, b.rate.start - 0.1, b.fact2.start + 0.1, 0.4 )} valueSize={96} />
 );
 
@@ -195,7 +196,7 @@ const Fact2: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
 };
 
 /** Compact closing call to action: keeps the payoff on screen instead of a full-screen brand card. */
-const CompactCta: React.FC<{ frame: number; start: number }> = ( { frame, start } ) => {
+export const CompactCta: React.FC<{ frame: number; start: number }> = ( { frame, start } ) => {
   const k = prog( frame / 30, start, 0.4 );
   if ( k <= 0.01 ) {
     return null;
