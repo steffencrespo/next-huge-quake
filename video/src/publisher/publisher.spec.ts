@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { scopesSatisfy, READ_SCOPES, WRITE_SCOPES } from './auth.js';
 import { composeDescription, contentHash, isApproved, loadManifest, validateManifest, type Manifest } from './manifest.js';
-import { assertAuthorizedChannel, likelyDuplicates, schedulePreflight, uploadPreflight } from './publish.js';
+import { assertAuthorizedChannel, likelyDuplicates, reconcilePlan, schedulePreflight, strictInspection, uploadPreflight, uploadResume } from './publish.js';
 import { isEditorialSlot, localToUtc, proposeSlots, toApiTimestamp } from './schedule.js';
 import type { VideoInfo } from './youtube.js';
 
@@ -96,5 +96,75 @@ describe( 'safety checks', () => {
     const state2 = { chile1960: { ...state.chile1960, contentHash: contentHash( ex ) } };
     expect( schedulePreflight( ex, state2, [], new Date( '2026-10-19T03:00:00Z' ) ).problems ).toEqual( [] );
     expect( schedulePreflight( ex, state2, [], new Date( '2026-10-19T05:30:00Z' ) ).problems.join() ).toMatch( /120 minutes/ );
+  } );
+} );
+
+describe( 'fast track', () => {
+  const ft = (): Manifest => ( {
+    ...loadManifest( 'tibet-m70-us6000u43g' ), approval: undefined,
+    fastTrack: { policy: 'fast-track@1', tier: 'A', signals: [ 'pager_orange' ], evaluatedAt: '2026-10-22T15:59:00Z', facts: { eventId: 'us6000u43g', magnitude: 7, pagerAlert: 'orange' } },
+  } );
+  const rec = ( x: Manifest, over: object = {} ) => ( { status: 'playlisted', videoId: 'vid', contentHash: contentHash( x ), fileSize: 1, updatedAt: '', ...over } ) as const;
+  const live = ( x: Manifest, over: Partial<VideoInfo> = {} ) => video( {
+    id: 'vid', title: x.approved.title, description: composeDescription( x ), tags: x.approved.tags, categoryId: x.categoryId, language: x.language,
+    madeForKids: false, privacy: 'private', uploadStatus: 'processed', ...over,
+  } );
+  const channels = [ { id: 'UCgJzKvpcPvzQT-YtBsJb6eQ', title: 'NHQ' } ];
+
+  it( 'binds the approval to the facts snapshot and leaves existing hashes unchanged', () => {
+    const plain = loadManifest( 'tibet-m70-us6000u43g' );
+    expect( isApproved( plain ) ).toBe( true ); // the committed, human-approved manifest still verifies
+    const a = approved( ft() );
+    expect( isApproved( a ) ).toBe( true );
+    expect( isApproved( { ...a, fastTrack: { ...a.fastTrack!, facts: { ...a.fastTrack!.facts, magnitude: 7.2 } } } ) ).toBe( false );
+  } );
+
+  it( 'never lets a fast-track manifest be scheduled or leave the Latest Earthquakes playlist', () => {
+    expect( validateManifest( ft() ) ).toEqual( [] );
+    expect( validateManifest( { ...ft(), publishAtLocal: '2026-10-27T18:00' } ).join() ).toMatch( /never scheduled/ );
+    expect( validateManifest( { ...ft(), playlistId: 'PLDquHuxZZySw' } ).join() ).toMatch( /Latest Earthquakes/ );
+    expect( validateManifest( { ...ft(), fastTrack: { ...ft().fastTrack!, policy: 'fast-track' } } ).join() ).toMatch( /versioned policy/ );
+  } );
+
+  it( 'strict inspection passes only when everything matches, and fails closed otherwise', () => {
+    const a = approved( ft() );
+    const base = { m: a, rec: rec( a ), channels, video: live( a ), playlistMemberships: 1, expect: 'private' as const };
+    expect( strictInspection( base ) ).toEqual( [] );
+    expect( strictInspection( { ...base, expect: 'public' } ).join() ).toMatch( /Privacy is private, expected public/ );
+    expect( strictInspection( { ...base, expect: 'public', video: live( a, { privacy: 'public', uploadStatus: 'uploaded' } ) } ).join() ).toMatch( /expected processed/ );
+    expect( strictInspection( { ...base, video: live( a, { title: 'other' } ) } ).join() ).toMatch( /title on YouTube differs/ );
+    expect( strictInspection( { ...base, playlistMemberships: 0 } ).join() ).toMatch( /exactly one membership/ );
+    expect( strictInspection( { ...base, channels: [ { id: 'UCother', title: 'x' } ] } ).join() ).toMatch( /Refusing/ );
+    expect( strictInspection( { ...base, m: ft() } ).join() ).toMatch( /not approved/ );
+    expect( strictInspection( { ...base, rec: rec( a, { contentHash: 'old' } ) } ).join() ).toMatch( /content hash/ );
+    expect( strictInspection( { ...base, video: live( a, { publishAt: '2026-11-03T21:00:00Z' } ) } ).join() ).toMatch( /publishAt/ );
+    expect( strictInspection( { ...base, rec: undefined } ).join() ).toMatch( /No uploaded video/ );
+    expect( strictInspection( { ...base, video: undefined } ).join() ).toMatch( /not found/ );
+  } );
+
+  it( 'reconcile moves the record forward only to what YouTube shows', () => {
+    const a = approved( ft() );
+    const plan = ( over: object ) => reconcilePlan( { m: a, rec: rec( a ), video: live( a ), titleMatches: [], playlistItemIds: [ 'pi' ], ...over } );
+    expect( plan( {} ) ).toMatchObject( { problems: [] } );
+    expect( plan( { rec: rec( a, { status: 'uploaded' } ) } ).patch ).toEqual( { status: 'playlisted', playlistItemId: 'pi' } );
+    expect( plan( { video: live( a, { privacy: 'public' } ) } ).patch ).toEqual( { status: 'published', playlistItemId: 'pi' } );
+    expect( plan( { rec: rec( a, { status: 'published' } ) } ).problems.join() ).toMatch( /YouTube shows private/ );
+    expect( plan( { video: undefined } ).problems.join() ).toMatch( /not on YouTube/ );
+    expect( plan( { playlistItemIds: [ 'p1', 'p2' ] } ).problems.join() ).toMatch( /2 times/ );
+    expect( plan( { rec: rec( a, { status: 'scheduled' } ) } ).problems.join() ).toMatch( /scheduled/ );
+    expect( plan( { rec: undefined, titleMatches: [ live( a, { id: 'x' } ) ] } ).problems.join() ).toMatch( /Untracked/ );
+    expect( plan( { rec: undefined } ) ).toEqual( { problems: [], notes: [ 'Nothing uploaded yet; nothing on the channel matches.' ] } );
+    expect( plan( { rec: { ...rec( a ), status: 'uploading', videoId: undefined }, titleMatches: [ live( a, { id: 'x' } ) ] } ).problems.join() ).toMatch( /unconfirmed/ );
+  } );
+
+  it( 'upload resumes the playlist step after a crash and never uploads twice', () => {
+    const a = approved( ft() );
+    expect( uploadResume( a, undefined ) ).toBe( 'new' );
+    expect( uploadResume( a, { ...rec( a ), status: 'uploading' } ) ).toBe( 'resume_session' );
+    expect( uploadResume( a, rec( a, { status: 'uploaded' } ) ) ).toBe( 'resume_playlist' );
+    expect( uploadResume( a, rec( a ) ) ).toBe( 'done' );
+    expect( uploadResume( a, rec( a, { status: 'published' } ) ) ).toBe( 'done' );
+    expect( uploadResume( a, rec( a, { status: 'scheduled' } ) ) ).toBe( 'refuse' );
+    expect( uploadResume( a, rec( a, { contentHash: 'other' } ) ) ).toBe( 'refuse' );
   } );
 } );

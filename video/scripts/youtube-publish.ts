@@ -2,9 +2,14 @@
  * YouTube Publisher M2: upload approved Shorts privately, file them in a playlist, and schedule them. Dry-run by default.
  *
  *   preview  [id...]            read-only: checks, full metadata, proposed slots, and the writes that would happen
- *   approve  <id>               record that the human reviewed this exact title/description/credits/tags
+ *   approve  <id> [--authority=<policy@n>]   record that a person (or, for a fast-track manifest, its policy) approved
+ *                               this exact title/description/credits/tags (and fast-track facts)
  *   upload   <id> [--confirm]   PRIVATE upload + playlist assignment (resumes an interrupted upload; never restarts it)
- *   inspect  <id>               read the uploaded video back and compare it with the manifest
+ *   inspect  <id> [--strict --expect=private|public]   read the uploaded video back and compare it with the manifest;
+ *                               --strict exits non-zero on any channel, licensing, approval, hash, metadata, playlist,
+ *                               schedule or privacy mismatch (and, for public, an unprocessed video)
+ *   reconcile <id>              compare the local record with YouTube after a crash; moves the record forward only to
+ *                               what YouTube shows, otherwise exits non-zero for a person to decide
  *   schedule <id> [--confirm]   set publishAt (the only way a video becomes public); separate from upload
  *   update-metadata <id> [--confirm]   correct title/description of an uploaded video in place (text only)
  *   queue                       scheduled and private videos currently on the channel
@@ -13,8 +18,8 @@
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { AuthError, READ_SCOPES, WRITE_SCOPES, getAccessToken, loadClient } from '../src/publisher/auth.js';
-import { AUTHORIZED_CHANNEL_ID, PLAYLISTS, composeDescription, contentHash, isApproved, loadManifest, resolveFile, saveManifest, validateManifest, type Manifest } from '../src/publisher/manifest.js';
-import { assertAuthorizedChannel, likelyDuplicates, schedulePreflight, scheduledVideos, uploadPreflight } from '../src/publisher/publish.js';
+import { AUTHORIZED_CHANNEL_ID, PLAYLISTS, approvalAuthority, composeDescription, contentHash, isApproved, loadManifest, resolveFile, saveManifest, validateManifest, type Manifest } from '../src/publisher/manifest.js';
+import { assertAuthorizedChannel, likelyDuplicates, reconcilePlan, schedulePreflight, scheduledVideos, strictInspection, uploadPreflight, uploadResume } from '../src/publisher/publish.js';
 import { EDITORIAL_TZ, formatLocal, localToUtc, proposeSlots, toApiTimestamp } from '../src/publisher/schedule.js';
 import { loadState, saveRecord } from '../src/publisher/state.js';
 import * as yt from '../src/publisher/youtube.js';
@@ -22,6 +27,7 @@ import * as yt from '../src/publisher/youtube.js';
 const args = process.argv.slice( 3 );
 const confirm = args.includes( '--confirm' );
 const rest = args.filter( a => !a.startsWith( '--' ) );
+const flag = ( name: string ) => args.find( a => a.startsWith( `--${ name }=` ) )?.slice( name.length + 3 );
 
 async function token( write: boolean ): Promise<string> {
   const client = loadClient();
@@ -92,17 +98,39 @@ async function preview() {
 
 function approve() {
   const m = need( rest[ 0 ] );
+  const authority = flag( 'authority' );
   const problems = validateManifest( m );
+  if ( authority !== undefined ) {
+    // A policy may approve only the manifest it built, for the facts recorded in it; never a scheduled or other video.
+    if ( !m.fastTrack ) problems.push( `--authority is only for fast-track manifests; ${ m.id } has none.` );
+    else if ( m.fastTrack.policy !== authority ) problems.push( `Manifest was built under ${ m.fastTrack.policy }, not ${ authority }.` );
+    const rec = loadState()[ m.id ];
+    if ( rec && rec.contentHash !== contentHash( m ) ) problems.push( `Already ${ rec.status } with different content; a policy cannot re-approve it.` );
+  }
   if ( problems.length ) throw new Error( `Cannot approve:\n  - ${ problems.join( '\n  - ' ) }` );
-  m.approval = { status: 'approved', approvedAt: new Date().toISOString(), contentHash: contentHash( m ) };
+  const hash = contentHash( m );
+  if ( isApproved( m ) && approvalAuthority( m ) === ( authority ?? 'human' ) ) {
+    console.log( `Already approved ${ m.id } (${ hash.slice( 0, 12 ) }) by ${ approvalAuthority( m ) }; unchanged.` );
+    return;
+  }
+  m.approval = { status: 'approved', approvedAt: new Date().toISOString(), contentHash: hash, ...( authority ? { authority } : {} ) };
   saveManifest( m );
-  console.log( `Approved ${ m.id } (${ m.approval.contentHash.slice( 0, 12 ) }). Any later edit to the approved text invalidates this.` );
+  console.log( `Approved ${ m.id } (${ hash.slice( 0, 12 ) }) by ${ approvalAuthority( m ) }. Any later edit to the approved text invalidates this.` );
 }
 
 async function upload() {
   const m = need( rest[ 0 ] );
+  const resume = uploadResume( m, loadState()[ m.id ] );
+  if ( resume === 'done' ) { console.log( `${ m.id } is already ${ loadState()[ m.id ].status } (video ${ loadState()[ m.id ].videoId }); nothing to upload.` ); return; }
   const at = await token( true );
   assertAuthorizedChannel( await yt.getMyChannels( at ) );
+  if ( resume === 'resume_playlist' ) {
+    // The upload finished earlier but the playlist step did not: finish it, never upload again.
+    if ( !isApproved( m ) ) throw new Error( 'Manifest is not approved or changed after approval.' );
+    console.log( `${ confirm ? 'RESUMING' : 'DRY RUN (add --confirm)' }: ${ m.id } is uploaded; adding it to playlist ${ m.playlistId }` );
+    if ( confirm ) await addToPlaylist( m, loadState()[ m.id ].videoId!, at );
+    return;
+  }
   const existing = await yt.listChannelVideos( at );
   const { problems, warnings } = uploadPreflight( m, loadState(), existing );
   bullets( 'Warnings:', warnings );
@@ -134,7 +162,7 @@ async function upload() {
     if ( !outcome.done ) throw new Error( 'Upload incomplete; rerun the same command to resume.' );
     const v = outcome.video;
     if ( v.status?.privacyStatus !== 'private' ) console.log( `WARNING: video ${ v.id } privacy is ${ v.status?.privacyStatus }, expected private. Check it in YouTube Studio now.` );
-    rec = saveRecord( m.id, { status: 'uploaded', videoId: v.id, uploadUrl: undefined } );
+    rec = saveRecord( m.id, { status: 'uploaded', videoId: v.id, uploadUrl: undefined, uploadedAt: new Date().toISOString() } );
     console.log( `Uploaded: https://youtu.be/${ v.id } (private)` );
   }
   await addToPlaylist( m, rec.videoId!, at );
@@ -155,6 +183,7 @@ async function addToPlaylist( m: Manifest, videoId: string, at: string ) {
 async function inspect() {
   const m = need( rest[ 0 ] );
   const rec = loadState()[ m.id ];
+  if ( args.includes( '--strict' ) ) return strictInspect( m );
   if ( !rec?.videoId ) throw new Error( 'No uploaded video recorded for this id.' );
   const at = await token( false );
   assertAuthorizedChannel( await yt.getMyChannels( at ) );
@@ -168,6 +197,38 @@ async function inspect() {
   ];
   console.log( `https://youtu.be/${ v.id }   privacy: ${ v.privacy }   publishAt: ${ v.publishAt ?? 'none' }   upload: ${ v.uploadStatus }   duration: ${ v.durationIso }` );
   for ( const [ k, got, want ] of rows ) console.log( `  ${ got === want ? 'ok  ' : 'DIFF' } ${ k }${ got === want ? '' : `\n         on YouTube: ${ JSON.stringify( got ) }\n         manifest:   ${ JSON.stringify( want ) }` }` );
+}
+
+/** Fails closed (non-zero exit) on any mismatch; see strictInspection. Read-only. */
+async function strictInspect( m: Manifest ) {
+  const expect = flag( 'expect' );
+  if ( expect !== 'private' && expect !== 'public' ) throw new Error( '--strict needs --expect=private or --expect=public.' );
+  const rec = loadState()[ m.id ];
+  const at = await token( false );
+  const channels = await yt.getMyChannels( at );
+  const video = rec?.videoId ? ( await yt.getVideos( [ rec.videoId ], at ) )[ 0 ] : undefined;
+  const playlistMemberships = video ? ( await yt.findPlaylistItems( m.playlistId, video.id, at ) ).length : 0;
+  const problems = strictInspection( { m, rec, channels, video, playlistMemberships, expect } );
+  console.log( `${ video ? `https://youtu.be/${ video.id }` : m.id }   privacy: ${ video?.privacy ?? '-' }   upload: ${ video?.uploadStatus ?? '-' }   approval: ${ approvalAuthority( m ) }` );
+  if ( problems.length ) throw new Error( `Strict inspection failed (${ expect }):\n  - ${ problems.join( '\n  - ' ) }` );
+  console.log( `Strict inspection passed (${ expect }).` );
+}
+
+async function reconcile() {
+  const m = need( rest[ 0 ] );
+  const rec = loadState()[ m.id ];
+  const at = await token( false );
+  assertAuthorizedChannel( await yt.getMyChannels( at ) );
+  const titleMatches = likelyDuplicates( m, await yt.listChannelVideos( at ) );
+  const video = rec?.videoId ? ( await yt.getVideos( [ rec.videoId ], at ) )[ 0 ] : undefined;
+  const playlistItemIds = video ? ( await yt.findPlaylistItems( m.playlistId, video.id, at ) ).map( i => i.id ) : [];
+  const plan = reconcilePlan( { m, rec, video, titleMatches, playlistItemIds } );
+  plan.notes.forEach( n => console.log( n ) );
+  if ( plan.problems.length ) throw new Error( `Reconcile found problems:\n  - ${ plan.problems.join( '\n  - ' ) }` );
+  if ( plan.patch ) {
+    saveRecord( m.id, { ...plan.patch, ...( plan.patch.status === 'published' ? { publishedAt: rec?.publishedAt ?? new Date().toISOString() } : {} ) } );
+    console.log( `Recorded ${ m.id } as ${ plan.patch.status }.` );
+  }
 }
 
 async function schedule() {
@@ -207,7 +268,15 @@ async function publishNowCommand() {
   const m = need( rest[ 0 ] );
   const rec = loadState()[ m.id ];
   const problems: string[] = [];
+  if ( rec?.status === 'published' && rec.videoId && rec.contentHash === contentHash( m ) ) {
+    // Idempotent for retries: confirm it really is public instead of failing.
+    const [ v ] = await yt.getVideos( [ rec.videoId ], await token( false ) );
+    if ( v?.privacy !== 'public' ) throw new Error( `Recorded as published but YouTube shows ${ v?.privacy ?? 'no video' }. Run reconcile.` );
+    console.log( `Already public: https://youtu.be/${ rec.videoId }` );
+    return;
+  }
   if ( !isApproved( m ) ) problems.push( 'Manifest is not approved or changed after approval.' );
+  if ( m.publishAtLocal || m.scheduleException ) problems.push( 'Manifest has a schedule; publish-now is only for unscheduled videos.' );
   if ( rec?.status !== 'playlisted' || !rec.videoId ) problems.push( `State is "${ rec?.status ?? 'none' }"; expected an uploaded and playlisted video.` );
   else if ( rec.contentHash !== contentHash( m ) ) problems.push( 'Manifest differs from what was uploaded.' );
   if ( problems.length ) throw new Error( `Preflight failed:\n  - ${ problems.join( '\n  - ' ) }` );
@@ -217,7 +286,7 @@ async function publishNowCommand() {
   if ( !confirm ) return;
   const v = await yt.publishNow( rec.videoId!, at );
   if ( v.privacy !== 'public' ) throw new Error( 'Publish response does not show public. Run inspect.' );
-  saveRecord( m.id, { status: 'published' } );
+  saveRecord( m.id, { status: 'published', publishedAt: new Date().toISOString() } );
   console.log( `Public: https://youtu.be/${ rec.videoId }` );
 }
 
@@ -259,7 +328,7 @@ async function queue() {
   for ( const v of unsched ) console.log( `  [${ v.privacy }] ${ v.id }  ${ v.title }` );
 }
 
-const commands: Record<string, () => unknown> = { preview, approve, upload, inspect, schedule, queue, 'create-kids-playlist': createKidsPlaylist, 'publish-now': publishNowCommand, 'update-metadata': updateMetadataCommand };
+const commands: Record<string, () => unknown> = { preview, approve, upload, inspect, reconcile, schedule, queue, 'create-kids-playlist': createKidsPlaylist, 'publish-now': publishNowCommand, 'update-metadata': updateMetadataCommand };
 const run = commands[ process.argv[ 2 ] ?? 'preview' ];
 if ( !run ) { console.error( `Usage: youtube-publish <${ Object.keys( commands ).join( '|' ) }> [id] [--confirm]` ); process.exit( 2 ); }
 Promise.resolve().then( run ).catch( error => { console.error( `\nFailed: ${ error instanceof Error ? error.message : 'unknown error' }` ); process.exit( 1 ); } );
