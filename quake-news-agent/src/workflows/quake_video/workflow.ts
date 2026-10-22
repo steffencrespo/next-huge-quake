@@ -1,7 +1,7 @@
 import { workflow } from '@outputai/core';
 import quakeNews from '../quake_news/workflow.js';
 import quakePublish from '../quake_publish/workflow.js';
-import { buildSpec, checkFastTrackNarration, clock, generateNarration, prepareTerrain, renderVideo } from './steps.js';
+import { buildSpec, checkFastTrackNarration, clock, generateNarration, prepareTerrain, renderVideo, reserveFastTrackBudget } from './steps.js';
 import { videoWorkflowOutputSchema, workflowInputSchemaVideo } from './types.js';
 import type { StageRecord, VideoWorkflowOutput } from './types.js';
 
@@ -36,8 +36,19 @@ export default workflow( {
     const begin = ( await clock() ).ms;
     const totalMs = async () => ( await clock() ).ms - begin;
 
+    // Fast Track: reserve the budget before the first paid call; a refusal ends the run before anything is spent.
+    let fastTrackOn = false;
+    if ( input.fastTrack && input.eventId ) {
+      try {
+        fastTrackOn = ( await reserveFastTrackBudget( { eventId: input.eventId } ) ).fastTrack;
+      } catch ( error ) {
+        return { status: 'failed', eventId: input.eventId, failedStage: 'quake_news', error: rootMessage( error ), stages, totalMs: await totalMs() };
+      }
+    }
+
     const newsStart = begin;
-    const news = await quakeNews( input );
+    const { fastTrack: _fastTrack, ...newsInput } = input;
+    const news = await quakeNews( newsInput );
     const newsMs = ( await clock() ).ms - newsStart;
     stages.push( { name: 'quake_news', status: 'ok', ms: newsMs, detail: null } );
 
@@ -65,7 +76,7 @@ export default workflow( {
       return fail( 'build_spec', error );
     }
     try {
-      if ( input.fastTrack ) {
+      if ( fastTrackOn ) {
         // Fail closed: the fast-track budget assumes a bounded narration length; refuse before the paid request.
         await checkFastTrackNarration( { eventId, narration: result.package.narration } );
       }
@@ -97,7 +108,7 @@ export default workflow( {
     };
     // Fast Track: the policy decides on fresh USGS data. A refusal or failure leaves this run ready for approval.
     let fastTrack;
-    if ( input.fastTrack ) {
+    if ( fastTrackOn && input.fastTrack ) {
       const timing = {
         detectedAtUtc: input.fastTrack.detectedAtUtc,
         productionStartedAtUtc: new Date( begin ).toISOString(),

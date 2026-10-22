@@ -8,7 +8,7 @@ import { publicationsOn } from '../../fast_track/budget.js';
 import { checkVideoText } from '../../fast_track/guard.js';
 import { parsePagerImpact, pagerUrls } from '../../fast_track/impact.js';
 import type { PagerImpact } from '../../fast_track/impact.js';
-import { isPaused, ledgerStore, updateLedgerEvent } from '../../fast_track/ledger.js';
+import { STOPPED, isPaused, ledgerStore, stopReason, updateLedgerEvent } from '../../fast_track/ledger.js';
 import type { LedgerEvent } from '../../fast_track/ledger.js';
 import { decide } from '../../fast_track/policy.js';
 import { nearbyPublished, readPublishedEventIds } from '../../fast_track/published.js';
@@ -154,16 +154,36 @@ const publisherInput = z.object( { args: z.array( z.string() ) } );
 const publisherOutput = z.object( { output: z.string() } );
 const runPublisher = async ( { args }: { args: string[] } ) => ( { output: ( await runVideoScript( 'scripts/youtube-publish.ts', args ) ).trim() } );
 
+/** Commands that write: a policy approval, or anything that changes YouTube. reconcile and inspect only read YouTube. */
+export const GUARDED_COMMANDS = [ 'approve', 'upload', 'publish-now' ];
+
 /**
- * One publisher command (approve, reconcile, upload, publish-now). Every command is idempotent, so a retry after an
- * uncertain outcome is safe: upload resumes its saved session or playlist step and never uploads twice.
+ * The emergency stop, checked inside the step immediately before every guarded command, on every attempt (a Temporal
+ * retry re-checks it too). A stop is not retried: the event goes to a person, and reconcile/inspect stay available.
+ */
+export function assertNotStopped( args: string[], env: Record<string, string | undefined> = process.env ): void {
+  if ( !GUARDED_COMMANDS.includes( args[0] ) ) {
+    return;
+  }
+  const reason = stopReason( loadFastTrackConfig( env ) );
+  if ( reason ) {
+    throw new FatalError( `${STOPPED}: ${reason} (before ${args[0]})` );
+  }
+}
+
+/**
+ * One publisher command (approve, reconcile, upload, publish-now). Each is safe to repeat after an uncertain outcome:
+ * upload resumes its saved session or playlist step, publish-now and approve are no-ops when already done.
  */
 export const publisherCommand = step( {
   name: 'publisher_command',
   description: 'Run one YouTube publisher command (approve, reconcile, upload, publish-now)',
   inputSchema: publisherInput,
   outputSchema: publisherOutput,
-  fn: runPublisher,
+  fn: async ( { args } ) => {
+    assertNotStopped( args );
+    return runPublisher( { args } );
+  },
   options: { activityOptions: { startToCloseTimeout: '20m', retry: { maximumAttempts: 3, initialInterval: '10s', backoffCoefficient: 2 } } }
 } );
 
@@ -175,21 +195,6 @@ export const publisherVerify = step( {
   outputSchema: publisherOutput,
   fn: runPublisher,
   options: { activityOptions: { startToCloseTimeout: '2m', retry: { maximumAttempts: 12, initialInterval: '30s', backoffCoefficient: 1.5, maximumInterval: '3m' } } }
-} );
-
-/** Emergency stop re-checked right before the video is made public. */
-export const fastTrackCheckpoint = step( {
-  name: 'fast_track_checkpoint',
-  description: 'Re-check the fast-track switch and pause file before publication',
-  outputSchema: z.object( { proceed: z.boolean(), reason: z.string().nullable() } ),
-  fn: async () => {
-    const config = loadFastTrackConfig( process.env );
-    if ( !config.enabled ) {
-      return { proceed: false, reason: 'fast_track_disabled' };
-    }
-    return isPaused( config.pauseFile ) ? { proceed: false, reason: 'fast_track_paused' } : { proceed: true, reason: null };
-  },
-  options: { activityOptions: { startToCloseTimeout: '1m', retry: { maximumAttempts: 3 } } }
 } );
 
 /**

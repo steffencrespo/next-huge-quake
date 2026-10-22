@@ -1,8 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { tibetFacts, tibetImpact } from '../../fast_track/testing.js';
 
+
 vi.mock( './steps.js', () => ( {
-  fastTrackGate: vi.fn(), buildFastTrackManifest: vi.fn(), publisherCommand: vi.fn(), publisherVerify: vi.fn(), fastTrackCheckpoint: vi.fn(), recordFastTrack: vi.fn()
+  fastTrackGate: vi.fn(), buildFastTrackManifest: vi.fn(), publisherCommand: vi.fn(), publisherVerify: vi.fn(), recordFastTrack: vi.fn()
 } ) );
 vi.mock( '../quake_video/steps.js', () => ( { clock: vi.fn() } ) );
 
@@ -31,7 +32,6 @@ describe( 'quake_publish workflow', () => {
     vi.mocked( steps.buildFastTrackManifest ).mockResolvedValue( { manifestId: 'nagqu-china-m70-us6000u43g', reused: false } );
     vi.mocked( steps.publisherCommand ).mockResolvedValue( { output: 'ok' } );
     vi.mocked( steps.publisherVerify ).mockResolvedValue( { output: 'Strict inspection passed' } );
-    vi.mocked( steps.fastTrackCheckpoint ).mockResolvedValue( { proceed: true, reason: null } );
     vi.mocked( steps.recordFastTrack ).mockResolvedValue( { videoId: 'vid', notified: false } );
   } );
 
@@ -67,10 +67,19 @@ describe( 'quake_publish workflow', () => {
     expect( verifies() ).toEqual( [ '--expect=private' ] );
   } );
 
-  it( 'honors the pause file right before publication', async () => {
-    vi.mocked( steps.fastTrackCheckpoint ).mockResolvedValue( { proceed: false, reason: 'fast_track_paused' } );
-    expect( await quakePublish( input ) ).toMatchObject( { status: 'manual', reasons: [ 'fast_track_paused' ] } );
-    expect( commands() ).not.toContain( 'publish-now' );
+  it( 'hands the event to a person when the emergency stop blocks any guarded command', async () => {
+    for ( const blocked of [ 'approve', 'upload', 'publish-now' ] ) {
+      vi.mocked( steps.publisherCommand ).mockClear();
+      vi.mocked( steps.publisherVerify ).mockClear();
+      vi.mocked( steps.publisherCommand ).mockImplementation( async ( { args } ) => {
+        if ( args[0] === blocked ) throw new Error( `fast_track_stopped: fast_track_paused (before ${blocked})` );
+        return { output: 'ok' };
+      } );
+      const result = await quakePublish( input );
+      expect( result ).toMatchObject( { status: 'manual', reasons: [ `fast_track_stopped: fast_track_paused (before ${blocked})` ] } );
+      const order = [ 'approve', 'reconcile', 'upload', 'publish-now' ];
+      expect( commands() ).toEqual( order.slice( 0, order.indexOf( blocked ) + 1 ) );
+    }
   } );
 
   it( 'never publishes after a failed upload or a failed private inspection', async () => {

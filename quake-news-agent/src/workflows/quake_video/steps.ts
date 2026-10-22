@@ -2,7 +2,9 @@ import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { FatalError, step, z } from '@outputai/core';
+import { reserve } from '../../fast_track/budget.js';
 import { loadFastTrackConfig } from '../../fast_track/config.js';
+import { ledgerStore, stopReason } from '../../fast_track/ledger.js';
 import { runVideoScript, videoDir } from '../../shared/run_cli.js';
 import {
   buildSpecInputSchema,
@@ -143,6 +145,39 @@ export const checkFastTrackNarration = step( {
       throw new FatalError( `narration has ${narration.length} characters; the fast-track budget covers ${budget.maxNarrationChars}` );
     }
     return { chars: narration.length };
+  },
+  options: { activityOptions: { startToCloseTimeout: '1m', retry: { maximumAttempts: 1 } } }
+} );
+
+/**
+ * Fast Track only, before any paid call: reserves the event's worst-case cost (idempotent; the monitor normally
+ * reserved it already, a hand-started run reserves it here). Switch off or paused: the run continues as a normal,
+ * human-approved production. Budget settings missing or a limit spent: refused before anything is spent.
+ */
+export const reserveFastTrackBudget = step( {
+  name: 'reserve_fast_track_budget',
+  description: 'Fast Track: reserve the worst-case cost of the event before any paid call',
+  inputSchema: z.object( { eventId: z.string() } ),
+  outputSchema: z.object( { fastTrack: z.boolean(), detail: z.string() } ),
+  fn: async ( { eventId } ) => {
+    const config = loadFastTrackConfig( process.env );
+    const stopped = stopReason( config );
+    if ( stopped ) {
+      return { fastTrack: false, detail: `${stopped}: produced for human approval` };
+    }
+    if ( !config.budget ) {
+      throw new FatalError( `fast-track budget is not configured: ${config.budgetProblems.join( '; ' )}` );
+    }
+    const store = ledgerStore();
+    const ledger = store.load();
+    const result = reserve( ledger, eventId, config.budget, new Date().toISOString() );
+    if ( !result.ok ) {
+      throw new FatalError( `fast-track budget: ${result.reason}` );
+    }
+    if ( !result.existing ) {
+      store.save( ledger );
+    }
+    return { fastTrack: true, detail: `reserved $${result.usd.toFixed( 4 )}${result.existing ? ' (already reserved)' : ''}` };
   },
   options: { activityOptions: { startToCloseTimeout: '1m', retry: { maximumAttempts: 1 } } }
 } );

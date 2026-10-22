@@ -81,3 +81,10 @@ export function updateLedgerEvent( store: LedgerStore, eventId: string, patch: P
 /** The emergency pause: while this file exists nothing is produced as a fast-track candidate and nothing is published. */
 export const pauseFilePath = ( configured: string | null ): string => configured ?? join( defaultStateDir(), 'FAST_TRACK_PAUSED' );
 export const isPaused = ( configured: string | null ): boolean => existsSync( pauseFilePath( configured ) );
+
+/** Why the fast track must not act right now (switch off or pause file present), or null. Read fresh on every call. */
+export const stopReason = ( config: { enabled: boolean; pauseFile: string | null } ): string | null =>
+  !config.enabled ? 'fast_track_disabled' : isPaused( config.pauseFile ) ? 'fast_track_paused' : null;
+
+/** Prefix of the error a guarded step throws when stopped, so the workflow can hand the event to a person. */
+export const STOPPED = 'fast_track_stopped';

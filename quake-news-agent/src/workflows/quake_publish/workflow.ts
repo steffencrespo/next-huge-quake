@@ -2,7 +2,8 @@ import { workflow } from '@outputai/core';
 import { FAST_TRACK_POLICY_VERSION } from '../../fast_track/config.js';
 import { latencyOf } from '../../fast_track/latency.js';
 import { clock } from '../quake_video/steps.js';
-import { buildFastTrackManifest, fastTrackCheckpoint, fastTrackGate, publisherCommand, publisherVerify, recordFastTrack } from './steps.js';
+import { STOPPED } from '../../fast_track/ledger.js';
+import { buildFastTrackManifest, fastTrackGate, publisherCommand, publisherVerify, recordFastTrack } from './steps.js';
 import { publishInputSchema, publishOutputSchema } from './types.js';
 import type { PublishOutput } from './types.js';
 
@@ -17,7 +18,8 @@ const rootMessage = ( error: unknown ): string => {
 /**
  * Breaking News Fast Track: a rendered quake_video -> policy gate on fresh USGS data -> deterministic manifest ->
  * policy approval (content hash + versioned authority + facts) -> reconcile -> private upload -> strict private
- * inspection -> pause check -> publish-now -> strict public inspection. Any refusal or failure leaves the video for a
+ * inspection -> publish-now -> strict public inspection. The switch and pause file are re-checked inside the step
+ * right before every approve, upload and publish-now (see assertNotStopped). Any refusal or failure leaves the video for a
  * person (private unless publication itself already happened) and is recorded and notified. It only ever touches the
  * manifest it built; scheduled videos and other manifests are never read for writing.
  *
@@ -82,11 +84,6 @@ export default workflow( {
         timestamps.verifiedAtUtc = await now();
         return finish( 'verified_private', [], 'uploaded and verified PRIVATE (FAST_TRACK_FINAL_PRIVACY=private); publish-now is up to a person' );
       }
-      stage = 'checkpoint';
-      const checkpoint = await fastTrackCheckpoint();
-      if ( !checkpoint.proceed ) {
-        return finish( 'manual', [ checkpoint.reason ?? 'stopped' ], 'stopped before publication; the video is uploaded and private' );
-      }
       stage = 'publish';
       await publisherCommand( { args: [ 'publish-now', manifestId, '--confirm' ] } );
       timestamps.publishedAtUtc = await now();
@@ -94,8 +91,13 @@ export default workflow( {
       await publisherVerify( { args: [ 'inspect', manifestId, '--strict', '--expect=public' ] } );
       timestamps.verifiedAtUtc = await now();
     } catch ( error ) {
+      const message = rootMessage( error );
+      if ( message.startsWith( STOPPED ) ) {
+        // The switch or pause file stopped a guarded command before it ran. Nothing after it happened.
+        return finish( 'manual', [ message ], `stopped at ${stage} by the emergency stop; ready for a person (run reconcile first)` );
+      }
       const where = [ 'publish', 'inspect_public' ].includes( stage ) ? 'at or after publication (the video may be public)' : 'before publication (the video is not public)';
-      return finish( 'failed', [ `${stage}: ${rootMessage( error )}` ], `failed at ${stage} ${where}; run reconcile and inspect` );
+      return finish( 'failed', [ `${stage}: ${message}` ], `failed at ${stage} ${where}; run reconcile and inspect` );
     }
     return finish( 'published', [], `published (tier ${gate.tier})` );
   },
