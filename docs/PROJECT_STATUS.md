@@ -45,6 +45,7 @@ Local `state.json` is not refreshed from YouTube. Public visibility below was ch
 | Kids: *Why Does the Earth Shake?* (V1, V2), *Drop, Cover, Hold On!*, short cut | published | Manifests on master (short cut and *Drop, Cover, Hold On!* via PR #31) |
 | **LA Is Moving In With San Francisco… Really?** (`california-loop`, cold open + seamless loop experiment) | scheduled | Not public yet. Fri 2026-10-23 18:00, a separately approved experiment release outside the Tue/Thu/Sat cadence; <https://youtu.be/rVSj_PvFPmE>; science playlist |
 | **SIX SEVEN… But Make It an EARTHQUAKE!** (`six-seven-earthquake`, meme-hook experiment) | scheduled | Not public yet. Sun 2026-10-25 18:00, a separately approved experiment release outside the Tue/Thu/Sat cadence; <https://youtu.be/i8mfyBetegY>; science playlist |
+| **Tibet M7.0** (`tibet-m70-us6000u43g`, USGS `us6000u43g`, Orange PAGER) | published 2026-10-22 via `publish-now` | Yes: <https://youtu.be/4ZrrJfRGJRQ>, public and processed; `inspect` matched title, description, tags, category, language, audience and Latest Earthquakes playlist. Event-specific breaking-news authorization; produced by `quake_video` (fast-beats, 27.3 s) |
 | Earlier by hand, no manifest | "Why Do Earthquakes Happen?" (ep 01), first Panama, Kamchatka | Published |
 
 Next free regular slots: Tue 2026-11-03, Thu 11-05, Sat 11-07 (18:00 America/Sao_Paulo).
