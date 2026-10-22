@@ -177,6 +177,18 @@ Polling pauses while a video renders, because the worker runs one activity at a 
 
 Traces are written to `logs/runs/quake_news/`. The Temporal UI is at http://localhost:8080.
 
+### `quake_publish`: Breaking News Fast Track (off by default)
+
+Publishes routine eligible breaking news without a person in the loop, under a versioned policy (`fast-track@1`). Off unless `FAST_TRACK_ENABLED=true`, and private unless `FAST_TRACK_FINAL_PRIVACY=public`. Events it refuses end at `ready_for_approval` exactly as before.
+
+- **Start:** the monitor (real mode) starts `quake_video` with `fastTrack` for M6.0+ candidates that are not PAGER red, after reserving the worst-case cost (`src/fast_track/budget.ts`) against the per-event, daily and monthly limits. A spent limit means no start at all. Missing prices or limits disable the fast track.
+- **Gate (after the render, on fresh USGS data):** tier A is M7.0+ with an impact signal; tier B is M6.0-6.9 with PAGER yellow/orange, significance >= 600 or >= 10,000 people at intensity VI+; tier C (the M5.5-5.9 populated-area rule) is recognized but manual in v1. Always manual: PAGER red, no PAGER yet, a published event within 150 km and 72 h, facts revised since production, older than 6 h, the daily publication cap.
+- **Publication:** a deterministic title, description and tags (fact-checked with the M1 rules; PAGER is described only as a model estimate and no confirmed impact is claimed), then `approve --authority=fast-track@1` (content hash plus the facts snapshot), `reconcile`, private `upload`, `inspect --strict --expect=private`, a pause check, `publish-now`, `inspect --strict --expect=public`.
+- **Stops:** `FAST_TRACK_ENABLED`, the pause file (`state/FAST_TRACK_PAUSED`, re-checked right before publication) and `MONITOR_DRY_RUN`.
+- **Records:** `state/fast-track.json` (reservations, decision, video, timestamps); the workflow output has the latency from origin to public. Manifests and `video/publish/state.json` change in the worker's checkout and are committed afterwards, outside the publication path.
+
+A controlled test without the monitor: start `quake_video` for a chosen event with `"fastTrack": { "detectedAtUtc": null }` in the input, and `FAST_TRACK_ENABLED=true` with `FAST_TRACK_FINAL_PRIVACY=private`. This spends Anthropic and ElevenLabs credits and uploads a private video.
+
 ## Tests
 
 All tests run offline:
