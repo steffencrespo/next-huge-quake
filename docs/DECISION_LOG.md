@@ -42,6 +42,12 @@ Dates are given only where the repository or PR history establishes them. "Not r
 | Fast-beats is the default narration pacing for newly produced Shorts: about 1.2x speech with pitch preserved, shortened natural pauses, and the pauses a script declares on purpose kept (the Panama D4 experiment plus the California comparison preview) | Approved | 2026-10-21 | Applies to news (`render-package`, `quake_video`) and the educational, historic and Myth vs Fact tooling; `--pace=natural` restores the old behavior. News videos now end 3.77 s after the voice, and the minimum spec duration is 24 s. Published and scheduled videos were not re-rendered. Kids tooling is not covered. See `video/README.md`, "Narration pacing" |
 | Myth vs Fact 06 published on 2026-10-21 outside the Tue/Thu/Sat cadence, as an approved editorial experiment | Approved | 2026-10-21 | PR #33; <https://youtu.be/8Zke9Kf1128>. No other video was moved |
 
+## Editorial strategy
+
+| Decision | Status | Date | Notes |
+| --- | --- | --- | --- |
+| **Experiment-driven publishing.** Rapidly experiment with hooks, cold opens, seamless loops, pacing and storytelling. Publish experiments that offer a meaningfully different viewing experience, each testing a clear hypothesis and published only after human approval. Reuse existing assets and narration to keep production cost low. Evaluate results with YouTube Analytics when available, and use YouTube Studio Trends and manually supplied screenshots to gauge audience demand and prioritize the backlog. Avoid low-value duplicate uploads. The regular Tuesday/Thursday/Saturday schedule is maintained; separately approved experiments may go outside it. Nothing is ever published autonomously | Approved | 2026-10-21 | Builds on the human-approval and cadence decisions above. Cold opens and seamless loops are not implemented yet. Analytics is not available yet (the OAuth token lacks the scope), so early evaluation is manual |
+
 ## Attribution, licensing and assets
 
 | Decision | Status | Date | Notes |

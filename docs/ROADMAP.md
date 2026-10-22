@@ -8,9 +8,11 @@ Last reviewed: 2026-10-21. Anything under "Future capabilities" or marked *propo
 
 1. Maintain the earthquake news production and publishing pipeline.
 2. Keep producing and publishing educational and historical Shorts.
-3. Experiment with new formats and stronger retention hooks.
+3. Experiment with new formats and stronger retention hooks (see the editorial strategy below).
 4. Measure YouTube performance before increasing publication frequency.
 5. Keep scientific accuracy and human approval non-negotiable.
+
+**Editorial strategy (approved 2026-10-21):** experiment-driven publishing. Test hooks, cold opens, seamless loops, pacing and storytelling as clearly stated hypotheses, reusing existing assets and narration. Publish an experiment only if it offers a meaningfully different viewing experience and a person approves it; experiments may go outside the regular schedule when separately approved, and nothing is published autonomously. Judge results with YouTube Analytics once available, and until then with YouTube Studio Trends and manually supplied screenshots, which also steer the backlog. See [DECISION_LOG.md](DECISION_LOG.md).
 
 ## Milestones
 
@@ -51,6 +53,7 @@ None of these exist yet.
 
 ## Sequencing notes
 
+- **Cold opens and seamless loops (not started):** candidate experiments under the editorial strategy. Neither is implemented.
 - **Narration pacing (implemented, 2026-10-21):** newly produced Shorts use the fast-beats preset (1.2x speech, pitch preserved, shortened pauses, declared storyboard pauses kept) in the news and educational tooling. Whether it improves retention is not yet measured; that waits for the analytics loop. The kids series and a compressed closing scene for news videos are not covered.
 - Prototype a format by hand first, then decide whether it deserves a workflow ([DECISION_LOG.md](DECISION_LOG.md)).
 - Analytics comes before any frequency increase. Five Shorts per week is a possible later experiment, not a plan.
