@@ -146,5 +146,14 @@
     "updatedAt": "2026-10-21T21:18:39.743Z",
     "videoId": "8Zke9Kf1128",
     "playlistItemId": "UExEcXVIdXhaWnlTdy45NDk1REZENzhEMzU5MDQz"
+  },
+  "california-loop": {
+    "status": "scheduled",
+    "contentHash": "8de73f0d54275f33916384b477db18f93aa2c3c9aee777875afd737d882b4743",
+    "fileSize": 4132770,
+    "updatedAt": "2026-10-22T01:31:02.944Z",
+    "videoId": "rVSj_PvFPmE",
+    "playlistItemId": "UExEcXVIdXhaWnlTdy5GNjNDRDREMDQxOThCMDQ2",
+    "publishAt": "2026-10-23T21:00:00Z"
   }
 }
