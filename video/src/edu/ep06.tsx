@@ -73,7 +73,7 @@ const Arrow: React.FC<{ x1: number; y1: number; x2: number; y2: number; color: s
 };
 
 /** MYTH card slams in word by word; FACT one slams in, strikes the myth through and levels the map. */
-const Cards: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
+export const Cards: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
   const o = vis( t, -1, b.plates.start + 0.25, 0.4 );
   if ( o <= 0.01 ) {
     return null;
@@ -106,7 +106,7 @@ const Cards: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
 };
 
 /** One California map for the whole video: tips toward the sea during the myth, then zooms with the explanation. */
-const CaMap: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
+export const CaMap: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
   const end = b.cta.start + 1.2;
   const o = vis( t, -1, end, 0.5 );
   if ( o <= 0.01 ) {
@@ -168,7 +168,7 @@ const CaMap: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
   );
 };
 
-const Rate: React.FC<{ t: number; b: B }> = ( { t, b } ) => (
+export const Rate: React.FC<{ t: number; b: B }> = ( { t, b } ) => (
   <Card x={90} y={1010} w={900} label="PACIFIC PLATE vs NORTH AMERICAN PLATE" value="≈ 46 MM / YEAR" note="northwest · about the rate fingernails grow" color={AMBER} opacity={vis( t, b.rate.start - 0.1, b.fact2.start + 0.1, 0.4 )} valueSize={96} />
 );
 
@@ -195,7 +195,7 @@ const Fact2: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
 };
 
 /** Compact closing call to action: keeps the payoff on screen instead of a full-screen brand card. */
-const CompactCta: React.FC<{ frame: number; start: number }> = ( { frame, start } ) => {
+export const CompactCta: React.FC<{ frame: number; start: number }> = ( { frame, start } ) => {
   const k = prog( frame / 30, start, 0.4 );
   if ( k <= 0.01 ) {
     return null;

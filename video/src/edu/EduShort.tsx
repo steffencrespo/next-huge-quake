@@ -35,7 +35,7 @@ export const calculateEduMetadata = ( id: EpisodeId | EpisodeMeta ): CalculateMe
   durationInFrames: episodeSeconds( typeof id === 'string' ? EPISODES[id as EpisodeId] : id, props.audio ) * FPS
 } );
 
-const Layers: React.FC<{ audio: EduAudio; cues: SfxCue[]; total: number }> = ( { audio, cues, total } ) => {
+export const Layers: React.FC<{ audio: EduAudio; cues: SfxCue[]; total: number }> = ( { audio, cues, total } ) => {
   const span = { narrationStart: audio.narrationStart, narrationDuration: audio.narrationEnd - audio.narrationStart };
   return (
     <>

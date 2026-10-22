@@ -108,6 +108,20 @@ Capture what we attempted, why we attempted it, the actual observations, decisio
 
 **Follow-up:** Preserve approval gates in new workflows and review integrations for least-privilege permissions.
 
+## 2026-10-21 — California cold open + seamless loop (prototype)
+
+**Status:** Prototype rendered for human review; not approved, not published. Branch `exp/california-cold-open-loop` (local, no PR yet).
+
+**Hypothesis:** Opening on the Los Angeles / San Francisco reveal, building the context, and ending on a state that matches the first frame may improve retention and encourage replays compared with the published natural-order episode. Untested.
+
+**Implementation / evidence [repo]:** `video/src/edu/ep06loop.tsx` and `video/scripts/render-california-loop.ts`; the published episode's map, cards, cached narration and music are reused, with fast-beats pacing. No new narration was generated (no paid calls). The order is: cold open (the reveal, then the conditional "well… in about fifteen million years") → MYTH → nowhere to fall → plates → slide → rate → "Southwestern California is moving north." → loop. The spoken lead-ins "Fact two:" and "Fact one:" were cut from the cached clips at the word boundaries the alignment gives, so the reordered lines read naturally, and the spoken call to action was dropped; a compact on-screen brand/like/subscribe row remains. The 15-million-year line stays conditional in the visuals ("If today's plate motion simply continued · schematic", plus the existing schematic/accelerated label). The body ends with the map in the state the cold open starts from, so a replay continues the motion. Output: 23.3 s, against 43.0 s for the published version (local render `video/out/edu/final/california-loop.mp4`, git-ignored). The published video, manifests and state are unchanged.
+
+**Observation:** Engineering checks only, from stills: the last frame and the first frame match on the map and labels; the card, caption and brand row are crowded in the cold open. No human review and no audience data yet [editorial: pending; metric: none].
+
+**Decision:** Pending human review. If approved for publication it would be a separately approved experiment outside the regular schedule, with its credits and manifest prepared first.
+
+**Follow-up:** Watch and iterate. Decide whether to keep the on-screen call to action and the music fade-out, which breaks audio continuity at the loop point. Compare Analytics against the published version when available, as a directional comparison and not a controlled test.
+
 ---
 
 ## Open questions and measurements
