@@ -37,6 +37,10 @@ describe( 'tiers', () => {
 } );
 
 describe( 'exclusions', () => {
+  it( 'never fast-tracks an event that already has a video (for example one published by hand)', () => {
+    expect( decide( input( { alreadyPublished: true } ), config ).reasons ).toEqual( [ 'already_published' ] );
+  } );
+
   it( 'keeps PAGER red manual', () => {
     expect( decide( input( { facts: tibetFacts( { pagerAlert: 'red' } ) } ), config ).reasons ).toEqual( [ 'pager_red' ] );
   } );

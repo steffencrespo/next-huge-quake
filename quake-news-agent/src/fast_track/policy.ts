@@ -13,7 +13,7 @@ import type { PagerImpact } from './impact.js';
  *   Tier C  M5.5-5.9 meeting the monitor's populated-area rule (PAGER yellow+ or significance >= 600). Recognized but
  *           manual in v1.
  *
- * Always manual: PAGER red, no PAGER product yet, an event near a recent publication (a sequence), a deleted or
+ * Always manual: an event that already has a video, PAGER red, no PAGER product yet, an event near a recent publication (a sequence), a deleted or
  * non-earthquake event, an event older than the publication window, and facts that changed since production.
  */
 export type Tier = 'A' | 'B' | 'C' | 'none';
@@ -26,6 +26,8 @@ export type PolicyInput = {
   impact: PagerImpact | null;
   /** IDs of already published or scheduled events nearby in the sequence window; null when that could not be checked. */
   nearbyPublished: string[] | null;
+  /** True when the publisher already has a video for this event under any of its IDs (e.g. published by hand). */
+  alreadyPublished?: boolean;
   /** The facts the video was produced from, when deciding after production. */
   produced?: QuakeFacts;
   nowMs: number;
@@ -103,6 +105,9 @@ export function decide( input: PolicyInput, config: Pick<FastTrackConfig, 'maxAg
   }
   if ( facts.pagerAlert === 'red' ) {
     reasons.push( 'pager_red' );
+  }
+  if ( input.alreadyPublished ) {
+    reasons.push( 'already_published' );
   }
   if ( input.nearbyPublished === null ) {
     reasons.push( 'sequence_check_unavailable' );

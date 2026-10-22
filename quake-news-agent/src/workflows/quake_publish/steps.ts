@@ -63,17 +63,20 @@ export const fastTrackGate = step( {
     const obs = observe( lookup.body );
     const impact = await fetchImpact( lookup.body );
     let nearby: string[] | null = null;
+    let alreadyPublished = true; // unknown counts as published: fail closed
     try {
+      const published = readPublishedEventIds( videoDir() );
+      alreadyPublished = obs.ids.some( id => published.includes( id ) );
       const nearbyBody = await fetchUsgsJson( buildUsgsNearbyUrl( {
         latitude: obs.facts.latitude, longitude: obs.facts.longitude, radiusKm: config.sequenceRadiusKm,
         startTimeUtc: new Date( Date.parse( obs.facts.timeUtc ) - config.sequenceHours * 3_600_000 ).toISOString(),
         endTimeUtc: new Date( now ).toISOString(), minMagnitude: SEQUENCE_MIN_MAGNITUDE
       } ) );
-      nearby = nearbyPublished( nearbyBody, readPublishedEventIds( videoDir() ), obs.ids );
+      nearby = nearbyPublished( nearbyBody, published, obs.ids );
     } catch {
       nearby = null; // sequence_check_unavailable: a person decides
     }
-    const decision = decide( { facts: obs.facts, type: obs.type, sig: obs.sig, impact, nearbyPublished: nearby, produced, nowMs: now }, config );
+    const decision = decide( { facts: obs.facts, type: obs.type, sig: obs.sig, impact, nearbyPublished: nearby, alreadyPublished, produced, nowMs: now }, config );
     const reasons = [ ...decision.reasons ];
     if ( reasons.length === 0 && publicationsOn( ledgerStore().load(), evaluatedAtUtc ) >= config.maxPublishPerDay ) {
       reasons.push( 'daily_publication_cap' );
