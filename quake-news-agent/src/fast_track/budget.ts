@@ -3,14 +3,22 @@ import type { Ledger } from './ledger.js';
 
 /**
  * Worst-case cost of producing one event, from the configured provider prices. Every bound below mirrors the
- * pipeline's own limits (budget.spec.ts reads them back from the prompt files and workflow code, so a change there
- * fails the tests instead of silently breaking the bound):
- *   - quake_news: MAX_DRAFT_ATTEMPTS drafts, each followed by one review, each call retried up to ACTIVITY_ATTEMPTS times;
- *   - output tokens are capped by maxOutputTokens in news_draft@v1 and draft_review@v1;
- *   - input tokens per call are bounded by the configured, measured FAST_TRACK_LLM_MAX_INPUT_TOKENS_PER_CALL;
- *   - ElevenLabs: one request (single attempt, reused when the text is unchanged) of at most maxNarrationChars,
- *     enforced before the request.
- * The reservation is charged in full and never refunded, so the limits hold even if every call hits its bound.
+ * pipeline's own limits (budget.spec.ts reads them back from the prompt files, workflow code and the installed
+ * @outputai/llm, so a change there fails the tests instead of silently breaking the bound):
+ *   - quake_news: MAX_DRAFT_ATTEMPTS drafts, each followed by one review; each is one model request (no tools, so one
+ *     step; @outputai/llm sets the AI SDK's maxRetries to 0) and Temporal retries a failed activity up to
+ *     ACTIVITY_ATTEMPTS times, each retry counted as a full, billed request;
+ *   - output tokens are capped per request by maxOutputTokens in news_draft@v1 and draft_review@v1;
+ *   - ElevenLabs: one request (generate_narration is a single attempt and makes one call; reused when the text is
+ *     unchanged) of at most maxNarrationChars, enforced before the request.
+ * Not strictly bounded, and why:
+ *   - input tokens: the prompt grows with the USGS place name and the revision feedback, and nothing caps it at runtime.
+ *     FAST_TRACK_LLM_MAX_INPUT_TOKENS_PER_CALL is an operator bound, to be set from a measured trace with a margin;
+ *   - prices: taken from configuration, not read from the providers (a price change needs a config change); ElevenLabs
+ *     subscription credits are billed per character by plan, so the USD rate must be the plan's per-character rate;
+ *   - work outside a fast-track run: a person re-running quake_video for the same event (narration is reused when the
+ *     text is unchanged, Anthropic is not), and manual productions, are not reserved here.
+ * The reservation is charged in full and never refunded, so the limits hold even if every request hits its bound.
  */
 export const LLM_BOUNDS = { draftAttempts: 2, activityAttempts: 3, draftMaxOutputTokens: 2048, reviewMaxOutputTokens: 1024 };
 

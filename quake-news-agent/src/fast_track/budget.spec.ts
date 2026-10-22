@@ -24,6 +24,21 @@ describe( 'worst-case cost', () => {
     expect( workflow ).toMatch( new RegExp( `maximumAttempts: ${LLM_BOUNDS.activityAttempts}\\b` ) );
   } );
 
+  it( 'relies on single requests: no SDK retries, no tools, no step-level retry overrides, one TTS call', () => {
+    const root = join( import.meta.dirname, '..', '..' );
+    expect( readFileSync( join( root, 'node_modules', '@outputai', 'llm', 'src', 'ai_sdk_options.js' ), 'utf8' ).match( /maxRetries: 0/g ) ).toHaveLength( 2 );
+    for ( const prompt of [ 'news_draft@v1.prompt', 'draft_review@v1.prompt' ] ) {
+      expect( read( `prompts/${prompt}` ).split( '---' )[1] ).not.toMatch( /tools|skills/ );
+    }
+    for ( const file of [ 'steps.ts', 'evaluators.ts' ] ) {
+      expect( read( file ) ).not.toMatch( /maximumAttempts/ );
+    }
+    const videoSteps = readFileSync( join( root, 'src', 'workflows', 'quake_video', 'steps.ts' ), 'utf8' );
+    expect( videoSteps ).toMatch( /name: 'generate_narration'[\s\S]*?maximumAttempts: 1 \}/ );
+    const narrationCli = readFileSync( join( root, '..', 'video', 'scripts', 'generate-narration.ts' ), 'utf8' );
+    expect( narrationCli.match( /await generateSpeech\(/g ) ).toHaveLength( 1 );
+  } );
+
   it( 'adds every bounded call and the narration characters', () => {
     // 6 drafts of (4000 in, 2048 out) + 6 reviews of (4000 in, 1024 out) at $3/$15 per MTok, plus 600 chars at $0.30/1k
     const llm = 6 * ( 4000 * 3 + 2048 * 15 ) / 1e6 + 6 * ( 4000 * 3 + 1024 * 15 ) / 1e6;
