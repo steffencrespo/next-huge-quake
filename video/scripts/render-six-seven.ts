@@ -2,7 +2,8 @@
  * EXPERIMENT: renders "SIX SEVEN: Earthquake Edition" v2 to out/edu/final/six-seven-v2.mp4 from the cached narration
  * (scripts/six-seven-narration.ts generates it; this script makes no request). Each line is paced with fast-beats, the
  * declared pauses (notably the one before "Seventy!") are kept, and the clips are placed back to back.
- * Usage: tsx scripts/render-six-seven.ts [--audio-only | --still=<seconds>]
+ * Usage: tsx scripts/render-six-seven.ts [--audio-only | --still=<seconds> | --credits-only]
+ *   --credits-only writes out/edu/final/six-seven-v2.credits.txt (the attribution the publisher appends to the description); no render.
  */
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -21,6 +22,31 @@ import { paceNarration } from './lib/pace-audio.js';
 const root = join( dirname( new URL( import.meta.url ).pathname ), '..' );
 const outDir = join( root, 'out', 'edu', 'six-seven' );
 const stillArg = process.argv.find( a => a.startsWith( '--still=' ) )?.split( '=' )[1];
+/** Attribution for the public description (appended verbatim by the publisher). */
+function writeCredits() {
+  const file = join( root, 'out', 'edu', 'final', 'six-seven-v2.credits.txt' );
+  mkdirSync( dirname( file ), { recursive: true } );
+  writeFileSync( file, [
+    `Music: ${ MUSIC.reviver.credit }`,
+    'Narration: ElevenLabs text-to-speech (voice: Daniel).',
+    'Sound effects: synthesized for this video. The "six seven" meme is referenced in text and gesture only; no meme audio or third-party footage is used.',
+    'Source: USGS, "The magnitude 6.7 Northridge, California, earthquake of 17 January 1994" (the earthquake raised the Santa Susana mountains by as much as 70 centimeters). https://pubs.usgs.gov/publication/70017610',
+    'Source: USGS Open-File Report 96-263, studying the setting and consequences of the Northridge earthquake (a rupture on a hidden fault, about 17.5 kilometers deep). https://pubs.usgs.gov/of/1996/ofr-96-0263/mainshk.htm',
+    'Source: USGS event page, M 6.7 - Northridge, California earthquake. https://earthquake.usgs.gov/earthquakes/eventpage/ci3144585',
+    'The side view of the fault and mountain is a schematic illustration, not to scale, with the rise exaggerated; it is not data or footage. The SIX SEVEN opening is a meme about a number and does not depict a real event.',
+    '',
+    'Production Technology',
+    'Automated news and video production powered by Output.ai',
+    'https://output.ai',
+    ''
+  ].join( '\n' ) );
+  console.log( `wrote ${ file }` );
+}
+if ( process.argv.includes( '--credits-only' ) ) {
+  writeCredits();
+  process.exit( 0 );
+}
+
 const envFile = join( root, '.env.local' );
 const config = loadTtsConfig( { ...( existsSync( envFile ) ? parseEnvFile( readFileSync( envFile, 'utf8' ) ) : {} ), ...process.env } );
 const library = openLibrary( join( root, 'assets', 'audio', 'edu', 'library' ) );
@@ -76,6 +102,9 @@ try {
   const r = spawnSync( 'npx', args, { cwd: root, stdio: 'inherit' } );
   if ( r.status !== 0 ) {
     throw new Error( `render failed (exit ${ r.status })` );
+  }
+  if ( !stillArg ) {
+    writeCredits();
   }
 } finally {
   staged.forEach( f => rmSync( f, { force: true } ) );

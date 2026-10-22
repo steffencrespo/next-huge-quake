@@ -132,6 +132,22 @@ Capture what we attempted, why we attempted it, the actual observations, decisio
 
 **Follow-up:** After publication, record Analytics for both videos here, separately from this entry's hypothesis. Once published, compare Analytics against the original California Short as a directional comparison and not a controlled test; record the result here separately. The music still restarts from its first bar at the loop point; with a steady low bed this is subtle but not a musically seamless loop.
 
+## 2026-10-22 — SIX SEVEN: Earthquake Edition (meme hook, acquisition test)
+
+**Status:** v2 editorially approved; publication package prepared and awaiting final human approval. Not uploaded, not scheduled, not published. Branch `exp/six-seven`.
+
+**Hypothesis (untested):** a recognizable meme used as an immediate hook, followed by an unexpected, accurate piece of earthquake science, may attract viewers who would not normally watch earthquake content, potentially improving Stayed to watch and introducing the channel to a broader audience. Acquisition and Stayed to watch are the metrics to compare once Analytics is available, directionally and not as a controlled test.
+
+**Implementation / evidence [repo]:** `video/src/edu/sixseven.tsx`, `sixsevenScript.ts`, `video/scripts/six-seven-narration.ts` (paid, one attempt per line, budget-capped) and `render-six-seven.ts`; sources and notes in `docs/experiments/six-seven-earthquake-edition.md`. A bouncing "6 7" opener merges into a magnitude 6.7, then a clearly marked switch to the real 1994 Northridge earthquake: a hidden fault, and the Santa Susana Mountains rising by as much as 70 cm (USGS). The meme section carries a "not a real earthquake" label and the diagram is labelled schematic. Original synthesized effects and YouTube Audio Library music; no meme audio. The topic was chosen to differ from the scheduled "Magnitude 6 vs 7" (scale and shallow-versus-deep damage).
+
+**Cost [repo]:** v1 had no voice and cost nothing. For v2, Daniel narration used 249 ElevenLabs credits (characters billed per the ledger, 7 requests, no retries) against 270 authorized.
+
+**Editorial assessment [editorial, subjective; not audience data]:** the v1 hook and visual concept were liked, but the middle relied too heavily on reading text and lost some of the opening's energy; v2 added narration, a simpler uplift diagram and a comic pause before "Seventy!", and was approved for publication. This says nothing about audience response.
+
+**Publication preparation [repo]:** manifest `video/publish/six-seven-earthquake.json` (unapproved; approval, a slot and the upload are separate human steps). Approved render `video/out/edu/final/six-seven-v2.mp4`: 17.941 s, 1080x1920, 3,007,214 bytes, SHA-256 `765f8d17c7a183670da33f5d87dbbd009eec86b472999d0d11dc5e72518c29b3` (git-ignored, not re-rendered). The publisher's read-only preview passed (no duplicate title); blockers were the missing approval and slot. The queue had no free regular slot this week.
+
+**Follow-up:** final human review, approval, a slot and the upload; then record Analytics against the other short-form experiments, separately from this entry's hypothesis.
+
 ---
 
 ## Open questions and measurements
