@@ -130,8 +130,10 @@ export function reconcilePlan( { m, rec, video, titleMatches, playlistItemIds }:
     return { problems, notes };
   }
   if ( rec.status === 'uploading' ) {
+    // The saved session is the only reliable link between this record and a video: upload asks YouTube about that
+    // session (never starts a new one), so a finished upload whose record was lost is recovered, not duplicated.
     notes.push( 'An upload session is open; upload resumes it and asks YouTube what it received.' );
-    if ( others.length ) problems.push( `Video(s) with this title exist while the upload is unconfirmed: ${ others.map( v => v.id ).join( ', ' ) }. A person must decide.` );
+    if ( others.length ) notes.push( `Video(s) with this title on the channel (${ others.map( v => v.id ).join( ', ' ) }); the session query identifies whether one is this upload.` );
     return { problems, notes };
   }
   if ( rec.status === 'scheduled' ) return { problems: [ 'Recorded as scheduled: not reconciled by this flow.' ], notes };

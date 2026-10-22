@@ -331,4 +331,5 @@ async function queue() {
 const commands: Record<string, () => unknown> = { preview, approve, upload, inspect, reconcile, schedule, queue, 'create-kids-playlist': createKidsPlaylist, 'publish-now': publishNowCommand, 'update-metadata': updateMetadataCommand };
 const run = commands[ process.argv[ 2 ] ?? 'preview' ];
 if ( !run ) { console.error( `Usage: youtube-publish <${ Object.keys( commands ).join( '|' ) }> [id] [--confirm]` ); process.exit( 2 ); }
-Promise.resolve().then( run ).catch( error => { console.error( `\nFailed: ${ error instanceof Error ? error.message : 'unknown error' }` ); process.exit( 1 ); } );
+/** Exported so tests can await the command; the CLI itself just runs it. */
+export const finished = Promise.resolve().then( run ).catch( error => { console.error( `\nFailed: ${ error instanceof Error ? error.message : 'unknown error' }` ); process.exit( 1 ); } );

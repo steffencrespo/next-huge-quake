@@ -154,7 +154,7 @@ describe( 'fast track', () => {
     expect( plan( { rec: rec( a, { status: 'scheduled' } ) } ).problems.join() ).toMatch( /scheduled/ );
     expect( plan( { rec: undefined, titleMatches: [ live( a, { id: 'x' } ) ] } ).problems.join() ).toMatch( /Untracked/ );
     expect( plan( { rec: undefined } ) ).toEqual( { problems: [], notes: [ 'Nothing uploaded yet; nothing on the channel matches.' ] } );
-    expect( plan( { rec: { ...rec( a ), status: 'uploading', videoId: undefined }, titleMatches: [ live( a, { id: 'x' } ) ] } ).problems.join() ).toMatch( /unconfirmed/ );
+    expect( plan( { rec: { ...rec( a ), status: 'uploading', videoId: undefined }, titleMatches: [ live( a, { id: 'x' } ) ] } ) ).toMatchObject( { problems: [], notes: [ expect.stringMatching( /resumes/ ), expect.stringMatching( /session query/ ) ] } );
   } );
 
   it( 'upload resumes the playlist step after a crash and never uploads twice', () => {
