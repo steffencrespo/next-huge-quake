@@ -134,7 +134,7 @@ Capture what we attempted, why we attempted it, the actual observations, decisio
 
 ## 2026-10-22 — SIX SEVEN: Earthquake Edition (meme hook, acquisition test)
 
-**Status:** v2 editorially approved; publication package prepared and awaiting final human approval. Not uploaded, not scheduled, not published. Branch `exp/six-seven`.
+**Status:** v2 editorially approved and scheduled: [youtu.be/i8mfyBetegY](https://youtu.be/i8mfyBetegY), going public Sunday 2026-10-25 18:00 America/Sao_Paulo (a separately approved experiment release outside the Tue/Thu/Sat cadence). Package merged in PR [#41](https://github.com/steffencrespo/next-huge-quake/pull/41) (`1106c43`). No audience data yet.
 
 **Hypothesis (untested):** a recognizable meme used as an immediate hook, followed by an unexpected, accurate piece of earthquake science, may attract viewers who would not normally watch earthquake content, potentially improving Stayed to watch and introducing the channel to a broader audience. Acquisition and Stayed to watch are the metrics to compare once Analytics is available, directionally and not as a controlled test.
 
@@ -146,7 +146,9 @@ Capture what we attempted, why we attempted it, the actual observations, decisio
 
 **Publication preparation [repo]:** manifest `video/publish/six-seven-earthquake.json` (unapproved; approval, a slot and the upload are separate human steps). Approved render `video/out/edu/final/six-seven-v2.mp4`: 17.941 s, 1080x1920, 3,007,214 bytes, SHA-256 `765f8d17c7a183670da33f5d87dbbd009eec86b472999d0d11dc5e72518c29b3` (git-ignored, not re-rendered). The publisher's read-only preview passed (no duplicate title); blockers were the missing approval and slot. The queue had no free regular slot this week.
 
-**Follow-up:** final human review, approval, a slot and the upload; then record Analytics against the other short-form experiments, separately from this entry's hypothesis.
+**Publication [repo]:** the render checksum was re-verified before upload; the publisher uploaded it privately, added it to Earthquake Science Explained and scheduled it with the `scheduleException` (24 h lead kept). `inspect` confirmed title, description with credits, tags, category, language, audience and playlist, and YouTube finished processing (18 s).
+
+**Follow-up:** after publication, record Analytics against the other short-form experiments, separately from this entry's hypothesis.
 
 ---
 
