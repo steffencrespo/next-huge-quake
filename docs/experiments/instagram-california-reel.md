@@ -1,9 +1,11 @@
 # Instagram Reel prototype: "Will California Fall Into the Ocean?" (Myth vs Fact 06)
 
-Status: **prototype, awaiting editorial review. Not published anywhere.** Account: @nexthugequake.
+Status: **editorially approved (2026-10-22); Instagram publication is a separate human step, URL to be added.** Account: @nexthugequake.
+Approved file: `video/out/experiments/instagram/california-reel-final.mp4`, SHA-256 `ac068aa9a859fa8aa03b1c41ce9814c3e8e9ee2fc1c0f9466ee937f4ad8be57c`.
+The YouTube original and its publication state are unchanged.
 Source: the published YouTube Short <https://youtu.be/8Zke9Kf1128> (`video/out/edu/final/california-deified.mp4`, props `california-deified.props.json`). Not the cold open + loop variant.
 
-Build (free, cached narration, no network): `cd video && npx tsx experiments/instagram/build.mts`
+Build (free, cached narration, no network): `cd video && npx tsx experiments/instagram/build.mts` (in a worktree, set `NHQ_MAIN_VIDEO` to the main checkout's `video/` path, which holds the git-ignored render and narration library). The final file is this render plus `volume=3dB` on the audio (ffmpeg from `@remotion/compositor`, video stream copied).
 Output: `video/out/experiments/instagram/california-reel.mp4` (git-ignored), props beside it.
 
 ## What changed from the YouTube original
@@ -38,5 +40,12 @@ No music credit needed. Caption/description should keep: USGS sources (FAQ and E
 - **Final file:** `video/out/experiments/instagram/california-reel-final.mp4`: the render above with +3 dB audio gain (video stream copied, audio re-encoded AAC 256 kbps). 38.02 s, peak -3.8 dBFS, no clipping, speech seconds about -21 dBFS RMS. SHA-256 `ac068aa9a859fa8aa03b1c41ce9814c3e8e9ee2fc1c0f9466ee937f4ad8be57c`.
 - **Narration/claims intact:** the 8 claim-carrying clips (hook to how) are byte-for-byte the published files with identical start, duration and gain; captions are the published first 14 of 16. Only the CTA clip and its 2 captions were removed. The 5.0 s difference is the CTA clip (4.34 s), the pause before it (0.88 s) and the tail now counted from the last claim line.
 - **No music:** gaps with no sound (analysis, not a listen-through): 12.1-14.0 s and 24.6-26.2 s (scripted dramatic pauses, previously filled by the music bed), 36.0-38.0 s at the end. Sound effects carry the rest. Left as is; a synthesized room-tone or rumble bed is a possible fix if review finds it empty.
-- **ElevenLabs plan: not established.** The repo records only character usage (ledger), not the plan. The API key lacks `user_read`, so the tier could not be read. Confirm in the ElevenLabs account that the plan was a paid tier (not Free) on 2026-10-21 and covers commercial use.
+- **ElevenLabs plan: confirmed by the owner** (2026-10-22): the narration was generated under a paid subscription. The repo itself records only character usage, and the API key lacks `user_read`, so this is the owner's statement, not a repo check.
 - **Caption:** keeps the AI-narration disclosure ("Narration is AI-generated"); set Instagram's AI label at publishing.
+
+## Decisions (2026-10-22)
+
+- **Approved:** the music-free version, including the three silent stretches, as reviewed.
+- **Audio:** narration plus original synthesized sound effects, no music. No track is documented as cleared for Instagram; revisit only with a track whose license covers social use, stored in the repo first.
+- **Disclosure:** the caption states the narration is AI-generated; also set Instagram's AI label when publishing.
+- **Publication:** manual, by the owner. Instagram URL: _to be added_.

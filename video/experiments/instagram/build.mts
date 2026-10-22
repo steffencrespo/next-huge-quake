@@ -2,13 +2,14 @@
  * EXPERIMENT: Instagram Reel of the published California Myth vs Fact Short. No network, no TTS.
  * Reuses the published render's props (narration clips, gains, timing) with: the closing "Like and subscribe" clip and its
  * captions removed, and the music replaced by silence (no track in the repo is demonstrably licensed for Instagram).
- * A silent stand-in keeps the closing beat (visuals fade on it) without any sound. Usage: npx tsx experiments/instagram/build.mts
+ * A silent stand-in keeps the closing beat (visuals fade on it) without any sound. Usage: [NHQ_MAIN_VIDEO=/path/to/main/video/] npx tsx experiments/instagram/build.mts
  */
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 
 const root = new URL( '../../', import.meta.url ).pathname;
-const main = '/Users/leonardosteffen/Dev/next-huge-quake/video/';
+/** Checkout that holds the git-ignored published render, props and narration library (a worktree has none of them): NHQ_MAIN_VIDEO=<path>/video/, default this checkout. */
+const main = process.env.NHQ_MAIN_VIDEO ?? root;
 const src = JSON.parse( readFileSync( `${main}out/edu/final/california-deified.props.json`, 'utf8' ) ).audio;
 const outDir = `${root}out/experiments/instagram`;
 mkdirSync( outDir, { recursive: true } );
