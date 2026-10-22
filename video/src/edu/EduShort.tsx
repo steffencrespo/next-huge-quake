@@ -35,11 +35,12 @@ export const calculateEduMetadata = ( id: EpisodeId | EpisodeMeta ): CalculateMe
   durationInFrames: episodeSeconds( typeof id === 'string' ? EPISODES[id as EpisodeId] : id, props.audio ) * FPS
 } );
 
-export const Layers: React.FC<{ audio: EduAudio; cues: SfxCue[]; total: number }> = ( { audio, cues, total } ) => {
+/** `musicVolume` replaces the default ducked mix (an episode that loops keeps the music level steady). */
+export const Layers: React.FC<{ audio: EduAudio; cues: SfxCue[]; total: number; musicVolume?: ( frame: number ) => number }> = ( { audio, cues, total, musicVolume } ) => {
   const span = { narrationStart: audio.narrationStart, narrationDuration: audio.narrationEnd - audio.narrationStart };
   return (
     <>
-      <Audio src={staticFile( audio.musicFile )} volume={f => musicGain( f / FPS, span, total )} />
+      <Audio src={staticFile( audio.musicFile )} volume={musicVolume ?? ( f => musicGain( f / FPS, span, total ) )} />
       {audio.clips.map( clip => (
         <Sequence key={clip.id} from={Math.round( clip.start * FPS )} layout="none">
           <Audio src={staticFile( clip.file )} volume={clip.gain ?? 1} />

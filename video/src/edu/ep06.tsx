@@ -106,7 +106,8 @@ export const Cards: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
 };
 
 /** One California map for the whole video: tips toward the sea during the myth, then zooms with the explanation. */
-export const CaMap: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
+/** `note` scales the "schematic" footnote under the map (1 by default); the loop version fades it out so it does not overlap the accelerated-move label. */
+export const CaMap: React.FC<{ t: number; b: B; note?: number }> = ( { t, b, note = 1 } ) => {
   const end = b.cta.start + 1.2;
   const o = vis( t, -1, end, 0.5 );
   if ( o <= 0.01 ) {
@@ -162,7 +163,7 @@ export const CaMap: React.FC<{ t: number; b: B }> = ( { t, b } ) => {
       <svg width={1080} height={1920} style={{ position: 'absolute', left: 0, top: 0 }}>
         <Pill x={690} y={MAP.y + 52} text="SAN ANDREAS FAULT SYSTEM" color={AMBER} size={28} opacity={prog( t, b.plates.start + 1.2, 0.5 ) * ( 1 - z2 )} />
         <Pill x={540} y={MAP.y + MAP.h - 44} text={`SCHEMATIC · ACCELERATED · ${years} MILLION YEARS`} color={FACT} size={26} opacity={cities * z2} />
-        <Txt x={84} y={MAP.y + MAP.h - 18} size={26} weight={600} anchor="start" color={COLORS.textSupport} opacity={trace * ( 1 - z2 )}>Fault trace, arrows and motion are schematic</Txt>
+        <Txt x={84} y={MAP.y + MAP.h - 18} size={26} weight={600} anchor="start" color={COLORS.textSupport} opacity={trace * ( 1 - z2 ) * note}>Fault trace, arrows and motion are schematic</Txt>
       </svg>
     </div>
   );

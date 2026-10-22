@@ -4,7 +4,7 @@
  * Usage: tsx scripts/render-california-loop.ts [--audio-only]
  * Takes the nine cached California clips from the narration library, cuts the "Fact two:" and "Fact one:" lead-ins at the
  * word boundary the character alignment gives, paces each clip with fast-beats, places them in the loop order and renders
- * MythCaliforniaLoop to out/edu/final/california-loop.mp4. The published episode, manifests and library are not touched.
+ * MythCaliforniaLoop to out/edu/final/california-loop.mp4 (the file is overwritten; keep a copy to compare versions). The published episode, manifests and library are not touched.
  */
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -79,7 +79,9 @@ function prepare( id: string, from?: string ): { file: string; duration: number;
 
 const gain = gains();
 const clips: ClipInput[] = ORDER.map( ( { id, from } ) => ( { id, ...prepare( id, from ), gain: gain[id] } ) );
-const script = ORDER.map( ( { id } ) => ( { ...CALIFORNIA.script.find( l => l.id === id )!, start: 0 } ) );
+/** Pause after each line (seconds): breathing room between the narrative sections and before the reveals, on top of the fast-beats speech. */
+const PAUSE: Record<string, number> = { fact2: 0.45, punch: 1.2, hook: 0.55, fact: 1.1, plates: 0.9, slide: 0.9, rate: 1.1 };
+const script = ORDER.map( ( { id } ) => ( { ...CALIFORNIA.script.find( l => l.id === id )!, start: 0, gap: PAUSE[id] } ) );
 const audio = eduAudioSchema.parse( { ...placeClips( script, clips, { gap: clipGap( FAST_BEATS_PACING ), keepPauses: true } ), musicFile: MUSIC.deified.file, musicCredit: MUSIC.deified.credit, pacing: FAST_BEATS_PACING.name } );
 writeFileSync( join( outDir, 'audio.json' ), `${ JSON.stringify( audio, null, 2 ) }\n` );
 console.log( `narration ${ audio.narrationStart }-${ audio.narrationEnd } s, ${ audio.captions.length } captions` );
