@@ -37,6 +37,9 @@ export type BudgetConfig = {
 export const FAST_TRACK_POLICY = 'fast-track';
 export const FAST_TRACK_POLICY_VERSION = 'fast-track@1';
 
+/** Prefix of the error a guarded step throws when stopped, so the workflow can hand the event to a person. */
+export const STOPPED = 'fast_track_stopped';
+
 type Env = Record<string, string | undefined>;
 
 const number = ( env: Env, name: string, fallback: number, min = 0 ): number => {

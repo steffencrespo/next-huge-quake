@@ -1,8 +1,7 @@
 import { workflow } from '@outputai/core';
-import { FAST_TRACK_POLICY_VERSION } from '../../fast_track/config.js';
+import { FAST_TRACK_POLICY_VERSION, STOPPED } from '../../fast_track/config.js';
 import { latencyOf } from '../../fast_track/latency.js';
 import { clock } from '../quake_video/steps.js';
-import { STOPPED } from '../../fast_track/ledger.js';
 import { buildFastTrackManifest, fastTrackGate, publisherCommand, publisherVerify, recordFastTrack } from './steps.js';
 import { publishInputSchema, publishOutputSchema } from './types.js';
 import type { PublishOutput } from './types.js';

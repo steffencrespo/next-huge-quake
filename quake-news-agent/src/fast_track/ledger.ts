@@ -86,5 +86,3 @@ export const isPaused = ( configured: string | null ): boolean => existsSync( pa
 export const stopReason = ( config: { enabled: boolean; pauseFile: string | null } ): string | null =>
   !config.enabled ? 'fast_track_disabled' : isPaused( config.pauseFile ) ? 'fast_track_paused' : null;
 
-/** Prefix of the error a guarded step throws when stopped, so the workflow can hand the event to a person. */
-export const STOPPED = 'fast_track_stopped';
