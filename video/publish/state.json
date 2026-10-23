@@ -172,5 +172,31 @@
     "updatedAt": "2026-10-22T16:59:31.841Z",
     "videoId": "4ZrrJfRGJRQ",
     "playlistItemId": "UExQc1I3NGxJaFdnSS41MzJCQjBCNDIyRkJDN0VD"
+  },
+  "magnitude-10": {
+    "status": "scheduled",
+    "contentHash": "0a5a8b2701374d3032859087237dca88c93324b1f538ff4976e7dc02e1fda41d",
+    "fileSize": 2990022,
+    "updatedAt": "2026-10-23T01:37:04.191Z",
+    "videoId": "uBG8FaoqSgE",
+    "publishAt": "2026-10-26T21:00:00Z"
+  },
+  "six-seven-vs-four-two": {
+    "status": "scheduled",
+    "contentHash": "13df442b4920a299bccdb2a03576ab7d37f6ce083abe3fdaa52234e5ec6180de",
+    "fileSize": 2934639,
+    "updatedAt": "2026-10-23T01:37:07.034Z",
+    "videoId": "xGLKl3cfdSc",
+    "playlistItemId": "UExEcXVIdXhaWnlTdy45ODRDNTg0QjA4NkFBNkQy",
+    "publishAt": "2026-10-28T21:00:00Z"
+  },
+  "why-aftershocks": {
+    "status": "scheduled",
+    "contentHash": "1c1ede362a6330dbff94abc2219b0f114269b4ce72ed677fe819094c1d19307a",
+    "fileSize": 4301040,
+    "updatedAt": "2026-10-23T01:37:10.068Z",
+    "videoId": "b4-US59Yk7o",
+    "playlistItemId": "UExEcXVIdXhaWnlTdy4zMDg5MkQ5MEVDMEM1NTg2",
+    "publishAt": "2026-10-30T21:00:00Z"
   }
 }

@@ -1,0 +1,55 @@
+{
+  "id": "why-aftershocks",
+  "file": "out/edu/final/aftershocks-deified-fast-beats.mp4",
+  "creditsFile": "out/edu/final/aftershocks-deified-fast-beats.credits.txt",
+  "generated": {
+    "title": "Why Do Aftershocks Keep Happening? #shorts",
+    "description": "The earthquake is over. So why does the ground keep shaking?\n\nAccording to the USGS, aftershocks are minor readjustments along the part of the fault that slipped during the mainshock. They are smaller earthquakes in the same general area following a larger one, they become less frequent over time, and after a big earthquake they can continue for weeks, months or years. They can compound the impacts of a major earthquake, including for buildings already weakened. Not every later earthquake is an aftershock: it has to follow a larger one, close to the same fault.\n\nIf the ground shakes again: drop, cover, and hold on.\n\nThe seismogram, fault map, decay chart and building in this video are schematic illustrations, not real data or footage.\n\nPart of the Earthquake Science Explained series. Subscribe to Next Huge Quake for more earthquake science.\n\n#Shorts #earthquake #aftershocks #safety",
+    "tags": [
+      "earthquake",
+      "earthquakes",
+      "aftershock",
+      "aftershocks",
+      "why do aftershocks happen",
+      "mainshock",
+      "earthquake science",
+      "earthquake science explained",
+      "earthquake safety",
+      "drop cover hold on",
+      "USGS",
+      "shorts"
+    ]
+  },
+  "categoryId": "27",
+  "language": "en",
+  "madeForKids": false,
+  "playlistId": "PLDquHuxZZySw",
+  "publishAtLocal": "2026-10-30T18:00",
+  "scheduleException": {
+    "reason": "Separately approved Experiment-Driven Publishing release (approved 2026-10-22): a Friday slot outside the Tue/Thu/Sat cadence. The 24 h lead time is kept.",
+    "minLeadMinutes": 1440
+  },
+  "approved": {
+    "title": "Why Do Aftershocks Keep Happening? #shorts",
+    "description": "The earthquake is over. So why does the ground keep shaking?\n\nAccording to the USGS, aftershocks are minor readjustments along the part of the fault that slipped during the mainshock. They are smaller earthquakes in the same general area following a larger one, they become less frequent over time, and after a big earthquake they can continue for weeks, months or years. They can compound the impacts of a major earthquake, including for buildings already weakened. Not every later earthquake is an aftershock: it has to follow a larger one, close to the same fault.\n\nIf the ground shakes again: drop, cover, and hold on.\n\nThe seismogram, fault map, decay chart and building in this video are schematic illustrations, not real data or footage.\n\nPart of the Earthquake Science Explained series. Subscribe to Next Huge Quake for more earthquake science.\n\n#Shorts #earthquake #aftershocks #safety",
+    "tags": [
+      "earthquake",
+      "earthquakes",
+      "aftershock",
+      "aftershocks",
+      "why do aftershocks happen",
+      "mainshock",
+      "earthquake science",
+      "earthquake science explained",
+      "earthquake safety",
+      "drop cover hold on",
+      "USGS",
+      "shorts"
+    ]
+  },
+  "approval": {
+    "status": "approved",
+    "approvedAt": "2026-10-23T01:35:41.266Z",
+    "contentHash": "1c1ede362a6330dbff94abc2219b0f114269b4ce72ed677fe819094c1d19307a"
+  }
+}
