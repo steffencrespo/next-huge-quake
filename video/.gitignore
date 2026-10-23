@@ -8,7 +8,9 @@ cache/
 public/terrain/
 public/audio/
 # Narration and music files (licensed, kept local; see README "Map data and credits")
-assets/
 
 # Local ElevenLabs credentials (M2.4b)
 .env.local
+
+# Local licensed audio. Matches the directory and the symlinks that git worktrees point at it (a tracked symlink here once replaced the real folder on pull)
+assets
