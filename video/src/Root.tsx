@@ -17,6 +17,9 @@ import { Magnitude } from './edu/ep03.js';
 import { DEPTH, EarthquakeDepth } from './edu/ep05.js';
 import { CALIFORNIA, MythCaliforniaOcean } from './edu/ep06.js';
 import { MythCaliforniaLoop, calculateLoopMetadata } from './edu/ep06loop.js';
+import { MAG10, MagnitudeTen } from './edu/ep07.js';
+import { VERSUS, SixSevenVsFourTwo } from './edu/ep08.js';
+import { AFTERSHOCKS, WhyAftershocks } from './edu/ep09.js';
 import { SixSevenEarthquake, calculateSixSevenMetadata } from './edu/sixseven.js';
 import { KidsWhyEarthShakes, calculateKidsMetadata, kidsShortSchema } from './kids/KidsShort.js';
 import { KidsDropCoverHold, calculateSafetyMetadata } from './kids/SafetyShort.js';
@@ -69,6 +72,9 @@ export const Root: React.FC = () => (
     <Composition id="EarthquakeDepth" component={EarthquakeDepth} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( DEPTH )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="MythCaliforniaLoop" component={MythCaliforniaLoop} schema={eduShortSchema} calculateMetadata={calculateLoopMetadata} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="SixSevenEarthquake" component={SixSevenEarthquake} schema={eduShortSchema} calculateMetadata={calculateSixSevenMetadata} width={1080} height={1920} fps={30} durationInFrames={540} defaultProps={{}} />
+    <Composition id="MagnitudeTen" component={MagnitudeTen} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( MAG10 )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
+    <Composition id="SixSevenVsFourTwo" component={SixSevenVsFourTwo} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( VERSUS )} width={1080} height={1920} fps={30} durationInFrames={900} defaultProps={{}} />
+    <Composition id="WhyAftershocks" component={WhyAftershocks} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( AFTERSHOCKS )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="MythCaliforniaOcean" component={MythCaliforniaOcean} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( CALIFORNIA )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="KidsWhyEarthShakes" component={KidsWhyEarthShakes} schema={kidsShortSchema} calculateMetadata={calculateKidsMetadata} width={1080} height={1920} fps={30} durationInFrames={1560} defaultProps={{}} />
     <Composition id="KidsWhyEarthShakesV2" component={KidsWhyEarthShakes} schema={kidsShortSchema} calculateMetadata={calculateKidsMetadata} width={1080} height={1920} fps={30} durationInFrames={1560} defaultProps={{ v2: true }} />

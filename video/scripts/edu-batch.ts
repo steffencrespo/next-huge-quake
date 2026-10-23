@@ -29,6 +29,9 @@ import type { Caption } from '../src/audio/soundtrack.js';
 import { EPISODE_LIST, EPISODES, episodeSeconds } from '../src/edu/episodes.js';
 import { DEFAULT_MUSIC, MUSIC } from '../src/audio/music.js';
 import type { MusicKey } from '../src/audio/music.js';
+import { MAG10 } from '../src/edu/ep07.js';
+import { VERSUS } from '../src/edu/ep08.js';
+import { AFTERSHOCKS } from '../src/edu/ep09.js';
 import { DEPTH } from '../src/edu/ep05.js';
 import { CALIFORNIA } from '../src/edu/ep06.js';
 import { HISTORIC, HISTORIC_LIST } from '../src/historic/episodes.js';
@@ -50,8 +53,10 @@ const series = flag( 'series' ) ?? 'edu';
 const pace = resolvePacing( flag( 'pace' ) );
 const paceSuffix = pace ? `-${ pace.name }` : '';
 const pacedDir = join( root, 'out', 'edu', 'paced', pace?.name ?? '' );
-const pool = series === 'myth' ? { california: CALIFORNIA } : series === 'depth' ? { depth: DEPTH } : series === 'historic' ? HISTORIC : EPISODES;
-const episodes: EpisodeMeta[] = episodeArg === 'all' ? ( series === 'myth' ? [ CALIFORNIA ] : series === 'depth' ? [ DEPTH ] : series === 'historic' ? HISTORIC_LIST : EPISODE_LIST ) : [ ( pool as Record<string, EpisodeMeta> )[episodeArg] ];
+/** October 26, 28 and 30 Shorts (docs/experiments/oct-26-28-30-shorts.md). */
+const OCT = { mag10: MAG10, versus: VERSUS, aftershocks: AFTERSHOCKS };
+const pool = series === 'oct' ? OCT : series === 'myth' ? { california: CALIFORNIA } : series === 'depth' ? { depth: DEPTH } : series === 'historic' ? HISTORIC : EPISODES;
+const episodes: EpisodeMeta[] = episodeArg === 'all' ? ( series === 'oct' ? Object.values( OCT ) : series === 'myth' ? [ CALIFORNIA ] : series === 'depth' ? [ DEPTH ] : series === 'historic' ? HISTORIC_LIST : EPISODE_LIST ) : [ ( pool as Record<string, EpisodeMeta> )[episodeArg] ];
 if ( episodes.some( e => !e ) ) {
   throw new Error( `unknown episode '${episodeArg}'` );
 }
@@ -65,7 +70,7 @@ const needMusic = () => {
   return MUSIC[musicKey as MusicKey];
 };
 const library = openLibrary( join( root, 'assets', 'audio', 'edu', 'library' ) );
-const ledgerFile = join( root, 'out', 'edu', series === 'historic' ? 'credit-ledger-historic.json' : series === 'depth' ? 'credit-ledger-depth.json' : series === 'myth' ? 'credit-ledger-myth.json' : 'credit-ledger.json' );
+const ledgerFile = join( root, 'out', 'edu', series === 'historic' ? 'credit-ledger-historic.json' : series === 'depth' ? 'credit-ledger-depth.json' : series === 'myth' ? 'credit-ledger-myth.json' : series === 'oct' ? 'credit-ledger-oct.json' : 'credit-ledger.json' );
 type LedgerEntry = { at: string; episode: string; line: string; key: string; characters: number };
 const readLedger = (): LedgerEntry[] => ( existsSync( ledgerFile ) ? JSON.parse( readFileSync( ledgerFile, 'utf8' ) ) : [] );
 
@@ -196,6 +201,9 @@ const SOURCES: Record<string, string[]> = {
   chile1960: [ 'USGS Earthquake Catalog (ComCat): 1960 Great Chilean (Valdivia) earthquake, M9.5. https://earthquake.usgs.gov/', 'USGS Hawaiian Volcano Observatory: 1960 tsunami travel times and Hilo deaths. https://www.usgs.gov/center-news/golden-anniversary-chilean-earthquake-comes-early' ],
   japan2011: [ 'USGS Earthquake Catalog (ComCat) and event page: 2011 Great Tohoku Earthquake, M9.1 Mww. https://earthquake.usgs.gov/earthquakes/eventpage/official20110311054624120_30', 'Japan Meteorological Agency: tsunami warning improvements after 2011. https://www.data.jma.go.jp/eqev/data/en/tsunami/LessonsLearned_Improvements_brochure.pdf' ],
   california: [ 'USGS FAQ: Will California eventually fall into the ocean? https://www.usgs.gov/faqs/will-california-eventually-fall-ocean', 'USGS: Earthquake Facts & Earthquake Fantasy (plate motion about 46 mm per year; Los Angeles and San Francisco neighbors in about 15 million years at this rate). https://www.usgs.gov/programs/earthquake-hazards/earthquake-facts-earthquake-fantasy' ],
+  mag10: [ 'USGS FAQ: Can "MegaQuakes" really happen? Like a magnitude 10 or larger? (largest recorded earthquake, magnitude 9.5 in Chile in 1960, on a fault almost 1,000 miles long; fault length and magnitude). https://www.usgs.gov/faqs/can-megaquakes-really-happen-a-magnitude-10-or-larger' ],
+  versus: [ 'USGS: Earthquake Magnitude, Energy Release, and Shaking Intensity (each whole magnitude step is about 32 times more energy). https://www.usgs.gov/programs/earthquake-hazards/earthquake-magnitude-energy-release-and-shaking-intensity' ],
+  aftershocks: [ 'USGS FAQ: Foreshocks, aftershocks - what\'s the difference? https://www.usgs.gov/faqs/foreshocks-aftershocks-whats-difference', 'USGS FAQ: What is the difference between aftershocks and swarms? https://www.usgs.gov/faqs/what-difference-between-aftershocks-and-swarms' ],
   depth: [ 'USGS depth classes (shallow 0-70 km, intermediate 70-300 km, deep 300-700 km) and the relation of focal depth to surface shaking. https://www.usgs.gov/programs/earthquake-hazards' ],
   sanfrancisco1906: [ 'USGS Earthquake Catalog (ComCat) and USGS 1906 San Francisco earthquake pages. https://earthquake.usgs.gov/earthquakes/events/1906calif/18april/', 'National Park Service (1906 earthquake history).' ]
 };
@@ -204,9 +212,9 @@ function historicCredits( ep: EpisodeMeta ): string[] {
     'Music: ' + needMusic().credit,
     'Narration: ElevenLabs text-to-speech (voice: Daniel).',
     'Sound effects: synthesized for this video.',
-    ...( ep.id === 'depth' ? [] : [ 'Map data: Natural Earth (public domain), 1:50m land and 1:110m land via world-atlas.' ] ),
+    ...( [ 'depth', 'mag10', 'versus', 'aftershocks' ].includes( ep.id ) ? [] : [ 'Map data: Natural Earth (public domain), 1:50m land and 1:110m land via world-atlas.' ] ),
     ...( SOURCES[ep.id] ?? [] ).map( x => 'Source: ' + x ),
-    ep.id === 'california' ? 'The fault trace, plate arrows, the accelerated Los Angeles move and the strike-slip diagram are schematic illustrations, not to scale, not data or footage.' : ep.id === 'depth' ? 'Cross-sections, wave rings and the city are schematic illustrations, not to scale, not data or footage (the depth ruler is to scale).' : 'Maps, wave routes and arcs, fault traces, cross-sections, skyline and fire graphics are illustrations, not data or archival footage.',
+    ep.id === 'mag10' ? 'The fault-length bars and the red arc are illustrations, not data. The Chile arc is drawn to scale against the Earth circumference of about 24,900 miles. Not data or footage.' : ep.id === 'versus' ? 'The dot grid is an illustration of the energy ratio (about 5,600 to 1, 10^(1.5 x 2.5)), not data or footage. The ratio is approximate: other USGS energy formulas give a somewhat smaller value.' : ep.id === 'aftershocks' ? 'The seismogram, fault map, decay chart, building and aftershock maps are schematic illustrations, not real data or footage.' : ep.id === 'california' ? 'The fault trace, plate arrows, the accelerated Los Angeles move and the strike-slip diagram are schematic illustrations, not to scale, not data or footage.' : ep.id === 'depth' ? 'Cross-sections, wave rings and the city are schematic illustrations, not to scale, not data or footage (the depth ruler is to scale).' : 'Maps, wave routes and arcs, fault traces, cross-sections, skyline and fire graphics are illustrations, not data or archival footage.',
     '',
     'Production Technology',
     'Automated news and video production powered by Output.ai',
@@ -255,7 +263,7 @@ function render( ep: EpisodeMeta, withAudio: boolean ) {
       throw new Error( `render failed (exit ${result.status})` );
     }
     if ( withAudio ) {
-      writeFileSync( out.replace( /\.mp4$/, '.credits.txt' ), ( series === 'historic' || series === 'depth' || series === 'myth' ? historicCredits( ep ) : [ 'Music: ' + needMusic().credit, 'Narration: ElevenLabs text-to-speech.', 'Sound effects: synthesized for this video.', '', 'Production Technology', 'Automated news and video production powered by Output.ai', 'https://output.ai', '' ] ).join( '\n' ) );
+      writeFileSync( out.replace( /\.mp4$/, '.credits.txt' ), ( series === 'historic' || series === 'depth' || series === 'myth' || series === 'oct' ? historicCredits( ep ) : [ 'Music: ' + needMusic().credit, 'Narration: ElevenLabs text-to-speech.', 'Sound effects: synthesized for this video.', '', 'Production Technology', 'Automated news and video production powered by Output.ai', 'https://output.ai', '' ] ).join( '\n' ) );
     }
     console.log( `wrote ${out}` );
   } finally {
