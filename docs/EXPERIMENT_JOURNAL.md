@@ -150,6 +150,56 @@ Capture what we attempted, why we attempted it, the actual observations, decisio
 
 **Follow-up:** after publication, record Analytics against the other short-form experiments, separately from this entry's hypothesis.
 
+## 2026-10-22 — Breaking news: time-to-publish vs. safety (Tibet M7.0)
+
+**Status:** Both Shorts published. No audience data yet.
+
+**Hypothesis:** Our existing pipelines can carry a breaking story from USGS-only facts to confirmed impacts quickly, without new tooling.
+
+**Implementation / evidence [repo]:** The initial USGS-only Short for `us6000u43g` ([youtu.be/4ZrrJfRGJRQ](https://youtu.be/4ZrrJfRGJRQ)) was produced by `quake_video` and published with `publish-now` (record merged in PR [#44](https://github.com/steffencrespo/next-huge-quake/pull/44)). Chinese authorities later reported at least 16 deaths, 32 injuries (11 serious) and at least 339 collapsed homes [reported: AP via NBC, 4:58 PM EDT; AFP via CBS, citing Xinhua]. The confirmed-impact follow-up ([youtu.be/d2v2iFsGi7w](https://youtu.be/d2v2iFsGi7w), record in PR [#47](https://github.com/steffencrespo/next-huge-quake/pull/47)) was produced with the existing news package tools (`build-from-package`, `generate-narration`, `render-package`): one ElevenLabs request of 384 characters (about $0.03 at the published $0.08 per 1,000 characters), no paid Anthropic calls, a 27.5 s fast-beats render reusing the cached Tibet terrain.
+
+**Observation:** Timestamps [repo; the AP time is reported]:
+
+| Interval | Duration |
+|---|---|
+| USGS origin (14:33 UTC) to the first Short going public (16:59 UTC) | about 2 h 26 min |
+| AP report (about 20:58 UTC) to the follow-up going public (about 22:25 UTC) | about 1 h 27 min |
+| Follow-up production, from narration to verified public | under 15 min |
+
+These were reconstructed afterwards from manifests, state records and article times, not measured by the pipeline. Most of the elapsed time went to investigating technical alternatives (including the Fast Track design and implementation in PR [#45](https://github.com/steffencrespo/next-huge-quake/pull/45)), coordinating PRs and obtaining execution approvals, not to production [editorial].
+
+**Decision / learning:** Editorial and execution latency, not production, was the bottleneck. Urgent coverage should use a proven production path rather than wait for new features.
+
+**Follow-up:** Start measuring detection-to-publication and confirmed-impact-to-publication latency for every breaking-news event (the unmerged PR #45 would record them for fast-track runs; confirmed-impact latency is not captured anywhere yet).
+
+## 2026-10-22 — Verified impact updates and pipeline safeguards
+
+**Status:** Observation; no change to the safeguards.
+
+**Hypothesis:** A follow-up with confirmed casualties can be produced without weakening the safeguards that keep the automated path USGS-only.
+
+**Implementation / evidence [repo]:** The automated validation (`quake-news-agent/src/workflows/quake_news/validation.ts`) rejects casualty or damage claims unless they describe the PAGER model estimate. The on-screen copy guard (`video/src/copy/guard.ts`) bans casualty wording on the standard USGS facts cards. Deduplication (`session produce`, `discover --check`, and the fast-track gate's `already_published` in PR #45) prevents re-producing an already published event. The follow-up went through the package CLIs directly, which apply the copy guard to on-screen text but do not check narration, and none of these safeguards was changed: the verified casualty figures appear in the narration, captions, title and description, attributed to Chinese authorities as cited by AP and AFP, but not as on-screen cards.
+
+**Observation [editorial]:** The original and follow-up openings look similar because they reuse the same opener and map. PAGER (a modeled estimate) and the reported impacts (actual counts from authorities) are separate kinds of information and were presented separately in the description.
+
+**Decision / learning:** Keep modeled USGS PAGER risk clearly distinct from actual impacts corroborated by authoritative reporting.
+
+**Follow-up:** Investigate a human-approved, source-verified impact-update workflow with attribution and follow-up-aware deduplication (an impact update for an already published event is not a duplicate). Not to be implemented now.
+
+## 2026-10-22 — Published news metadata corrections
+
+**Status:** Correction applied and verified on YouTube; record in PR [#46](https://github.com/steffencrespo/next-huge-quake/pull/46).
+
+**Hypothesis:** A published breaking-news Short's description can be kept accurate after publication without touching the video.
+
+**Implementation / evidence [repo]:** The original Tibet Short's description was accurate when published: no casualties or damage had been confirmed. Once casualties were confirmed, that statement was outdated. The description was updated with the publisher's `update-metadata` (description only, dry run reviewed first): a dated, attributed update was added at the top, and the earlier sentence now states that it described the situation at publication. A YouTube read-back with `inspect` confirmed the description, and the title, tags, category, language, audience, playlist, credits, privacy and video content were preserved. PR #46 records the description update and PR #47 the follow-up publication. Both change `video/publish/state.json` in adjacent lines, so the second to merge may need a small reconciliation.
+
+**Observation:** The correction was applied about 1 h 13 min after the AP report (about 22:11 UTC) [repo; the AP time is reported].
+
+**Decision / learning:** Breaking-news publishing includes keeping published metadata accurate after publication, not only producing the initial video.
+
+**Follow-up:** Measure the time between significant factual updates and the corresponding metadata corrections.
+
 ---
 
 ## Open questions and measurements
@@ -160,6 +210,7 @@ Capture what we attempted, why we attempted it, the actual observations, decisio
 - Which topics justify urgent publication versus scheduled evergreen release?
 - Can the production process remain fast without drifting into repeated, low-value content?
 - When, if ever, do enough recurring tasks justify new Output.ai editorial workflows?
+- How can we minimize breaking-news time-to-publish while preserving factual accuracy, source attribution, budget limits, and bounded human editorial control?
 
 ## Maintaining the journal
 

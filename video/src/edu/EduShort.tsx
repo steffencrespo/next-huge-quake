@@ -66,7 +66,7 @@ export function makeEduShort( def: EpisodeDefinition ): React.FC<EduShortProps> 
     return (
       <AbsoluteFill style={{ background: COLORS.background }}>
         <def.Visuals t={t} b={b} />
-        {def.Cta ? <def.Cta frame={frame} start={b.cta.start} /> : <Cta frame={frame} start={b.cta.start - 1} />}
+        {def.Cta ? <def.Cta frame={frame} start={b.cta?.start ?? 0} /> : <Cta frame={frame} start={b.cta.start - 1} />}
         <Captions t={t} captions={audio?.captions ?? placeholderCaptions( meta.script )} />
         {audio ? <Layers audio={audio} cues={def.cues( b )} total={durationInFrames / FPS} /> : null}
       </AbsoluteFill>
