@@ -10,9 +10,18 @@ Baselines of viewer metrics for the Next Huge Quake channel, kept so later chang
 
 ## Data source and limits
 
-All figures below come from **YouTube Studio screenshots supplied manually** on 2026-10-22. They were not exported from the YouTube Analytics API and are not reproducible from the repository. Percentages are as displayed in Studio (rounded). Screenshots do not state the reporting period for every card, so only the "last 48 hours" figure carries a period here; treat the others as Studio's default window at the snapshot time. The channel is young and the sample is small: one day of a single format mix, with no per-video retention curves captured yet.
+All figures below come from **YouTube Studio screenshots supplied manually** on 2026-10-22. They were not exported from the YouTube Analytics API and are not reproducible from the repository. Percentages are as displayed in Studio (rounded).
+
+Reporting periods, as shown in the screenshots:
+
+- **Sep 25 to Oct 22, 2026 (last 28 days):** all figures below except the one noted next.
+- **Last 48 hours (realtime):** the 2,706 views figure only. It is a separate, shorter window.
+
+The sample is small: no per-video retention curves were captured yet.
 
 ## Baseline: 2026-10-22
+
+Figures cover Sep 25 to Oct 22, 2026 (last 28 days) unless marked otherwise.
 
 ### Channel totals [metric]
 
@@ -21,7 +30,7 @@ All figures below come from **YouTube Studio screenshots supplied manually** on 
 | Views | 5,158 |
 | Watch time | 11.6 hours |
 | Subscribers | +7 |
-| Views, last 48 hours | 2,706 |
+| Views, last 48 hours (realtime, separate window) | 2,706 |
 | Monthly audience | 843 |
 | New viewers (share of monthly audience) | 99.4% |
 
@@ -89,6 +98,6 @@ Capture a second Studio snapshot about one week after the baseline, with the sam
 
 - the same totals, engagement, traffic, device, top-video and geography figures;
 - stayed-to-watch per video where Studio shows it, for the Shorts published since 2026-10-22, noting which had a changed opening;
-- the reporting period shown on each card, so the two snapshots are comparable.
+- the reporting period shown on each card, so the two snapshots are comparable (the baseline is Sep 25 to Oct 22, 2026, last 28 days).
 
 If the figures cannot be captured the same way, say so rather than comparing unlike numbers. Decide then whether the hook hypothesis is supported, unsupported or still undecided.
