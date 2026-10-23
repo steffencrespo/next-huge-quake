@@ -21,7 +21,7 @@ See `octClaims.ts` for line-by-line claims. Pages: megaquake FAQ, magnitude/ener
 
 ## Attention items
 1. **5,600x is approximate.** USGS states about 32x energy per whole step (10^1.5), which gives 5,623 for 2.5 steps. The USGS rough formula log E = 5.24 + 1.44 Mw gives about 4,000. The script says "about" and the screen shows the 10^(1.5 x 2.5) arithmetic.
-2. **USGS wording on magnitude 10 differs.** The FAQ says it "cannot happen"; other pages say theoretically possible but very highly unlikely. The script says "very unlikely" and "isn't something scientists expect", never impossible.
-3. "Tomorrow" in the magnitude 10 Short is only correct if it publishes 10-26 and Chile 1960 on 10-27.
-4. "Especially in buildings already weakened" (aftershocks) is from USGS search summaries; the fetched FAQ page only says aftershocks "can compound the impacts of a major earthquake".
-5. Earth circumference (about 24,900 mi) in the magnitude 10 ring is a general reference value, not from the USGS pages.
+2. **USGS wording on magnitude 10 differs.** The FAQ says it "cannot happen"; other pages call it theoretically possible but very highly unlikely. The script says "very unlikely" and "isn't something scientists expect", never impossible.
+3. **Fault-length wording simplified after review.** The USGS FAQ says the 1960 fault was "almost 1,000 miles" long and that a magnitude 10 fault would "extend around most of the planet". Published rupture models give about 900-1,000 km (about 600 miles), so the video says "about a thousand kilometers", and the planet-circling claim is dropped: required length depends on assumed width and slip (one model of an M10 uses 1,200 km by 600 km). The video now says only "a much longer fault" and "no fault that long is known".
+4. "Tomorrow" in the magnitude 10 Short is only correct if it publishes 10-26 and Chile 1960 on 10-27. Also, the Chile 1960 Historic episode should be checked for the same miles/km issue; this was not done.
+5. "Especially in buildings already weakened" (aftershocks) is from USGS search summaries; the fetched FAQ page only says aftershocks "can compound the impacts of a major earthquake".

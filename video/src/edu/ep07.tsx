@@ -1,25 +1,25 @@
 /**
  * Episode 07, "Can a Magnitude 10 Earthquake Actually Happen?" (published slot 2026-10-26). Claims and sources: octClaims.ts.
- * A 9.5 becomes a "10?", then a ring drawn to scale around Earth's circumference: the Chile 1960 fault (almost 1,000 miles, USGS)
- * against the "most of the planet" a magnitude 10 fault would have to extend (USGS FAQ). The red arc is illustrative.
+ * A 9.5 becomes a "10?", then a schematic comparison: the Chile 1960 fault (about 1,000 km) against a much longer magnitude 10 fault.
+ * No lengths are claimed for the magnitude 10 fault.
  */
 import { COLORS } from '../design/tokens.js';
-import { Backdrop, HOT, Pill, Txt, clamp, f1, prog, vis } from './kit.js';
+import { Backdrop, HOT, Txt, clamp, f1, prog, vis } from './kit.js';
 import { CTA_LINE, plan } from './episodes.js';
 import type { EpisodeMeta } from './episodes.js';
 import { SeriesTag, makeEduShort } from './EduShort.js';
 import type { EpisodeVisuals } from './EduShort.js';
 import { CompactCta } from './ep06.js';
-import { Layer, Pop, arcPath } from './octShared.js';
+import { Layer, Pop } from './octShared.js';
 
 export const MAG10: EpisodeMeta = {
-  id: 'mag10', number: 7, compositionId: 'MagnitudeTen', title: 'Can a Magnitude 10 Earthquake Actually Happen?', baseSeconds: 35, tailSeconds: 4.8,
+  id: 'mag10', number: 7, compositionId: 'MagnitudeTen', title: 'Can a Magnitude 10 Earthquake Actually Happen?', baseSeconds: 35, tailSeconds: 5.8,
   script: plan( [
     { id: 'hook', text: 'We’ve seen magnitude nine point five. But could Earth ever produce a ten?', gap: 0.45 },
     { id: 'short', text: 'Short answer: very unlikely. Here’s why.', gap: 0.4 },
     { id: 'size', text: 'Bigger earthquakes need longer faults.' },
-    { id: 'chile', text: 'In Chile, in nineteen sixty, a fault almost a thousand miles long produced the largest earthquake ever recorded.' },
-    { id: 'need', text: 'A magnitude ten would need a fault extending around most of the planet.' },
+    { id: 'chile', text: 'In Chile, in nineteen sixty, a fault about a thousand kilometers long produced the largest earthquake ever recorded.' },
+    { id: 'need', text: 'A magnitude ten would need a much longer fault.' },
     { id: 'none', text: 'No fault that long is known to exist.', gap: 0.4 },
     { id: 'so', text: 'So a ten isn’t something scientists expect.', gap: 0.5 },
     { id: 'tie', text: 'Tomorrow, we revisit that nine point five: Chile, nineteen sixty.' },
@@ -28,9 +28,6 @@ export const MAG10: EpisodeMeta = {
 };
 
 const AMBER = '#e0a43c';
-const CX = 540, CY = 960, R = 260;
-/** Chile 1960 fault, almost 1,000 miles, against Earth's circumference of about 24,900 miles. */
-const CHILE_TURN = 1000 / 24901;
 
 const Visuals: EpisodeVisuals = ( { t, b } ) => {
   const intro = vis( t, -1, b.size.start + 0.1, 0.35 );
@@ -70,20 +67,15 @@ const Visuals: EpisodeVisuals = ( { t, b } ) => {
           <Txt x={540} y={1450} size={28} weight={600} color={COLORS.textSupport}>Schematic · lengths not to scale</Txt>
         </g>
         <g opacity={ringO}>
-          <circle cx={CX} cy={CY} r={R} fill="rgba(10,29,49,0.85)" stroke="#8fa3c7" strokeOpacity={0.45} strokeWidth={6} />
-          <Txt x={CX} y={CY - 10} size={44} display weight={800} spacing={6} color={COLORS.textSupport}>EARTH</Txt>
-          <Txt x={CX} y={CY + 40} size={28} weight={700} color={COLORS.textSupport}>circumference ≈ 24,900 mi</Txt>
-          <path d={arcPath( CX, CY, R, 0, CHILE_TURN * chile )} stroke={AMBER} strokeWidth={26} strokeLinecap="round" fill="none" />
-          <path d={arcPath( CX, CY, R, CHILE_TURN + 0.01, CHILE_TURN + 0.01 + 0.62 * need )} stroke={HOT} strokeWidth={22} strokeLinecap="round" strokeDasharray="4 30" fill="none" opacity={0.95} />
-          <Pill x={CX + 150} y={CY - R - 70} text="CHILE 1960 · M9.5" color={AMBER} size={30} opacity={chile} />
-          <Txt x={CX + 150} y={CY - R - 20} size={30} weight={700} color={AMBER} opacity={chile}>fault almost 1,000 mi (USGS)</Txt>
-          <Pill x={CX - 130} y={CY + R + 50} text="A MAGNITUDE 10 FAULT" color={HOT} size={32} opacity={need} />
-          <Txt x={CX - 130} y={CY + R + 98}  size={30} weight={700} color={COLORS.text} opacity={need}>would extend around most of the planet</Txt>
-          <g opacity={none * ( t < b.so.start ? pulse : 1 )}>
-            <Txt x={CX} y={440} size={56} display weight={800} color={HOT}>NO KNOWN FAULT THIS LONG</Txt>
-          </g>
-          <Txt x={CX} y={520} size={46} display weight={800} color={COLORS.text} opacity={so}>NOT EXPECTED</Txt>
-          <Txt x={CX} y={CY + 105} size={24} weight={600} color={COLORS.textSupport}>Chile arc to scale · red arc illustrative</Txt>
+          <Txt x={100} y={820} size={34} anchor="start" color={AMBER} spacing={3} opacity={chile}>CHILE 1960 · M9.5</Txt>
+          <rect x={100} y={850} width={260 * chile} height={52} rx={26} fill={AMBER} />
+          <Txt x={100} y={960} size={32} anchor="start" color={AMBER} opacity={chile}>fault about 1,000 km long</Txt>
+          <Txt x={100} y={1090} size={34} anchor="start" color={HOT} spacing={3} opacity={need}>A MAGNITUDE 10 FAULT</Txt>
+          <rect x={100} y={1120} width={880 * need} height={52} rx={26} fill={HOT} opacity={0.9} />
+          <Txt x={540} y={1300} size={120} display weight={800} color={HOT} opacity={need}>MUCH LONGER</Txt>
+          <Txt x={540} y={440} size={56} display weight={800} color={HOT} opacity={none * ( t < b.so.start ? pulse : 1 )}>NO KNOWN FAULT THIS LONG</Txt>
+          <Txt x={540} y={520} size={46} display weight={800} color={COLORS.text} opacity={so}>NOT EXPECTED</Txt>
+          <Txt x={100} y={1010} size={24} anchor="start" weight={600} color={COLORS.textSupport}>Schematic · bar lengths illustrative</Txt>
         </g>
         <g opacity={tie}>
           <rect x={90} y={620} width={900} height={420} rx={22} fill="rgba(7,11,20,0.94)" stroke={AMBER} strokeWidth={8} />
