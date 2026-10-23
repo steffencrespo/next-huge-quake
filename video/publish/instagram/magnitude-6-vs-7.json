@@ -1,0 +1,17 @@
+{
+  "id": "magnitude-6-vs-7",
+  "sourceYoutubeId": "magnitude-r2",
+  "file": "out/instagram/magnitude-6-vs-7-reel-final.mp4",
+  "generated": {
+    "caption": "Is a magnitude 7 just a little stronger than a magnitude 6? Not even close. 🌍\n\nThe scale is logarithmic: each whole step is about 10x the ground motion on a seismogram and about 32x the energy released. But magnitude measures the earthquake itself, not the damage. Depth, distance, soil and building quality decide what you actually feel.\n\nMagnitude is size. Intensity is shaking.\n\nFollow Next Huge Quake for more earthquake science.\n\nNarration: ElevenLabs text-to-speech. Sound effects synthesized. Automated news and video production powered by Output.ai - https://output.ai\n\n#earthquake #earthquakes #magnitude #seismology #earthquakescience #science #reels"
+  },
+  "approved": {
+    "caption": "Is a magnitude 7 just a little stronger than a magnitude 6? Not even close. 🌍\n\nThe scale is logarithmic: each whole step is about 10x the ground motion on a seismogram and about 32x the energy released. But magnitude measures the earthquake itself, not the damage. Depth, distance, soil and building quality decide what you actually feel.\n\nMagnitude is size. Intensity is shaking.\n\nFollow Next Huge Quake for more earthquake science.\n\nNarration: ElevenLabs text-to-speech. Sound effects synthesized. Automated news and video production powered by Output.ai - https://output.ai\n\n#earthquake #earthquakes #magnitude #seismology #earthquakescience #science #reels"
+  },
+  "shareToFeed": true,
+  "thumbOffsetMs": 0,
+  "publishedManually": {
+    "date": "2026-10-23",
+    "note": "Posted by hand from the same file and caption. Used only to validate API staging; never publish this manifest by API."
+  }
+}
