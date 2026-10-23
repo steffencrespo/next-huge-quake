@@ -25,3 +25,14 @@ See `octClaims.ts` for line-by-line claims. Pages: megaquake FAQ, magnitude/ener
 3. **Fault-length wording simplified after review.** The USGS FAQ says the 1960 fault was "almost 1,000 miles" long and that a magnitude 10 fault would "extend around most of the planet". Published rupture models give about 900-1,000 km (about 600 miles), so the video says "about a thousand kilometers", and the planet-circling claim is dropped: required length depends on assumed width and slip (one model of an M10 uses 1,200 km by 600 km). The video now says only "a much longer fault" and "no fault that long is known".
 4. "Tomorrow" in the magnitude 10 Short is only correct if it publishes 10-26 and Chile 1960 on 10-27. Also, the Chile 1960 Historic episode should be checked for the same miles/km issue; this was not done.
 5. "Especially in buildings already weakened" (aftershocks) is from USGS search summaries; the fetched FAQ page only says aftershocks "can compound the impacts of a major earthquake".
+
+## Publication record (approved 2026-10-22, all three after the owner watched them with sound)
+Uploaded private, processed, metadata and Earthquake Science Explained playlist verified with `inspect`, then scheduled (schedule exceptions approved: Mon/Wed/Fri, 24 h lead kept). Manifests: `video/publish/magnitude-10.json`, `six-seven-vs-four-two.json`, `why-aftershocks.json`.
+
+| Video | YouTube | Public at (America/Sao_Paulo) |
+|---|---|---|
+| Can a Magnitude 10 Earthquake Actually Happen? | <https://youtu.be/uBG8FaoqSgE> | Mon 2026-10-26 18:00 |
+| SIX SEVEN vs FOUR TWO: The Earthquake Difference | <https://youtu.be/xGLKl3cfdSc> | Wed 2026-10-28 18:00 |
+| Why Do Aftershocks Keep Happening? | <https://youtu.be/b4-US59Yk7o> | Fri 2026-10-30 18:00 |
+
+Chile 1960 (`chile1960-r2`, scheduled 10-27) was checked for the miles/km issue: its narration and description say "hundreds of kilometers" and no miles figure appears, so no change is needed.
