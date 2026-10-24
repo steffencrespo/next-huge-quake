@@ -4,9 +4,11 @@ import eventFixture from '../quake_news/__fixtures__/event_us6000u18k.json';
 import type { QuakeFacts, WorkflowOutput } from '../quake_news/types.js';
 
 vi.mock( '../quake_news/workflow.js', () => ( { default: vi.fn() } ) );
-vi.mock( './steps.js', () => ( { clock: vi.fn(), buildSpec: vi.fn(), generateNarration: vi.fn(), prepareTerrain: vi.fn(), renderVideo: vi.fn() } ) );
+vi.mock( './steps.js', () => ( { clock: vi.fn(), buildSpec: vi.fn(), checkFastTrackNarration: vi.fn(), generateNarration: vi.fn(), prepareTerrain: vi.fn(), renderVideo: vi.fn(), reserveFastTrackBudget: vi.fn() } ) );
+vi.mock( '../quake_publish/workflow.js', () => ( { default: vi.fn() } ) );
 
 const { default: quakeNews } = await import( '../quake_news/workflow.js' );
+const { default: quakePublish } = await import( '../quake_publish/workflow.js' );
 const steps = await import( './steps.js' );
 const { default: quakeVideo } = await import( './workflow.js' );
 
@@ -42,6 +44,7 @@ describe( 'quake_video workflow', () => {
     vi.mocked( steps.generateNarration ).mockResolvedValue( { ms: 4000, detail: null, narration: '/o/narration.mp3', soundtrack: '/o/soundtrack.json' } );
     vi.mocked( steps.prepareTerrain ).mockResolvedValue( { ms: 300, detail: 'cached 10 (1 MB); to download 0' } );
     vi.mocked( steps.renderVideo ).mockResolvedValue( { ms: 180000, detail: null, mp4: '/o/video.mp4', credits: '/o/credits.txt' } );
+    vi.mocked( steps.reserveFastTrackBudget ).mockResolvedValue( { fastTrack: true, detail: 'reserved $0.4000' } );
   } );
 
   it( 'runs every stage in order for a validated event and stops ready for approval', async () => {
@@ -103,5 +106,65 @@ describe( 'quake_video workflow', () => {
     vi.mocked( steps.generateNarration ).mockResolvedValue( { ms: 3, detail: 'reused existing narration (no ElevenLabs request)', narration: '/o/narration.mp3', soundtrack: '/o/soundtrack.json' } );
     const result = await quakeVideo( input );
     expect( result.stages.find( s => s.name === 'narration' )?.status ).toBe( 'skipped' );
+  } );
+
+  it( 'publishes nothing and never calls quake_publish for a normal run', async () => {
+    vi.mocked( quakeNews ).mockResolvedValue( draftOutput( readyPackage() ) );
+    const result = await quakeVideo( input );
+    expect( quakePublish ).not.toHaveBeenCalled();
+    expect( steps.checkFastTrackNarration ).not.toHaveBeenCalled();
+    expect( result ).not.toHaveProperty( 'fastTrack' );
+  } );
+
+  it( 'hands a fast-track run to quake_publish after the render, with production timestamps', async () => {
+    vi.mocked( quakeNews ).mockResolvedValue( draftOutput( readyPackage() ) );
+    vi.mocked( steps.checkFastTrackNarration ).mockResolvedValue( { chars: 24 } );
+    const published = { status: 'published' as const, eventId: 'us6000u18k', manifestId: 'm', videoId: 'v', tier: 'A', reasons: [], timestamps: {}, latency: {
+      originToDetectionMs: 1, detectionToProductionMs: 1, productionToRenderMs: 1, renderToUploadMs: 1, uploadToPublicMs: 1, originToPublicMs: 1 } };
+    vi.mocked( quakePublish ).mockResolvedValue( published );
+    const result = await quakeVideo( { ...input, fastTrack: { detectedAtUtc: '2026-10-18T17:55:00.000Z' } } );
+    expect( steps.reserveFastTrackBudget ).toHaveBeenCalledWith( { eventId: 'us6000u18k' } );
+    expect( quakeNews ).toHaveBeenCalledWith( input );
+    expect( steps.checkFastTrackNarration ).toHaveBeenCalledWith( { eventId: 'us6000u18k', narration: draft.narration } );
+    expect( quakePublish ).toHaveBeenCalledWith( expect.objectContaining( {
+      eventId: 'us6000u18k', mp4: '/o/video.mp4', credits: '/o/credits.txt', narration: draft.narration,
+      timing: { detectedAtUtc: '2026-10-18T17:55:00.000Z', productionStartedAtUtc: new Date( 1000 ).toISOString(), renderCompletedAtUtc: expect.any( String ) }
+    } ) );
+    expect( result ).toMatchObject( { status: 'ready_for_approval', fastTrack: { status: 'published', videoId: 'v' } } );
+  } );
+
+  it( 'refuses a fast-track narration the budget does not cover, before the paid request', async () => {
+    vi.mocked( quakeNews ).mockResolvedValue( draftOutput( readyPackage() ) );
+    vi.mocked( steps.checkFastTrackNarration ).mockRejectedValue( new Error( 'narration has 900 characters; the fast-track budget covers 600' ) );
+    const result = await quakeVideo( { ...input, fastTrack: { detectedAtUtc: null } } );
+    expect( result ).toMatchObject( { status: 'failed', failedStage: 'narration', error: expect.stringContaining( 'fast-track budget covers 600' ) } );
+    expect( steps.generateNarration ).not.toHaveBeenCalled();
+    expect( quakePublish ).not.toHaveBeenCalled();
+  } );
+
+  it( 'keeps the run ready for approval when quake_publish itself fails', async () => {
+    vi.mocked( quakeNews ).mockResolvedValue( draftOutput( readyPackage() ) );
+    vi.mocked( steps.checkFastTrackNarration ).mockResolvedValue( { chars: 24 } );
+    vi.mocked( quakePublish ).mockRejectedValue( new Error( 'worker lost' ) );
+    const result = await quakeVideo( { ...input, fastTrack: { detectedAtUtc: null } } );
+    expect( result ).toMatchObject( { status: 'ready_for_approval', fastTrack: { status: 'failed', reasons: [ 'quake_publish: worker lost' ] } } );
+  } );
+
+  it( 'refuses a fast-track run before any paid call when the budget is missing or spent', async () => {
+    vi.mocked( steps.reserveFastTrackBudget ).mockRejectedValue( new Error( 'fast-track budget: daily limit $2 reached' ) );
+    const result = await quakeVideo( { ...input, fastTrack: { detectedAtUtc: null } } );
+    expect( result ).toMatchObject( { status: 'failed', failedStage: 'quake_news', error: 'fast-track budget: daily limit $2 reached' } );
+    expect( quakeNews ).not.toHaveBeenCalled();
+    videoStepsNotCalled();
+  } );
+
+  it( 'produces for human approval when the switch is off or paused at the start', async () => {
+    vi.mocked( quakeNews ).mockResolvedValue( draftOutput( readyPackage() ) );
+    vi.mocked( steps.reserveFastTrackBudget ).mockResolvedValue( { fastTrack: false, detail: 'fast_track_paused: produced for human approval' } );
+    const result = await quakeVideo( { ...input, fastTrack: { detectedAtUtc: null } } );
+    expect( result ).toMatchObject( { status: 'ready_for_approval' } );
+    expect( result ).not.toHaveProperty( 'fastTrack' );
+    expect( steps.checkFastTrackNarration ).not.toHaveBeenCalled();
+    expect( quakePublish ).not.toHaveBeenCalled();
   } );
 } );

@@ -20,6 +20,18 @@ export const PLAYLISTS = {
 export class ManifestError extends Error {}
 
 export interface VideoText { title: string; description: string; tags: string[] }
+
+/**
+ * Present only on manifests built by the Breaking News Fast Track: the versioned policy that authorized publication
+ * and the USGS facts it was evaluated on. It is part of the content hash, so an approval binds the text AND the facts.
+ */
+export interface FastTrackAuthority {
+  policy: string;
+  tier: string;
+  signals: string[];
+  evaluatedAt: string;
+  facts: { eventId: string } & Record<string, string | number | boolean | null>;
+}
 export interface Manifest {
   id: string;
   /** Path of the final MP4, relative to the video/ directory. */
@@ -38,7 +50,9 @@ export interface Manifest {
   publishAtLocal?: string;
   /** One-video override of the Tue/Thu/Sat 18:00 cadence and the 24 h lead time (live API test). Absent on every normal manifest. */
   scheduleException?: { reason: string; minLeadMinutes: number };
-  approval?: { status: 'approved'; approvedAt: string; contentHash: string };
+  fastTrack?: FastTrackAuthority;
+  /** `authority` is the policy version for fast-track approvals; absent (a person ran approve) means "human". */
+  approval?: { status: 'approved'; approvedAt: string; contentHash: string; authority?: string };
 }
 
 const root = () => process.env.NHQ_VIDEO_DIR ?? resolve( import.meta.dirname, '..', '..' );
@@ -62,10 +76,11 @@ export function readCredits( m: Manifest ): string {
 /** The exact description uploaded: approved body, then the credits file verbatim. */
 export const composeDescription = ( m: Manifest ) => `${ m.approved.description.trim() }\n\n${ readCredits( m ) }`;
 
-/** Hash of everything the human approved: text, credits, playlist, language, audience, category. */
+/** Hash of everything approved: text, credits, playlist, language, audience, category, and the fast-track facts if any. */
 export function contentHash( m: Manifest ): string {
   return createHash( 'sha256' ).update( JSON.stringify( [
     m.approved.title, composeDescription( m ), m.approved.tags, m.categoryId, m.language, m.madeForKids, m.playlistId,
+    ...( m.fastTrack ? [ m.fastTrack ] : [] ),
   ] ) ).digest( 'hex' );
 }
 
@@ -92,7 +107,16 @@ export function validateManifest( m: Manifest ): string[] {
   need( typeof m.madeForKids === 'boolean', 'madeForKids (audience declaration) must be true or false.' );
   need( Object.values<string>( PLAYLISTS ).includes( m.playlistId ), 'playlistId is not one of the verified playlists.' );
   if ( m.publishAtLocal ) need( /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test( m.publishAtLocal ), 'publishAtLocal must look like 2026-10-22T18:00.' );
+  if ( m.fastTrack ) {
+    const f = m.fastTrack;
+    need( /^[a-z-]+@\d+$/.test( f.policy ?? '' ) && f.tier && Array.isArray( f.signals ) && f.evaluatedAt && f.facts?.eventId, 'fastTrack needs a versioned policy, tier, signals, evaluatedAt and facts.eventId.' );
+    need( !m.publishAtLocal && !m.scheduleException, 'A fast-track manifest is never scheduled.' );
+    need( m.playlistId === PLAYLISTS.latest && m.madeForKids === false, 'A fast-track manifest goes to the Latest Earthquakes playlist, not made for kids.' );
+  }
   return problems;
 }
 
 export const isApproved = ( m: Manifest ) => m.approval?.status === 'approved' && m.approval.contentHash === contentHash( m );
+
+/** Who approved: the fast-track policy version, or "human" for an approval recorded by a person. */
+export const approvalAuthority = ( m: Manifest ) => m.approval?.authority ?? 'human';

@@ -19,6 +19,9 @@ export interface UploadRecord {
   videoId?: string;
   playlistItemId?: string;
   publishAt?: string;
+  /** When videos.insert finished and when the video was made public (latency metrics). */
+  uploadedAt?: string;
+  publishedAt?: string;
   updatedAt: string;
 }
 export type State = Record<string, UploadRecord>;

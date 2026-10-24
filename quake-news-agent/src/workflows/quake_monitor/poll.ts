@@ -15,11 +15,19 @@ export type PollDeps = {
   api: {
     inspect: ( workflowId: string ) => Promise<Inspection>;
     /** Resolves when started or already started; throws when the outcome is unknown. */
-    start: ( workflowId: string, input: { eventId: string; asOfUtc: string } ) => Promise<void>;
+    start: ( workflowId: string, input: StartInput ) => Promise<void>;
   };
+  /**
+   * Fast Track (optional): before a real start, decides whether the event is produced as a fast-track candidate (its
+   * worst-case cost reserved against the budget), produced normally, or not started at all because a budget is spent.
+   */
+  fastTrack?: ( obs: Observation, record: EventRecord, nowMs: number ) => FastTrackStart;
 };
 
-export type Decision = 'none' | 'dry_run_would_start' | 'started' | 'start_unconfirmed' | 'capped' | 'busy' | 'attempts_exhausted' | 'poll_failed';
+export type StartInput = { eventId: string; asOfUtc: string; fastTrack?: { detectedAtUtc: string | null } };
+export type FastTrackStart = { kind: 'fast_track'; detectedAtUtc: string } | { kind: 'normal'; note: string | null } | { kind: 'stop'; reason: string };
+
+export type Decision = 'none' | 'dry_run_would_start' | 'started' | 'start_unconfirmed' | 'capped' | 'budget_capped' | 'busy' | 'attempts_exhausted' | 'poll_failed';
 
 export type PollSummary = {
   ok: boolean;
@@ -144,7 +152,7 @@ export async function runPoll( deps: PollDeps, config: MonitorConfig ): Promise<
   const day = utcDay( nowMs );
 
   if ( candidates.length > 0 ) {
-    const { record } = candidates[0];
+    const { record, obs } = candidates[0];
     summary.eventId = record.id;
     if ( config.dryRun ) {
       record.state = 'would_start';
@@ -159,16 +167,28 @@ export async function runPoll( deps: PollDeps, config: MonitorConfig ): Promise<
       record.note = `start could not be confirmed after ${record.startAttempts} attempts`;
       summary.decision = 'attempts_exhausted';
     } else {
+      const fast = deps.fastTrack?.( obs, record, nowMs ) ?? { kind: 'normal', note: null };
+      if ( fast.kind === 'stop' ) {
+        // Hard stop: a fast-track budget is spent, so nothing paid starts for this candidate.
+        record.note = `not started: ${fast.reason}`;
+        summary.decision = 'budget_capped';
+        summary.startsToday = state.startsByDay[day] ?? 0;
+        deps.store.save( prune( state, nowMs ) );
+        return summary;
+      }
+      const startInput: StartInput = {
+        eventId: record.id, asOfUtc: iso( nowMs ), ...( fast.kind === 'fast_track' ? { fastTrack: { detectedAtUtc: fast.detectedAtUtc } } : {} )
+      };
       // Persist the intent first: a crash after this point can never cause a second paid start for the event.
       record.state = 'starting';
       record.workflowId = workflowIdFor( record.id );
       record.startedAt = iso( nowMs );
       record.startAttempts++;
-      record.note = null;
+      record.note = fast.kind === 'fast_track' ? 'fast-track candidate' : fast.note;
       state.startsByDay[day] = ( state.startsByDay[day] ?? 0 ) + 1;
       deps.store.save( state );
       try {
-        await deps.api.start( record.workflowId, { eventId: record.id, asOfUtc: iso( nowMs ) } );
+        await deps.api.start( record.workflowId, startInput );
         record.state = 'started';
         summary.decision = 'started';
       } catch ( error ) {

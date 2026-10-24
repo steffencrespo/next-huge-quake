@@ -90,3 +90,39 @@ export async function queryUsgsList( query: UsgsListQuery ): Promise<unknown> {
     throw new ValidationError( 'USGS returned a response that is not valid JSON' );
   }
 }
+
+export type UsgsNearbyQuery = { latitude: number; longitude: number; radiusKm: number; startTimeUtc: string; endTimeUtc: string; minMagnitude: number };
+
+export function buildUsgsNearbyUrl( q: UsgsNearbyQuery ): string {
+  const params = new URLSearchParams( {
+    format: 'geojson',
+    latitude: String( q.latitude ),
+    longitude: String( q.longitude ),
+    maxradiuskm: String( q.radiusKm ),
+    starttime: q.startTimeUtc,
+    endtime: q.endTimeUtc,
+    minmagnitude: String( q.minMagnitude ),
+    eventtype: 'earthquake',
+    orderby: 'time',
+    limit: '200'
+  } );
+  return `${USGS_QUERY_URL}?${params.toString()}`;
+}
+
+/** Fetches a USGS JSON document (an event query or a product file such as PAGER's alerts.json). Throws on any failure. */
+export async function fetchUsgsJson( url: string ): Promise<unknown> {
+  const response = await outputFetch( url, { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout( 30_000 ) } );
+  if ( response.status === 204 ) {
+    await response.body?.cancel();
+    return { type: 'FeatureCollection', features: [] };
+  }
+  if ( !response.ok ) {
+    await response.body?.cancel();
+    throw new Error( `USGS request failed with HTTP ${response.status}` );
+  }
+  try {
+    return JSON.parse( await response.text() );
+  } catch {
+    throw new ValidationError( 'USGS returned a response that is not valid JSON' );
+  }
+}
