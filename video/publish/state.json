@@ -223,5 +223,13 @@
     "videoId": "89Hfy4FffxQ",
     "playlistItemId": "UExEcXVIdXhaWnlTdy41Mzk2QTAxMTkzNDk4MDhF",
     "publishAt": "2026-11-03T21:00:00Z"
+  },
+  "vanuatu-m69-us6000u4j2": {
+    "status": "published",
+    "contentHash": "bfc383e8e668cd1801a7de38787a0437896072fbc1a498223ea232ea07244eab",
+    "fileSize": 13872820,
+    "updatedAt": "2026-10-24T04:36:38.181Z",
+    "videoId": "h0GyKt2AaHA",
+    "playlistItemId": "UExQc1I3NGxJaFdnSS5GNjNDRDREMDQxOThCMDQ2"
   }
 }
