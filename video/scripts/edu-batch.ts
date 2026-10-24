@@ -260,7 +260,7 @@ function render( ep: EpisodeMeta, withAudio: boolean ) {
     }
     const propsFile = out.replace( /\.mp4$/, '.props.json' );
     writeFileSync( propsFile, JSON.stringify( props ) );
-    const result = spawnSync( 'npx', [ 'remotion', 'render', ep.compositionId, out, `--props=${propsFile}`, '--overwrite' ], { cwd: root, stdio: 'inherit' } );
+    const result = spawnSync( 'npx', [ 'remotion', 'render', ep.compositionId, out, ...( ep.compositionId === 'WhereWillTheNextBigOneHitFull' ? [ '--gl=angle' ] : [] ), `--props=${propsFile}`, '--overwrite' ], { cwd: root, stdio: 'inherit' } );
     if ( result.status !== 0 ) {
       throw new Error( `render failed (exit ${result.status})` );
     }
