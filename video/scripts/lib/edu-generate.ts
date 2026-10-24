@@ -1,7 +1,7 @@
-import { NarrationTooLongError } from '../../src/audio/tts.js';
+import { InvalidAudioError, NarrationTooLongError } from '../../src/audio/tts.js';
 import type { Speech } from '../../src/audio/tts.js';
 
-export type LedgerEntry = { at: string; episode: string; line: string; key: string; characters: number; status?: 'rejected'; durationSeconds?: number };
+export type LedgerEntry = { at: string; episode: string; line: string; key: string; characters: number; status?: 'rejected'; durationSeconds?: number; reason?: string };
 
 /** Slowest observed pace in the narration library (about the 5th percentile, 131 clips): 12 characters per second. */
 export const ESTIMATE_CHARS_PER_SECOND = 12;
@@ -30,7 +30,7 @@ export type GenerateLineDeps = {
 };
 
 /**
- * Budget check, one paid request, then the ledger. Audio that came back but is unusable (over the clip limit) is still a paid
+ * Budget check, one paid request, then the ledger. Audio that came back but is unusable (over the clip limit, or invalid alignment) is still a paid
  * request: it is recorded as 'rejected' (and so counts against the budget) before the error is rethrown. Nothing is saved then.
  */
 export async function generateLine( d: GenerateLineDeps ): Promise<Speech> {
@@ -44,6 +44,9 @@ export async function generateLine( d: GenerateLineDeps ): Promise<Speech> {
   } catch ( error ) {
     if ( error instanceof NarrationTooLongError ) {
       d.record( { ...entry, status: 'rejected', durationSeconds: error.speech.durationSeconds } );
+    }
+    if ( error instanceof InvalidAudioError ) {
+      d.record( { ...entry, status: 'rejected', reason: error.message } );
     }
     throw error;
   }

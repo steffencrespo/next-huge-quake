@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { NarrationTooLongError } from '../../src/audio/tts.js';
+import { InvalidAudioError, NarrationTooLongError } from '../../src/audio/tts.js';
 import type { Speech } from '../../src/audio/tts.js';
 import { estimateClipSeconds, generateLine, preflightLines } from './edu-generate.js';
 import type { GenerateLineDeps, LedgerEntry } from './edu-generate.js';
@@ -44,6 +44,13 @@ describe( 'generateLine', () => {
     const retry = { ...deps, request: async () => { calls++; return speech( 8 ); } };
     await expect( generateLine( retry ) ).rejects.toThrow( /budget: 127 credits already spent/ );
     expect( calls ).toBe( 0 );
+  } );
+  it( 'records a paid response rejected for invalid alignment and counts it in the budget', async () => {
+    const { deps, ledger, saved } = setup( async () => { throw new InvalidAudioError( 'alignment does not match the text' ); } );
+    await expect( generateLine( deps ) ).rejects.toBeInstanceOf( InvalidAudioError );
+    expect( saved ).toHaveLength( 0 );
+    expect( ledger ).toEqual( [ expect.objectContaining( { characters: 127, status: 'rejected', reason: 'alignment does not match the text' } ) ] );
+    expect( deps.spent() ).toBe( 127 );
   } );
   it( 'does not record requests that failed without audio', async () => {
     const { deps, ledger } = setup( async () => { throw new Error( 'ElevenLabs returned HTTP 401' ); } );
