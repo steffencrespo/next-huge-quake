@@ -214,5 +214,13 @@
     "updatedAt": "2026-10-23T14:09:16.185Z",
     "videoId": "FYI3Ylwavws",
     "playlistItemId": "UExQc1I3NGxJaFdnSS45NDk1REZENzhEMzU5MDQz"
+  },
+  "where-next-big-one": {
+    "status": "playlisted",
+    "contentHash": "b5b269f9ed66c0849ec6d74b62f5072b639b97dadd623df9caaae90942a5ee76",
+    "fileSize": 18425097,
+    "updatedAt": "2026-10-24T01:32:42.577Z",
+    "videoId": "89Hfy4FffxQ",
+    "playlistItemId": "UExEcXVIdXhaWnlTdy41Mzk2QTAxMTkzNDk4MDhF"
   }
 }
