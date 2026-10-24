@@ -43,6 +43,8 @@ import { MAX_CLIP_SECONDS, SCRIPT as EP01_SCRIPT, eduAudioSchema, placeClips } f
 import type { ClipInput } from '../src/edu/narration.js';
 import { EXTRA_SFX, SFX_FILES, boom, rumble, wavBytes } from '../src/edu/sfx.js';
 import { paceNarration } from './lib/pace-audio.js';
+import { generateLine, preflightLines } from './lib/edu-generate.js';
+import type { LedgerEntry } from './lib/edu-generate.js';
 
 const root = join( dirname( new URL( import.meta.url ).pathname ), '..' );
 const args = process.argv.slice( 2 );
@@ -72,7 +74,6 @@ const needMusic = () => {
 };
 const library = openLibrary( join( root, 'assets', 'audio', 'edu', 'library' ) );
 const ledgerFile = join( root, 'out', 'edu', series === 'historic' ? 'credit-ledger-historic.json' : series === 'depth' ? 'credit-ledger-depth.json' : series === 'myth' ? 'credit-ledger-myth.json' : series === 'oct' ? 'credit-ledger-oct.json' : series === 'nbo' ? 'credit-ledger-nbo.json' : 'credit-ledger.json' );
-type LedgerEntry = { at: string; episode: string; line: string; key: string; characters: number };
 const readLedger = (): LedgerEntry[] => ( existsSync( ledgerFile ) ? JSON.parse( readFileSync( ledgerFile, 'utf8' ) ) : [] );
 
 const envFile = join( root, '.env.local' );
@@ -120,6 +121,8 @@ function plan() {
 
 async function generate() {
   const spent = () => readLedger().reduce( ( n, e ) => n + e.characters, 0 );
+  const todo = episodes.flatMap( ep => ep.script.filter( l => !library.has( identity( l.text ) ) ).map( l => ( { id: `${ep.id}/${l.id}`, text: l.text, characters: normalizeText( l.text ).length } ) ) );
+  preflightLines( todo, MAX_CLIP_SECONDS );
   for ( const ep of episodes ) {
     for ( const line of ep.script ) {
       const id = identity( line.text );
@@ -127,14 +130,16 @@ async function generate() {
         continue;
       }
       const characters = normalizeText( line.text ).length;
-      if ( spent() + characters > BUDGET ) {
-        throw new Error( `budget: ${spent()} credits already spent, '${line.id}' needs ${characters} more, over ${BUDGET}. Stopping.` );
-      }
       // The text is sent exactly as written in the script (normalization only decides the cache key).
-      const speech = await generateSpeech( line.text, config, fetch, MAX_CLIP_SECONDS );
-      library.addGenerated( id, speech.mp3, speech.alignment, `${ep.id}:${line.id}` );
-      mkdirSync( dirname( ledgerFile ), { recursive: true } );
-      writeFileSync( ledgerFile, JSON.stringify( [ ...readLedger(), { at: new Date().toISOString(), episode: ep.id, line: line.id, key: clipKey( id ), characters } ], null, 2 ) );
+      const speech = await generateLine( {
+        episode: ep.id, line, key: clipKey( id ), characters, budget: BUDGET, limitSeconds: MAX_CLIP_SECONDS, spent,
+        record: entry => {
+          mkdirSync( dirname( ledgerFile ), { recursive: true } );
+          writeFileSync( ledgerFile, JSON.stringify( [ ...readLedger(), entry ], null, 2 ) );
+        },
+        request: ( text, limit ) => generateSpeech( text, config, fetch, limit ),
+        save: s => library.addGenerated( id, s.mp3, s.alignment, `${ep.id}:${line.id}` )
+      } );
       console.log( `  generated ${ep.id}/${line.id}: ${speech.durationSeconds.toFixed( 2 )} s, ${characters} credits (ledger total ${spent()})` );
     }
   }

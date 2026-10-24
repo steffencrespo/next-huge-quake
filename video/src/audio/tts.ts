@@ -80,6 +80,13 @@ export class NarrationTooLongError extends Error {
   }
 }
 
+/** Audio came back from ElevenLabs (so the request was billed) but failed validation, e.g. an alignment that does not match the text. */
+export class InvalidAudioError extends Error {
+  constructor( message: string, readonly cause?: unknown ) {
+    super( message );
+  }
+}
+
 export type Speech = { mp3: Uint8Array; alignment: Alignment; durationSeconds: number; captions: Caption[] };
 
 /**
@@ -106,7 +113,14 @@ export async function generateSpeech( text: string, config: TtsConfig, fetchFn: 
   if ( !body.success ) {
     throw new Error( 'ElevenLabs response has no audio_base64' );
   }
-  return speechFromAudio( text, Uint8Array.from( Buffer.from( body.data.audio_base64, 'base64' ) ), body.data.alignment, limitSeconds );
+  try {
+    return speechFromAudio( text, Uint8Array.from( Buffer.from( body.data.audio_base64, 'base64' ) ), body.data.alignment, limitSeconds );
+  } catch ( error ) {
+    if ( error instanceof NarrationTooLongError ) {
+      throw error;
+    }
+    throw new InvalidAudioError( error instanceof Error ? error.message : 'invalid narration audio', error );
+  }
 }
 
 /**

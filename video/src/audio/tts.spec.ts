@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { alignmentToCaptions, validateAlignment } from './captions.js';
 import type { Alignment } from './captions.js';
 import { mp3DurationSeconds } from './mp3.js';
-import { DEFAULT_END_MARGIN_SECONDS, MAX_NARRATION_SECONDS, endMarginSeconds, maxNarrationSeconds, NarrationTooLongError, generateSpeech, speechFromAudio, loadTtsConfig, parseEnvFile } from './tts.js';
+import { DEFAULT_END_MARGIN_SECONDS, MAX_NARRATION_SECONDS, endMarginSeconds, maxNarrationSeconds, NarrationTooLongError, InvalidAudioError, generateSpeech, speechFromAudio, loadTtsConfig, parseEnvFile } from './tts.js';
 
 const config = { apiKey: 'sk_test_SECRET', voiceId: 'voice123', modelId: 'model_x' };
 const TEXT = 'A powerful magnitude 7.7 earthquake struck southern Panama on October 9, according to the USGS. The depth was 13 kilometers. Reviewed.';
@@ -111,6 +111,8 @@ describe( 'generateSpeech', () => {
   it( 'fails on a response without audio or with invalid alignment', async () => {
     await expect( generateSpeech( TEXT, config, reply( { alignment: null } ) ) ).rejects.toThrow( 'no audio_base64' );
     await expect( generateSpeech( TEXT, config, reply( okBody( 400, null ) ) ) ).rejects.toThrow( 'invalid alignment' );
+    await expect( generateSpeech( TEXT, config, reply( okBody( 400, null ) ) ) ).rejects.toBeInstanceOf( InvalidAudioError ); // audio arrived, so it was billed
+    await expect( generateSpeech( TEXT, config, reply( { alignment: null } ) ) ).rejects.not.toBeInstanceOf( InvalidAudioError );
   } );
 
   it( 'rejects audio that does not fit the video instead of truncating it', async () => {
