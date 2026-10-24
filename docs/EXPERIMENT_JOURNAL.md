@@ -200,6 +200,30 @@ These were reconstructed afterwards from manifests, state records and article ti
 
 **Follow-up:** Measure the time between significant factual updates and the corresponding metadata corrections.
 
+## 2026-10-23 — MapLibre educational Short: render time and an unrecorded narration failure ("Where Will the Next Big One Hit?")
+
+**Status:** The Short is uploaded privately and unscheduled (see `video/publish/where-next-big-one.json`); the findings below are recorded here, and no optimization has been implemented.
+
+**Hypothesis:** The approved MapLibre globe look can be used for an educational Short through the existing `edu-batch` workflow (`--series=nbo`) without changing the pipeline.
+
+**Observed measurements [repo/logs]:**
+- The final render of 1,440 frames (48 s, `edu-batch.ts final`, which does not pass `--gl`) took about 35 minutes (props written 21:49, MP4 written 22:24 local time). Chrome's GPU process was observed at about 700% CPU for the whole render.
+- The comparable accelerated prototype (the 62 s, 1,860-frame silent version, rendered with `--gl=angle --concurrency=4`) took 3 min 45 s; the 12 s V2 clip (360 frames) took 1 min 45 s.
+- Per frame that is about 1.5 s (35 min / 1,440) against about 0.12 s (3 min 45 s / 1,860), roughly 12 times slower. This is not a controlled A/B: the runs differ in frame count, audio, captions and background load.
+- One narration line (127 characters, the Bay Area statistic) came back as 9.87 s of audio, over the 9 s `MAX_CLIP_SECONDS` limit. `generateSpeech` threw after the paid request, before the clip was saved to the library or written to the credit ledger. The ledger holds 724 credits for 12 clips; the discarded request adds about 127 (the characters sent), so about 851 credits were consumed in total. The ElevenLabs dashboard is the authority on the exact figure.
+- Replacing the line with two shorter ones (60 and 92 characters, 4.3 s and 6.5 s) succeeded.
+
+**Hypotheses (not verified):**
+- The 35-minute render is slow because without `--gl=angle` Chrome falls back to a software WebGL path (the `edu-batch.ts` render does not set it; the other MapLibre render scripts, `render-news.ts` and `render-terrain-spike.ts`, do). The high GPU-process CPU is consistent with that but does not prove it.
+- Speech duration is predictable enough from character count to catch most overruns: the 12 recorded clips ran at about 12.1 to 15.8 characters per second (observed from the ledger and clip durations), and the discarded clip, at about 12.9 characters per second for 127 characters, was simply the longest line. A cap near 100 to 110 characters per clip would have flagged it.
+
+**Decision / learning:** Treat the render time and the unrecorded spend as pipeline findings, not one-off bad luck.
+
+**Follow-up (proposals, not implemented):**
+1. Investigate passing `--gl=angle` through `edu-batch.ts` `render()` (a flag or a default for MapLibre compositions), then re-measure the same composition for a controlled comparison.
+2. Add a lightweight duration preflight to `edu-batch.ts plan` and `generate`: estimate each new line from its characters at a conservative rate and warn or stop before any request when it may exceed the limit (the plan already prints characters and credits).
+3. Track failed paid generations: write the ledger entry before or regardless of validation, and keep rejected audio in a `rejected/` folder so a clip that is paid for but over the limit can be inspected or reused instead of lost.
+
 ---
 
 ## Open questions and measurements

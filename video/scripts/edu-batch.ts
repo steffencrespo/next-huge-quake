@@ -34,6 +34,7 @@ import { VERSUS } from '../src/edu/ep08.js';
 import { AFTERSHOCKS } from '../src/edu/ep09.js';
 import { DEPTH } from '../src/edu/ep05.js';
 import { CALIFORNIA } from '../src/edu/ep06.js';
+import { NEXT_BIG_ONE } from '../src/edu/ep10.js';
 import { HISTORIC, HISTORIC_LIST } from '../src/historic/episodes.js';
 import type { EpisodeMeta } from '../src/edu/episodes.js';
 import { clipKey, normalizeText, openLibrary } from '../src/edu/library.js';
@@ -55,8 +56,8 @@ const paceSuffix = pace ? `-${ pace.name }` : '';
 const pacedDir = join( root, 'out', 'edu', 'paced', pace?.name ?? '' );
 /** October 26, 28 and 30 Shorts (docs/experiments/oct-26-28-30-shorts.md). */
 const OCT = { mag10: MAG10, versus: VERSUS, aftershocks: AFTERSHOCKS };
-const pool = series === 'oct' ? OCT : series === 'myth' ? { california: CALIFORNIA } : series === 'depth' ? { depth: DEPTH } : series === 'historic' ? HISTORIC : EPISODES;
-const episodes: EpisodeMeta[] = episodeArg === 'all' ? ( series === 'oct' ? Object.values( OCT ) : series === 'myth' ? [ CALIFORNIA ] : series === 'depth' ? [ DEPTH ] : series === 'historic' ? HISTORIC_LIST : EPISODE_LIST ) : [ ( pool as Record<string, EpisodeMeta> )[episodeArg] ];
+const pool = series === 'nbo' ? { nextbigone: NEXT_BIG_ONE } : series === 'oct' ? OCT : series === 'myth' ? { california: CALIFORNIA } : series === 'depth' ? { depth: DEPTH } : series === 'historic' ? HISTORIC : EPISODES;
+const episodes: EpisodeMeta[] = episodeArg === 'all' ? ( series === 'nbo' ? [ NEXT_BIG_ONE ] : series === 'oct' ? Object.values( OCT ) : series === 'myth' ? [ CALIFORNIA ] : series === 'depth' ? [ DEPTH ] : series === 'historic' ? HISTORIC_LIST : EPISODE_LIST ) : [ ( pool as Record<string, EpisodeMeta> )[episodeArg] ];
 if ( episodes.some( e => !e ) ) {
   throw new Error( `unknown episode '${episodeArg}'` );
 }
@@ -70,7 +71,7 @@ const needMusic = () => {
   return MUSIC[musicKey as MusicKey];
 };
 const library = openLibrary( join( root, 'assets', 'audio', 'edu', 'library' ) );
-const ledgerFile = join( root, 'out', 'edu', series === 'historic' ? 'credit-ledger-historic.json' : series === 'depth' ? 'credit-ledger-depth.json' : series === 'myth' ? 'credit-ledger-myth.json' : series === 'oct' ? 'credit-ledger-oct.json' : 'credit-ledger.json' );
+const ledgerFile = join( root, 'out', 'edu', series === 'historic' ? 'credit-ledger-historic.json' : series === 'depth' ? 'credit-ledger-depth.json' : series === 'myth' ? 'credit-ledger-myth.json' : series === 'oct' ? 'credit-ledger-oct.json' : series === 'nbo' ? 'credit-ledger-nbo.json' : 'credit-ledger.json' );
 type LedgerEntry = { at: string; episode: string; line: string; key: string; characters: number };
 const readLedger = (): LedgerEntry[] => ( existsSync( ledgerFile ) ? JSON.parse( readFileSync( ledgerFile, 'utf8' ) ) : [] );
 
@@ -204,6 +205,7 @@ const SOURCES: Record<string, string[]> = {
   mag10: [ 'USGS FAQ: Can "MegaQuakes" really happen? Like a magnitude 10 or larger? (largest recorded earthquake, magnitude 9.5 in Chile in 1960; longer faults can host larger earthquakes; no known fault is long enough for a magnitude 10. The 1960 rupture length of about 1,000 km follows published rupture models, e.g. Barrientos and Ward 1990 and Ho et al. 2019, J. Geophys. Res. Solid Earth). https://www.usgs.gov/faqs/can-megaquakes-really-happen-a-magnitude-10-or-larger' ],
   versus: [ 'USGS: Earthquake Magnitude, Energy Release, and Shaking Intensity (each whole magnitude step is about 32 times more energy). https://www.usgs.gov/programs/earthquake-hazards/earthquake-magnitude-energy-release-and-shaking-intensity' ],
   aftershocks: [ 'USGS FAQ: Foreshocks, aftershocks - what\'s the difference? https://www.usgs.gov/faqs/foreshocks-aftershocks-whats-difference', 'USGS FAQ: What is the difference between aftershocks and swarms? https://www.usgs.gov/faqs/what-difference-between-aftershocks-and-swarms' ],
+  nextbigone: [ 'USGS: Earthquake Outlook for the San Francisco Bay Region 2014-2043 (Fact Sheet 2016-3020; 72% chance of at least one M6.7+ earthquake in 2014-2043, whole regional fault system). https://pubs.usgs.gov/publication/fs20163020', 'USGS: Earthquake Probabilities and Hazards in the U.S. Pacific Northwest (Fact Sheet 2025-3050; 10-15% chance of an approximately M9 Cascadia Subduction Zone earthquake in 50 years; last great earthquake January 26, 1700). https://pubs.usgs.gov/publication/fs20253050', 'Map data: Natural Earth (public domain), 1:10m land, coastline and borders, rendered with MapLibre GL JS.' ],
   depth: [ 'USGS depth classes (shallow 0-70 km, intermediate 70-300 km, deep 300-700 km) and the relation of focal depth to surface shaking. https://www.usgs.gov/programs/earthquake-hazards' ],
   sanfrancisco1906: [ 'USGS Earthquake Catalog (ComCat) and USGS 1906 San Francisco earthquake pages. https://earthquake.usgs.gov/earthquakes/events/1906calif/18april/', 'National Park Service (1906 earthquake history).' ]
 };
@@ -212,9 +214,9 @@ function historicCredits( ep: EpisodeMeta ): string[] {
     'Music: ' + needMusic().credit,
     'Narration: ElevenLabs text-to-speech (voice: Daniel).',
     'Sound effects: synthesized for this video.',
-    ...( [ 'depth', 'mag10', 'versus', 'aftershocks' ].includes( ep.id ) ? [] : [ 'Map data: Natural Earth (public domain), 1:50m land and 1:110m land via world-atlas.' ] ),
+    ...( [ 'depth', 'mag10', 'versus', 'aftershocks', 'nextbigone' ].includes( ep.id ) ? [] : [ 'Map data: Natural Earth (public domain), 1:50m land and 1:110m land via world-atlas.' ] ),
     ...( SOURCES[ep.id] ?? [] ).map( x => 'Source: ' + x ),
-    ep.id === 'mag10' ? 'The fault-length bars are schematic illustrations with no stated lengths for the magnitude 10 fault; not data or footage.' : ep.id === 'versus' ? 'The dot grid is an illustration of the energy ratio (about 5,600 to 1, 10^(1.5 x 2.5)), not data or footage. The ratio is approximate: other USGS energy formulas give a somewhat smaller value.' : ep.id === 'aftershocks' ? 'The seismogram, fault map, decay chart, building and aftershock maps are schematic illustrations, not real data or footage.' : ep.id === 'california' ? 'The fault trace, plate arrows, the accelerated Los Angeles move and the strike-slip diagram are schematic illustrations, not to scale, not data or footage.' : ep.id === 'depth' ? 'Cross-sections, wave rings and the city are schematic illustrations, not to scale, not data or footage (the depth ruler is to scale).' : 'Maps, wave routes and arcs, fault traces, cross-sections, skyline and fire graphics are illustrations, not data or archival footage.',
+    ep.id === 'nextbigone' ? 'The map traces, rings and labels are schematic illustrations, not survey data or footage. The Bay Area and Cascadia probabilities cover different faults, magnitudes and time windows and are not comparable; no joint probability exists, and the question of both regions is hypothetical, not a forecast.' : ep.id === 'mag10' ? 'The fault-length bars are schematic illustrations with no stated lengths for the magnitude 10 fault; not data or footage.' : ep.id === 'versus' ? 'The dot grid is an illustration of the energy ratio (about 5,600 to 1, 10^(1.5 x 2.5)), not data or footage. The ratio is approximate: other USGS energy formulas give a somewhat smaller value.' : ep.id === 'aftershocks' ? 'The seismogram, fault map, decay chart, building and aftershock maps are schematic illustrations, not real data or footage.' : ep.id === 'california' ? 'The fault trace, plate arrows, the accelerated Los Angeles move and the strike-slip diagram are schematic illustrations, not to scale, not data or footage.' : ep.id === 'depth' ? 'Cross-sections, wave rings and the city are schematic illustrations, not to scale, not data or footage (the depth ruler is to scale).' : 'Maps, wave routes and arcs, fault traces, cross-sections, skyline and fire graphics are illustrations, not data or archival footage.',
     '',
     'Production Technology',
     'Automated news and video production powered by Output.ai',
@@ -263,7 +265,7 @@ function render( ep: EpisodeMeta, withAudio: boolean ) {
       throw new Error( `render failed (exit ${result.status})` );
     }
     if ( withAudio ) {
-      writeFileSync( out.replace( /\.mp4$/, '.credits.txt' ), ( series === 'historic' || series === 'depth' || series === 'myth' || series === 'oct' ? historicCredits( ep ) : [ 'Music: ' + needMusic().credit, 'Narration: ElevenLabs text-to-speech.', 'Sound effects: synthesized for this video.', '', 'Production Technology', 'Automated news and video production powered by Output.ai', 'https://output.ai', '' ] ).join( '\n' ) );
+      writeFileSync( out.replace( /\.mp4$/, '.credits.txt' ), ( series === 'historic' || series === 'depth' || series === 'myth' || series === 'oct' || series === 'nbo' ? historicCredits( ep ) : [ 'Music: ' + needMusic().credit, 'Narration: ElevenLabs text-to-speech.', 'Sound effects: synthesized for this video.', '', 'Production Technology', 'Automated news and video production powered by Output.ai', 'https://output.ai', '' ] ).join( '\n' ) );
     }
     console.log( `wrote ${out}` );
   } finally {
