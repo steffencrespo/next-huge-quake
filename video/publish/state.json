@@ -231,5 +231,22 @@
     "updatedAt": "2026-10-24T04:36:38.181Z",
     "videoId": "h0GyKt2AaHA",
     "playlistItemId": "UExQc1I3NGxJaFdnSS5GNjNDRDREMDQxOThCMDQ2"
+  },
+  "chile1960-cinematic": {
+    "status": "published",
+    "contentHash": "97eccb41cf51d946588881ece0aad110351ebf1e59961bf39892489a343e2c92",
+    "fileSize": 15666496,
+    "updatedAt": "2026-10-27T21:07:46.982Z",
+    "videoId": "CT64teDqfPk",
+    "playlistItemId": "UExLbm9mZkgyb0g1cy41MzJCQjBCNDIyRkJDN0VD"
+  },
+  "japan2011-cinematic": {
+    "status": "scheduled",
+    "contentHash": "c4eb67d6a78d648e9c889bd914c7976d769f045a0c59e5456fbd8ad274062612",
+    "fileSize": 27972482,
+    "updatedAt": "2026-10-27T21:52:44.909Z",
+    "videoId": "00dtV-VQ0Z0",
+    "playlistItemId": "UExLbm9mZkgyb0g1cy5DQUNERDQ2NkIzRUQxNTY1",
+    "publishAt": "2026-11-01T21:00:00Z"
   }
 }

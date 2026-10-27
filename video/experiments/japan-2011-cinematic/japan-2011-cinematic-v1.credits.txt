@@ -1,0 +1,13 @@
+Music: "Deified" by The Grey Room / Density & Time.
+Source: YouTube Audio Library.
+Narration: ElevenLabs text-to-speech (voice: Daniel).
+Sound effects: synthesized for this video.
+Map data: Natural Earth (public domain), 1:50m land and 1:110m land via world-atlas.
+Source: USGS Earthquake Catalog (ComCat) and event page: 2011 Great Tohoku Earthquake, M9.1 Mww. https://earthquake.usgs.gov/earthquakes/eventpage/official20110311054624120_30
+Source: Japan Meteorological Agency: tsunami warning improvements after 2011. https://www.data.jma.go.jp/eqev/data/en/tsunami/LessonsLearned_Improvements_brochure.pdf
+Maps, wave routes and arcs, fault traces, cross-sections, skyline and fire graphics are illustrations, not data or archival footage.
+The six photorealistic scenes are AI-generated illustrations (images made with Nano Banana 2 Lite through ElevenLabs). They are not archival photographs or footage, and the buildings, signs and places shown are not documented historical details.
+
+Production Technology
+Automated news and video production powered by Output.ai
+https://output.ai

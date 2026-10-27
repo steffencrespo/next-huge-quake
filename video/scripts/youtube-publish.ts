@@ -115,7 +115,7 @@ async function upload() {
   let rec = loadState()[ m.id ];
   if ( rec && rec.fileSize !== bytes.length ) throw new Error( 'File size differs from the interrupted upload. Aborting.' );
   if ( !rec?.videoId ) {
-    const meta = { title: m.approved.title, description: composeDescription( m ), tags: m.approved.tags, categoryId: m.categoryId, language: m.language, madeForKids: m.madeForKids };
+    const meta = { title: m.approved.title, description: composeDescription( m ), tags: m.approved.tags, categoryId: m.categoryId, language: m.language, madeForKids: m.madeForKids, containsSyntheticMedia: m.containsSyntheticMedia };
     // Persist the session URI BEFORE sending bytes: whatever happens next, a rerun resumes this session instead of creating a second video.
     const resuming = rec?.status === 'uploading';
     const uploadUrl = rec?.uploadUrl ?? await yt.startResumableUpload( meta, bytes.length, at );
@@ -163,7 +163,7 @@ async function inspect() {
   const inPlaylist = ( await yt.findPlaylistItems( m.playlistId, v.id, at ) ).length;
   const rows: [ string, unknown, unknown ][] = [
     [ 'title', v.title, m.approved.title ], [ 'description', v.description.trim(), composeDescription( m ) ], [ 'tags (order-insensitive)', [ ...v.tags ].sort().join( '|' ), [ ...m.approved.tags ].sort().join( '|' ) ],
-    [ 'category', v.categoryId, m.categoryId ], [ 'language', v.language, m.language ], [ 'madeForKids', v.madeForKids, m.madeForKids ],
+    [ 'category', v.categoryId, m.categoryId ], [ 'language', v.language, m.language ], [ 'madeForKids', v.madeForKids, m.madeForKids ], ...( m.containsSyntheticMedia === undefined ? [] : [ [ 'containsSyntheticMedia', v.containsSyntheticMedia, m.containsSyntheticMedia ] as [ string, unknown, unknown ] ] ),
     [ 'playlist memberships', inPlaylist, 1 ],
   ];
   console.log( `https://youtu.be/${ v.id }   privacy: ${ v.privacy }   publishAt: ${ v.publishAt ?? 'none' }   upload: ${ v.uploadStatus }   duration: ${ v.durationIso }` );
@@ -181,7 +181,7 @@ async function schedule() {
   const videoId = loadState()[ m.id ].videoId!;
   console.log( `${ confirm ? 'SCHEDULING' : 'DRY RUN (add --confirm to schedule)' }: ${ videoId } (${ m.approved.title }) goes public at ${ m.publishAtLocal } ${ EDITORIAL_TZ } = ${ when }` );
   if ( !confirm ) return;
-  const v = await yt.scheduleVideo( videoId, when, at );
+  const v = await yt.scheduleVideo( videoId, when, at, m.containsSyntheticMedia );
   if ( v.privacy !== 'private' || !v.publishAt || new Date( v.publishAt ).getTime() !== new Date( when ).getTime() ) throw new Error( 'Schedule response does not match. Run inspect.' );
   saveRecord( m.id, { status: 'scheduled', publishAt: when } );
   console.log( 'Scheduled and verified.' );
@@ -215,7 +215,7 @@ async function publishNowCommand() {
   assertAuthorizedChannel( await yt.getMyChannels( at ) );
   console.log( `${ confirm ? 'PUBLISHING NOW' : 'DRY RUN (add --confirm to publish)' }: ${ rec.videoId } (${ m.approved.title }) private -> public` );
   if ( !confirm ) return;
-  const v = await yt.publishNow( rec.videoId!, at );
+  const v = await yt.publishNow( rec.videoId!, at, m.containsSyntheticMedia );
   if ( v.privacy !== 'public' ) throw new Error( 'Publish response does not show public. Run inspect.' );
   saveRecord( m.id, { status: 'published' } );
   console.log( `Public: https://youtu.be/${ rec.videoId }` );

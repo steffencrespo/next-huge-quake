@@ -33,6 +33,8 @@ export interface Manifest {
   language: string;
   /** Audience declaration: always an explicit boolean (YouTube "made for kids"). */
   madeForKids: boolean;
+  /** YouTube "altered or synthetic content" disclosure. Absent = not declared (every earlier manifest). */
+  containsSyntheticMedia?: boolean;
   playlistId: string;
   /** Editorial calendar slot, America/Sao_Paulo wall-clock "YYYY-MM-DDTHH:mm". Optional until scheduling. */
   publishAtLocal?: string;
@@ -66,6 +68,7 @@ export const composeDescription = ( m: Manifest ) => `${ m.approved.description.
 export function contentHash( m: Manifest ): string {
   return createHash( 'sha256' ).update( JSON.stringify( [
     m.approved.title, composeDescription( m ), m.approved.tags, m.categoryId, m.language, m.madeForKids, m.playlistId,
+    ...( m.containsSyntheticMedia === undefined ? [] : [ m.containsSyntheticMedia ] ),
   ] ) ).digest( 'hex' );
 }
 

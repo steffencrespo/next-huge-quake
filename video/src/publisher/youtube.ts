@@ -38,12 +38,12 @@ export async function listMyPlaylists( accessToken: string ): Promise<Playlist[]
 
 export interface VideoInfo {
   id: string; title: string; description: string; tags: string[]; categoryId?: string; language?: string;
-  privacy?: string; publishAt?: string; madeForKids?: boolean; uploadStatus?: string; durationIso?: string;
+  privacy?: string; publishAt?: string; madeForKids?: boolean; containsSyntheticMedia?: boolean; uploadStatus?: string; durationIso?: string;
 }
 const toVideoInfo = ( v: any ): VideoInfo => ( {
   id: v.id, title: v.snippet?.title, description: v.snippet?.description ?? '', tags: v.snippet?.tags ?? [], categoryId: v.snippet?.categoryId,
   language: v.snippet?.defaultAudioLanguage ?? v.snippet?.defaultLanguage, privacy: v.status?.privacyStatus, publishAt: v.status?.publishAt,
-  madeForKids: v.status?.selfDeclaredMadeForKids, uploadStatus: v.status?.uploadStatus, durationIso: v.contentDetails?.duration,
+  madeForKids: v.status?.selfDeclaredMadeForKids, containsSyntheticMedia: v.status?.containsSyntheticMedia, uploadStatus: v.status?.uploadStatus, durationIso: v.contentDetails?.duration,
 } );
 
 export async function getVideos( ids: string[], accessToken: string ): Promise<VideoInfo[]> {
@@ -84,12 +84,12 @@ export async function findPlaylistItems( playlistId: string, videoId: string, ac
 // ---- M2 writes (each is called only behind the safety checks in the CLI) -----------------------------------------------
 
 export interface UploadMetadata {
-  title: string; description: string; tags: string[]; categoryId: string; language: string; madeForKids: boolean;
+  title: string; description: string; tags: string[]; categoryId: string; language: string; madeForKids: boolean; containsSyntheticMedia?: boolean;
 }
 /** Uploads are always private. A video becomes public only by a scheduled publishAt or the explicit one-video publishNow below. */
 const insertBody = ( m: UploadMetadata ) => ( {
   snippet: { title: m.title, description: m.description, tags: m.tags, categoryId: m.categoryId, defaultLanguage: m.language, defaultAudioLanguage: m.language },
-  status: { privacyStatus: 'private', selfDeclaredMadeForKids: m.madeForKids, embeddable: true },
+  status: { privacyStatus: 'private', selfDeclaredMadeForKids: m.madeForKids, embeddable: true, ...( m.containsSyntheticMedia === undefined ? {} : { containsSyntheticMedia: m.containsSyntheticMedia } ) },
 } );
 
 /** Opens a resumable session; returns the session URI (valid ~1 week). No bytes are sent yet. */
@@ -140,13 +140,14 @@ export async function createPlaylist( title: string, description: string, access
 }
 
 /** Makes one private, unscheduled video public immediately (one-video exception to the scheduled cadence). Other status fields are carried over. */
-export async function publishNow( videoId: string, accessToken: string ): Promise<VideoInfo> {
+export async function publishNow( videoId: string, accessToken: string, containsSyntheticMedia?: boolean ): Promise<VideoInfo> {
   const current = await get( 'videos', { part: 'status', id: videoId }, accessToken );
   const status = current.items?.[ 0 ]?.status;
   if ( !status ) throw new Error( 'Video not found when publishing.' );
   if ( status.privacyStatus !== 'private' || status.publishAt ) throw new Error( `Refusing to publish: video is ${ status.privacyStatus }${ status.publishAt ? ' with a schedule' : '' }, expected private and unscheduled.` );
   const body = await call( 'PUT', 'videos', { part: 'status' }, accessToken, { id: videoId, status: {
     privacyStatus: 'public', selfDeclaredMadeForKids: status.selfDeclaredMadeForKids, embeddable: status.embeddable, license: status.license, publicStatsViewable: status.publicStatsViewable,
+    ...( ( containsSyntheticMedia ?? status.containsSyntheticMedia ) === undefined ? {} : { containsSyntheticMedia: containsSyntheticMedia ?? status.containsSyntheticMedia } ),
   } } );
   return toVideoInfo( { id: videoId, status: body.status } );
 }
@@ -167,13 +168,14 @@ export async function updateVideoText( videoId: string, title: string, descripti
 }
 
 /** Sets publishAt on an existing private video. status is replaced wholesale by videos.update, so the current values are carried over. */
-export async function scheduleVideo( videoId: string, publishAtIso: string, accessToken: string ): Promise<VideoInfo> {
+export async function scheduleVideo( videoId: string, publishAtIso: string, accessToken: string, containsSyntheticMedia?: boolean ): Promise<VideoInfo> {
   const current = await get( 'videos', { part: 'status', id: videoId }, accessToken );
   const status = current.items?.[ 0 ]?.status;
   if ( !status ) throw new Error( 'Video not found when scheduling.' );
   if ( status.privacyStatus !== 'private' ) throw new Error( `Refusing to schedule: video is ${ status.privacyStatus }, expected private.` );
   const body = await call( 'PUT', 'videos', { part: 'status' }, accessToken, { id: videoId, status: {
     privacyStatus: 'private', publishAt: publishAtIso, selfDeclaredMadeForKids: status.selfDeclaredMadeForKids, embeddable: status.embeddable, license: status.license, publicStatsViewable: status.publicStatsViewable,
+    ...( ( containsSyntheticMedia ?? status.containsSyntheticMedia ) === undefined ? {} : { containsSyntheticMedia: containsSyntheticMedia ?? status.containsSyntheticMedia } ),
   } } );
   return toVideoInfo( { id: videoId, status: body.status } );
 }

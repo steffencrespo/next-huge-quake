@@ -1,0 +1,58 @@
+{
+  "id": "japan2011-cinematic",
+  "file": "experiments/japan-2011-cinematic/out/japan-2011-cinematic-v1.mp4",
+  "creditsFile": "experiments/japan-2011-cinematic/japan-2011-cinematic-v1.credits.txt",
+  "generated": {
+    "title": "Japan 2011: The M9.1 Earthquake and Devastating Tsunami | Cinematic #shorts",
+    "description": "On March 11, 2011, a magnitude 9.1 earthquake struck off the northeast coast of Japan, triggering a devastating tsunami.\n\nDiscover how the seafloor moved, why the tsunami became so destructive, and how the disaster changed Japan's tsunami warning systems.\n\nFeaturing cinematic AI-generated historical illustrations, scientific visualizations, and factual storytelling.\n\n#Japan2011 #Tsunami #Earthquake #NextHugeQuake #shorts",
+    "tags": [
+      "earthquake",
+      "earthquakes",
+      "2011 Tohoku earthquake",
+      "Japan earthquake",
+      "Japan 2011",
+      "tsunami",
+      "Fukushima",
+      "plate tectonics",
+      "Pacific plate",
+      "earthquake science",
+      "historic earthquakes",
+      "AI-generated illustrations",
+      "shorts"
+    ]
+  },
+  "approved": {
+    "title": "Japan 2011: The M9.1 Earthquake and Devastating Tsunami | Cinematic #shorts",
+    "description": "On March 11, 2011, a magnitude 9.1 earthquake struck off the northeast coast of Japan, triggering a devastating tsunami.\n\nDiscover how the seafloor moved, why the tsunami became so destructive, and how the disaster changed Japan's tsunami warning systems.\n\nFeaturing cinematic AI-generated historical illustrations, scientific visualizations, and factual storytelling.\n\n#Japan2011 #Tsunami #Earthquake #NextHugeQuake #shorts",
+    "tags": [
+      "earthquake",
+      "earthquakes",
+      "2011 Tohoku earthquake",
+      "Japan earthquake",
+      "Japan 2011",
+      "tsunami",
+      "Fukushima",
+      "plate tectonics",
+      "Pacific plate",
+      "earthquake science",
+      "historic earthquakes",
+      "AI-generated illustrations",
+      "shorts"
+    ]
+  },
+  "categoryId": "27",
+  "language": "en",
+  "madeForKids": false,
+  "containsSyntheticMedia": true,
+  "playlistId": "PLKnoffH2oH5s",
+  "publishAtLocal": "2026-11-01T18:00",
+  "scheduleException": {
+    "reason": "Separately approved Experiment-Driven Publishing release (approved 2026-10-28): a Sunday slot outside the Tue/Thu/Sat cadence. The 24 h lead time is kept.",
+    "minLeadMinutes": 1440
+  },
+  "approval": {
+    "status": "approved",
+    "approvedAt": "2026-10-27T21:50:42.444Z",
+    "contentHash": "c4eb67d6a78d648e9c889bd914c7976d769f045a0c59e5456fbd8ad274062612"
+  }
+}
