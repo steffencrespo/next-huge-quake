@@ -181,7 +181,7 @@ async function schedule() {
   const videoId = loadState()[ m.id ].videoId!;
   console.log( `${ confirm ? 'SCHEDULING' : 'DRY RUN (add --confirm to schedule)' }: ${ videoId } (${ m.approved.title }) goes public at ${ m.publishAtLocal } ${ EDITORIAL_TZ } = ${ when }` );
   if ( !confirm ) return;
-  const v = await yt.scheduleVideo( videoId, when, at );
+  const v = await yt.scheduleVideo( videoId, when, at, m.containsSyntheticMedia );
   if ( v.privacy !== 'private' || !v.publishAt || new Date( v.publishAt ).getTime() !== new Date( when ).getTime() ) throw new Error( 'Schedule response does not match. Run inspect.' );
   saveRecord( m.id, { status: 'scheduled', publishAt: when } );
   console.log( 'Scheduled and verified.' );

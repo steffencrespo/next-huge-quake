@@ -168,14 +168,14 @@ export async function updateVideoText( videoId: string, title: string, descripti
 }
 
 /** Sets publishAt on an existing private video. status is replaced wholesale by videos.update, so the current values are carried over. */
-export async function scheduleVideo( videoId: string, publishAtIso: string, accessToken: string ): Promise<VideoInfo> {
+export async function scheduleVideo( videoId: string, publishAtIso: string, accessToken: string, containsSyntheticMedia?: boolean ): Promise<VideoInfo> {
   const current = await get( 'videos', { part: 'status', id: videoId }, accessToken );
   const status = current.items?.[ 0 ]?.status;
   if ( !status ) throw new Error( 'Video not found when scheduling.' );
   if ( status.privacyStatus !== 'private' ) throw new Error( `Refusing to schedule: video is ${ status.privacyStatus }, expected private.` );
   const body = await call( 'PUT', 'videos', { part: 'status' }, accessToken, { id: videoId, status: {
     privacyStatus: 'private', publishAt: publishAtIso, selfDeclaredMadeForKids: status.selfDeclaredMadeForKids, embeddable: status.embeddable, license: status.license, publicStatsViewable: status.publicStatsViewable,
-    ...( status.containsSyntheticMedia === undefined ? {} : { containsSyntheticMedia: status.containsSyntheticMedia } ),
+    ...( ( containsSyntheticMedia ?? status.containsSyntheticMedia ) === undefined ? {} : { containsSyntheticMedia: containsSyntheticMedia ?? status.containsSyntheticMedia } ),
   } } );
   return toVideoInfo( { id: videoId, status: body.status } );
 }
