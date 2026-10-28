@@ -1,0 +1,186 @@
+{
+  "clips": [
+    {
+      "id": "h0",
+      "file": "audio/edu/11a6ef0c2ff60f99-fast-beats.mp3",
+      "start": 0.25,
+      "duration": 2.13,
+      "gain": 1.06
+    },
+    {
+      "id": "h1",
+      "file": "audio/edu/9dd067fe85925652-fast-beats.mp3",
+      "start": 2.63,
+      "duration": 1.416,
+      "gain": 0.93
+    },
+    {
+      "id": "s0",
+      "file": "audio/edu/6e6b99eec5581a55-fast-beats.mp3",
+      "start": 4.086,
+      "duration": 3.517,
+      "gain": 1
+    },
+    {
+      "id": "s1",
+      "file": "audio/edu/f8846196b703d39f-fast-beats.mp3",
+      "start": 7.643,
+      "duration": 1.831,
+      "gain": 0.98
+    },
+    {
+      "id": "s2",
+      "file": "audio/edu/260bd7f1c3bcddef-fast-beats.mp3",
+      "start": 9.514,
+      "duration": 4.092,
+      "gain": 1.09
+    },
+    {
+      "id": "s3",
+      "file": "audio/edu/97f9b337da6238ab-fast-beats.mp3",
+      "start": 13.646,
+      "duration": 3.317,
+      "gain": 1.08
+    },
+    {
+      "id": "w0",
+      "file": "audio/edu/6deb4e8868637e8d-fast-beats.mp3",
+      "start": 17.003,
+      "duration": 4.309,
+      "gain": 0.91
+    },
+    {
+      "id": "w1",
+      "file": "audio/edu/32d2d60b5ae9d294-fast-beats.mp3",
+      "start": 21.352,
+      "duration": 2.939,
+      "gain": 0.88
+    },
+    {
+      "id": "e0",
+      "file": "audio/edu/72637ceea45d0c04-fast-beats.mp3",
+      "start": 24.331,
+      "duration": 3.618,
+      "gain": 1.04
+    },
+    {
+      "id": "e1",
+      "file": "audio/edu/34c99c4e71504565-fast-beats.mp3",
+      "start": 28.399,
+      "duration": 2.15,
+      "gain": 1.13
+    }
+  ],
+  "captions": [
+    {
+      "text": "Five powerful earthquakes.",
+      "start": 0.25,
+      "end": 1.48
+    },
+    {
+      "text": "Nine days.",
+      "start": 1.581,
+      "end": 2.38
+    },
+    {
+      "text": "And Vanuatu is still shaking.",
+      "start": 2.63,
+      "end": 4.046
+    },
+    {
+      "text": "It began October nineteenth,",
+      "start": 4.086,
+      "end": 5.885
+    },
+    {
+      "text": "with a magnitude six point zero.",
+      "start": 5.885,
+      "end": 7.603
+    },
+    {
+      "text": "A six point three followed the",
+      "start": 7.643,
+      "end": 8.998
+    },
+    {
+      "text": "next day.",
+      "start": 8.998,
+      "end": 9.474
+    },
+    {
+      "text": "On October twenty-fourth,",
+      "start": 9.514,
+      "end": 10.794
+    },
+    {
+      "text": "a six point nine,",
+      "start": 10.794,
+      "end": 11.83
+    },
+    {
+      "text": "then a six point three minutes later.",
+      "start": 11.83,
+      "end": 13.606
+    },
+    {
+      "text": "And on October twenty-eighth,",
+      "start": 13.646,
+      "end": 15.024
+    },
+    {
+      "text": "the latest: another six point zero.",
+      "start": 15.024,
+      "end": 16.963
+    },
+    {
+      "text": "Why so much?",
+      "start": 17.003,
+      "end": 17.844
+    },
+    {
+      "text": "Vanuatu sits where the Australian plate",
+      "start": 17.925,
+      "end": 19.839
+    },
+    {
+      "text": "dives beneath the Pacific plate.",
+      "start": 19.839,
+      "end": 21.312
+    },
+    {
+      "text": "That slow collision loads faults with stress",
+      "start": 21.352,
+      "end": 23.524
+    },
+    {
+      "text": "until they slip.",
+      "start": 23.524,
+      "end": 24.291
+    },
+    {
+      "text": "That same collision built Vanuatu's chain of",
+      "start": 24.331,
+      "end": 26.937
+    },
+    {
+      "text": "volcanic islands.",
+      "start": 26.937,
+      "end": 27.949
+    },
+    {
+      "text": "This one patch had five in",
+      "start": 28.399,
+      "end": 29.889
+    },
+    {
+      "text": "nine days.",
+      "start": 29.889,
+      "end": 30.549
+    }
+  ],
+  "narrationStart": 0.25,
+  "narrationEnd": 30.549,
+  "musicFile": "audio/ytal-deified-the-grey-room.mp3",
+  "musicCredit": "\"Deified\" by The Grey Room / Density & Time.\nSource: YouTube Audio Library.",
+  "pacing": "fast-beats"
+}

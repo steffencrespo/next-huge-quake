@@ -1,0 +1,104 @@
+{
+  "source": "USGS ComCat fdsnws/event/1/query",
+  "fetchedAt": "2026-10-28T22:47:45.734Z",
+  "sequence": {
+    "definition": "M6.0+ within 100 km of (-14.0558, 165.5455), 2026-10-19 to 2026-10-28 UTC",
+    "events": [
+      {
+        "id": "us6000u3bc",
+        "time": "2026-10-19T07:49:04.900Z",
+        "mag": 6,
+        "magType": "mww",
+        "place": "186 km NW of Port-Olry, Vanuatu",
+        "lon": 165.6761,
+        "lat": -14.0533,
+        "depth": 10,
+        "tsunami": 0,
+        "alert": "green",
+        "status": "reviewed"
+      },
+      {
+        "id": "us6000u3jl",
+        "time": "2026-10-20T04:20:38.737Z",
+        "mag": 6.3,
+        "magType": "mww",
+        "place": "197 km NW of Port-Olry, Vanuatu",
+        "lon": 165.5892,
+        "lat": -13.9906,
+        "depth": 16,
+        "tsunami": 1,
+        "alert": "green",
+        "status": "reviewed"
+      },
+      {
+        "id": "us6000u4j2",
+        "time": "2026-10-24T02:31:28.641Z",
+        "mag": 6.9,
+        "magType": "mww",
+        "place": "197 km WNW of Port-Olry, Vanuatu",
+        "lon": 165.5455,
+        "lat": -14.0558,
+        "depth": 10,
+        "tsunami": 1,
+        "alert": "green",
+        "status": "reviewed"
+      },
+      {
+        "id": "us6000u4jb",
+        "time": "2026-10-24T02:35:57.362Z",
+        "mag": 6.3,
+        "magType": "mb",
+        "place": "170 km NW of Port-Olry, Vanuatu",
+        "lon": 165.8666,
+        "lat": -14.0424,
+        "depth": 10,
+        "tsunami": 0,
+        "alert": "green",
+        "status": "reviewed"
+      },
+      {
+        "id": "us7000ttlm",
+        "time": "2026-10-28T02:21:45.806Z",
+        "mag": 6,
+        "magType": "mww",
+        "place": "214 km NW of Port-Olry, Vanuatu",
+        "lon": 165.446,
+        "lat": -13.9312,
+        "depth": 10,
+        "tsunami": 0,
+        "alert": "green",
+        "status": "reviewed"
+      }
+    ]
+  },
+  "annualRate": {
+    "definition": "M6.0+ earthquakes in the box lat -20.5..-12.5, lon 165..171 (the Vanuatu arc, including the cluster), 1986-01-01 to 2025-12-31, duplicates within 120 s merged",
+    "box": [
+      -20.5,
+      -12.5,
+      165,
+      171
+    ],
+    "events": 256,
+    "years": 40,
+    "perYear": 6.4,
+    "perYearOtherBoxes": {
+      "-20.5,-13,165,171": 6.2,
+      "-21,-12,164,172": 7.2,
+      "-20.5,-12.5,164.5,170.5": 6.4
+    },
+    "narrated": false
+  },
+  "rejectedClaim": {
+    "claim": "no M6+ in this patch for four decades",
+    "priorWithin100kmSince1964": [
+      "1964-01-22 M6.3",
+      "1985-11-28 M7",
+      "1985-11-28 M7",
+      "1985-12-16 M6.6",
+      "1985-12-21 M6.3",
+      "1988-05-16 M6.1",
+      "2009-10-08 M6.8"
+    ]
+  }
+}
