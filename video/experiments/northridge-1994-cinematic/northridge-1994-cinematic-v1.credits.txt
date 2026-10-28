@@ -1,0 +1,15 @@
+Music: "Deified" by The Grey Room / Density & Time.
+Source: YouTube Audio Library.
+Narration: ElevenLabs text-to-speech (voice: Daniel).
+Sound effects: synthesized for this video.
+Map data: Natural Earth (public domain), 1:50m land and 1:110m land via world-atlas.
+Source: USGS Earthquake Catalog (ComCat) event ci3144585: 1994 Northridge earthquake, Mw 6.7. https://earthquake.usgs.gov/earthquakes/eventpage/ci3144585
+Source: USGS Open-File Report 96-263, The Northridge earthquake main shock (blind thrust fault, rupture depth and direction). https://pubs.usgs.gov/of/1996/ofr-96-0263/mainshk.htm
+Source: USGS, The magnitude 6.7 Northridge, California, earthquake of 17 January 1994 (slip and uplift of the Santa Susana Mountains). https://pubs.usgs.gov/publication/70017610
+Source: USGS Earthquake Science Center, M6.7 January 17, 1994 Northridge, California earthquake (freeway interchange collapse, bridge retrofit program, updated building codes). https://www.usgs.gov/centers/earthquake-science-center/science/m67-january-17-1994-northridge-california-earthquake
+Maps, the San Andreas trace, the fault cross-section (depth to scale, slip and uplift exaggerated), the seismogram and data cards are illustrations, not data or archival footage. Reports of deaths and costs differ between sources, so the video gives only general figures.
+The six photorealistic scenes are AI-generated illustrations (images made with Nano Banana 2 Lite through ElevenLabs). They are not archival photographs or footage, and the buildings, vehicles and places shown are not documented historical details. The fault cutaway is illustrative only.
+
+Production Technology
+Automated news and video production powered by Output.ai
+https://output.ai
