@@ -122,7 +122,8 @@ function plan() {
 async function generate() {
   const spent = () => readLedger().reduce( ( n, e ) => n + e.characters, 0 );
   const todo = episodes.flatMap( ep => ep.script.filter( l => !library.has( identity( l.text ) ) ).map( l => ( { id: `${ep.id}/${l.id}`, text: l.text, characters: normalizeText( l.text ).length } ) ) );
-  preflightLines( todo, MAX_CLIP_SECONDS );
+  // --preflight-limit loosens only the pre-request estimate (12 chars/s is the slowest observed pace); the 9 s limit on the returned audio still applies.
+  preflightLines( todo, Number( flag( 'preflight-limit' ) ?? MAX_CLIP_SECONDS ) );
   for ( const ep of episodes ) {
     for ( const line of ep.script ) {
       const id = identity( line.text );

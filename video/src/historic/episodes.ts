@@ -7,7 +7,7 @@
 import { CTA_LINE, plan } from '../edu/episodes.js';
 import type { EpisodeMeta } from '../edu/episodes.js';
 
-export type HistoricId = 'chile1960' | 'japan2011' | 'sanfrancisco1906';
+export type HistoricId = 'chile1960' | 'japan2011' | 'sanfrancisco1906' | 'northridge1994';
 
 export const HISTORIC: Record<HistoricId, EpisodeMeta> = {
   chile1960: {
@@ -58,6 +58,24 @@ export const HISTORIC: Record<HistoricId, EpisodeMeta> = {
       { id: 'toll', text: 'Early official reports underestimated the death toll, now believed to number in the thousands.' },
       { id: 'reid', text: 'Scientists mapped the broken ground, and Harry Reid explained what they saw.' },
       { id: 'rebound', text: 'Rock bends, stores energy, then snaps back. We still call it elastic rebound.' },
+      CTA_LINE
+    ] )
+  },
+  northridge1994: {
+    id: 'northridge1994', number: 4, compositionId: 'HistoricNorthridge1994', title: 'Northridge 1994: The M6.7 Earthquake That Shattered Los Angeles', baseSeconds: 58,
+    script: plan( [
+      { id: 'hook', text: 'Freeway overpasses collapsed, and the earthquake was right beneath Los Angeles.' },
+      { id: 'date', text: 'January seventeenth, nineteen ninety-four, just before four thirty-one in the morning.' },
+      { id: 'mag', text: 'Magnitude six point seven.', gap: 0.45 },
+      { id: 'notsa', text: 'It was not the San Andreas Fault.', gap: 0.5 },
+      { id: 'blind', text: 'It was a blind thrust fault, hidden about eighteen kilometers beneath the San Fernando Valley.' },
+      { id: 'rupture', text: 'Rock slid up and over along the fault, and the Santa Susana Mountains rose by as much as seventy centimeters.' },
+      { id: 'shake', text: 'For ten to twenty seconds, the shaking was violent.' },
+      { id: 'damage', text: 'Apartment buildings, parking structures and freeway bridges gave way.' },
+      { id: 'toll', text: 'Dozens of people died, thousands were hurt, and the damage reached tens of billions of dollars.' },
+      { id: 'old', text: 'Many of the collapsed structures were older designs, built before modern seismic rules.' },
+      { id: 'change', text: 'California began a major bridge retrofit program, and building codes were updated.' },
+      { id: 'lesson', text: 'The lesson: a dangerous fault can hide beneath a city, so strengthen buildings before the shaking.' },
       CTA_LINE
     ] )
   }

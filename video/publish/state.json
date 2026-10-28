@@ -248,5 +248,14 @@
     "videoId": "00dtV-VQ0Z0",
     "playlistItemId": "UExLbm9mZkgyb0g1cy5DQUNERDQ2NkIzRUQxNTY1",
     "publishAt": "2026-11-01T21:00:00Z"
+  },
+  "northridge1994-cinematic": {
+    "status": "scheduled",
+    "contentHash": "289cecb9cd9a41cfc1dfe2a86805caabf896130ab7b1688b10d0bd76dcf3af92",
+    "fileSize": 24677501,
+    "updatedAt": "2026-10-28T17:17:38.373Z",
+    "videoId": "Od1jGLN9NDI",
+    "publishAt": "2026-11-05T21:00:00Z",
+    "playlistItemId": "UExLbm9mZkgyb0g1cy45NDk1REZENzhEMzU5MDQz"
   }
 }

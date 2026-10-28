@@ -28,6 +28,7 @@ import { KidsWhyEarthShakes, calculateKidsMetadata, kidsShortSchema } from './ki
 import { KidsDropCoverHold, calculateSafetyMetadata } from './kids/SafetyShort.js';
 import { HistoricChile1960 } from './historic/chile1960.js';
 import { HistoricJapan2011 } from './historic/japan2011.js';
+import { HistoricNorthridge1994 } from './historic/northridge1994.js';
 import { HistoricSanFrancisco1906 } from './historic/sanfrancisco1906.js';
 import { HISTORIC } from './historic/episodes.js';
 import { MapSpike } from './spike/MapSpike.js';
@@ -88,7 +89,8 @@ export const Root: React.FC = () => (
     <Composition id="KidsDropCoverHold" component={KidsDropCoverHold} schema={kidsShortSchema} calculateMetadata={calculateSafetyMetadata} width={1080} height={1920} fps={30} durationInFrames={1260} defaultProps={{}} />
     <Composition id="HistoricChile1960" component={HistoricChile1960} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( HISTORIC.chile1960 )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="HistoricJapan2011" component={HistoricJapan2011} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( HISTORIC.japan2011 )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
-    <Composition id="HistoricSanFrancisco1906" component={HistoricSanFrancisco1906} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( HISTORIC.sanfrancisco1906 )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
+    <Composition id="HistoricNorthridge1994" component={HistoricNorthridge1994} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( HISTORIC.northridge1994 )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
+    <Composition id="HistoricSanFrancisco1906"component={HistoricSanFrancisco1906} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( HISTORIC.sanfrancisco1906 )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Still
       id="DesignBoard"
       component={DesignBoard}
