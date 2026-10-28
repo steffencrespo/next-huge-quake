@@ -266,5 +266,13 @@
     "videoId": "4PibWuVoiIo",
     "publishAt": "2026-11-07T21:00:00Z",
     "playlistItemId": "UExLbm9mZkgyb0g1cy5GNjNDRDREMDQxOThCMDQ2"
+  },
+  "vanuatu-m60-us7000ttlm": {
+    "status": "published",
+    "contentHash": "195adc01f6950758ccc92b89df9016908543788a1671b296da79cd2e9fac9dae",
+    "fileSize": 10638212,
+    "updatedAt": "2026-10-28T23:13:13.442Z",
+    "videoId": "5P7KuR1AZF4",
+    "playlistItemId": "UExQc1I3NGxJaFdnSS40NzZCMERDMjVEN0RFRThB"
   }
 }

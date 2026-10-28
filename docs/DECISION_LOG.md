@@ -56,6 +56,7 @@ Dates are given only where the repository or PR history establishes them. "Not r
 | Descriptions include the Output.ai "Production Technology" credit | Approved | 2026-10-18 | PR #16 |
 | Music only from the YouTube Audio Library list in `video/src/audio/music.ts`; the Pixabay "Legendary" track is retired | Approved | 2026-10-19 (PR #27) | After a Content ID block |
 | Generated visuals and external assets need recorded provenance, licensing and appropriate disclosure | Proposed policy | n/a | No such assets are used yet; this applies before Visual Asset Enrichment starts |
+| AI-generated imagery: no prominent on-screen "AI-generated" label over cinematic images. Disclose in YouTube metadata (`containsSyntheticMedia: true`), the description and the credits file; if an on-screen mark is needed, use a very small, translucent "AI VISUALIZATION" watermark in a safe corner (about 20 px, 50% opacity). Never present an illustration as footage or as a specific real place | Approved | 2026-10-28 | Vanuatu M6.0 Short (`video/experiments/vanuatu-m60-us7000ttlm/`). Supersedes the large label used in its first render |
 
 ## Open questions
 

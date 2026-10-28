@@ -1,0 +1,15 @@
+Earthquake data: U.S. Geological Survey (USGS) Earthquake Catalog, https://earthquake.usgs.gov/fdsnws/event/1/ (public domain).
+Music: "Deified" by The Grey Room / Density & Time.
+Source: YouTube Audio Library.
+Narration: ElevenLabs text-to-speech (voice: Daniel).
+Sound effects: synthesized for this video.
+Map data: Made with Natural Earth (naturalearthdata.com), public domain.
+Source: USGS event pages us7000ttlm (M6.0, October 28, 2026), us6000u3bc, us6000u3jl, us6000u4j2, us6000u4jb. https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttlm
+Source: USGS tectonic summary, M7.3 Espiritu Santo earthquake, Vanuatu, March 30, 2026 (Australia plate subducting at the New Hebrides Trench). https://earthquake.usgs.gov/earthquakes/eventpage/us7000s8q0
+Source: Smithsonian Institution, Global Volcanism Program, Vanuatu volcanic arc (subduction-zone setting). https://volcano.si.edu/volcano.cfm?vn=257020
+Epicenters are plotted at USGS coordinates. The plate cross-section is a schematic illustration, not to scale.
+The opening image is an AI-generated illustration (image made with GPT Image 2.5 Sunburst through ElevenLabs) of a Vanuatu-style coastline. It is not a photograph or footage of the earthquakes, of Port-Olry or of any affected area.
+
+Production Technology
+Automated news and video production powered by Output.ai
+https://output.ai
