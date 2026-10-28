@@ -1,6 +1,6 @@
 # Next Huge Quake — Engineering & Experimentation Journal
 
-*Started: 2026-10-21. Historical entries reconstructed from project conversations and GitHub milestones, then checked against the repository, PRs and implementation on 2026-10-21 (repository state: `origin/master` at `ea680e7`, PR #36). This is an evidence-oriented log, not a claim of measured audience impact.*
+*Started: 2026-10-21. Historical entries reconstructed from project conversations and GitHub milestones, then checked against the repository, PRs and implementation on 2026-10-21 (repository state: `origin/master` at `ea680e7`, PR #36). Updated 2026-10-28 against `origin/master` at `77f1b85` (PR #62). This is an evidence-oriented log, not a claim of measured audience impact.*
 
 ## Purpose
 
@@ -202,7 +202,7 @@ These were reconstructed afterwards from manifests, state records and article ti
 
 ## 2026-10-23 — MapLibre educational Short: render time and an unrecorded narration failure ("Where Will the Next Big One Hit?")
 
-**Status:** The Short is uploaded privately and unscheduled (see `video/publish/where-next-big-one.json`); the findings below are recorded here, and no optimization has been implemented.
+**Status:** *Updated 2026-10-28.* Scheduled for Tue 2026-11-03 18:00 São Paulo (PRs [#54](https://github.com/steffencrespo/next-huge-quake/pull/54), [#55](https://github.com/steffencrespo/next-huge-quake/pull/55); `video/publish/state.json` records it as `scheduled`; not re-verified on YouTube). When first written this entry read: uploaded privately and unscheduled, no optimization implemented. Two of the three follow-ups have since been merged (see the update at the end of this entry).
 
 **Hypothesis:** The approved MapLibre globe look can be used for an educational Short through the existing `edu-batch` workflow (`--series=nbo`) without changing the pipeline.
 
@@ -224,6 +224,107 @@ These were reconstructed afterwards from manifests, state records and article ti
 2. Add a lightweight duration preflight to `edu-batch.ts plan` and `generate`: estimate each new line from its characters at a conservative rate and warn or stop before any request when it may exceed the limit (the plan already prints characters and credits).
 3. Track failed paid generations: write the ledger entry before or regardless of validation, and keep rejected audio in a `rejected/` folder so a clip that is paid for but over the limit can be inspected or reused instead of lost.
 
+**Update 2026-10-28 [repo]:**
+- Follow-up 1 is merged for this one composition: PR [#56](https://github.com/steffencrespo/next-huge-quake/pull/56) passes `--gl=angle` only for `WhereWillTheNextBigOneHitFull`. Its controlled check, the same 60 frames (300–359), silent, was 18.4 s with the flag against 36.3 s without, about 2×. That is a smaller effect than the uncontrolled ~12× above, so the 35-minute render probably also reflects frame count, audio, captions and background load. The software-WebGL hypothesis is supported in direction, not proven in size. A full 1,440-frame re-render with the flag has not been recorded; the scheduled upload was rendered before #56.
+- Follow-ups 2 and 3 are merged in PR [#57](https://github.com/steffencrespo/next-huge-quake/pull/57) (`93a92ec`): a preflight at 12 characters per second (about the 5th percentile of the 131 library clips at the time; it flags lines above roughly 108 characters, so it is conservative) and a `status: 'rejected'` ledger entry when audio comes back over the limit. Rejected audio is not kept (nothing is saved to the library), so the `rejected/` part of follow-up 3 is not implemented. HTTP failures and alignment mismatches are still not ledgered.
+- The 127-character discarded request above was never added retroactively: `credit-ledger-nbo.json` still sums to 724.
+- Other MapLibre render scripts set `--gl=angle` themselves (`render-news.ts` and the Vanuatu M6.0, weekly and October globe experiments). Render time still differs a lot by composition (a 1,050-frame news render with terrain took about 6.5 min, a 1,020-frame Vanuatu sequence render about 1 min 45 s), with no controlled comparison between them.
+
+## 2026-10-22 to 2026-10-28 — ElevenLabs narration reliability: lost library, recovery, backup, rejected spend
+
+**Status:** Library recovered and in use; rejected-spend accounting merged (PR #57, see the update in the 2026-10-23 entry above); backup and alignment gaps open.
+
+**Hypothesis:** Paid, git-ignored narration is a single point of failure, and spend that fails validation is invisible to budget checks. Both are cheap to protect against.
+
+**Implementation / evidence [repo]:** The library was lost when a tracked `video/assets` symlink replaced the real git-ignored folder on pull (PR [#49](https://github.com/steffencrespo/next-huge-quake/pull/49)). In the local library manifest, 119 of the 205 clips (7,056 characters) are tagged `recovered:<ElevenLabs history id> (alignment rebuilt locally)` and indexed with hashes in `recovered-index.json`; the other 86 were generated afterwards. A checksummed copy made at 2026-10-22 23:58, after the recovery, sits outside the repository at `~/Backups/next-huge-quake/assets-audio-20261022-235850/` (local files, not in Git).
+
+**Observation (engineering):** The 86 clips generated since that copy have no external backup. Rebuilt alignments, which drive captions, were never compared with ElevenLabs' own alignment. None of the ten credit ledgers holds a `rejected` entry yet, so that path is covered by mocked tests but has not fired in production; the first run behind the preflight (Vanuatu M6.0, 10 lines, 558 characters) passed. Whether the recovery cost credits is not recorded in any ledger.
+
+**Decision / learning:** Git-ignored does not mean safe, and paid spend should be recorded before its result is validated.
+
+**Follow-up:** Refresh the backup; compare a rebuilt alignment with a native one on a clip that has both; read total credits since 2026-10-22 from the ElevenLabs dashboard, which is the authority.
+
+## 2026-10-24 — Earthquakes This Week (M4.0+ weekly globe)
+
+**Status:** Two local renders (V1, V2). Continuation approved editorially; no recurring workflow, manifest or publication record exists in the repository.
+
+**Hypothesis:** A fixed-window, data-driven count of every M4.0+ earthquake, shown as red dots on a globe, can be a repeatable weekly format at low cost.
+
+**Implementation / evidence [repo]:** `video/experiments/quakes-week/` (local, untracked, in no PR); USGS catalog, 2026-10-17 to 10-24 UTC. Counts and the region ranking are computed from the cached data, never typed. V1 has 182 events, V2 has 190; each render is about 63 to 64 s. Narration used 668 credits for V1 and 376 for V2's changed lines, with no rejected entries.
+
+**Observation (engineering):** V1's query was capped at M5.5 while its on-screen subtitle said "MAGNITUDE 4.0+", so it silently dropped eight events (M5.7 to M7.0, including Tibet M7.0 and five Vanuatu events). V2 removed the cap, reconciles against the API count and requires every V1 event to be present. Lesson: derive on-screen labels from the query that produced the data.
+
+**Decision [editorial; from project conversation, not repo-verified]:** The owner approved continuing the M4.0+ weekly format on 2026-10-24. The recurring workflow (tracked code, a schedule, a refresh rule for the cached data, a publication path) is not implemented.
+
+**Follow-up:** Decide where weekly code lives and how data is refreshed (the fetch script reuses its cached file unless `--refresh`). Once Analytics is available, compare stayed-to-watch with videos of similar length, directionally.
+
+## 2026-10-26 — Earthquakes in October 2026 (live-loop visualization)
+
+**Status:** Local render, not published; its credits file says manual upload only.
+
+**Hypothesis (untested):** A day-by-day replay of the month's M5+ earthquakes can work as a watchable, loopable data visualization.
+
+**Implementation / evidence [repo]:** `video/experiments/quakes-october-live/` (local, untracked). USGS, 2026-10-01 to 10-25 UTC: 121 events above M5.0. The API returned 168 at M≥5.0; the 47 at exactly 5.0 are excluded because the script says "above magnitude five". Render 115 s; 973 narration credits.
+
+**Observation:** No review notes and no audience data. The wording-driven filter changes the count by about 28%, so spoken text and query must stay consistent (the same class of problem as the weekly V1 label).
+
+**Follow-up:** Editorial review, then decide whether 115 s suits a channel whose traffic is 90.9% Shorts feed [metric: 2026-10-22 baseline, `docs/YOUTUBE_ANALYTICS.md`].
+
+## 2026-10-28 — Monthly compilation (proposed concept, not implemented)
+
+**Status:** Concept only. No code, script, manifest or render exists in the repository [repo: none found on `origin/master` at `77f1b85`]. The idea comes from project conversation [reported].
+
+**Hypothesis (untested):** A longer monthly video combining previously published Shorts, possibly enriched with authentic event imagery, could give older Shorts a second life and give returning viewers a reason to stay. It is a different concept from the October live-loop above, which is built from raw USGS events.
+
+**Open questions:** Which published Shorts qualify; where authentic imagery would come from (external assets need recorded provenance and licensing per `docs/DECISION_LOG.md`); how to avoid near-duplicate content; and how to measure it, since a long video is a different surface from Shorts-feed stayed-to-watch.
+
+## 2026-10-24 and 2026-10-28 — Breaking news: Vanuatu M6.9 and the M6.0 sequence
+
+**Status:** Both Shorts are recorded as published in `video/publish/state.json` (PRs [#58](https://github.com/steffencrespo/next-huge-quake/pull/58) and [#62](https://github.com/steffencrespo/next-huge-quake/pull/62)); public visibility not re-checked from YouTube. No audience data.
+
+**Hypothesis:** (1) The proven manual news path can cover a sequence quickly while saying only what is known. (2) For a repeat event, a short "why does it keep happening" explainer adds more than another alert. The second is untested.
+
+**Implementation / evidence [repo]:** M6.9 `us6000u4j2` (origin 2026-10-24 02:31 UTC): [youtu.be/h0GyKt2AaHA](https://youtu.be/h0GyKt2AaHA), approved at 04:36 UTC, about 2 h 05 min after origin (Tibet: about 2 h 26 min), reconstructed from manifest and state, not measured by the pipeline. Fast Track was not involved. Its narration cost is not recorded anywhere in the repo. M6.0 `us7000ttlm` (origin 2026-10-28 02:21 UTC): [youtu.be/5P7KuR1AZF4](https://youtu.be/5P7KuR1AZF4), published 23:13 UTC, about 21 h later, a deliberate sequence explainer and not a speed test. Experiment files and sourcing notes: `video/experiments/vanuatu-m60-us7000ttlm/`. Both descriptions keep modeled PAGER and the tsunami flag distinct from confirmed impact.
+
+**Observation (engineering):** Verification removed two tempting lines from the M6.0 script: "no M6+ in this patch for four decades" (a USGS M6.8 on 2009-10-08 lies within 100 km, and the answer depends on the search radius) and an annual rate (6.4 a year in one box, 6.2 to 7.2 in neighbouring boxes). The script calls the events a "sequence" only, because USGS lists no aftershock product, and gives no depth or convergence rate. The volcanic-arc line rests on a USGS tectonic summary; the Smithsonian page was unreachable from the build machine on 2026-10-28 and its re-check is not recorded. The approved title is the owner's choice [editorial].
+
+**Decision / learning:** For a sequence, discipline means saying less; two of the strongest-sounding lines failed verification.
+
+**Follow-up:** Compare stayed-to-watch for the M6.9 alert and the M6.0 explainer once Analytics exists. Keep recording origin-to-public latency for every breaking item. The experiment's `CREDITS.md` still says "Not published", which is now outdated.
+
+## 2026-10-27 to 2026-10-28 — AI cinematic visuals and synthetic-media disclosure
+
+**Status:** In use. Chile 1960 cinematic is recorded as published 2026-10-27; Japan 2011, Northridge 1994 and Loma Prieta 1989 cinematic are scheduled for 11-01, 11-05 and 11-07; the Vanuatu M6.0 Short uses one generated image. The disclosure convention is recorded in `docs/DECISION_LOG.md` (row dated 2026-10-28, PR [#62](https://github.com/steffencrespo/next-huge-quake/pull/62)) and is not repeated here.
+
+**Hypothesis (untested):** Generated establishing images add a cinematic feel to historic and news Shorts without misleading viewers, if they are disclosed in metadata, description and credits, with at most a discreet on-screen mark.
+
+**Implementation / evidence [repo]:** Images and clips come from ElevenLabs-hosted generators and Seedance (see each experiment's `CREDITS.md`). `containsSyntheticMedia: true` is set in all five manifests; PR [#59](https://github.com/steffencrespo/next-huge-quake/pull/59) added it to the publisher. On-screen treatment differs: Chile carries a large "AI-GENERATED HISTORICAL RECONSTRUCTION" label; Northridge and Loma Prieta have none by design; Vanuatu M6.0 shows "AI VISUALIZATION" at 20 px and 50% opacity while the image is visible.
+
+**Observation:** The convention arrived after Chile was public, so three treatments exist within two days. The stated reason for dropping the large label (it distracted and looked less polished) is [editorial; reported], not recorded in DECISION_LOG. Nothing has been measured about viewer comprehension or retention.
+
+**Follow-up:** Read back the synthetic-content setting from YouTube for each video (manifests say true; no read-back yet). `chile1960-r2` still shows as scheduled for 2026-10-27 21:00 UTC in `state.json` although the cinematic Chile was approved and published minutes later (Japan: r2 on 10-29, cinematic on 11-01); whether r2 was withdrawn is not recorded and bears on the duplicate-content principle. Compare retention of cinematic and earlier historic Shorts directionally.
+
+## 2026-10-28 — Fast Track pilot: bounded spending and safeguards, still unproven
+
+**Status:** PR [#45](https://github.com/steffencrespo/next-huge-quake/pull/45) is open and unmerged, last pushed 2026-10-22; disabled by default. "Paused" is the owner's status [reported]; the repository shows only inactivity. No run is recorded (no `state/fast-track.json` in any local checkout).
+
+**Hypothesis:** Policy-governed automation can shorten detection-to-public time for qualifying events without removing the human-authority gates, and cost can be capped by reserving worst-case spend before any paid call.
+
+**Implementation / evidence [repo]:** Per the PR: ships disabled and private; eligibility tiers with fail-closed manual fallbacks (sequences, stale or revised facts, missing PAGER, daily cap); deterministic text through the M1 fact check; approval authority bound to the manifest hash; per-event, daily and monthly spend reserved before paid calls, with missing prices disabling it; kill switches re-read before approve, upload and publish; strict inspection and reconcile for retries. Tests: 172 (`quake-news-agent`) and 272 (`video`), including crash recovery against an in-memory YouTube. A read-only gate check on real USGS data sent Tibet and Vanuatu M6.3 to manual.
+
+**Observation:** Unproven: any end-to-end or paid run, a real YouTube write, actual latency, spend bound against actual cost (prices not configured), and exactly-once delivery (the PR says it is not guaranteed). The manual path covered Vanuatu M6.9 in about 2 h 05 min, so a latency benefit is still a hypothesis.
+
+**Decision:** Pending. The PR's own next step is one separately authorized private test.
+
+**Follow-up:** A free read-only replay of the gate on `us6000u4j2` and `us7000ttlm`, recording the verdicts; if resumed, one private test measured against manual latency.
+
+## 2026-10-28 — Smaller updates
+
+- **Instagram Reels:** PR [#43](https://github.com/steffencrespo/next-huge-quake/pull/43) (open) carries its own California Reel entry; PR [#53](https://github.com/steffencrespo/next-huge-quake/pull/53) (draft, paused) has never run against Meta. Reels are posted by hand, music-free because no track is documented as cleared for Instagram. The first Reel (Magnitude 6 vs 7) was posted 2026-10-23 [reported]; no URL or metrics are in the repository.
+- **Chile 1960 cinematic pacing:** fast-beats (45.3 s) and natural-pace (68.5 s) renders both exist; the published file is the fast-beats one (its size matches the manifest). The reason is not recorded and there is no retention data.
+- **Analytics baseline:** `docs/YOUTUBE_ANALYTICS.md` (PR [#52](https://github.com/steffencrespo/next-huge-quake/pull/52)) holds the 2026-10-22 baseline. The 2026-10-29 checkpoint has not been captured. Videos recorded as published or scheduled since then include California loop (10-23), Vanuatu M6.9 (10-24), SIX SEVEN (10-25), Magnitude 10 (10-26), Chile cinematic (10-27), SIX SEVEN vs FOUR TWO and Vanuatu M6.0 (10-28); note which had changed openings.
+- **Northridge research:** USGS pages disagree on deaths (33 to nearly 100), so the script says "dozens"; figures come from USGS sources and the stills are AI illustrations (see `CREDITS.md`). Loma Prieta handles a similar disagreement ("more than forty" for the Cypress viaduct). Scheduled for 11-05 and 11-07; no data.
+
 ---
 
 ## Open questions and measurements
@@ -235,6 +336,10 @@ These were reconstructed afterwards from manifests, state records and article ti
 - Can the production process remain fast without drifting into repeated, low-value content?
 - When, if ever, do enough recurring tasks justify new Output.ai editorial workflows?
 - How can we minimize breaking-news time-to-publish while preserving factual accuracy, source attribution, budget limits, and bounded human editorial control?
+- Does a data-driven weekly format (Earthquakes This Week) retain viewers as well as a one-off explainer, and where should its recurring code and data refresh live?
+- Does a short sequence explainer (Vanuatu M6.0) beat a bare alert on stayed-to-watch, and does Fast Track ever beat the manual path on latency?
+- Do cinematic AI-illustrated Shorts retain better than earlier map-only historic Shorts, and does the on-screen disclosure treatment change that?
+- Is the narration library safe enough (backup refresh, alignment check), and what is the monthly compilation concept worth before anyone builds it?
 
 ## Maintaining the journal
 
