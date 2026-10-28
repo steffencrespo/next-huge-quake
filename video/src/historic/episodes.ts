@@ -7,7 +7,7 @@
 import { CTA_LINE, plan } from '../edu/episodes.js';
 import type { EpisodeMeta } from '../edu/episodes.js';
 
-export type HistoricId = 'chile1960' | 'japan2011' | 'sanfrancisco1906' | 'northridge1994';
+export type HistoricId = 'chile1960' | 'japan2011' | 'sanfrancisco1906' | 'northridge1994' | 'lomaprieta1989';
 
 export const HISTORIC: Record<HistoricId, EpisodeMeta> = {
   chile1960: {
@@ -76,6 +76,32 @@ export const HISTORIC: Record<HistoricId, EpisodeMeta> = {
       { id: 'old', text: 'Many of the collapsed structures were older designs, built before modern seismic rules.' },
       { id: 'change', text: 'California began a major bridge retrofit program, and building codes were updated.' },
       { id: 'lesson', text: 'The lesson: a dangerous fault can hide beneath a city, so strengthen buildings before the shaking.' },
+      CTA_LINE
+    ] )
+  },
+  lomaprieta1989: {
+    id: 'lomaprieta1989', number: 5, compositionId: 'HistoricLomaPrieta1989', title: 'Loma Prieta 1989: The Earthquake That Changed San Francisco', baseSeconds: 60,
+    script: plan( [
+      { id: 'hook', text: 'For decades, San Francisco fought its freeways. Then, the ground shook.', gap: 0.4 },
+      { id: 'plan', text: 'In the nineteen fifties, planners drew up ten freeways for the city.' },
+      { id: 'revolt', text: 'Neighborhoods pushed back. In nineteen fifty-nine, supervisors voted to cancel most of them.' },
+      { id: 'emb', text: 'But one had already risen along the waterfront: the double-decker Embarcadero Freeway.' },
+      { id: 'wall', text: 'It walled off the Ferry Building, and it simply stopped at Broadway, unfinished.' },
+      { id: 'no', text: 'For years, the city argued about tearing it down. In the nineteen eighties, voters said no.' },
+      { id: 'date', text: 'Then, October seventeenth, nineteen eighty-nine, four minutes past five in the afternoon.', gap: 0.45 },
+      { id: 'mag', text: 'A magnitude six point nine earthquake hit the Santa Cruz Mountains, just before a World Series game.' },
+      { id: 'toll', text: 'Sixty-three people died, and more than forty were on one Oakland freeway.' },
+      { id: 'cyp', text: 'The Cypress Viaduct\'s upper deck fell onto the traffic below.' },
+      { id: 'sf', text: 'Across the bay, San Francisco\'s Embarcadero Freeway was badly damaged, but it did not fall.' },
+      { id: 'closed', text: 'It was closed. The state wanted to repair it. The mayor wanted it gone.' },
+      { id: 'debate', text: 'Chinatown merchants feared losing customers. The debate lasted months.' },
+      { id: 'vote', text: 'Supervisors voted six to five to tear it down.' },
+      { id: 'demo', text: 'In February nineteen ninety-one, demolition began.' },
+      { id: 'after', text: 'The Ferry Building returned to view. A palm-lined boulevard and streetcars replaced the concrete.' },
+      { id: 'people', text: 'Today, people walk, bike and gather along the bay where the freeway once stood.' },
+      { id: 'central', text: 'The damaged Central Freeway came down too, and Hayes Valley gained a boulevard and new housing.' },
+      { id: 'nature', text: 'The earthquake had no intentions. It brought tragedy, and it forced a decision.' },
+      { id: 'end', text: 'San Francisco spent decades fighting its freeways. Then nature forced the question.', gap: 0.5 },
       CTA_LINE
     ] )
   }

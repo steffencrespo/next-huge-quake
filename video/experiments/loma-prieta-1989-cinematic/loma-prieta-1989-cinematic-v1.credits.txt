@@ -1,0 +1,18 @@
+Music: "Deified" by The Grey Room / Density & Time.
+Source: YouTube Audio Library.
+Narration: ElevenLabs text-to-speech (voice: Daniel).
+Sound effects: synthesized for this video.
+Map data: Natural Earth (public domain), 1:10m land via world-atlas.
+Source: USGS, M 6.9 October 17, 1989 Loma Prieta Earthquake (5:04 PM PDT; 63 deaths, 3,757 injuries). https://www.usgs.gov/programs/earthquake-hazards/science/m-69-october-17-1989-loma-prieta-earthquake
+Source: Caltrans, After the Devastation, a Safer Highway System (Cypress Street Viaduct, Oakland). https://dot.ca.gov/programs/public-affairs/mile-marker/winter-2019-2020/copy-of-loma-prieta
+Source: KQED, What would San Francisco have looked like without the freeway revolt. https://www.kqed.org/news/105321/what-would-san-francisco-have-looked-like-without-the-freeway-revolt
+Source: SPUR, When Freeways Came Down. https://www.spur.org/publications/urbanist-article/2010-02-01/when-freeways-came-down
+Source: Livable City, Loma Prieta: The Earthquake That Started a Transportation Revolution. https://livablecity.org/?p=653
+Source: APA Great Places, San Francisco Ferry Building. https://w1.planning.org/greatplaces/spaces/2010/ferrybuilding.htm
+Source: San Francisco Planning, Market and Octavia Area Plan (Central Freeway parcels).
+The Bay Area map is an illustration with approximate markers. The Cypress Street Viaduct (Oakland) collapsed; the Embarcadero Freeway (San Francisco) was damaged and closed but did not collapse. Sources differ on the Cypress death count (41 to 42), the year of the 1980s ballot vote and the date of the Board of Supervisors vote, so the video gives general figures.
+The ten photorealistic scenes are AI-generated illustrative reconstructions (images made with GPT Image 2.5 Sunburst through ElevenLabs). They are not archival photographs or footage, and the buildings, vehicles, people and places shown are not documented historical details.
+
+Production Technology
+Automated news and video production powered by Output.ai
+https://output.ai

@@ -1,0 +1,13 @@
+# Loma Prieta 1989 Cinematic Edition — local experiment credits
+
+Base: `HistoricLomaPrieta1989` (new composition, `src/historic/lomaprieta1989.tsx`). Narration: ElevenLabs text-to-speech (voice: Daniel), `fast-beats` pacing. Music: "Deified" by The Grey Room / Density & Time, YouTube Audio Library.
+
+Synthetic content: ten still images were generated with GPT Image 2.5 Sunburst (via ElevenLabs) and are AI-generated illustrative reconstructions, not archival photographs or footage. Files: `assets/*.png` (720×1280), named after the narration line each illustrates (Embarcadero Freeway and Ferry Building, Freeway Revolt rally, evening rush hour, Cypress Street Viaduct collapse, damaged Embarcadero Freeway, Board of Supervisors hearing, demolition, the Embarcadero today, closing sunset). No on-screen AI label by design; disclose as altered/synthetic content in YouTube Studio and in the description when publishing.
+
+The Bay Area map is an original illustration (Natural Earth 1:10m land, public domain); epicentre, city and structure markers are approximate.
+
+Sources: USGS, M 6.9 October 17, 1989 Loma Prieta Earthquake (5:04 PM PDT; about 9 miles northeast of Santa Cruz and 60 miles southeast of San Francisco; 63 deaths, 3,757 injuries) https://www.usgs.gov/programs/earthquake-hazards/science/m-69-october-17-1989-loma-prieta-earthquake ; Caltrans, "After the Devastation, a Safer Highway System" (Cypress Street Viaduct, Oakland: 42 deaths, 0.7 mile of upper deck collapsed) https://dot.ca.gov/programs/public-affairs/mile-marker/winter-2019-2020/copy-of-loma-prieta ; KQED and SPUR (1948 ten-freeway plan, 1959 cancellations; sources cite seven of ten routes) https://www.kqed.org/news/105321/what-would-san-francisco-have-looked-like-without-the-freeway-revolt , https://www.spur.org/publications/urbanist-article/2010-02-01/when-freeways-came-down ; Livable City, NBC Bay Area and Wikipedia "California State Route 480" (Embarcadero Freeway damaged, closed, not collapsed; 1980s vote against removal; Board of Supervisors 6 to 5; demolition began February 27, 1991, per FHWA); APA Great Places, Ferry Building (freeway hid the building; reopened 2003); San Francisco Planning, Market and Octavia Area Plan (Central Freeway parcels developed for housing).
+
+Choices where sources disagree: the Cypress death count (USGS page 41, Caltrans 42) is narrated as "more than forty"; the year of the 1980s removal vote (1986 or 1987) and the date of the Board of Supervisors vote are not stated; the 1959 cancellation is narrated as "most" of the planned freeways. The Embarcadero Freeway (San Francisco) was damaged and closed but did not collapse; the Cypress Street Viaduct (Oakland) collapsed.
+
+Not published; publish/ untouched.
