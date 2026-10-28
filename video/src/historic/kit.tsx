@@ -12,10 +12,10 @@ export const OCEAN_THEME: MapTheme = { ocean: '#0A1D31', land: '#2a3442', coast:
 export const SEPIA_THEME: MapTheme = { ocean: '#1b1712', land: '#3a3226', coast: '#d9c49a', rule: '#5a4b34' };
 
 const pathCache = new Map<string, string>();
-const cachedLand = ( box: Box ) => {
-  const k = JSON.stringify( box );
+const cachedLand = ( box: Box, detail: '50m' | '10m' ) => {
+  const k = JSON.stringify( [ box, detail ] );
   if ( !pathCache.has( k ) ) {
-    pathCache.set( k, landPath( box ) );
+    pathCache.set( k, landPath( box, detail ) );
   }
   return pathCache.get( k )!;
 };
@@ -30,8 +30,8 @@ export const makeProj = ( rect: Rect, center: [ number, number ], zoom: number )
 };
 
 /** A rounded map window with land, a graticule and overlays in screen space (children get the projection). */
-export const RegionMap: React.FC<{ id: string; rect: Rect; box: Box; center: [ number, number ]; zoom: number; theme?: MapTheme; grid?: number; children?: ( p: Proj ) => React.ReactNode }> = (
-  { id, rect, box, center, zoom, theme = OCEAN_THEME, grid = 5, children }
+export const RegionMap: React.FC<{ id: string; rect: Rect; box: Box; center: [ number, number ]; zoom: number; theme?: MapTheme; grid?: number; detail?: '50m' | '10m'; children?: ( p: Proj ) => React.ReactNode }> = (
+  { id, rect, box, center, zoom, theme = OCEAN_THEME, grid = 5, detail = '50m', children }
 ) => {
   const [ cx, cy ] = merc( center[0], center[1] );
   const proj = makeProj( rect, center, zoom );
@@ -54,7 +54,7 @@ export const RegionMap: React.FC<{ id: string; rect: Rect; box: Box; center: [ n
       <g clipPath={`url(#clip-${id})`}>
         {lines}
         <g transform={`translate(${f1( rect.x + rect.w / 2 )} ${f1( rect.y + rect.h / 2 )}) scale(${zoom}) translate(${f1( -cx )} ${f1( -cy )})`}>
-          <path d={cachedLand( box )} fill={theme.land} stroke={theme.coast} strokeWidth={1.6 / zoom} strokeOpacity={0.7} strokeLinejoin="round" />
+          <path d={cachedLand( box, detail )} fill={theme.land} stroke={theme.coast} strokeWidth={1.6 / zoom} strokeOpacity={0.7} strokeLinejoin="round" />
         </g>
         {children?.( proj )}
       </g>

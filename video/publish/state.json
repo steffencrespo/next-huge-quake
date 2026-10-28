@@ -257,5 +257,14 @@
     "videoId": "Od1jGLN9NDI",
     "publishAt": "2026-11-05T21:00:00Z",
     "playlistItemId": "UExLbm9mZkgyb0g1cy45NDk1REZENzhEMzU5MDQz"
+  },
+  "lomaprieta1989-cinematic": {
+    "status": "scheduled",
+    "contentHash": "257d951594786b01345a024e8b7dd2541698394411b9da5a559f5a4ede87d9f6",
+    "fileSize": 52124865,
+    "updatedAt": "2026-10-28T20:23:13.044Z",
+    "videoId": "4PibWuVoiIo",
+    "publishAt": "2026-11-07T21:00:00Z",
+    "playlistItemId": "UExLbm9mZkgyb0g1cy5GNjNDRDREMDQxOThCMDQ2"
   }
 }
