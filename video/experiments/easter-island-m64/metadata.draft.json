@@ -1,0 +1,33 @@
+{
+  "status": "Superseded by publish/easter-island-m64-us7000ttxz.json (published 2026-10-29 as https://youtu.be/sq6CqssHcaU).",
+  "id": "easter-island-m64-us7000ttxz",
+  "file": "experiments/easter-island-m64/out/easter-island-m64-v1.mp4",
+  "creditsFile": "experiments/easter-island-m64/easter-island-m64-v1.credits.txt",
+  "containsSyntheticMedia": true,
+  "title": "M6.4 EARTHQUAKE Near EASTER ISLAND! What Happened? #shorts",
+  "description": "A magnitude 6.4 earthquake struck the South Pacific on October 29, 2026 at 07:49 UTC, according to the U.S. Geological Survey (USGS). The epicenter was in the open ocean about 1,480 km southeast of Hanga Roa, Easter Island (Rapa Nui), not on the island itself.\n\nWhat USGS reports:\n- Magnitude: M6.4 (Mww, reviewed)\n- Depth: 10 km, a depth fixed by USGS for a shallow event rather than measured\n- PAGER alert: green, a low likelihood of casualties and damage. USGS estimates that no population was exposed to the shaking. PAGER is a model estimate, not a damage report.\n- Fault motion: strike-slip (sideways), from the USGS moment tensor\n\nTsunami: the Pacific Tsunami Warning Center issued no message for this earthquake, and we found no tsunami warning reported for Easter Island or Chile. No damage or injuries have been reported. This may change as more information becomes available.\n\nWhy here? The quake struck on the Chile Rise, the boundary where the Nazca and Antarctic plates spread apart. The ridge is broken into segments by faults that slip sideways. USGS recorded a magnitude 6.7 earthquake about 26 km from this epicenter on February 3, 2021.\n\nOfficial event page: https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttxz\n\nThis video contains altered or synthetic content. The opening image is an AI-generated illustration of Easter Island made with ElevenLabs. It is not a photograph or footage of the earthquake or of any effects on the island.\n\nCredits: earthquake data USGS (public domain). Map data Natural Earth (public domain). Narration ElevenLabs (voice: Daniel). Music: \"Deified\" by The Grey Room / Density & Time, YouTube Audio Library. Sound effects synthesized for this video.\n\nProduction Technology\nAutomated news and video production powered by Output.ai\nhttps://output.ai\n\nLatest Earthquakes from Next Huge Quake. Subscribe for more. Facts are from USGS and may be updated as the data is reviewed.\n\n#Shorts #earthquake #EasterIsland #USGS #NextHugeQuake",
+  "tags": [
+    "earthquake",
+    "earthquakes",
+    "Easter Island earthquake",
+    "Rapa Nui",
+    "M6.4 earthquake",
+    "magnitude 6.4",
+    "Chile Rise",
+    "South Pacific earthquake",
+    "Nazca plate",
+    "Antarctic plate",
+    "strike-slip fault",
+    "USGS",
+    "PAGER",
+    "latest earthquakes",
+    "earthquake news",
+    "AI-generated illustration",
+    "shorts"
+  ],
+  "notes": [
+    "Synthetic-content disclosure: set containsSyntheticMedia true in the manifest and tick the altered or synthetic content box in YouTube Studio when publishing.",
+    "Re-check the USGS event page and tsunami.gov right before publication; the tsunami and damage status are as of 2026-10-29 13:00 UTC.",
+    "The '1,480 km from Hanga Roa' figure is the USGS nearby-places value given in the brief (1,483 km); the haversine from Hanga Roa town is 1,486 km. The video rounds to ~1,500 km."
+  ]
+}

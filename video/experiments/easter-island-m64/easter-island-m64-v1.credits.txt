@@ -1,0 +1,15 @@
+Earthquake data: U.S. Geological Survey (USGS) Earthquake Catalog, https://earthquake.usgs.gov/fdsnws/event/1/ (public domain).
+Music: "Deified" by The Grey Room / Density & Time.
+Source: YouTube Audio Library.
+Narration: ElevenLabs text-to-speech (voice: Daniel).
+Sound effects: synthesized for this video.
+Map data: Made with Natural Earth (naturalearthdata.com), public domain.
+Source: USGS event page us7000ttxz (M6.4, southeast of Easter Island, October 29, 2026), including the PAGER impact estimate and the moment tensor. https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttxz
+Source: USGS event page us6000de34 (M6.7, West Chile Rise, February 3, 2021). https://earthquake.usgs.gov/earthquakes/eventpage/us6000de34
+Source: NOAA tsunami.gov (Pacific Tsunami Warning Center and National Tsunami Warning Center message feeds), checked October 29, 2026: no message for this event. https://www.tsunami.gov
+Seismicity dots: USGS M5+ earthquakes, 1976 to October 2026. The epicenter is plotted at USGS coordinates. The strike-slip panel is a schematic illustration, not to scale.
+The opening image is an AI-generated illustration of Easter Island (Rapa Nui) made with ElevenLabs. It is not a photograph or footage of the earthquake or of any effects on the island.
+
+Production Technology
+Automated news and video production powered by Output.ai
+https://output.ai

@@ -292,5 +292,13 @@
     "videoId": "UiOPJ3SjXSA",
     "playlistItemId": "UExEcXVIdXhaWnlTdy41QTY1Q0UxMTVCODczNThE",
     "publishAt": "2026-11-12T21:00:00Z"
+  },
+  "easter-island-m64-us7000ttxz": {
+    "status": "published",
+    "contentHash": "9eb1280e3613573b52833d235a22c56f1c39c518aadbddc7127bd4978284f745",
+    "fileSize": 14699774,
+    "updatedAt": "2026-10-29T13:31:22.344Z",
+    "videoId": "sq6CqssHcaU",
+    "playlistItemId": "UExQc1I3NGxJaFdnSS5EMEEwRUY5M0RDRTU3NDJC"
   }
 }

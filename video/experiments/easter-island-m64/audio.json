@@ -1,0 +1,186 @@
+{
+  "clips": [
+    {
+      "id": "h0",
+      "file": "audio/edu/e2ddfaaf0f47311d-fast-beats.mp3",
+      "start": 0.2,
+      "duration": 3.172,
+      "gain": 0.91
+    },
+    {
+      "id": "h1",
+      "file": "audio/edu/e90adda43f75d82b-fast-beats.mp3",
+      "start": 3.412,
+      "duration": 1.078,
+      "gain": 1.1
+    },
+    {
+      "id": "s0",
+      "file": "audio/edu/9f00c58589059352-fast-beats.mp3",
+      "start": 4.79,
+      "duration": 3.469,
+      "gain": 1.01
+    },
+    {
+      "id": "s1",
+      "file": "audio/edu/6a864b6f01082056-fast-beats.mp3",
+      "start": 8.299,
+      "duration": 3.17,
+      "gain": 1.1
+    },
+    {
+      "id": "i0",
+      "file": "audio/edu/52a07d58de93cb9f-fast-beats.mp3",
+      "start": 11.509,
+      "duration": 4.694,
+      "gain": 1.09
+    },
+    {
+      "id": "i1",
+      "file": "audio/edu/18268362448c9d47-fast-beats.mp3",
+      "start": 16.243,
+      "duration": 2.248,
+      "gain": 0.95
+    },
+    {
+      "id": "w0",
+      "file": "audio/edu/5c6ab5c8275922e2-fast-beats.mp3",
+      "start": 18.531,
+      "duration": 4.112,
+      "gain": 1
+    },
+    {
+      "id": "w1",
+      "file": "audio/edu/e8c569cae512ebd2-fast-beats.mp3",
+      "start": 22.683,
+      "duration": 2.44,
+      "gain": 0.89
+    },
+    {
+      "id": "e0",
+      "file": "audio/edu/055ca39f894fc990-fast-beats.mp3",
+      "start": 25.163,
+      "duration": 3.137,
+      "gain": 1
+    },
+    {
+      "id": "e1",
+      "file": "audio/edu/4b00677c66c1bf4c-fast-beats.mp3",
+      "start": 28.34,
+      "duration": 2.903,
+      "gain": 0.94
+    }
+  ],
+  "captions": [
+    {
+      "text": "A magnitude six point four earthquake just",
+      "start": 0.2,
+      "end": 2.205
+    },
+    {
+      "text": "struck the South Pacific!",
+      "start": 2.205,
+      "end": 3.372
+    },
+    {
+      "text": "But not on Easter Island.",
+      "start": 3.412,
+      "end": 4.49
+    },
+    {
+      "text": "It hit about fifteen hundred kilometers",
+      "start": 4.79,
+      "end": 6.679
+    },
+    {
+      "text": "southeast, in the open ocean.",
+      "start": 6.679,
+      "end": 8.259
+    },
+    {
+      "text": "A shallow quake on October twenty-ninth,",
+      "start": 8.299,
+      "end": 10.436
+    },
+    {
+      "text": "far from any town.",
+      "start": 10.436,
+      "end": 11.469
+    },
+    {
+      "text": "USGS issued a green alert,",
+      "start": 11.509,
+      "end": 13.508
+    },
+    {
+      "text": "estimating no populated areas were exposed",
+      "start": 13.508,
+      "end": 15.673
+    },
+    {
+      "text": "to shaking.",
+      "start": 15.673,
+      "end": 16.203
+    },
+    {
+      "text": "No tsunami warnings or damage have",
+      "start": 16.243,
+      "end": 17.889
+    },
+    {
+      "text": "been reported.",
+      "start": 17.889,
+      "end": 18.491
+    },
+    {
+      "text": "Why here?",
+      "start": 18.531,
+      "end": 19.125
+    },
+    {
+      "text": "This is the Chile Rise,",
+      "start": 19.196,
+      "end": 20.329
+    },
+    {
+      "text": "where the Nazca and Antarctic plates",
+      "start": 20.329,
+      "end": 22.029
+    },
+    {
+      "text": "pull apart.",
+      "start": 22.029,
+      "end": 22.643
+    },
+    {
+      "text": "USGS data show this fault slipped sideways.",
+      "start": 22.683,
+      "end": 25.123
+    },
+    {
+      "text": "Nearly the same spot hit six point",
+      "start": 25.163,
+      "end": 26.882
+    },
+    {
+      "text": "seven in twenty twenty-one.",
+      "start": 26.882,
+      "end": 28.3
+    },
+    {
+      "text": "Follow Next Huge Quake for verified",
+      "start": 28.34,
+      "end": 30.316
+    },
+    {
+      "text": "earthquake news.",
+      "start": 30.316,
+      "end": 31.243
+    }
+  ],
+  "narrationStart": 0.2,
+  "narrationEnd": 31.243,
+  "musicFile": "audio/ytal-deified-the-grey-room.mp3",
+  "musicCredit": "\"Deified\" by The Grey Room / Density & Time.\nSource: YouTube Audio Library.",
+  "pacing": "fast-beats"
+}
