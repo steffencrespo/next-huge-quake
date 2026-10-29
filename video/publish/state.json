@@ -300,5 +300,14 @@
     "updatedAt": "2026-10-29T13:31:22.344Z",
     "videoId": "sq6CqssHcaU",
     "playlistItemId": "UExQc1I3NGxJaFdnSS5EMEEwRUY5M0RDRTU3NDJC"
+  },
+  "nyc-earthquake": {
+    "status": "scheduled",
+    "contentHash": "c261734064c1352ba7cbbd28b911284b44d0a1ebf8ea310185ff7ec71c0fb742",
+    "fileSize": 46370829,
+    "updatedAt": "2026-10-29T16:34:07.062Z",
+    "videoId": "8sC9YYxBnIc",
+    "playlistItemId": "UExEcXVIdXhaWnlTdy4yMUQyQTQzMjRDNzMyQTMy",
+    "publishAt": "2026-11-14T21:00:00Z"
   }
 }

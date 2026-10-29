@@ -1,0 +1,16 @@
+Music: "Deified" by The Grey Room / Density & Time.
+Source: YouTube Audio Library.
+Narration: ElevenLabs text-to-speech (voice: Daniel).
+Sound effects: synthesized for this video.
+Map data: Natural Earth (public domain), land via world-atlas.
+Source: USGS, M 4.8 - 2024 Tewksbury, New Jersey Earthquake (us7000ma74), event page and Did You Feel It? responses. https://earthquake.usgs.gov/earthquakes/eventpage/us7000ma74
+Source: Boyd et al. (2024), Preliminary observations of the April 5th, 2024, Mw4.8 New Jersey earthquake, The Seismic Record 4(4), 240–250 (more than 180,000 Did You Feel It? reports, the most for any earthquake). https://pubs.usgs.gov/publication/70259320
+Source: NYC Emergency Management, NYC's Risk Landscape, Chapter 4.8: Earthquakes (1884 earthquake estimated at magnitude 5.2 from damage reports, thought to have originated between Brooklyn and Sandy Hook; more than 100,000 unreinforced brick buildings; soil amplification and liquefaction; most buildings predate the 1995 seismic code). https://www.nyc.gov/assets/em/downloads/pdf/hazard_mitigation/nycs_risk_landscape_chapter_4.8_earthquakes.pdf
+Source: NYC Hazard Mitigation Plan, Earthquakes hazard profile (5 to 25 percent chance over 100 years, from the 2023 USGS maps). https://nychazardmitigation.com/documentation/hazard-profiles/earthquakes/
+Source: USGS (Petersen et al., 2023), Chance of potentially damaging ground shaking (MMI VI) in 100 years, 2023 National Seismic Hazard Model. https://doi.org/10.5066/P9GNPCOD
+Synthetic content: the four photographic-style images (New York earthquake scene, 1884 street reconstruction, brick row houses, calm Manhattan) were generated with ElevenLabs. They are AI-generated illustrations, not photographs or footage of a real event, and not a forecast. The 1884 image is a dramatized reconstruction, not an archival photograph. Disclose as altered or synthetic content in YouTube Studio.
+The map's 1884 area and the NYC-area ring are schematic illustrations. The yellow dots are USGS Did You Feel It? response areas, not a shaking-intensity map.
+
+Production Technology
+Automated news and video production powered by Output.ai
+https://output.ai
