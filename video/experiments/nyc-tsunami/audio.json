@@ -1,0 +1,276 @@
+{
+  "clips": [
+    {
+      "id": "h0",
+      "file": "audio/edu/f8e2efa8c31db5cc-fast-beats.mp3",
+      "start": 0.2,
+      "duration": 2.835,
+      "gain": 0.81
+    },
+    {
+      "id": "h1",
+      "file": "audio/edu/2369e2b1d1e0c187-fast-beats.mp3",
+      "start": 3.075,
+      "duration": 3.541,
+      "gain": 1.07
+    },
+    {
+      "id": "q",
+      "file": "audio/edu/7b2f896cdd432a43-fast-beats.mp3",
+      "start": 6.656,
+      "duration": 1.623,
+      "gain": 0.9
+    },
+    {
+      "id": "atl",
+      "file": "audio/edu/039b580920b6ce91-fast-beats.mp3",
+      "start": 8.729,
+      "duration": 3.704,
+      "gain": 1.04
+    },
+    {
+      "id": "gb0",
+      "file": "audio/edu/036b6994ee2872a2-fast-beats.mp3",
+      "start": 12.473,
+      "duration": 4.216,
+      "gain": 0.91
+    },
+    {
+      "id": "gb1",
+      "file": "audio/edu/674d3924431d3eed-fast-beats.mp3",
+      "start": 16.729,
+      "duration": 2.051,
+      "gain": 1.04
+    },
+    {
+      "id": "gb2",
+      "file": "audio/edu/5be5c26362432e57-fast-beats.mp3",
+      "start": 18.82,
+      "duration": 1.983,
+      "gain": 0.92
+    },
+    {
+      "id": "gb3",
+      "file": "audio/edu/ebb2ecf18192e908-fast-beats.mp3",
+      "start": 20.843,
+      "duration": 3.045,
+      "gain": 1.08
+    },
+    {
+      "id": "ny",
+      "file": "audio/edu/f1b5f2ad79309dec-fast-beats.mp3",
+      "start": 24.288,
+      "duration": 1.009,
+      "gain": 0.96
+    },
+    {
+      "id": "low",
+      "file": "audio/edu/58ca1af19511b64e-fast-beats.mp3",
+      "start": 25.647,
+      "duration": 4.094,
+      "gain": 1
+    },
+    {
+      "id": "lp0",
+      "file": "audio/edu/58666122f226fc08-fast-beats.mp3",
+      "start": 29.781,
+      "duration": 4.69,
+      "gain": 0.85
+    },
+    {
+      "id": "lp1",
+      "file": "audio/edu/231b55434702a799-fast-beats.mp3",
+      "start": 34.511,
+      "duration": 3.202,
+      "gain": 0.88
+    },
+    {
+      "id": "yes",
+      "file": "audio/edu/7ee688368e58c96f-fast-beats.mp3",
+      "start": 38.113,
+      "duration": 2.202,
+      "gain": 1.05
+    },
+    {
+      "id": "no",
+      "file": "audio/edu/f415786741682550-fast-beats.mp3",
+      "start": 40.615,
+      "duration": 3.814,
+      "gain": 1.05
+    },
+    {
+      "id": "end",
+      "file": "audio/edu/9b22d349444bd5da-fast-beats.mp3",
+      "start": 44.829,
+      "duration": 3.172,
+      "gain": 1
+    }
+  ],
+  "captions": [
+    {
+      "text": "Imagine a monster tsunami racing toward New",
+      "start": 0.2,
+      "end": 2.512
+    },
+    {
+      "text": "York City.",
+      "start": 2.512,
+      "end": 3.035
+    },
+    {
+      "text": "Manhattan underwater.",
+      "start": 3.075,
+      "end": 4.24
+    },
+    {
+      "text": "The Statue of Liberty surrounded by",
+      "start": 4.316,
+      "end": 5.711
+    },
+    {
+      "text": "raging waves.",
+      "start": 5.711,
+      "end": 6.616
+    },
+    {
+      "text": "Could this nightmare actually happen?",
+      "start": 6.656,
+      "end": 8.279
+    },
+    {
+      "text": "Here’s the terrifying part:",
+      "start": 8.729,
+      "end": 10.132
+    },
+    {
+      "text": "the Atlantic has produced deadly",
+      "start": 10.132,
+      "end": 11.452
+    },
+    {
+      "text": "tsunamis before.",
+      "start": 11.452,
+      "end": 12.433
+    },
+    {
+      "text": "In nineteen twenty-nine,",
+      "start": 12.473,
+      "end": 13.692
+    },
+    {
+      "text": "a magnitude seven point two earthquake",
+      "start": 13.692,
+      "end": 15.688
+    },
+    {
+      "text": "struck off Newfoundland.",
+      "start": 15.688,
+      "end": 16.689
+    },
+    {
+      "text": "It triggered a massive underwater landslide.",
+      "start": 16.729,
+      "end": 18.78
+    },
+    {
+      "text": "The tsunami killed twenty-eight people.",
+      "start": 18.82,
+      "end": 20.803
+    },
+    {
+      "text": "Its waves were detected as far south",
+      "start": 20.843,
+      "end": 22.848
+    },
+    {
+      "text": "as South Carolina.",
+      "start": 22.848,
+      "end": 23.888
+    },
+    {
+      "text": "But what about New York?",
+      "start": 24.288,
+      "end": 25.297
+    },
+    {
+      "text": "Scientists rate the Atlantic coast’s tsunami",
+      "start": 25.647,
+      "end": 27.917
+    },
+    {
+      "text": "hazard as low.",
+      "start": 27.917,
+      "end": 28.913
+    },
+    {
+      "text": "But not zero.",
+      "start": 28.974,
+      "end": 29.741
+    },
+    {
+      "text": "And that famous mega-tsunami theory",
+      "start": 29.781,
+      "end": 31.743
+    },
+    {
+      "text": "involving a collapsing volcano in the",
+      "start": 31.743,
+      "end": 33.625
+    },
+    {
+      "text": "Canary Islands?",
+      "start": 33.625,
+      "end": 34.471
+    },
+    {
+      "text": "USGS scientists say that nightmare scenario",
+      "start": 34.511,
+      "end": 36.942
+    },
+    {
+      "text": "doesn’t hold up.",
+      "start": 36.942,
+      "end": 37.713
+    },
+    {
+      "text": "So, could a tsunami reach New York?",
+      "start": 38.113,
+      "end": 39.837
+    },
+    {
+      "text": "Yes.",
+      "start": 39.919,
+      "end": 40.315
+    },
+    {
+      "text": "Could a monster wave wipe out Manhattan?",
+      "start": 40.615,
+      "end": 42.518
+    },
+    {
+      "text": "That’s not a credible expected scenario.",
+      "start": 42.572,
+      "end": 44.429
+    },
+    {
+      "text": "Myth or fact?",
+      "start": 44.829,
+      "end": 45.811
+    },
+    {
+      "text": "The threat is real.",
+      "start": 45.886,
+      "end": 46.59
+    },
+    {
+      "text": "The Hollywood disaster is not.",
+      "start": 46.655,
+      "end": 48.001
+    }
+  ],
+  "narrationStart": 0.2,
+  "narrationEnd": 48.001,
+  "musicFile": "audio/ytal-deified-the-grey-room.mp3",
+  "musicCredit": "\"Deified\" by The Grey Room / Density & Time.\nSource: YouTube Audio Library.",
+  "pacing": "fast-beats"
+}

@@ -1,0 +1,14 @@
+Music: "Deified" by The Grey Room / Density & Time.
+Source: YouTube Audio Library.
+Narration: ElevenLabs text-to-speech (voice: Daniel).
+Sound effects: synthesized for this video.
+Map data: Natural Earth (public domain), land via world-atlas.
+Source: NOAA National Centers for Environmental Information, On This Day: 1929 Grand Banks Tsunami (magnitude 7.2, about 250 km south of Newfoundland; an underwater landslide generated the tsunami; 28 deaths; recorded on tide gauges as far as Charleston, South Carolina, and in the Azores and Portugal). https://www.ncei.noaa.gov/node/7051
+Source: USGS Hawaiian Volcano Observatory, Volcano Watch: The Canary Islands "mega-tsunami" hypothesis, and why it doesn't carry water (2021). https://www.usgs.gov/center-news/volcano-watch-canary-islands-mega-tsunami-hypothesis-and-why-it-doesnt-carry-water
+Source: NOAA / USGS, U.S. States and Territories National Tsunami Hazard Assessment (U.S. Atlantic coast hazard rated very low to low). https://pubs.usgs.gov/publication/70159744
+Synthetic content: the four photographic-style images (monster wave, Statue of Liberty, flooded Manhattan, calm Manhattan) were generated with GPT Image 2.5 Sunburst (via ElevenLabs). They are AI-generated illustrations of a hypothetical scenario, not photographs or footage of a real event, and not a forecast. Disclose as altered or synthetic content in YouTube Studio.
+The map's landslide area, tide-gauge routes and La Palma arc are schematic illustrations, not data or forecasts. No wave heights are shown.
+
+Production Technology
+Automated news and video production powered by Output.ai
+https://output.ai
