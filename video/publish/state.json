@@ -283,5 +283,14 @@
     "videoId": "A1i9NL5XSw8",
     "playlistItemId": "UExEcXVIdXhaWnlTdy5EQUE1NTFDRjcwMDg0NEMz",
     "publishAt": "2026-11-10T21:00:00Z"
+  },
+  "nyc-tsunami": {
+    "status": "scheduled",
+    "contentHash": "381142e85078346c4e7f49b0c1345924a330afad94f7e982344556977b6197cd",
+    "fileSize": 43391353,
+    "updatedAt": "2026-10-29T12:46:39.864Z",
+    "videoId": "UiOPJ3SjXSA",
+    "playlistItemId": "UExEcXVIdXhaWnlTdy41QTY1Q0UxMTVCODczNThE",
+    "publishAt": "2026-11-12T21:00:00Z"
   }
 }
