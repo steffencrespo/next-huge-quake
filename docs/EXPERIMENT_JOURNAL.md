@@ -325,6 +325,20 @@ These were reconstructed afterwards from manifests, state records and article ti
 - **Analytics baseline:** `docs/YOUTUBE_ANALYTICS.md` (PR [#52](https://github.com/steffencrespo/next-huge-quake/pull/52)) holds the 2026-10-22 baseline. The 2026-10-29 checkpoint has not been captured. Videos recorded as published or scheduled since then include California loop (10-23), Vanuatu M6.9 (10-24), SIX SEVEN (10-25), Magnitude 10 (10-26), Chile cinematic (10-27), SIX SEVEN vs FOUR TWO and Vanuatu M6.0 (10-28); note which had changed openings.
 - **Northridge research:** USGS pages disagree on deaths (33 to nearly 100), so the script says "dozens"; figures come from USGS sources and the stills are AI illustrations (see `CREDITS.md`). Loma Prieta handles a similar disagreement ("more than forty" for the Cypress viaduct). Scheduled for 11-05 and 11-07; no data.
 
+## 2026-10-29 — Autonomous production and publication test: Vanuatu M6.2 (deep)
+
+**Status:** Published. [youtu.be/Orhq2djDOcM](https://youtu.be/Orhq2djDOcM), public and processed, 26 s, in Latest Earthquakes; `inspect` matched every field except `containsSyntheticMedia`, which the API does not read back. No audience data.
+
+**Hypothesis:** The existing manual path (`discover --check`, `session produce`, publisher `approve`/`upload`/`publish-now`) can run end to end without a human in the loop when the owner gives event-specific authorization up front, with the quality gates checked by the agent instead of a reviewer.
+
+**Implementation / evidence [repo]:** USGS `us7000tu4f`, M6.2 Mww (reviewed), 142.8 km deep, origin 2026-10-29 21:46:44 UTC, green PAGER, no tsunami flag. `discover --check` found no record under the ID or its alias `usauto7000tu4f`. It sits about 200 km from the shallow north-west sequence and is not linked to it in the video or the description. One `quake_video` run: one attempt, 255 s in total, 212 s of it render; fast-beats pacing, 25.5 s MP4 at 1080×1920. The manifest sets `containsSyntheticMedia: false` (no generated imagery) and discloses the AI narration voice in the description. Approved 23:20:59 UTC and public 23:21:25 UTC, about 1 h 35 min after origin.
+
+**Observation (engineering):** The QA was automated. Frame analysis found no black frames, no hard cuts, and one static run, the closing card. The voice sits about 11 dB above the music. An offline Vosk transcription of both the narration and the final mix read every number and "km" correctly; "Vanuatu" was confirmed only with a constrained grammar, and "Port-Olry" is outside the recognizer's vocabulary. ElevenLabs speech-to-text is not enabled on the project key, and whisper.cpp needed a cmake build from source, so it was abandoned. The workflow keeps no local trace, and `output workflow cost` could not find the run, so the Anthropic cost is an estimate (two claude-sonnet-4-6 calls, a few US cents). The ElevenLabs request was 334 characters.
+
+**Decision / learning:** The path works unattended once the owner has authorized the event. The weak points are measurement: there is no stored per-run cost and no first-class pronunciation check.
+
+**Follow-up:** Check the synthetic-content setting in Studio. Record per-run LLM cost in the `quake_video` result. Consider a reproducible offline STT check in `video/` for proper nouns.
+
 ---
 
 ## Open questions and measurements
