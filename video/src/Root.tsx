@@ -16,6 +16,7 @@ import { RingOfFire } from './edu/ep04.js';
 import { Magnitude } from './edu/ep03.js';
 import { DEPTH, EarthquakeDepth } from './edu/ep05.js';
 import { CALIFORNIA, MythCaliforniaOcean } from './edu/ep06.js';
+import { MythSfTsunami, SF_TSUNAMI } from './edu/ep11.js';
 import { MythCaliforniaLoop, calculateLoopMetadata } from './edu/ep06loop.js';
 import { MAG10, MagnitudeTen } from './edu/ep07.js';
 import { VERSUS, SixSevenVsFourTwo } from './edu/ep08.js';
@@ -84,6 +85,7 @@ export const Root: React.FC = () => (
     <Composition id="NextBigOneV2" component={NextBigOneV2} width={1080} height={1920} fps={30} durationInFrames={V2_SECONDS * 30} />
     <Composition id="WhereWillTheNextBigOneHit" component={WhereWillTheNextBigOneHit} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( NEXT_BIG_ONE )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="MythCaliforniaOcean" component={MythCaliforniaOcean} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( CALIFORNIA )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
+    <Composition id="MythSfTsunami" component={MythSfTsunami} schema={eduShortSchema} calculateMetadata={calculateEduMetadata( SF_TSUNAMI )} width={1080} height={1920} fps={30} durationInFrames={1800} defaultProps={{}} />
     <Composition id="KidsWhyEarthShakes" component={KidsWhyEarthShakes} schema={kidsShortSchema} calculateMetadata={calculateKidsMetadata} width={1080} height={1920} fps={30} durationInFrames={1560} defaultProps={{}} />
     <Composition id="KidsWhyEarthShakesV2" component={KidsWhyEarthShakes} schema={kidsShortSchema} calculateMetadata={calculateKidsMetadata} width={1080} height={1920} fps={30} durationInFrames={1560} defaultProps={{ v2: true }} />
     <Composition id="KidsWhyEarthShakesShort" component={KidsWhyEarthShakes} schema={kidsShortSchema} calculateMetadata={calculateKidsMetadata} width={1080} height={1920} fps={30} durationInFrames={1260} defaultProps={{ v2: true, short: true }} />
