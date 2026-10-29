@@ -309,5 +309,13 @@
     "videoId": "8sC9YYxBnIc",
     "playlistItemId": "UExEcXVIdXhaWnlTdy4yMUQyQTQzMjRDNzMyQTMy",
     "publishAt": "2026-11-14T21:00:00Z"
+  },
+  "vanuatu-m62-us7000tu4f": {
+    "status": "published",
+    "contentHash": "f3d59147c5ed1b103f9128cca871f6f29b9f7a025f2cdb6125de56ffca153b81",
+    "fileSize": 10359927,
+    "updatedAt": "2026-10-29T23:21:25.846Z",
+    "videoId": "Orhq2djDOcM",
+    "playlistItemId": "UExQc1I3NGxJaFdnSS45ODRDNTg0QjA4NkFBNkQy"
   }
 }
