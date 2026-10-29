@@ -274,5 +274,14 @@
     "updatedAt": "2026-10-28T23:13:13.442Z",
     "videoId": "5P7KuR1AZF4",
     "playlistItemId": "UExQc1I3NGxJaFdnSS40NzZCMERDMjVEN0RFRThB"
+  },
+  "sf-tsunami-myth-fact": {
+    "status": "scheduled",
+    "contentHash": "9d934bddbd8d903ccfb92b46184a86462589d126329a0768436b6fd2093e37a5",
+    "fileSize": 40761153,
+    "updatedAt": "2026-10-29T03:24:44.218Z",
+    "videoId": "A1i9NL5XSw8",
+    "playlistItemId": "UExEcXVIdXhaWnlTdy5EQUE1NTFDRjcwMDg0NEMz",
+    "publishAt": "2026-11-10T21:00:00Z"
   }
 }

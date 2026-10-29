@@ -34,6 +34,7 @@ import { VERSUS } from '../src/edu/ep08.js';
 import { AFTERSHOCKS } from '../src/edu/ep09.js';
 import { DEPTH } from '../src/edu/ep05.js';
 import { CALIFORNIA } from '../src/edu/ep06.js';
+import { SF_IMAGES, SF_TSUNAMI } from '../src/edu/ep11.js';
 import { NEXT_BIG_ONE } from '../src/edu/ep10.js';
 import { HISTORIC, HISTORIC_LIST } from '../src/historic/episodes.js';
 import type { EpisodeMeta } from '../src/edu/episodes.js';
@@ -58,8 +59,8 @@ const paceSuffix = pace ? `-${ pace.name }` : '';
 const pacedDir = join( root, 'out', 'edu', 'paced', pace?.name ?? '' );
 /** October 26, 28 and 30 Shorts (docs/experiments/oct-26-28-30-shorts.md). */
 const OCT = { mag10: MAG10, versus: VERSUS, aftershocks: AFTERSHOCKS };
-const pool = series === 'nbo' ? { nextbigone: NEXT_BIG_ONE } : series === 'oct' ? OCT : series === 'myth' ? { california: CALIFORNIA } : series === 'depth' ? { depth: DEPTH } : series === 'historic' ? HISTORIC : EPISODES;
-const episodes: EpisodeMeta[] = episodeArg === 'all' ? ( series === 'nbo' ? [ NEXT_BIG_ONE ] : series === 'oct' ? Object.values( OCT ) : series === 'myth' ? [ CALIFORNIA ] : series === 'depth' ? [ DEPTH ] : series === 'historic' ? HISTORIC_LIST : EPISODE_LIST ) : [ ( pool as Record<string, EpisodeMeta> )[episodeArg] ];
+const pool = series === 'nbo' ? { nextbigone: NEXT_BIG_ONE } : series === 'oct' ? OCT : series === 'myth' ? { california: CALIFORNIA, sftsunami: SF_TSUNAMI } : series === 'depth' ? { depth: DEPTH } : series === 'historic' ? HISTORIC : EPISODES;
+const episodes: EpisodeMeta[] = episodeArg === 'all' ? ( series === 'nbo' ? [ NEXT_BIG_ONE ] : series === 'oct' ? Object.values( OCT ) : series === 'myth' ? [ CALIFORNIA, SF_TSUNAMI ] : series === 'depth' ? [ DEPTH ] : series === 'historic' ? HISTORIC_LIST : EPISODE_LIST ) : [ ( pool as Record<string, EpisodeMeta> )[episodeArg] ];
 if ( episodes.some( e => !e ) ) {
   throw new Error( `unknown episode '${episodeArg}'` );
 }
@@ -207,6 +208,13 @@ function buildAudio( ep: EpisodeMeta ) {
 const SOURCES: Record<string, string[]> = {
   chile1960: [ 'USGS Earthquake Catalog (ComCat): 1960 Great Chilean (Valdivia) earthquake, M9.5. https://earthquake.usgs.gov/', 'USGS Hawaiian Volcano Observatory: 1960 tsunami travel times and Hilo deaths. https://www.usgs.gov/center-news/golden-anniversary-chilean-earthquake-comes-early' ],
   japan2011: [ 'USGS Earthquake Catalog (ComCat) and event page: 2011 Great Tohoku Earthquake, M9.1 Mww. https://earthquake.usgs.gov/earthquakes/eventpage/official20110311054624120_30', 'Japan Meteorological Agency: tsunami warning improvements after 2011. https://www.data.jma.go.jp/eqev/data/en/tsunami/LessonsLearned_Improvements_brochure.pdf' ],
+  sftsunami: [
+    'Cal OES Tsunami Program, Tsunami Signs and Tsunami Risk pages (hazard-zone and evacuation signs; maximum considered runup from extreme, infrequent sources; a tsunami is usually a series of waves and danger can last hours; follow posted routes and stay out until the all-clear). https://www.caloes.ca.gov/office-of-the-director/operations/planning-preparedness-prevention/seismic-hazards/tsunami-program/',
+    'California Geological Survey and Cal OES: San Francisco County Tsunami Hazard Area map (the map is not reproduced in this video; check an address in Cal OES MyHazards). https://conservation.ca.gov/cgs/tsunami/maps/san-francisco',
+    'NOAA / National Weather Service, U.S. Tsunami Warning Centers: message definitions (Warning, Advisory, Watch, Information Statement). https://www.tsunami.gov/?page=message_definitions',
+    'NOAA Center for Tsunami Research (PMEL): San Francisco, California tsunami forecast model report (historical tsunami record, including the 1964 Alaska tsunami in San Francisco Bay). https://nctr.pmel.noaa.gov/forecast_model_reports/final_reports/03_SanFranciscoCA_3342_web.pdf',
+    'USGS: Tsunami record from the great 1906 San Francisco earthquake (about 10 cm at the Presidio tide gauge). https://www.usgs.gov/centers/pcmsc/science/tsunami-record-great-1906-san-francisco-earthquake'
+  ],
   california: [ 'USGS FAQ: Will California eventually fall into the ocean? https://www.usgs.gov/faqs/will-california-eventually-fall-ocean', 'USGS: Earthquake Facts & Earthquake Fantasy (plate motion about 46 mm per year; Los Angeles and San Francisco neighbors in about 15 million years at this rate). https://www.usgs.gov/programs/earthquake-hazards/earthquake-facts-earthquake-fantasy' ],
   mag10: [ 'USGS FAQ: Can "MegaQuakes" really happen? Like a magnitude 10 or larger? (largest recorded earthquake, magnitude 9.5 in Chile in 1960; longer faults can host larger earthquakes; no known fault is long enough for a magnitude 10. The 1960 rupture length of about 1,000 km follows published rupture models, e.g. Barrientos and Ward 1990 and Ho et al. 2019, J. Geophys. Res. Solid Earth). https://www.usgs.gov/faqs/can-megaquakes-really-happen-a-magnitude-10-or-larger' ],
   versus: [ 'USGS: Earthquake Magnitude, Energy Release, and Shaking Intensity (each whole magnitude step is about 32 times more energy). https://www.usgs.gov/programs/earthquake-hazards/earthquake-magnitude-energy-release-and-shaking-intensity' ],
@@ -222,7 +230,8 @@ function historicCredits( ep: EpisodeMeta ): string[] {
     'Sound effects: synthesized for this video.',
     ...( [ 'depth', 'mag10', 'versus', 'aftershocks', 'nextbigone' ].includes( ep.id ) ? [] : [ 'Map data: Natural Earth (public domain), 1:50m land and 1:110m land via world-atlas.' ] ),
     ...( SOURCES[ep.id] ?? [] ).map( x => 'Source: ' + x ),
-    ep.id === 'nextbigone' ? 'The map traces, rings and labels are schematic illustrations, not survey data or footage. The Bay Area and Cascadia probabilities cover different faults, magnitudes and time windows and are not comparable; no joint probability exists, and the question of both regions is hypothetical, not a forecast.' : ep.id === 'mag10' ? 'The fault-length bars are schematic illustrations with no stated lengths for the magnitude 10 fault; not data or footage.' : ep.id === 'versus' ? 'The dot grid is an illustration of the energy ratio (about 5,600 to 1, 10^(1.5 x 2.5)), not data or footage. The ratio is approximate: other USGS energy formulas give a somewhat smaller value.' : ep.id === 'aftershocks' ? 'The seismogram, fault map, decay chart, building and aftershock maps are schematic illustrations, not real data or footage.' : ep.id === 'california' ? 'The fault trace, plate arrows, the accelerated Los Angeles move and the strike-slip diagram are schematic illustrations, not to scale, not data or footage.' : ep.id === 'depth' ? 'Cross-sections, wave rings and the city are schematic illustrations, not to scale, not data or footage (the depth ruler is to scale).' : 'Maps, wave routes and arcs, fault traces, cross-sections, skyline and fire graphics are illustrations, not data or archival footage.',
+    ...( ep.id === 'sftsunami' ? [ 'Synthetic content: the seven photographic-style images were generated with GPT Image 2.5 Sunburst (via ElevenLabs). They are AI-generated illustrations, not photographs or footage of real events, and none shows an actual tsunami. The sign graphic is generic, not an installed sign. Disclose as altered or synthetic content in YouTube Studio.' ] : [] ),
+    ep.id === 'sftsunami' ? 'The Pacific route, wavefronts and Alaska–Aleutian arc position, and the subduction and strike-slip diagrams (the strike-slip diagram is a top-down map view), are schematic illustrations, not data, forecasts or footage. The official California Geological Survey hazard map is not reproduced; no hazard boundaries are drawn.' : ep.id === 'nextbigone' ? 'The map traces, rings and labels are schematic illustrations, not survey data or footage. The Bay Area and Cascadia probabilities cover different faults, magnitudes and time windows and are not comparable; no joint probability exists, and the question of both regions is hypothetical, not a forecast.' : ep.id === 'mag10' ? 'The fault-length bars are schematic illustrations with no stated lengths for the magnitude 10 fault; not data or footage.' : ep.id === 'versus' ? 'The dot grid is an illustration of the energy ratio (about 5,600 to 1, 10^(1.5 x 2.5)), not data or footage. The ratio is approximate: other USGS energy formulas give a somewhat smaller value.' : ep.id === 'aftershocks' ? 'The seismogram, fault map, decay chart, building and aftershock maps are schematic illustrations, not real data or footage.' : ep.id === 'california' ? 'The fault trace, plate arrows, the accelerated Los Angeles move and the strike-slip diagram are schematic illustrations, not to scale, not data or footage.' : ep.id === 'depth' ? 'Cross-sections, wave rings and the city are schematic illustrations, not to scale, not data or footage (the depth ruler is to scale).' : 'Maps, wave routes and arcs, fault traces, cross-sections, skyline and fire graphics are illustrations, not data or archival footage.',
     '',
     'Production Technology',
     'Automated news and video production powered by Output.ai',
@@ -248,6 +257,16 @@ function render( ep: EpisodeMeta, withAudio: boolean ) {
     staged.push( target );
   };
   try {
+    if ( ep.id === 'sftsunami' ) {
+      // Approved stills: copies of the originals under assets/myth-sf-tsunami/ (never renamed or modified), staged under short names.
+      for ( const [ key, img ] of Object.entries( SF_IMAGES ) ) {
+        const source = join( root, 'assets', 'myth-sf-tsunami', img.file );
+        if ( !existsSync( source ) ) {
+          throw new Error( `missing approved image ${ source }` );
+        }
+        stage( `myth-sf-tsunami/${ key }.png`, readFileSync( source ) );
+      }
+    }
     let props = {};
     if ( withAudio ) {
       needMusic();
