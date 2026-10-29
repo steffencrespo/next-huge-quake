@@ -1,0 +1,332 @@
+{
+  "clips": [
+    {
+      "id": "h0",
+      "file": "audio/edu/04eee112b6e6f841-fast-beats.mp3",
+      "start": 0.2,
+      "duration": 2.4,
+      "gain": 0.97
+    },
+    {
+      "id": "h1",
+      "file": "audio/edu/7ef1a395678b06de-fast-beats.mp3",
+      "start": 2.64,
+      "duration": 3.267,
+      "gain": 1.08
+    },
+    {
+      "id": "q",
+      "file": "audio/edu/9e03baee595783c4-fast-beats.mp3",
+      "start": 5.947,
+      "duration": 1.237,
+      "gain": 0.99
+    },
+    {
+      "id": "again",
+      "file": "audio/edu/2d0c05b97037c465-fast-beats.mp3",
+      "start": 7.484,
+      "duration": 0.657,
+      "gain": 1.08
+    },
+    {
+      "id": "e84a",
+      "file": "audio/edu/0b98ac7739d598a9-fast-beats.mp3",
+      "start": 8.491,
+      "duration": 4.754,
+      "gain": 1.13
+    },
+    {
+      "id": "e84b",
+      "file": "audio/edu/fa1cd0b21ce9cd1d-fast-beats.mp3",
+      "start": 13.285,
+      "duration": 3.159,
+      "gain": 0.93
+    },
+    {
+      "id": "nj0",
+      "file": "audio/edu/bccba6db1521a3ba-fast-beats.mp3",
+      "start": 16.794,
+      "duration": 4.547,
+      "gain": 0.92
+    },
+    {
+      "id": "nj1",
+      "file": "audio/edu/a59712ada48547fa-fast-beats.mp3",
+      "start": 21.381,
+      "duration": 0.893,
+      "gain": 1
+    },
+    {
+      "id": "nj2",
+      "file": "audio/edu/295146df45ecf95c-fast-beats.mp3",
+      "start": 22.314,
+      "duration": 5.102,
+      "gain": 0.95
+    },
+    {
+      "id": "but",
+      "file": "audio/edu/a7f30ab03ab5f780-fast-beats.mp3",
+      "start": 27.766,
+      "duration": 2.239,
+      "gain": 1.06
+    },
+    {
+      "id": "haz0",
+      "file": "audio/edu/976543c0367c098d-fast-beats.mp3",
+      "start": 30.305,
+      "duration": 3.397,
+      "gain": 0.95
+    },
+    {
+      "id": "haz1",
+      "file": "audio/edu/61dd89bdc00103d3-fast-beats.mp3",
+      "start": 33.742,
+      "duration": 4.955,
+      "gain": 1
+    },
+    {
+      "id": "sky",
+      "file": "audio/edu/565da121583b3481-fast-beats.mp3",
+      "start": 38.997,
+      "duration": 1.993,
+      "gain": 1.02
+    },
+    {
+      "id": "v0",
+      "file": "audio/edu/a925da8a27d273e4-fast-beats.mp3",
+      "start": 41.03,
+      "duration": 3.89,
+      "gain": 1.04
+    },
+    {
+      "id": "v1",
+      "file": "audio/edu/bee70cb6a67fa2e2-fast-beats.mp3",
+      "start": 44.96,
+      "duration": 3.485,
+      "gain": 1.01
+    },
+    {
+      "id": "yes",
+      "file": "audio/edu/9e97cc1e45834449-fast-beats.mp3",
+      "start": 48.795,
+      "duration": 2.757,
+      "gain": 0.87
+    },
+    {
+      "id": "no",
+      "file": "audio/edu/6ac2f712057cfe39-fast-beats.mp3",
+      "start": 51.852,
+      "duration": 1.92,
+      "gain": 1.09
+    },
+    {
+      "id": "end",
+      "file": "audio/edu/f88ad70921c526c1-fast-beats.mp3",
+      "start": 54.072,
+      "duration": 2.377,
+      "gain": 1.02
+    }
+  ],
+  "captions": [
+    {
+      "text": "Imagine a powerful earthquake striking New",
+      "start": 0.2,
+      "end": 2.072
+    },
+    {
+      "text": "York City.",
+      "start": 2.072,
+      "end": 2.6
+    },
+    {
+      "text": "Buildings shaking.",
+      "start": 2.64,
+      "end": 3.757
+    },
+    {
+      "text": "Streets cracking.",
+      "start": 3.845,
+      "end": 4.692
+    },
+    {
+      "text": "Millions caught off guard.",
+      "start": 4.764,
+      "end": 5.907
+    },
+    {
+      "text": "Sounds like Hollywood fiction?",
+      "start": 5.947,
+      "end": 7.184
+    },
+    {
+      "text": "Think again.",
+      "start": 7.484,
+      "end": 8.141
+    },
+    {
+      "text": "In eighteen eighty-four,",
+      "start": 8.491,
+      "end": 9.681
+    },
+    {
+      "text": "an earthquake estimated at magnitude five",
+      "start": 9.681,
+      "end": 11.679
+    },
+    {
+      "text": "point two shook New York.",
+      "start": 11.679,
+      "end": 13.245
+    },
+    {
+      "text": "It damaged chimneys and brick buildings in",
+      "start": 13.285,
+      "end": 15.288
+    },
+    {
+      "text": "New York and New Jersey.",
+      "start": 15.288,
+      "end": 16.444
+    },
+    {
+      "text": "And in twenty twenty-four,",
+      "start": 16.794,
+      "end": 18.068
+    },
+    {
+      "text": "a magnitude four point eight earthquake",
+      "start": 18.068,
+      "end": 20.036
+    },
+    {
+      "text": "struck nearby New Jersey.",
+      "start": 20.036,
+      "end": 21.341
+    },
+    {
+      "text": "Millions felt it.",
+      "start": 21.381,
+      "end": 22.274
+    },
+    {
+      "text": "The USGS received more than one hundred",
+      "start": 22.314,
+      "end": 24.7
+    },
+    {
+      "text": "eighty thousand reports,",
+      "start": 24.7,
+      "end": 25.996
+    },
+    {
+      "text": "the most for any earthquake.",
+      "start": 25.996,
+      "end": 27.416
+    },
+    {
+      "text": "But here’s what makes this truly unsettling.",
+      "start": 27.766,
+      "end": 30.005
+    },
+    {
+      "text": "New York City’s official hazard plan cites",
+      "start": 30.305,
+      "end": 32.431
+    },
+    {
+      "text": "USGS maps:",
+      "start": 32.431,
+      "end": 33.702
+    },
+    {
+      "text": "a five to twenty-five percent chance of",
+      "start": 33.742,
+      "end": 35.965
+    },
+    {
+      "text": "potentially damaging shaking in the next",
+      "start": 35.965,
+      "end": 37.965
+    },
+    {
+      "text": "hundred years.",
+      "start": 37.965,
+      "end": 38.697
+    },
+    {
+      "text": "And the biggest danger isn’t",
+      "start": 38.997,
+      "end": 40.163
+    },
+    {
+      "text": "the skyscrapers.",
+      "start": 40.163,
+      "end": 40.99
+    },
+    {
+      "text": "It’s older brick buildings,",
+      "start": 41.03,
+      "end": 42.362
+    },
+    {
+      "text": "aging underground infrastructure,",
+      "start": 42.362,
+      "end": 43.924
+    },
+    {
+      "text": "and soft ground.",
+      "start": 43.924,
+      "end": 44.92
+    },
+    {
+      "text": "They could turn a moderate earthquake into",
+      "start": 44.96,
+      "end": 47.012
+    },
+    {
+      "text": "a costly urban disaster.",
+      "start": 47.012,
+      "end": 48.445
+    },
+    {
+      "text": "So, could a damaging earthquake hit",
+      "start": 48.795,
+      "end": 50.576
+    },
+    {
+      "text": "New York?",
+      "start": 50.576,
+      "end": 51.051
+    },
+    {
+      "text": "Yes.",
+      "start": 51.134,
+      "end": 51.552
+    },
+    {
+      "text": "Is a catastrophic quake likely?",
+      "start": 51.852,
+      "end": 53.362
+    },
+    {
+      "text": "No.",
+      "start": 53.476,
+      "end": 53.772
+    },
+    {
+      "text": "Myth or fact?",
+      "start": 54.072,
+      "end": 54.982
+    },
+    {
+      "text": "New York isn’t earthquake-proof.",
+      "start": 55.064,
+      "end": 56.449
+    }
+  ],
+  "narrationStart": 0.2,
+  "narrationEnd": 56.449,
+  "musicFile": "audio/ytal-deified-the-grey-room.mp3",
+  "musicCredit": "\"Deified\" by The Grey Room / Density & Time.\nSource: YouTube Audio Library.",
+  "pacing": "fast-beats"
+}
