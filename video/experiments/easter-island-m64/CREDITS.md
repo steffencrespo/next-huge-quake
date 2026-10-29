@@ -1,0 +1,19 @@
+# Easter Island M6.4 breaking-news Short (USGS us7000ttxz, 2026-10-29): local experiment credits
+
+Proposed title: M6.4 EARTHQUAKE Near EASTER ISLAND! What Happened? #shorts (draft metadata in `metadata.draft.json`)
+
+Composition: `EasterIslandM64` (this folder). Narration: ElevenLabs text-to-speech (voice: Daniel), `fast-beats` pacing (Panama D4, pitch preserved). Music: "Deified" by The Grey Room / Density & Time, YouTube Audio Library. Sound effects: synthesized for this video. Paid narration: 590 characters (ledger `out/edu/credit-ledger-easter-island-m64-us7000ttxz.json`).
+
+Synthetic content: the opening image (`assets/images/easter-island-m64/easter-island-m64-opening.png`, approved, generated manually with ElevenLabs, shown for about four seconds) is an AI-generated illustration of Easter Island with moai. It is not a photograph or footage of the earthquake or of any effects on the island. On screen: only a small translucent "AI VISUALIZATION" watermark (top-left) while it is visible, per the editorial convention; the full disclosure is in the metadata, description and credits. When publishing: `containsSyntheticMedia: true` and the Studio disclosure. No other image was generated.
+
+Data (cached in `data.json` by `fetch.ts`, fetched 2026-10-29 ~13:00 UTC): USGS ComCat us7000ttxz, reviewed, Mww 6.4 (±0.036), 07:49:50 UTC, 36.4058°S 98.0489°W, depth 10 km **operator assigned**, PAGER green (automatic): "low likelihood of casualties and damage", population exposure 0 at every intensity, no cities listed. Moment tensor: nodal planes 91/72/173 and 184/84/18, i.e. strike-slip. PTWC and NTWC atom feeds: latest message 2026-10-25 (Bonin Islands), none for this event. Map: Natural Earth land (public domain), MapLibre GL. Seismicity dots: USGS M5+ 1976-2026, lat -47..-22, lon -118..-80 (1,095 events).
+
+Choices where the data is not clear-cut
+- Depth: 10 km is a USGS-assigned (fixed) depth, not a measurement, so the narration says only "shallow" and the card says "USGS-ASSIGNED". The suggested line "at a depth of just ten kilometers" was dropped.
+- Distance: the brief's 1,483 km (USGS nearby places) and our haversine from Hanga Roa (1,486 km) are both narrated as "about fifteen hundred kilometers" and shown as "~1,500 KM".
+- Impact: PAGER is a model. The narration says "estimating no populated areas were exposed to shaking", and on screen "EST. POPULATION EXPOSED: 0". Tsunami and damage are framed as "none reported" (as of 13:00 UTC), not as a confirmed absence. No PTWC message exists for this event. The SHOA (Chile) site was unreachable from the build machine and Chilean news searches found no SHOA bulletin for this quake, so no SHOA statement is quoted.
+- Tectonics: USGS names the region "West Chile Rise"; the Chile Rise is the divergent Nazca-Antarctic boundary, segmented by transform faults (Wikipedia, Chile Rise). The plotted USGS seismicity shows the epicenter on that band. The narration claims only what the moment tensor shows ("slipped sideways"). It does not call the fault a transform fault.
+- History: the 2021 M6.7 (us6000de34) is 26 km from this epicenter; USGS also lists an M6.1 (us7000kvhu, 2023) 22 km away. Only the 2021 event is narrated ("nearly the same spot"). No rate or prediction is stated.
+- The title says "Near Easter Island" (the brief's choice), and the opening says "But not on Easter Island" straight away to correct the impression.
+
+Published publicly 2026-10-29 (owner-approved): https://youtu.be/sq6CqssHcaU in Latest Earthquakes, manifest `publish/easter-island-m64-us7000ttxz.json`, `containsSyntheticMedia: true` sent on upload and publish (the API does not read the field back; confirm in Studio). The description body is the draft in `metadata.draft.json` minus its credits paragraphs, since the publisher appends the credits file.
