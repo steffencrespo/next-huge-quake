@@ -1,6 +1,6 @@
 # Next Huge Quake — Engineering & Experimentation Journal
 
-*Started: 2026-10-21. Historical entries reconstructed from project conversations and GitHub milestones, then checked against the repository, PRs and implementation on 2026-10-21 (repository state: `origin/master` at `ea680e7`, PR #36). Updated 2026-10-28 against `origin/master` at `77f1b85` (PR #62). This is an evidence-oriented log, not a claim of measured audience impact.*
+*Started: 2026-10-21. Historical entries reconstructed from project conversations and GitHub milestones, then checked against the repository, PRs and implementation on 2026-10-21 (repository state: `origin/master` at `ea680e7`, PR #36). Updated 2026-10-28 against `origin/master` at `77f1b85` (PR #62), and 2026-10-29 after PR #68. This is an evidence-oriented log, not a claim of measured audience impact.*
 
 ## Purpose
 
@@ -325,19 +325,43 @@ These were reconstructed afterwards from manifests, state records and article ti
 - **Analytics baseline:** `docs/YOUTUBE_ANALYTICS.md` (PR [#52](https://github.com/steffencrespo/next-huge-quake/pull/52)) holds the 2026-10-22 baseline. The 2026-10-29 checkpoint has not been captured. Videos recorded as published or scheduled since then include California loop (10-23), Vanuatu M6.9 (10-24), SIX SEVEN (10-25), Magnitude 10 (10-26), Chile cinematic (10-27), SIX SEVEN vs FOUR TWO and Vanuatu M6.0 (10-28); note which had changed openings.
 - **Northridge research:** USGS pages disagree on deaths (33 to nearly 100), so the script says "dozens"; figures come from USGS sources and the stills are AI illustrations (see `CREDITS.md`). Loma Prieta handles a similar disagreement ("more than forty" for the Cypress viaduct). Scheduled for 11-05 and 11-07; no data.
 
-## 2026-10-29 — Autonomous production and publication test: Vanuatu M6.2 (deep)
+## 2026-10-29 — Autonomous breaking news: Vanuatu M6.2 (deep), publish first, review after
 
-**Status:** Published. [youtu.be/Orhq2djDOcM](https://youtu.be/Orhq2djDOcM), public and processed, 26 s, in Latest Earthquakes; `inspect` matched every field except `containsSyntheticMedia`, which the API does not read back. No audience data.
+**Status:** Succeeded and published; the owner reviewed it after publication and called it a success [reported]. [youtu.be/Orhq2djDOcM](https://youtu.be/Orhq2djDOcM), public and processed, 26 s, in Latest Earthquakes. Records in PR [#68](https://github.com/steffencrespo/next-huge-quake/pull/68). This led to the "publish first, review after" decision in `docs/DECISION_LOG.md` (2026-10-29). No audience data.
 
-**Hypothesis:** The existing manual path (`discover --check`, `session produce`, publisher `approve`/`upload`/`publish-now`) can run end to end without a human in the loop when the owner gives event-specific authorization up front, with the quality gates checked by the agent instead of a reviewer.
+**Hypothesis:** The existing path (`discover --check`, `session produce`, publisher `approve` / `upload` / `publish-now`) can run end to end with no human checkpoint between production and publication. That requires the owner to authorize one specific event up front and the agent to run the fact, duplicate and quality gates instead of a reviewer.
 
-**Implementation / evidence [repo]:** USGS `us7000tu4f`, M6.2 Mww (reviewed), 142.8 km deep, origin 2026-10-29 21:46:44 UTC, green PAGER, no tsunami flag. `discover --check` found no record under the ID or its alias `usauto7000tu4f`. It sits about 200 km from the shallow north-west sequence and is not linked to it in the video or the description. One `quake_video` run: one attempt, 255 s in total, 212 s of it render; fast-beats pacing, 25.5 s MP4 at 1080×1920. The manifest sets `containsSyntheticMedia: false` (no generated imagery) and discloses the AI narration voice in the description. Approved 23:20:59 UTC and public 23:21:25 UTC, about 1 h 35 min after origin.
+**Scope of the authorization [reported]:** one event (`us7000tu4f`) and one Short. It allowed paid Anthropic and ElevenLabs calls up to an estimated US$1, public publication and a records PR. It ruled out monitoring, pipeline changes and any other video. This was a single authorized run, not a deployed unattended system: discovery was started by the owner's request, and the monitor stayed off.
 
-**Observation (engineering):** The QA was automated. Frame analysis found no black frames, no hard cuts, and one static run, the closing card. The voice sits about 11 dB above the music. An offline Vosk transcription of both the narration and the final mix read every number and "km" correctly; "Vanuatu" was confirmed only with a constrained grammar, and "Port-Olry" is outside the recognizer's vocabulary. ElevenLabs speech-to-text is not enabled on the project key, and whisper.cpp needed a cmake build from source, so it was abandoned. The workflow keeps no local trace, and `output workflow cost` could not find the run, so the Anthropic cost is an estimate (two claude-sonnet-4-6 calls, a few US cents). The ElevenLabs request was 334 characters.
+**Implementation / evidence [repo]:**
+- *Event:* USGS `us7000tu4f`, M6.2 Mww (reviewed), 142.8 km deep, 43 km ESE of Port-Olry, origin 2026-10-29 21:46:44 UTC. Green PAGER, ShakeMap maximum intensity IV, no tsunami flag, 2 DYFI reports. USGS data was fetched again just before approval and had not changed. A news search found no damage or casualty reports.
+- *Duplicates:* `discover --check` found nothing under the ID or its alias `usauto7000tu4f`. There was no manifest, state or package record either. The event lies about 200 km from the shallow north-west sequence; the video and description make no claim about a link.
+- *Production:* one `quake_video` run with one attempt and no retry. Stage times: `quake_news` 29.1 s, spec 1.0 s, narration 4.6 s, terrain 7.6 s (42 tiles fetched), render 212.2 s; 255 s in total. The render took 205.9 s of wall time for 766 frames, with peak memory of about 4.1 GB. Narration was paced with fast-beats from 27.9 s to 20.2 s; the MP4 is 25.5 s, 1080×1920 at 30 fps, 10.4 MB.
+- *Timeline (UTC):* origin 21:46:44, workflow started 22:56:53, approval recorded 23:20:59, public 23:21:25. That is about 1 h 35 min from origin to public, and about 24.5 min from workflow start to public. The QA, the manifest and the speech-recognition detour below took most of those 24.5 minutes. Earlier manually approved breaking items: Tibet about 2 h 26 min, Vanuatu M6.9 about 2 h 05 min. Those were reconstructed differently, so the comparison is only directional.
+- *Automated QA:*
+  - frame analysis: no black frames and no hard cuts; the only static run is the closing card;
+  - visual checks of representative frames: map position, magnitude, depth and the PAGER "not confirmed damage" wording;
+  - voice about 10.9 dB above the music;
+  - speech recognition on both the narration and the final mix: no pauses over 0.5 s, every number and "km" spoken correctly.
+- *Metadata:* the manifest sets `containsSyntheticMedia: false` because there is no generated imagery, and the description discloses the AI narration voice.
+- *Publisher:* the normal `approve` → private `upload` + playlist → `publish-now` sequence ran, with the content hash intact. The approval record was written by the agent under the owner's prior authorization; no approval was fabricated.
 
-**Decision / learning:** The path works unattended once the owner has authorized the event. The weak points are measurement: there is no stored per-run cost and no first-class pronunciation check.
+**Observation (engineering):**
+- *Speech-recognition recovery:* the planned pronunciation check failed three times before it worked. Each failure was found and worked around without spending money or blocking the run:
+  1. ElevenLabs speech-to-text returned "missing permission speech_to_text" for the project key (no charge);
+  2. `pip install faster-whisper` failed because PyAV has no wheel for Python 3.14 on this Intel Mac;
+  3. `brew install whisper-cpp` began compiling cmake from source and was abandoned after about 10 minutes.
 
-**Follow-up:** Check the synthetic-content setting in Studio. Record per-run LLM cost in the `quake_video` result. Consider a reproducible offline STT check in `video/` for proper nouns.
+  Vosk (pip wheel plus the `vosk-model-en-us-0.22-lgraph` model, in a scratch virtualenv) worked. Its limits: "Port-Olry" is not in its vocabulary, and "Vanuatu" was recognized only with a constrained grammar (confidence 0.89–1.0). Proper nouns were therefore only partly verified by machine.
+- *Cost reporting:* the host worker keeps no local trace, and `output workflow cost` / `debug` could not find the run, so the Anthropic cost was not measured. The estimate is about US$0.02–0.03: two claude-sonnet-4-6 calls, a draft and a review, inferred from the worker's activity log. ElevenLabs was one request of 334 characters, about 334 credits at the configured model. The US$1 cap was respected by estimate, not by metering.
+- *Synthetic-media verification:* `inspect` matched title, description, tags, category, language, audience, playlist, privacy and duration. `containsSyntheticMedia` reads back as undefined, so the value actually sent (false) cannot be confirmed through the API; only YouTube Studio shows it. This is the same gap as earlier Shorts that set it to true.
+
+**Decision / learning:** For an explicitly authorized event, the gate between production and publication can be automated without losing the hard checks. The weak points are measurement: cost, pronunciation and the synthetic-media flag were each verified only partly. The resulting operating preference is recorded in `docs/DECISION_LOG.md`. It is not a deployed unattended system: the monitor stays a dry run, and nothing auto-publishes without a per-event (or later, a per-workflow) authorization.
+
+**Follow-up improvements (not started):**
+1. *Reliable local speech recognition:* a reproducible, pinned offline STT check in `video/` that runs on this machine without a source build. It should include a proper-noun check against the script, for example grammar-constrained matching of place names.
+2. *Per-run Anthropic cost tracking:* record token usage and cost per LLM call in the `quake_video` result or a ledger, so the spending cap is metered, not estimated.
+3. *Synthetic-media verification:* confirm the flag after upload, either through a supported API field or a recorded Studio check, and back-fill the check for the Shorts already published with `containsSyntheticMedia` set.
 
 ---
 
@@ -349,7 +373,7 @@ These were reconstructed afterwards from manifests, state records and article ti
 - Which topics justify urgent publication versus scheduled evergreen release?
 - Can the production process remain fast without drifting into repeated, low-value content?
 - When, if ever, do enough recurring tasks justify new Output.ai editorial workflows?
-- How can we minimize breaking-news time-to-publish while preserving factual accuracy, source attribution, budget limits, and bounded human editorial control?
+- How can we minimize breaking-news time-to-publish while preserving factual accuracy, source attribution, budget limits, and bounded human editorial control? The first authorized autonomous run (Vanuatu M6.2, about 1 h 35 min from origin to public) suggests the remaining latency is in detection and QA tooling, not in the approval step.
 - Does a data-driven weekly format (Earthquakes This Week) retain viewers as well as a one-off explainer, and where should its recurring code and data refresh live?
 - Does a short sequence explainer (Vanuatu M6.0) beat a bare alert on stayed-to-watch, and does Fast Track ever beat the manual path on latency?
 - Do cinematic AI-illustrated Shorts retain better than earlier map-only historic Shorts, and does the on-screen disclosure treatment change that?
