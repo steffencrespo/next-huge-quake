@@ -28,7 +28,9 @@
     "render:kids": "tsx scripts/render-kids.ts",
     "plan:kids-narration": "tsx scripts/kids-narration-plan.ts",
     "youtube:connect": "tsx scripts/youtube-connect.ts",
-    "youtube:publish": "tsx scripts/youtube-publish.ts"
+    "youtube:publish": "tsx scripts/youtube-publish.ts",
+    "instagram:connect": "tsx scripts/instagram-connect.ts",
+    "instagram:publish": "tsx scripts/instagram-publish.ts"
   },
   "engines": {
     "node": ">=24.3.0"
