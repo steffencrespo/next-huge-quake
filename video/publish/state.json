@@ -326,5 +326,14 @@
     "videoId": "z3Xl9FJipb4",
     "playlistItemId": "UExLbm9mZkgyb0g1cy40NzZCMERDMjVEN0RFRThB",
     "publishAt": "2026-11-15T21:00:00Z"
+  },
+  "taipei101-cinematic": {
+    "status": "scheduled",
+    "contentHash": "b5e0fd14e9f673ddc02d605a4649c812cabe6a4b050e0189500abea5cf864386",
+    "fileSize": 33101501,
+    "updatedAt": "2026-10-31T18:31:32.172Z",
+    "videoId": "Fvpb-GlcvqY",
+    "publishAt": "2026-11-17T21:00:00Z",
+    "playlistItemId": "UExEcXVIdXhaWnlTdy45RTgxNDRBMzUwRjQ0MDhC"
   }
 }

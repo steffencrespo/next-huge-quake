@@ -1,0 +1,198 @@
+{
+  "clips": [
+    {
+      "id": "hook",
+      "file": "audio/edu/7e914595557f0fde-fast-beats.mp3",
+      "start": 0.2,
+      "duration": 2.394,
+      "gain": 0.93
+    },
+    {
+      "id": "taiwan",
+      "file": "audio/edu/9fc908b3a590fe5c-fast-beats.mp3",
+      "start": 2.894,
+      "duration": 4.295,
+      "gain": 0.93
+    },
+    {
+      "id": "rose",
+      "file": "audio/edu/5628baeba99b4d12-fast-beats.mp3",
+      "start": 7.229,
+      "duration": 2.771,
+      "gain": 1.11
+    },
+    {
+      "id": "two",
+      "file": "audio/edu/7779a0436bb2f293-fast-beats.mp3",
+      "start": 10.2,
+      "duration": 2.502,
+      "gain": 1.03
+    },
+    {
+      "id": "mags",
+      "file": "audio/edu/d331be0a3b3520ce-fast-beats.mp3",
+      "start": 12.742,
+      "duration": 2.673,
+      "gain": 1.06
+    },
+    {
+      "id": "fault",
+      "file": "audio/edu/09314f80d134a666-fast-beats.mp3",
+      "start": 15.715,
+      "duration": 2.929,
+      "gain": 0.91
+    },
+    {
+      "id": "weight",
+      "file": "audio/edu/4f59fa5ca8d086fe-fast-beats.mp3",
+      "start": 18.684,
+      "duration": 3.642,
+      "gain": 1.09
+    },
+    {
+      "id": "catch",
+      "file": "audio/edu/990d8195fdff9569-fast-beats.mp3",
+      "start": 22.676,
+      "duration": 1.08,
+      "gain": 0.93
+    },
+    {
+      "id": "proof",
+      "file": "audio/edu/9d549565b8c57eb4-fast-beats.mp3",
+      "start": 24.056,
+      "duration": 2.644,
+      "gain": 0.94
+    },
+    {
+      "id": "q",
+      "file": "audio/edu/af2b16e6dab32cbc-fast-beats.mp3",
+      "start": 27.05,
+      "duration": 2.011,
+      "gain": 1
+    },
+    {
+      "id": "end",
+      "file": "audio/edu/324a90a274ac198d-fast-beats.mp3",
+      "start": 29.361,
+      "duration": 2.779,
+      "gain": 1.07
+    }
+  ],
+  "captions": [
+    {
+      "text": "What if a skyscraper could trigger",
+      "start": 0.2,
+      "end": 1.897
+    },
+    {
+      "text": "an earthquake?",
+      "start": 1.897,
+      "end": 2.594
+    },
+    {
+      "text": "In Taiwan, scientists noticed something",
+      "start": 2.894,
+      "end": 4.825
+    },
+    {
+      "text": "strange beneath Taipei one-oh-one.",
+      "start": 4.825,
+      "end": 7.189
+    },
+    {
+      "text": "As the massive tower rose,",
+      "start": 7.229,
+      "end": 8.59
+    },
+    {
+      "text": "earthquake activity increased.",
+      "start": 8.59,
+      "end": 10
+    },
+    {
+      "text": "Then, two earthquakes struck beneath",
+      "start": 10.2,
+      "end": 12.209
+    },
+    {
+      "text": "the area.",
+      "start": 12.209,
+      "end": 12.702
+    },
+    {
+      "text": "Magnitudes three point eight and three",
+      "start": 12.742,
+      "end": 14.834
+    },
+    {
+      "text": "point two.",
+      "start": 14.834,
+      "end": 15.415
+    },
+    {
+      "text": "Researchers found signs of a hidden fault",
+      "start": 15.715,
+      "end": 17.743
+    },
+    {
+      "text": "deep underground.",
+      "start": 17.743,
+      "end": 18.644
+    },
+    {
+      "text": "And they suspected the building’s enormous",
+      "start": 18.684,
+      "end": 20.465
+    },
+    {
+      "text": "weight might have helped trigger",
+      "start": 20.465,
+      "end": 21.85
+    },
+    {
+      "text": "the shaking.",
+      "start": 21.85,
+      "end": 22.326
+    },
+    {
+      "text": "But here’s the catch.",
+      "start": 22.676,
+      "end": 23.756
+    },
+    {
+      "text": "Nobody has proven the tower caused",
+      "start": 24.056,
+      "end": 25.777
+    },
+    {
+      "text": "those earthquakes.",
+      "start": 25.777,
+      "end": 26.7
+    },
+    {
+      "text": "So can a skyscraper trigger an earthquake?",
+      "start": 27.05,
+      "end": 29.061
+    },
+    {
+      "text": "Possibly.",
+      "start": 29.361,
+      "end": 29.892
+    },
+    {
+      "text": "And that’s what makes this discovery",
+      "start": 29.953,
+      "end": 31.291
+    },
+    {
+      "text": "so fascinating.",
+      "start": 31.291,
+      "end": 32.14
+    }
+  ],
+  "narrationStart": 0.2,
+  "narrationEnd": 32.14,
+  "musicFile": "audio/ytal-deified-the-grey-room.mp3",
+  "musicCredit": "\"Deified\" by The Grey Room / Density & Time.\nSource: YouTube Audio Library.",
+  "pacing": "fast-beats"
+}
