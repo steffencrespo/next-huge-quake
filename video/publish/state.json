@@ -335,5 +335,13 @@
     "videoId": "Fvpb-GlcvqY",
     "publishAt": "2026-11-17T21:00:00Z",
     "playlistItemId": "UExEcXVIdXhaWnlTdy45RTgxNDRBMzUwRjQ0MDhC"
+  },
+  "japan-m60-deep-us7000tuku": {
+    "status": "published",
+    "contentHash": "50d8fe964c7c65b60ac41241f7ef2ffca9a84c069acd3cc21fd8859bbe97af9e",
+    "fileSize": 16059752,
+    "updatedAt": "2026-10-31T23:19:35.840Z",
+    "videoId": "P1tpybP4CmU",
+    "playlistItemId": "UExQc1I3NGxJaFdnSS4zMDg5MkQ5MEVDMEM1NTg2"
   }
 }

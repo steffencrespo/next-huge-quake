@@ -365,6 +365,33 @@ These were reconstructed afterwards from manifests, state records and article ti
 
 ---
 
+## 2026-10-31 — Breaking news: Japan M6.0 at 352 km, depth-led narration
+
+**Status:** Published. [youtu.be/P1tpybP4CmU](https://youtu.be/P1tpybP4CmU), public and processed (28 s), in Latest Earthquakes. No audience data.
+
+**Hypothesis:** For a low-impact event, an explanatory angle (here, why a 352 km deep M6.0 differs from a shallow one) makes a stronger Short than the standard facts readout. It can be added fast through the existing package revision path without weakening the fact check.
+
+**Scope of the authorization [reported]:** one event (`us7000tuku`) and one Short. It allowed services, paid Anthropic and ElevenLabs calls, public publication with no checkpoint before it, records, a PR and a merge if checks passed. No AI images. The owner set the title and the opening hook.
+
+**Implementation / evidence [repo]:**
+- *Event:* USGS `us7000tuku`, M6.0 Mww (reviewed), 352.449 km deep, 58 km SSE of Shima, origin 2026-10-31 22:15:02 UTC (07:15 JST, November 1). Since the read-only assessment, PAGER went from null to green (automatic) and significance from 554 to 557. ShakeMap v1 maximum intensity was about III, ground failure green, no tsunami flag, 11 DYFI reports by the 22:55 UTC update. Data was fetched again before production and before the manifest, with no material change. A news search found no damage or casualty reports.
+- *Duplicates:* the first `discover --check` refused because Temporal was down (fail-safe). After `session start` it passed for `us7000tuku` and `usauto7000tuku`. There was no package, manifest, state or monitor record, and the publisher's preview found no title match.
+- *Production:* one `quake_video` run with no retry (`quake_news` 54.7 s, spec 1.3 s, narration 4.4 s, terrain 7.1 s with 46 tiles to fetch, render 264.3 s; 332 s in total). Its narration was a generic facts readout, so a revised package (`out/packages/us7000tuku-depth/`) replaced only the narration. It went through `build-from-package`, `generate-narration` and `render-package` into separate `-depth` output folders, leaving the original run intact. The revision was checked with the M1 `checkDraft` (compiled `dist/`) against the live USGS facts before any paid request. Each draft was corrected without spending: "most damaging earthquakes" was flagged as an unsupported impact claim, and "eleven people sent" was dropped because it counts people. Depth is spoken as "352 kilometers" (±1 km rule). The first passing draft (457 characters) was trimmed to 375 before the request: at the 12.9 characters per second measured on the first run's audio, it would have exceeded the 30.8 s audio limit.
+- *Narration:* Daniel (`3WqHLnw80rOZqJzW9YRB`, `eleven_multilingual_v2`), one request of 375 characters, 30.72 s raw, just under the 30.8 s limit. Fast-beats paced it to 22.5 s; the MP4 is 27.8 s, 1080×1920 at 30 fps, 834 frames, 16.1 MB (SHA-256 `9fb0e769…fe65b0`). Music: "Deified" (YouTube Audio Library).
+- *Timeline (UTC):* origin 22:15:02; workflow started about 23:03; public 23:19:35. That is about 1 h 04 min from origin to public, the fastest breaking item so far (Vanuatu M6.2 took about 1 h 35 min), including the narration revision and a second render of about 6 min.
+- *QA:*
+  - stills at nine timestamps: hook card, epicenter offshore SSE of Shima, depth card (352.4 km, USGS deep range 300–700 km), felt-reports card ("not of individual people"), and the end card with sources;
+  - paced captions follow the script, with no gap over 0.5 s;
+  - **not done:** a speech-recognition pronunciation check (no Vosk environment on this machine) and a measured voice-to-music level. The bundled ffmpeg has no PCM or `volumedetect` encoder, and no system ffmpeg is installed. The mix uses the same pipeline as earlier news Shorts.
+- *Publisher:* `approve` (hash `50d8fe96…`, written by the agent under the owner's authorization) → private `upload` + playlist → `publish-now`. `inspect` matched everything except `containsSyntheticMedia` (false, not readable through the API; same gap as before). Anonymous oEmbed returned 200.
+- *Cost:* ElevenLabs 375 (revision) + about 330 (`quake_video`'s own narration, unused) ≈ 705 credits, about US$0.06. Anthropic was not metered; estimated at about US$0.03 for two calls.
+
+**Decision / learning:** The package revision path works as a fast editorial override after `quake_video`, provided the M1 `checkDraft` runs first. The paid narration from the standard run is wasted when a revision is already likely. A narration-angle option (for example "depth") in `quake_video` would avoid the second TTS request and render. Length is now the tightest constraint: a 62-word script reached 30.72 of 30.8 s.
+
+**Follow-up (not started):** the three follow-ups from the Vanuatu M6.2 entry still apply. In addition, give `quake_video` a way to steer the narration angle before its single TTS request.
+
+---
+
 ## Open questions and measurements
 
 - What measurable effect, if any, does `fast-beats` have on viewer retention versus natural pacing?
