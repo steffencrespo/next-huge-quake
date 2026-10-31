@@ -317,5 +317,14 @@
     "updatedAt": "2026-10-29T23:21:25.846Z",
     "videoId": "Orhq2djDOcM",
     "playlistItemId": "UExQc1I3NGxJaFdnSS45ODRDNTg0QjA4NkFBNkQy"
+  },
+  "sanfrancisco1906-cinematic": {
+    "status": "scheduled",
+    "contentHash": "22b1f2dc363f1634c8c87ab4ae5e4eed1fc383869f5bb1256be82c5de5c19be7",
+    "fileSize": 44834301,
+    "updatedAt": "2026-10-31T12:40:10.500Z",
+    "videoId": "z3Xl9FJipb4",
+    "playlistItemId": "UExLbm9mZkgyb0g1cy40NzZCMERDMjVEN0RFRThB",
+    "publishAt": "2026-11-15T21:00:00Z"
   }
 }

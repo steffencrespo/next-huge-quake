@@ -1,0 +1,56 @@
+{
+  "id": "sanfrancisco1906-cinematic",
+  "file": "experiments/sanfrancisco-1906-cinematic/out/sf1906-cinematic-v3-youtube.mp4",
+  "creditsFile": "experiments/sanfrancisco-1906-cinematic/sf1906-cinematic-v3.credits.txt",
+  "generated": {
+    "title": "San Francisco 1906: One Minute of Shaking, Three Days of Fire #shorts",
+    "description": "On April 18, 1906, a magnitude 7.9 earthquake struck San Francisco.\n\nThe San Andreas Fault ruptured across nearly 300 miles. Water mains broke, fires spread for three days, and approximately 28,000 buildings were destroyed.\n\nMore than half the city's population was left homeless. Thousands lost their lives.\n\nThis cinematic reconstruction combines authentic photographs from the U.S. National Archives with AI-generated historical illustrations. AI-generated scenes are not authentic footage from 1906.\n\nSources:\n- USGS: https://earthquake.usgs.gov/earthquakes/events/1906calif/18april/\n- USGS casualties and damage: https://earthquake.usgs.gov/earthquakes/events/1906calif/18april/casualties.php\n- National Park Service: https://home.nps.gov/prsf/historyculture/1906-earthquake-fire-fighting.htm\n- U.S. National Archives: Record Group 92 photographs (listed in the credits below)\n\n#SanFrancisco #Earthquake #EarthquakeHistory #shorts",
+    "tags": [
+      "earthquake",
+      "earthquakes",
+      "1906 San Francisco earthquake",
+      "San Francisco earthquake",
+      "San Francisco 1906",
+      "San Andreas Fault",
+      "earthquake history",
+      "historic earthquakes",
+      "1906 fire",
+      "National Archives",
+      "AI-generated reconstruction",
+      "shorts"
+    ]
+  },
+  "approved": {
+    "title": "San Francisco 1906: One Minute of Shaking, Three Days of Fire #shorts",
+    "description": "On April 18, 1906, a magnitude 7.9 earthquake struck San Francisco.\n\nThe San Andreas Fault ruptured across nearly 300 miles. Water mains broke, fires spread for three days, and approximately 28,000 buildings were destroyed.\n\nMore than half the city's population was left homeless. Thousands lost their lives.\n\nThis cinematic reconstruction combines authentic photographs from the U.S. National Archives with AI-generated historical illustrations. AI-generated scenes are not authentic footage from 1906.\n\nSources:\n- USGS: https://earthquake.usgs.gov/earthquakes/events/1906calif/18april/\n- USGS casualties and damage: https://earthquake.usgs.gov/earthquakes/events/1906calif/18april/casualties.php\n- National Park Service: https://home.nps.gov/prsf/historyculture/1906-earthquake-fire-fighting.htm\n- U.S. National Archives: Record Group 92 photographs (listed in the credits below)\n\n#SanFrancisco #Earthquake #EarthquakeHistory #shorts",
+    "tags": [
+      "earthquake",
+      "earthquakes",
+      "1906 San Francisco earthquake",
+      "San Francisco earthquake",
+      "San Francisco 1906",
+      "San Andreas Fault",
+      "earthquake history",
+      "historic earthquakes",
+      "1906 fire",
+      "National Archives",
+      "AI-generated reconstruction",
+      "shorts"
+    ]
+  },
+  "categoryId": "27",
+  "language": "en",
+  "madeForKids": false,
+  "containsSyntheticMedia": true,
+  "playlistId": "PLKnoffH2oH5s",
+  "publishAtLocal": "2026-11-15T18:00",
+  "scheduleException": {
+    "reason": "Owner-approved release (approved 2026-10-31): a Sunday slot outside the Tue/Thu/Sat cadence. The 24 h lead time is kept.",
+    "minLeadMinutes": 1440
+  },
+  "approval": {
+    "status": "approved",
+    "approvedAt": "2026-10-31T12:39:02.284Z",
+    "contentHash": "22b1f2dc363f1634c8c87ab4ae5e4eed1fc383869f5bb1256be82c5de5c19be7"
+  }
+}
