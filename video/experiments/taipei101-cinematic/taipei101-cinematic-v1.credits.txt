@@ -1,0 +1,9 @@
+Music: "Deified" by The Grey Room / Density & Time.
+Source: YouTube Audio Library.
+Narration: ElevenLabs text-to-speech (voice: Daniel).
+Sound effects: synthesized for this video.
+Images: four AI-generated illustrations (GPT Image 2.5 Sunburst, through ElevenLabs). They are not photographs; the underground cross-section and fault views are schematic and not to scale.
+
+Production Technology
+Automated news and video production powered by Output.ai
+https://output.ai

@@ -1,0 +1,32 @@
+TAIPEI 101: TIKTOK EDITION (manual upload by the owner; nothing has been uploaded)
+PREFERRED FILE (music-free): video/experiments/taipei101-cinematic/out/taipei101-tiktok-no-music-v1.mp4
+  33.98 s, 1080x1920, 30 fps. sha256 d1afce398de8dea7cfad9cffa5ecae7dc6715e3ca66e73c2589e706a8d8f84c2
+  Add licensed music in TikTok Studio. The video's own audio is narration plus SFX only, and the last 1.8 s are silent.
+Alternative (with Deified): out/taipei101-tiktok-v1.mp4, sha256 79309e90640869831e0639a9eefa614cdfe0f9260ed029259c02bc8898b9a755
+
+=== CAPTION (paste as is) ===
+Could the weight of a single skyscraper actually trigger an earthquake? Scientists noticed something strange beneath Taipei 101, but nobody has proven the tower caused it. What do you think? 👇
+
+Visuals are AI-generated illustrations; the underground scenes are schematic and not to scale.
+Source: Lin (2005), Geophysical Research Letters.
+
+#earthquake #taipei101 #science #geology #taiwan
+
+=== COVER TITLE ===
+DID THIS BUILDING CAUSE AN EARTHQUAKE?
+(Suggested cover frame: around 1.0 s, the low-angle tower with the hook title. If you type the cover text in TikTok, choose a frame with no burned-in title, such as 7.5 s.)
+
+=== SYNTHETIC-MEDIA DISCLOSURE ===
+- Turn on TikTok's "AI-generated content" label when posting. All four stills are AI-generated (ElevenLabs web UI, GPT Image 2.5 Sunburst), and the narration is an ElevenLabs synthetic voice (Daniel).
+- The small "AI VISUALIZATION" mark stays on screen for the whole video, and the caption's disclosure sentence covers the rest.
+- Do not describe the images as photos or footage.
+
+=== SCIENTIFIC SOURCES (for comments or replies) ===
+- Lin, C.-H. (2005). "Seismicity increase after the construction of the world's tallest building: An active blind fault beneath the Taipei 101." Geophysical Research Letters 32(22). doi:10.1029/2005GL024223
+- Chen, K.-C., et al. (2010). "A Blind Normal Fault beneath the Taipei Basin in Northern Taiwan." TAO 21(3):495-502. doi:10.3319/TAO.2010.01.25.01(TH)
+- The skeptics: Vidale (UCLA) said the building's stress probably doesn't reach the quakes' depth of about 10 km; Lubkowski (Arup) said the record is too short (reported by the Taipei Times and UPI/phys.org, December 2005).
+Keep replies to "possible, not proven". Never say the tower caused the quakes.
+
+=== MUSIC ===
+Upload the music-free file and add licensed music in TikTok Studio. Earlier uploads mixed it at about −18 dB, fading in over 1 s and out over 2 s, so the narration stays clear.
+The with-music file carries "Deified" (YouTube Audio Library), whose license doesn't clearly cover use outside YouTube; it's kept only for reference.
