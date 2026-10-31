@@ -1,0 +1,11 @@
+Music: "Deified" by The Grey Room / Density & Time.
+Source: YouTube Audio Library.
+Narration: ElevenLabs text-to-speech (voice: Daniel).
+Sound effects: synthesized for this video.
+Map data: Natural Earth (public domain). The fault trace on the map is approximate and schematic.
+Photographs: U.S. National Archives, Record Group 92, Records of the Office of the Quartermaster General, series "Photographs of the Aftermath of the San Francisco Earthquake" (NAID 522932): Market Street from Third Street (NAID 522933), City Hall (NAID 522956), view from Nob Hill (NAID 522952), Jefferson Square refugee camp (NAID 522960). https://catalog.archives.gov/id/522932
+The color scenes are AI-generated illustrations (six images made with GPT Image 2.5 Sunburst and one animated clip made with Seedance 1.5 Pro, through ElevenLabs). They are not photographs or footage from 1906, and the streets and buildings shown are not documented historical places.
+
+Production Technology
+Automated news and video production powered by Output.ai
+https://output.ai
