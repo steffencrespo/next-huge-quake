@@ -1,0 +1,10 @@
+Earthquakes in October 2026 (Oct 1-31 UTC, worldwide, magnitude 5.0 or greater) - 9:16 TikTok version (no background music) credits
+
+Earthquake data: U.S. Geological Survey (USGS) Earthquake Catalog, https://earthquake.usgs.gov/fdsnws/event/1/ (public domain).
+  Query: starttime=2026-10-01T00:00:00Z, endtime=2026-11-01T00:00:00Z, minmagnitude=5, eventtype=earthquake. Retrieved 2026-11-01 00:03:13 UTC.
+Map: Natural Earth land, coastline, borders (public domain), rendered with MapLibre GL.
+Narration: English text-to-speech, ElevenLabs voice "Daniel - Radio News Host".
+Music: none in the file. Project rule: TikTok music is added manually in the TikTok app.
+Video: Next Huge Quake.
+
+Not published. For manual upload only.

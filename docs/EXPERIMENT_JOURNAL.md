@@ -288,7 +288,9 @@ These were reconstructed afterwards from manifests, state records and article ti
 
 **Observation (engineering):** Restricting the vertical script to lines that already exist in the landscape script made the edit free and guaranteed the same wording; regions 3–5 moved from narration to the on-screen ranking. Several first-draft labels were under the 30 px project minimum and were raised before the render.
 
-**Follow-up:** Check the safe-area placement on a phone after a manual upload; decide the TikTok music path (the project prefers music-free TikTok cuts).
+**TikTok version (2026-11-01):** `out/earthquakes-october-2026-tiktok-final.mp4`, no background music (project rule: TikTok music is added manually in the app). The Shorts video stream is copied unchanged and the audio is re-mixed from the original paced narration stems with the composition's timings and gains (`export-tiktok.ts`), so nothing is filtered from the mixed track and nothing is re-rendered. `qa/tiktok.ts`: identical video bitstream, silent gaps (−120 dB) where Shorts has music, every clip aligned (0 ms) and within 0.6 dB of the Shorts mix, no clipping. 0 credits.
+
+**Follow-up:** Check the safe-area placement on a phone after a manual upload.
 
 ## 2026-10-28 — Monthly compilation (proposed concept, not implemented)
 
