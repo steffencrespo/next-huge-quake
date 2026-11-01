@@ -1,0 +1,292 @@
+{
+  "clips": [
+    {
+      "id": "hook",
+      "file": "audio/edu/d34ab6acf1d4e348.mp3",
+      "start": 1,
+      "duration": 6.844,
+      "gain": 0.9
+    },
+    {
+      "id": "dots",
+      "file": "audio/edu/8ae2163f76075f82.mp3",
+      "start": 9.2,
+      "duration": 4.571,
+      "gain": 0.88
+    },
+    {
+      "id": "b0",
+      "file": "audio/edu/a2f84f0beaa299c4.mp3",
+      "start": 15.3,
+      "duration": 2.664,
+      "gain": 1.08
+    },
+    {
+      "id": "r0",
+      "file": "audio/edu/a354c51bb5c6c71d.mp3",
+      "start": 19.5,
+      "duration": 5.224,
+      "gain": 1.1
+    },
+    {
+      "id": "r1",
+      "file": "audio/edu/60427f78676d23aa.mp3",
+      "start": 26,
+      "duration": 2.612,
+      "gain": 0.89
+    },
+    {
+      "id": "r2",
+      "file": "audio/edu/3b2e8c86ea501128.mp3",
+      "start": 31,
+      "duration": 3.866,
+      "gain": 0.92
+    },
+    {
+      "id": "r3",
+      "file": "audio/edu/aa1f9dbd5bfc3265.mp3",
+      "start": 36,
+      "duration": 2.377,
+      "gain": 0.91
+    },
+    {
+      "id": "r4",
+      "file": "audio/edu/38fced6415e2a9d9.mp3",
+      "start": 41,
+      "duration": 3.187,
+      "gain": 1.07
+    },
+    {
+      "id": "r5",
+      "file": "audio/edu/3a0469941923f679.mp3",
+      "start": 46,
+      "duration": 2.795,
+      "gain": 1.02
+    },
+    {
+      "id": "rest",
+      "file": "audio/edu/88b4724685595eb8.mp3",
+      "start": 52,
+      "duration": 4.232,
+      "gain": 1.17
+    },
+    {
+      "id": "plate",
+      "file": "audio/edu/05ae8d4c5e1f674d.mp3",
+      "start": 59,
+      "duration": 3.265,
+      "gain": 1.02
+    },
+    {
+      "id": "c0",
+      "file": "audio/edu/e4468dae3627ec72.mp3",
+      "start": 73,
+      "duration": 6.792,
+      "gain": 0.85
+    },
+    {
+      "id": "c1",
+      "file": "audio/edu/c9d51a0a49062de7.mp3",
+      "start": 82,
+      "duration": 5.825,
+      "gain": 0.9
+    },
+    {
+      "id": "c2",
+      "file": "audio/edu/a83143838d27be42.mp3",
+      "start": 91,
+      "duration": 5.695,
+      "gain": 1.04
+    },
+    {
+      "id": "s0",
+      "file": "audio/edu/0029cddb38ce4717.mp3",
+      "start": 100,
+      "duration": 6.008,
+      "gain": 1.1
+    },
+    {
+      "id": "s1",
+      "file": "audio/edu/88291d94c1c46cf5.mp3",
+      "start": 107,
+      "duration": 3.866,
+      "gain": 1
+    }
+  ],
+  "captions": [
+    {
+      "text": "Worldwide, from October first to",
+      "start": 1,
+      "end": 3.09
+    },
+    {
+      "text": "twenty-fifth: one hundred twenty-one",
+      "start": 3.09,
+      "end": 5.365
+    },
+    {
+      "text": "earthquakes above magnitude five.",
+      "start": 5.365,
+      "end": 7.78
+    },
+    {
+      "text": "This is a historical record.",
+      "start": 9.2,
+      "end": 10.756
+    },
+    {
+      "text": "Each red dot marks one epicenter.",
+      "start": 11.139,
+      "end": 13.705
+    },
+    {
+      "text": "Watch them appear,",
+      "start": 15.3,
+      "end": 16.693
+    },
+    {
+      "text": "day by day.",
+      "start": 16.693,
+      "end": 17.901
+    },
+    {
+      "text": "The most active area was the Vanuatu",
+      "start": 19.5,
+      "end": 21.822
+    },
+    {
+      "text": "region, with thirty-three earthquakes.",
+      "start": 21.822,
+      "end": 24.655
+    },
+    {
+      "text": "Central America recorded thirteen.",
+      "start": 26,
+      "end": 28.554
+    },
+    {
+      "text": "The Japan, Kuril and Kamchatka region",
+      "start": 31,
+      "end": 33.775
+    },
+    {
+      "text": "had twelve.",
+      "start": 33.775,
+      "end": 34.808
+    },
+    {
+      "text": "The Indonesia region had eleven.",
+      "start": 36,
+      "end": 38.322
+    },
+    {
+      "text": "The China and Central Asia region",
+      "start": 41,
+      "end": 43.09
+    },
+    {
+      "text": "had nine.",
+      "start": 43.09,
+      "end": 44.111
+    },
+    {
+      "text": "And the Papua New Guinea region, eight.",
+      "start": 46,
+      "end": 48.74
+    },
+    {
+      "text": "The remaining thirty-five were spread across",
+      "start": 52,
+      "end": 54.775
+    },
+    {
+      "text": "the rest of the world.",
+      "start": 54.775,
+      "end": 56.18
+    },
+    {
+      "text": "Most cluster along the boundaries of",
+      "start": 59,
+      "end": 60.904
+    },
+    {
+      "text": "tectonic plates.",
+      "start": 60.904,
+      "end": 62.204
+    },
+    {
+      "text": "The strongest was magnitude seven point",
+      "start": 73,
+      "end": 75.299
+    },
+    {
+      "text": "seven, near Pitaloza Arriba,",
+      "start": 75.299,
+      "end": 77.307
+    },
+    {
+      "text": "Panama, on October ninth.",
+      "start": 77.307,
+      "end": 79.734
+    },
+    {
+      "text": "Next, magnitude seven point zero,",
+      "start": 82,
+      "end": 84.752
+    },
+    {
+      "text": "near Nagqu, China,",
+      "start": 84.752,
+      "end": 86.017
+    },
+    {
+      "text": "on October twenty-second.",
+      "start": 86.017,
+      "end": 87.759
+    },
+    {
+      "text": "And magnitude six point nine,",
+      "start": 91,
+      "end": 93.252
+    },
+    {
+      "text": "near Ozernovskiy, Russia,",
+      "start": 93.252,
+      "end": 94.936
+    },
+    {
+      "text": "on October sixteenth.",
+      "start": 94.936,
+      "end": 96.619
+    },
+    {
+      "text": "In all, eighteen earthquakes reached",
+      "start": 100,
+      "end": 102.45
+    },
+    {
+      "text": "magnitude six or greater,",
+      "start": 102.45,
+      "end": 104.284
+    },
+    {
+      "text": "and two reached seven.",
+      "start": 104.284,
+      "end": 105.944
+    },
+    {
+      "text": "Historical records, from the",
+      "start": 107,
+      "end": 108.753
+    },
+    {
+      "text": "U.S. Geological Survey.",
+      "start": 108.753,
+      "end": 110.808
+    }
+  ],
+  "narrationStart": 1,
+  "narrationEnd": 110.866,
+  "musicFile": "audio/ytal-deified-the-grey-room.mp3",
+  "musicCredit": "\"Deified\" by The Grey Room / Density & Time.\nSource: YouTube Audio Library."
+}

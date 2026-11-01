@@ -270,6 +270,16 @@ These were reconstructed afterwards from manifests, state records and article ti
 
 **Follow-up:** Editorial review, then decide whether 115 s suits a channel whose traffic is 90.9% Shorts feed [metric: 2026-10-22 baseline, `docs/YOUTUBE_ANALYTICS.md`].
 
+## 2026-11-01 — Earthquakes in October 2026: FINAL landscape live loop
+
+**Status:** Final render approved by the owner on 2026-11-01; not published (manual upload only). Experiment source, data snapshot, clip manifest and records are tracked in `video/experiments/quakes-october-live/` (`RECORD-final.md`, `CREDITS-final.txt`); the MP4 (`out/earthquakes-october-2026-live-final.mp4`) and the narration audio stay local and git-ignored.
+
+**Implementation / evidence [repo]:** The vertical Oct 1–25 version was turned into a 1920×1080 loop (`QuakesOctoberFinal.tsx`, `script-final.ts`, `fetch-final.ts`, `audio-final.ts`, `render-final.ts`, `qa/`). USGS full month, 2026-10-01T00:00Z to 2026-11-01T00:00Z, M≥5.0, retrieved 2026-11-01 00:03 UTC: 216 events (195 M5, 19 M6, 2 M7), largest M7.7 near Pitaloza Arriba, Panama (Oct 9). No local magnitude filter: every label says "5.0 or greater". 118 s, 61.1 MB; 734 new narration credits (5 clips reused). `src/map/LiveMap.tsx` gained optional width/height props (default 1080×1920, so vertical compositions are unchanged).
+
+**Observation (engineering):** The bundled ffmpeg lacks `volumedetect` and the `null` encoder but has the `pcm_s16le` encoder, the `wav` muxer and the `loudnorm` filter. Decoding to WAV and measuring in Node, plus `loudnorm` JSON, gives levels; AVFoundation through a Swift script gives frame decoding and black/frozen/seam checks on this Intel Mac. For a loop, cross-fading the music from offset = video length into offset 0 removes the silent dip at the seam. A tie for third strongest (two M6.9) was caught by a guard; both are shown.
+
+**Follow-up:** Editorial review before any upload. The `yuvj420p` (full-range) tag on Remotion's output is worth checking if colour shifts appear on YouTube.
+
 ## 2026-10-28 — Monthly compilation (proposed concept, not implemented)
 
 **Status:** Concept only. No code, script, manifest or render exists in the repository [repo: none found on `origin/master` at `77f1b85`]. The idea comes from project conversation [reported].

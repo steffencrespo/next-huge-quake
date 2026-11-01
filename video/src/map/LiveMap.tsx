@@ -55,6 +55,9 @@ export type LiveMapProps = {
   /** Layers between the map and the overlay (e.g. a vignette). */
   children?: React.ReactNode;
   background?: string;
+  /** Canvas size in pixels; defaults to the vertical 1080×1920 frame. */
+  width?: number;
+  height?: number;
 };
 
 /**
@@ -96,7 +99,7 @@ function guardRequests( allowedHosts: string[], errors: { current: string[] } ) 
   };
 }
 
-export const LiveMap: React.FC<LiveMapProps> = ( { cameraAt, epicenter, tiles, style: customStyle, allowedHosts = [], diagnostics = {}, overlay, trackPoints, children, background = '#000' } ) => {
+export const LiveMap: React.FC<LiveMapProps> = ( { cameraAt, epicenter, tiles, style: customStyle, allowedHosts = [], diagnostics = {}, overlay, trackPoints, children, background = '#000', width = WIDTH, height = HEIGHT } ) => {
   const frame = useCurrentFrame();
   const containerRef = useRef<HTMLDivElement>( null );
   const [ map, setMap ] = useState<MapLibreMap | null>( null );
@@ -211,7 +214,7 @@ export const LiveMap: React.FC<LiveMapProps> = ( { cameraAt, epicenter, tiles, s
 
   return (
     <AbsoluteFill style={{ backgroundColor: background }}>
-      <div ref={containerRef} style={{ position: 'absolute', width: WIDTH, height: HEIGHT }} />
+      <div ref={containerRef} style={{ position: 'absolute', width, height }} />
       {children}
       {marker && overlay ? overlay( marker, frame, tracked?.frame === frame ? tracked.points : undefined ) : null}
     </AbsoluteFill>

@@ -1,0 +1,3747 @@
+{
+ "source": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-10-01T00:00:00Z&endtime=2026-11-01T00:00:00Z&minmagnitude=5&eventtype=earthquake&orderby=time-asc",
+ "retrievedAt": "2026-11-01T00:03:13.352Z",
+ "snapshot": "snapshot/usgs-2026-11-01T00-03-13-352Z.geojson",
+ "startUtc": "2026-10-01T00:00:00.000Z",
+ "endUtcExclusive": "2026-11-01T00:00:00.000Z",
+ "coverage": "full-month",
+ "apiCount": 216,
+ "duplicatesRemoved": [],
+ "events": [
+  {
+   "id": "us6000tyny",
+   "ids": [
+    "us6000tyny"
+   ],
+   "time": "2026-10-01T01:29:20.875Z",
+   "mag": 5,
+   "magType": "mww",
+   "place": "4 km SE of Baghlān, Afghanistan",
+   "lon": 68.7436,
+   "lat": 36.1078,
+   "depth": 55.091,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tyny"
+  },
+  {
+   "id": "us6000tyq7",
+   "ids": [
+    "us6000tyq7"
+   ],
+   "time": "2026-10-01T05:34:10.575Z",
+   "mag": 5.3,
+   "magType": "mb",
+   "place": "42 km WSW of Palimbang, Philippines",
+   "lon": 123.8339,
+   "lat": 6.0524,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tyq7"
+  },
+  {
+   "id": "us6000tytg",
+   "ids": [
+    "us6000tytg"
+   ],
+   "time": "2026-10-01T12:27:14.063Z",
+   "mag": 5.2,
+   "magType": "mww",
+   "place": "0 km ENE of Yokoshiba, Japan",
+   "lon": 140.4924,
+   "lat": 35.653,
+   "depth": 64.885,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tytg"
+  },
+  {
+   "id": "us6000tyua",
+   "ids": [
+    "us6000tyua"
+   ],
+   "time": "2026-10-01T14:19:59.036Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "177 km NNE of Ruteng, Indonesia",
+   "lon": 120.8431,
+   "lat": -7.0506,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tyua"
+  },
+  {
+   "id": "us6000tyw6",
+   "ids": [
+    "us6000tyw6"
+   ],
+   "time": "2026-10-01T17:17:17.225Z",
+   "mag": 5.1,
+   "magType": "mww",
+   "place": "103 km ENE of Miyako, Japan",
+   "lon": 143.1211,
+   "lat": 39.8559,
+   "depth": 14.481,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tyw6"
+  },
+  {
+   "id": "us6000tywu",
+   "ids": [
+    "us6000tywu"
+   ],
+   "time": "2026-10-01T19:38:01.254Z",
+   "mag": 5.1,
+   "magType": "mww",
+   "place": "182 km SE of Lata, Solomon Islands",
+   "lon": 166.9873,
+   "lat": -11.8787,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tywu"
+  },
+  {
+   "id": "us6000tyzl",
+   "ids": [
+    "us6000tyzl"
+   ],
+   "time": "2026-10-02T04:44:53.243Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "167 km ESE of Gizo, Solomon Islands",
+   "lon": 158.141,
+   "lat": -8.8914,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tyzl"
+  },
+  {
+   "id": "us6000tz0x",
+   "ids": [
+    "us6000tz0x"
+   ],
+   "time": "2026-10-02T11:14:13.822Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "61 km SW of Panguna, Papua New Guinea",
+   "lon": 155.0278,
+   "lat": -6.634,
+   "depth": 35,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tz0x"
+  },
+  {
+   "id": "us6000tz1c",
+   "ids": [
+    "us6000tz1c"
+   ],
+   "time": "2026-10-02T13:57:15.823Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "4 km ENE of Inglewood, New Zealand",
+   "lon": 174.2319,
+   "lat": -39.144,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tz1c"
+  },
+  {
+   "id": "us6000tz5h",
+   "ids": [
+    "us6000tz5h"
+   ],
+   "time": "2026-10-02T16:31:24.505Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "22 km SSE of Güiria, Venezuela",
+   "lon": -62.2335,
+   "lat": 10.3838,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tz5h"
+  },
+  {
+   "id": "us6000tz62",
+   "ids": [
+    "usauto6000tz62",
+    "attmagps",
+    "us6000tz62"
+   ],
+   "time": "2026-10-02T16:34:39.331Z",
+   "mag": 5.7,
+   "magType": "mww",
+   "place": "152 km SE of Vilyuchinsk, Russia",
+   "lon": 159.6705,
+   "lat": 51.798,
+   "depth": 17,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tz62"
+  },
+  {
+   "id": "us6000tz7b",
+   "ids": [
+    "us6000tz7b"
+   ],
+   "time": "2026-10-02T18:25:20.937Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "173 km SSE of Vilyuchinsk, Russia",
+   "lon": 159.7723,
+   "lat": 51.6115,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tz7b"
+  },
+  {
+   "id": "us6000tzal",
+   "ids": [
+    "us6000tzal"
+   ],
+   "time": "2026-10-03T02:59:06.658Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "169 km SE of Petropavlovsk-Kamchatsky, Russia",
+   "lon": 160.599,
+   "lat": 52.1219,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tzal"
+  },
+  {
+   "id": "us6000tzer",
+   "ids": [
+    "us6000tzer",
+    "usauto6000tzer"
+   ],
+   "time": "2026-10-03T22:55:52.175Z",
+   "mag": 5.7,
+   "magType": "mww",
+   "place": "36 km WSW of Tambolaka, Indonesia",
+   "lon": 118.9245,
+   "lat": -9.5399,
+   "depth": 17,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tzer"
+  },
+  {
+   "id": "us6000tzfg",
+   "ids": [
+    "us6000tzfg"
+   ],
+   "time": "2026-10-03T23:37:34.268Z",
+   "mag": 5.3,
+   "magType": "mww",
+   "place": "85 km SSW of Banda Aceh, Indonesia",
+   "lon": 95.1352,
+   "lat": 4.7986,
+   "depth": 55.019,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tzfg"
+  },
+  {
+   "id": "us6000tzi5",
+   "ids": [
+    "us6000tzi5"
+   ],
+   "time": "2026-10-04T10:13:07.031Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "42 km NNW of Ruteng, Indonesia",
+   "lon": 120.2937,
+   "lat": -8.2659,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tzi5"
+  },
+  {
+   "id": "us6000tzid",
+   "ids": [
+    "us6000tzid"
+   ],
+   "time": "2026-10-04T11:12:48.366Z",
+   "mag": 5.1,
+   "magType": "mww",
+   "place": "Volcano Islands, Japan region",
+   "lon": 144.6065,
+   "lat": 22.8481,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tzid"
+  },
+  {
+   "id": "us6000tzip",
+   "ids": [
+    "us6000tzip"
+   ],
+   "time": "2026-10-04T11:43:22.802Z",
+   "mag": 5.1,
+   "magType": "mww",
+   "place": "21 km ESE of Feke, Turkey",
+   "lon": 36.1316,
+   "lat": 37.7324,
+   "depth": 7.692,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tzip"
+  },
+  {
+   "id": "us6000tzj8",
+   "ids": [
+    "us6000tzj8"
+   ],
+   "time": "2026-10-04T14:06:10.091Z",
+   "mag": 5,
+   "magType": "mww",
+   "place": "south of Panama",
+   "lon": -82.6909,
+   "lat": 5.251,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tzj8"
+  },
+  {
+   "id": "us6000tzkn",
+   "ids": [
+    "us6000tzkn"
+   ],
+   "time": "2026-10-04T20:27:24.306Z",
+   "mag": 5,
+   "magType": "mww",
+   "place": "28 km SE of Jurm, Afghanistan",
+   "lon": 71.0507,
+   "lat": 36.6745,
+   "depth": 235.582,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tzkn"
+  },
+  {
+   "id": "us6000tzlp",
+   "ids": [
+    "us6000tzlp"
+   ],
+   "time": "2026-10-05T01:18:50.490Z",
+   "mag": 5.3,
+   "magType": "mww",
+   "place": "central Mid-Atlantic Ridge",
+   "lon": -19.9285,
+   "lat": -0.4417,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tzlp"
+  },
+  {
+   "id": "us6000tzme",
+   "ids": [
+    "us6000tzme"
+   ],
+   "time": "2026-10-05T05:26:45.292Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "67 km E of ‘Ohonua, Tonga",
+   "lon": -174.3041,
+   "lat": -21.3012,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tzme"
+  },
+  {
+   "id": "us6000tzna",
+   "ids": [
+    "us6000tzna"
+   ],
+   "time": "2026-10-05T10:52:09.874Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "183 km ENE of Saipan, Northern Mariana Islands",
+   "lon": 147.345,
+   "lat": 15.8212,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tzna"
+  },
+  {
+   "id": "us6000tzsc",
+   "ids": [
+    "us6000tzsc"
+   ],
+   "time": "2026-10-05T20:22:59.107Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "south of the Fiji Islands",
+   "lon": 179.8632,
+   "lat": -24.4774,
+   "depth": 518.391,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tzsc"
+  },
+  {
+   "id": "us6000tzwg",
+   "ids": [
+    "us6000tzwg"
+   ],
+   "time": "2026-10-06T13:11:22.940Z",
+   "mag": 5,
+   "magType": "mww",
+   "place": "43 km NNE of Semporna, Malaysia",
+   "lon": 118.7737,
+   "lat": 4.8423,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tzwg"
+  },
+  {
+   "id": "us6000u0hy",
+   "ids": [
+    "usauto6000u0hy",
+    "us6000u0hy"
+   ],
+   "time": "2026-10-06T16:48:21.856Z",
+   "mag": 5.8,
+   "magType": "mww",
+   "place": "275 km SSW of Severo-Kuril’sk, Russia",
+   "lon": 154.8289,
+   "lat": 48.3446,
+   "depth": 29,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u0hy"
+  },
+  {
+   "id": "us6000u0hz",
+   "ids": [
+    "us6000u0hz"
+   ],
+   "time": "2026-10-06T16:53:12.828Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "32 km NW of Bāgeshwar, India",
+   "lon": 79.5747,
+   "lat": 30.0758,
+   "depth": 19.552,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u0hz"
+  },
+  {
+   "id": "aka2026tuxgky",
+   "ids": [
+    "aka2026tuxgky",
+    "us6000u0ju"
+   ],
+   "time": "2026-10-06T18:34:31.760Z",
+   "mag": 5.5,
+   "magType": "ml",
+   "place": "92 km NNW of Aleneva, Alaska",
+   "lon": -153.609,
+   "lat": 58.802,
+   "depth": 87.6,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/aka2026tuxgky"
+  },
+  {
+   "id": "us6000u0rr",
+   "ids": [
+    "us6000u0rr"
+   ],
+   "time": "2026-10-07T14:59:25.672Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "Chagos Archipelago region",
+   "lon": 72.3546,
+   "lat": -6.6769,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u0rr"
+  },
+  {
+   "id": "us6000u0wa",
+   "ids": [
+    "us6000u0wa"
+   ],
+   "time": "2026-10-08T04:49:00.248Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "92 km N of Ruteng, Indonesia",
+   "lon": 120.3316,
+   "lat": -7.7822,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u0wa"
+  },
+  {
+   "id": "us6000u0ws",
+   "ids": [
+    "attmkthr",
+    "us6000u0ws"
+   ],
+   "time": "2026-10-08T06:46:48.002Z",
+   "mag": 5.5,
+   "magType": "mww",
+   "place": "west of Macquarie Island",
+   "lon": 140.1371,
+   "lat": -52.5661,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u0ws"
+  },
+  {
+   "id": "us6000u0x4",
+   "ids": [
+    "us6000u0x4"
+   ],
+   "time": "2026-10-08T08:07:59.721Z",
+   "mag": 5.5,
+   "magType": "mww",
+   "place": "13 km SW of Burias, Philippines",
+   "lon": 125.1838,
+   "lat": 5.6177,
+   "depth": 57.803,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u0x4"
+  },
+  {
+   "id": "us6000u0xi",
+   "ids": [
+    "pt26281001",
+    "us6000u0xi",
+    "usauto6000u0xi"
+   ],
+   "time": "2026-10-08T09:00:07.768Z",
+   "mag": 6.3,
+   "magType": "mww",
+   "place": "102 km NE of Norsup, Vanuatu",
+   "lon": 168.1889,
+   "lat": -15.5411,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u0xi"
+  },
+  {
+   "id": "us6000u0xn",
+   "ids": [
+    "us6000u0xn"
+   ],
+   "time": "2026-10-08T10:07:28.642Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "236 km E of Levuka, Fiji",
+   "lon": -178.4545,
+   "lat": -18.0147,
+   "depth": 602.272,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u0xn"
+  },
+  {
+   "id": "us6000u11v",
+   "ids": [
+    "us6000u11v"
+   ],
+   "time": "2026-10-08T20:59:30.654Z",
+   "mag": 5.1,
+   "magType": "mww",
+   "place": "northern Mid-Atlantic Ridge",
+   "lon": -41.8655,
+   "lat": 30.5774,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u11v"
+  },
+  {
+   "id": "us6000u13v",
+   "ids": [
+    "us6000u13v"
+   ],
+   "time": "2026-10-09T05:11:04.200Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "117 km SE of Bitung, Indonesia",
+   "lon": 125.9365,
+   "lat": 0.7587,
+   "depth": 40.049,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u13v"
+  },
+  {
+   "id": "us6000u153",
+   "ids": [
+    "us6000u153"
+   ],
+   "time": "2026-10-09T10:22:14.915Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "72 km SSW of Colchane, Chile",
+   "lon": -68.7905,
+   "lat": -19.9128,
+   "depth": 123.835,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u153"
+  },
+  {
+   "id": "us6000u15x",
+   "ids": [
+    "us6000u15x"
+   ],
+   "time": "2026-10-09T13:51:42.608Z",
+   "mag": 5.2,
+   "magType": "mww",
+   "place": "101 km NE of Norsup, Vanuatu",
+   "lon": 168.1618,
+   "lat": -15.5313,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u15x"
+  },
+  {
+   "id": "us6000u164",
+   "ids": [
+    "usauto6000u164",
+    "us6000u164"
+   ],
+   "time": "2026-10-09T14:49:42.372Z",
+   "mag": 5.9,
+   "magType": "mww",
+   "place": "west of Macquarie Island",
+   "lon": 154.1387,
+   "lat": -60.8806,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u164"
+  },
+  {
+   "id": "us6000u18k",
+   "ids": [
+    "pt26282000",
+    "us6000u18k",
+    "usauto6000u18k"
+   ],
+   "time": "2026-10-09T17:56:06.036Z",
+   "mag": 7.7,
+   "magType": "mww",
+   "place": "12 km WSW of Pitaloza Arriba, Panama",
+   "lon": -80.769,
+   "lat": 7.5868,
+   "depth": 12.647,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u18k"
+  },
+  {
+   "id": "us6000u2uc",
+   "ids": [
+    "us6000u2uc"
+   ],
+   "time": "2026-10-09T18:01:50.381Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "16 km NE of Pedasí, Panama",
+   "lon": -79.9113,
+   "lat": 7.6259,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2uc"
+  },
+  {
+   "id": "us6000u2ud",
+   "ids": [
+    "us6000u2ud"
+   ],
+   "time": "2026-10-09T18:02:43.739Z",
+   "mag": 5.4,
+   "magType": "mb",
+   "place": "47 km SSW of Puerto Vidal, Panama",
+   "lon": -81.7627,
+   "lat": 7.6489,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2ud"
+  },
+  {
+   "id": "us6000u2us",
+   "ids": [
+    "us6000u2us"
+   ],
+   "time": "2026-10-09T18:06:30.447Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "8 km NNE of Quebro, Panama",
+   "lon": -80.847,
+   "lat": 7.5055,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2us"
+  },
+  {
+   "id": "us6000u2t1",
+   "ids": [
+    "us6000u2t1"
+   ],
+   "time": "2026-10-09T18:16:47.961Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "2 km ESE of La Mesa, Panama",
+   "lon": -80.6018,
+   "lat": 7.6524,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2t1"
+  },
+  {
+   "id": "us6000u18t",
+   "ids": [
+    "us6000u18t"
+   ],
+   "time": "2026-10-09T18:22:15.709Z",
+   "mag": 5.5,
+   "magType": "mb",
+   "place": "3 km SW of Bajo Corral, Panama",
+   "lon": -80.2885,
+   "lat": 7.586,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u18t"
+  },
+  {
+   "id": "us6000u2uw",
+   "ids": [
+    "us6000u2uw"
+   ],
+   "time": "2026-10-09T18:37:16.814Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "6 km NNW of El Cortezo, Panama",
+   "lon": -80.6506,
+   "lat": 7.4857,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2uw"
+  },
+  {
+   "id": "us6000u18x",
+   "ids": [
+    "us6000u18x"
+   ],
+   "time": "2026-10-09T18:37:46.146Z",
+   "mag": 5.8,
+   "magType": "mb",
+   "place": "1 km S of El Cacao, Panama",
+   "lon": -80.4012,
+   "lat": 7.4362,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u18x"
+  },
+  {
+   "id": "us6000u2td",
+   "ids": [
+    "us6000u2td"
+   ],
+   "time": "2026-10-09T18:42:26.001Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "13 km SE of Río Grande, Panama",
+   "lon": -81.2534,
+   "lat": 7.6218,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2td"
+  },
+  {
+   "id": "us6000u195",
+   "ids": [
+    "us6000u195"
+   ],
+   "time": "2026-10-09T18:47:04.065Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "19 km S of Leones Arriba, Panama",
+   "lon": -81.0943,
+   "lat": 7.5783,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u195"
+  },
+  {
+   "id": "us6000u194",
+   "ids": [
+    "us6000u194"
+   ],
+   "time": "2026-10-09T18:50:12.134Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "18 km S of Los Asientos, Panama",
+   "lon": -80.1178,
+   "lat": 7.3504,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u194"
+  },
+  {
+   "id": "us6000u197",
+   "ids": [
+    "us6000u197"
+   ],
+   "time": "2026-10-09T19:04:49.566Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "8 km SE of Río Grande, Panama",
+   "lon": -81.2713,
+   "lat": 7.6745,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u197"
+  },
+  {
+   "id": "us6000u19h",
+   "ids": [
+    "us6000u19h"
+   ],
+   "time": "2026-10-09T19:48:55.225Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "10 km SE of Río Grande, Panama",
+   "lon": -81.275,
+   "lat": 7.6406,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u19h"
+  },
+  {
+   "id": "us6000u19t",
+   "ids": [
+    "us6000u19t"
+   ],
+   "time": "2026-10-09T20:21:37.961Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "9 km NW of Tonosí, Panama",
+   "lon": -80.494,
+   "lat": 7.4722,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u19t"
+  },
+  {
+   "id": "us6000u19w",
+   "ids": [
+    "pt26282001",
+    "us6000u19w",
+    "attmnq2s",
+    "usauto6000u19w"
+   ],
+   "time": "2026-10-09T20:25:40.656Z",
+   "mag": 6.6,
+   "magType": "mww",
+   "place": "12 km W of Río Grande, Panama",
+   "lon": -81.444,
+   "lat": 7.7013,
+   "depth": 24.044,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 1,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u19w"
+  },
+  {
+   "id": "us6000u1a5",
+   "ids": [
+    "us6000u1a5"
+   ],
+   "time": "2026-10-09T20:41:04.285Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "4 km ENE of Leones Arriba, Panama",
+   "lon": -81.084,
+   "lat": 7.7723,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1a5"
+  },
+  {
+   "id": "us6000u1aa",
+   "ids": [
+    "us6000u1aa"
+   ],
+   "time": "2026-10-09T20:42:08.628Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "18 km W of Río Grande, Panama",
+   "lon": -81.5023,
+   "lat": 7.7378,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1aa"
+  },
+  {
+   "id": "us6000u1ax",
+   "ids": [
+    "us6000u1ax"
+   ],
+   "time": "2026-10-09T23:10:02.977Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "4 km ESE of La Tronosa, Panama",
+   "lon": -80.5486,
+   "lat": 7.4188,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1ax"
+  },
+  {
+   "id": "us6000u1ay",
+   "ids": [
+    "us6000u1ay"
+   ],
+   "time": "2026-10-09T23:12:38.232Z",
+   "mag": 5.4,
+   "magType": "mb",
+   "place": "6 km SE of Oria Arriba, Panama",
+   "lon": -80.1705,
+   "lat": 7.4647,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1ay"
+  },
+  {
+   "id": "us6000u1az",
+   "ids": [
+    "us6000u1az"
+   ],
+   "time": "2026-10-09T23:23:13.388Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "4 km NE of Río Grande, Panama",
+   "lon": -81.307,
+   "lat": 7.7507,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1az"
+  },
+  {
+   "id": "us6000u1bs",
+   "ids": [
+    "us6000u1bs"
+   ],
+   "time": "2026-10-10T02:00:42.742Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "127 km E of Bitung, Indonesia",
+   "lon": 126.2738,
+   "lat": 1.4159,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1bs"
+  },
+  {
+   "id": "us6000u1bu",
+   "ids": [
+    "us6000u1bu"
+   ],
+   "time": "2026-10-10T02:26:33.039Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "5 km WSW of Flores, Panama",
+   "lon": -80.4515,
+   "lat": 7.4652,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1bu"
+  },
+  {
+   "id": "us6000u1cd",
+   "ids": [
+    "us6000u1cd"
+   ],
+   "time": "2026-10-10T03:58:18.116Z",
+   "mag": 5.3,
+   "magType": "mb",
+   "place": "40 km NE of Yigo Village, Guam",
+   "lon": 145.0986,
+   "lat": 13.843,
+   "depth": 111.158,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1cd"
+  },
+  {
+   "id": "us6000u1cf",
+   "ids": [
+    "us6000u1cf",
+    "usauto6000u1cf"
+   ],
+   "time": "2026-10-10T04:14:01.528Z",
+   "mag": 6,
+   "magType": "mww",
+   "place": "4 km NNE of La Tronosa, Panama",
+   "lon": -80.5728,
+   "lat": 7.4777,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1cf"
+  },
+  {
+   "id": "us6000u1cv",
+   "ids": [
+    "us6000u1cv"
+   ],
+   "time": "2026-10-10T05:32:01.552Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "141 km E of Bitung, Indonesia",
+   "lon": 126.3886,
+   "lat": 1.6248,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1cv"
+  },
+  {
+   "id": "us6000u1gs",
+   "ids": [
+    "us6000u1gs"
+   ],
+   "time": "2026-10-10T21:34:02.337Z",
+   "mag": 5.3,
+   "magType": "mww",
+   "place": "southeast of Easter Island",
+   "lon": -95.2667,
+   "lat": -37.1165,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1gs"
+  },
+  {
+   "id": "us6000u1hw",
+   "ids": [
+    "us6000u1hw"
+   ],
+   "time": "2026-10-11T01:50:52.299Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "3 km NW of Flores, Panama",
+   "lon": -80.4283,
+   "lat": 7.5139,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1hw"
+  },
+  {
+   "id": "us6000u1i6",
+   "ids": [
+    "us6000u1i6"
+   ],
+   "time": "2026-10-11T03:30:17.224Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "193 km S of Pelabuhanratu, Indonesia",
+   "lon": 106.4969,
+   "lat": -8.7323,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1i6"
+  },
+  {
+   "id": "us6000u1kt",
+   "ids": [
+    "us6000u1kt"
+   ],
+   "time": "2026-10-11T13:42:58.478Z",
+   "mag": 5.3,
+   "magType": "mb",
+   "place": "28 km SSW of Camaná, Peru",
+   "lon": -72.8212,
+   "lat": -16.8578,
+   "depth": 30.903,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1kt"
+  },
+  {
+   "id": "us6000u1kv",
+   "ids": [
+    "us6000u1kv",
+    "usauto6000u1kv",
+    "attmqxwf"
+   ],
+   "time": "2026-10-11T14:07:20.554Z",
+   "mag": 6.2,
+   "magType": "mww",
+   "place": "86 km SSE of Panguna, Papua New Guinea",
+   "lon": 155.7498,
+   "lat": -7.0483,
+   "depth": 31,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1kv"
+  },
+  {
+   "id": "us6000u1ld",
+   "ids": [
+    "us6000u1ld"
+   ],
+   "time": "2026-10-11T17:00:29.277Z",
+   "mag": 5.2,
+   "magType": "mww",
+   "place": "101 km SSW of Severo-Kuril’sk, Russia",
+   "lon": 155.7863,
+   "lat": 49.7885,
+   "depth": 83.386,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1ld"
+  },
+  {
+   "id": "us6000u1mj",
+   "ids": [
+    "us6000u1mj"
+   ],
+   "time": "2026-10-11T21:34:53.780Z",
+   "mag": 5.2,
+   "magType": "mww",
+   "place": "149 km W of Gorontalo, Indonesia",
+   "lon": 121.7195,
+   "lat": 0.5303,
+   "depth": 110.24,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1mj"
+  },
+  {
+   "id": "us6000u1pl",
+   "ids": [
+    "us6000u1pl"
+   ],
+   "time": "2026-10-12T04:38:11.491Z",
+   "mag": 5.5,
+   "magType": "mww",
+   "place": "119 km W of Neiafu, Tonga",
+   "lon": -175.1104,
+   "lat": -18.5748,
+   "depth": 179.919,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1pl"
+  },
+  {
+   "id": "us6000u1rh",
+   "ids": [
+    "usauto6000u1rh",
+    "us6000u1rh"
+   ],
+   "time": "2026-10-12T11:28:43.398Z",
+   "mag": 5.4,
+   "magType": "mww",
+   "place": "Mid-Indian Ridge",
+   "lon": 67.3909,
+   "lat": -8.873,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1rh"
+  },
+  {
+   "id": "us6000u1wn",
+   "ids": [
+    "us6000u1wn",
+    "usauto6000u1wn",
+    "attmti6g"
+   ],
+   "time": "2026-10-12T23:20:36.005Z",
+   "mag": 6.1,
+   "magType": "mww",
+   "place": "15 km W of Río Grande, Panama",
+   "lon": -81.4715,
+   "lat": 7.7098,
+   "depth": 11,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1wn"
+  },
+  {
+   "id": "us6000u3vr",
+   "ids": [
+    "us6000u3vr"
+   ],
+   "time": "2026-10-12T23:27:50.634Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "8 km NW of Río Grande, Panama",
+   "lon": -81.3767,
+   "lat": 7.7817,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3vr"
+  },
+  {
+   "id": "us6000u1ye",
+   "ids": [
+    "us6000u1ye"
+   ],
+   "time": "2026-10-13T04:00:15.768Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "119 km SSW of Gambiran Satu, Indonesia",
+   "lon": 113.8887,
+   "lat": -9.4473,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1ye"
+  },
+  {
+   "id": "us6000u1z5",
+   "ids": [
+    "us6000u1z5",
+    "usauto6000u1z5",
+    "attmtzyo"
+   ],
+   "time": "2026-10-13T05:44:46.919Z",
+   "mag": 6.7,
+   "magType": "mww",
+   "place": "central Mid-Atlantic Ridge",
+   "lon": -19.8598,
+   "lat": 0.1685,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u1z5"
+  },
+  {
+   "id": "us6000u207",
+   "ids": [
+    "us6000u207"
+   ],
+   "time": "2026-10-13T08:38:28.325Z",
+   "mag": 5.3,
+   "magType": "mb",
+   "place": "southern Mid-Atlantic Ridge",
+   "lon": -12.5205,
+   "lat": -28.556,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u207"
+  },
+  {
+   "id": "us6000u214",
+   "ids": [
+    "attmuiel",
+    "usauto6000u214",
+    "us6000u214",
+    "pt26286001"
+   ],
+   "time": "2026-10-13T12:23:07.248Z",
+   "mag": 6.8,
+   "magType": "mww",
+   "place": "central Mid-Atlantic Ridge",
+   "lon": -19.4308,
+   "lat": -0.4085,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 1,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u214"
+  },
+  {
+   "id": "us6000u21s",
+   "ids": [
+    "us6000u21s"
+   ],
+   "time": "2026-10-13T14:36:12.242Z",
+   "mag": 5.3,
+   "magType": "mb",
+   "place": "129 km S of Kokopo, Papua New Guinea",
+   "lon": 152.1283,
+   "lat": -5.5103,
+   "depth": 29.792,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u21s"
+  },
+  {
+   "id": "us6000u23d",
+   "ids": [
+    "us6000u23d"
+   ],
+   "time": "2026-10-13T16:28:15.172Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "123 km S of Kokopo, Papua New Guinea",
+   "lon": 152.1025,
+   "lat": -5.4453,
+   "depth": 36.991,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u23d"
+  },
+  {
+   "id": "us6000u24c",
+   "ids": [
+    "us6000u24c",
+    "usauto6000u24c"
+   ],
+   "time": "2026-10-13T18:45:03.061Z",
+   "mag": 6,
+   "magType": "mww",
+   "place": "128 km S of Kokopo, Papua New Guinea",
+   "lon": 152.1501,
+   "lat": -5.4965,
+   "depth": 21.758,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u24c"
+  },
+  {
+   "id": "us6000u28y",
+   "ids": [
+    "usauto6000u28y",
+    "us6000u28y"
+   ],
+   "time": "2026-10-14T10:49:47.588Z",
+   "mag": 5.9,
+   "magType": "mww",
+   "place": "Fiji region",
+   "lon": -178.7711,
+   "lat": -20.9899,
+   "depth": 585.07,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u28y"
+  },
+  {
+   "id": "us6000u2ec",
+   "ids": [
+    "us6000u2ec"
+   ],
+   "time": "2026-10-15T03:36:29.038Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "36 km E of Safotu, Samoa",
+   "lon": -172.0686,
+   "lat": -13.409,
+   "depth": 13.211,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2ec"
+  },
+  {
+   "id": "us6000u2ev",
+   "ids": [
+    "us6000u2ev"
+   ],
+   "time": "2026-10-15T05:25:31.982Z",
+   "mag": 5.3,
+   "magType": "mww",
+   "place": "46 km SSE of Otorohanga, New Zealand",
+   "lon": 175.3818,
+   "lat": -38.5782,
+   "depth": 283.842,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2ev"
+  },
+  {
+   "id": "aka2026ukynnb",
+   "ids": [
+    "aka2026ukynnb",
+    "us6000u2g7"
+   ],
+   "time": "2026-10-15T11:07:01.800Z",
+   "mag": 5.6,
+   "magType": "ml",
+   "place": "43 km NNW of Lake Minchumina, Alaska",
+   "lon": -152.746,
+   "lat": 64.22,
+   "depth": 4.5,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/aka2026ukynnb"
+  },
+  {
+   "id": "us6000u2gd",
+   "ids": [
+    "us6000u2gd"
+   ],
+   "time": "2026-10-15T11:16:43.668Z",
+   "mag": 5.4,
+   "magType": "mww",
+   "place": "off the coast of Ecuador",
+   "lon": -85.3587,
+   "lat": 0.9022,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2gd"
+  },
+  {
+   "id": "us6000u2hp",
+   "ids": [
+    "us6000u2hp"
+   ],
+   "time": "2026-10-15T13:06:51.887Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "161 km W of Sola, Vanuatu",
+   "lon": 166.0591,
+   "lat": -13.8896,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2hp"
+  },
+  {
+   "id": "us6000u2hv",
+   "ids": [
+    "us6000u2hv"
+   ],
+   "time": "2026-10-15T13:29:31.595Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "92 km NNE of Hihifo, Tonga",
+   "lon": -173.3236,
+   "lat": -15.2498,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2hv"
+  },
+  {
+   "id": "us6000u2mq",
+   "ids": [
+    "us6000u2mq",
+    "usauto6000u2mq"
+   ],
+   "time": "2026-10-16T03:35:31.925Z",
+   "mag": 6.9,
+   "magType": "mww",
+   "place": "76 km NE of Ozernovskiy, Russia",
+   "lon": 157.2701,
+   "lat": 51.9848,
+   "depth": 135,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2mq"
+  },
+  {
+   "id": "us6000u2v8",
+   "ids": [
+    "us6000u2v8"
+   ],
+   "time": "2026-10-16T19:34:10.597Z",
+   "mag": 5.2,
+   "magType": "mww",
+   "place": "off the coast of Ecuador",
+   "lon": -85.2725,
+   "lat": 1.2955,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2v8"
+  },
+  {
+   "id": "us6000u2y1",
+   "ids": [
+    "us6000u2y1",
+    "usauto6000u2y1"
+   ],
+   "time": "2026-10-17T05:06:57.657Z",
+   "mag": 5.7,
+   "magType": "mww",
+   "place": "48 km WNW of Khuzdar, Pakistan",
+   "lon": 66.1708,
+   "lat": 28.0179,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u2y1"
+  },
+  {
+   "id": "us6000u309",
+   "ids": [
+    "us6000u309"
+   ],
+   "time": "2026-10-17T13:59:34.575Z",
+   "mag": 5.2,
+   "magType": "mww",
+   "place": "86 km SW of Brisas Barra de Suchiate, Mexico",
+   "lon": -92.8552,
+   "lat": 14.0469,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u309"
+  },
+  {
+   "id": "us6000u34e",
+   "ids": [
+    "us6000u34e"
+   ],
+   "time": "2026-10-18T08:00:05.896Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "60 km NNW of Ruteng, Indonesia",
+   "lon": 120.2865,
+   "lat": -8.0974,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u34e"
+  },
+  {
+   "id": "us6000u37h",
+   "ids": [
+    "us6000u37h"
+   ],
+   "time": "2026-10-18T19:32:28.734Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "71 km ESE of ‘Ohonua, Tonga",
+   "lon": -174.2956,
+   "lat": -21.541,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u37h"
+  },
+  {
+   "id": "us6000u38g",
+   "ids": [
+    "us6000u38g"
+   ],
+   "time": "2026-10-18T22:31:43.253Z",
+   "mag": 5.1,
+   "magType": "mww",
+   "place": "127 km SSE of Kokopo, Papua New Guinea",
+   "lon": 152.6203,
+   "lat": -5.4388,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u38g"
+  },
+  {
+   "id": "us6000u3bc",
+   "ids": [
+    "us6000u3bc",
+    "usauto6000u3bc"
+   ],
+   "time": "2026-10-19T07:49:04.900Z",
+   "mag": 6,
+   "magType": "mww",
+   "place": "186 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6761,
+   "lat": -14.0533,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3bc"
+  },
+  {
+   "id": "us6000u3be",
+   "ids": [
+    "us6000u3be"
+   ],
+   "time": "2026-10-19T07:55:36.888Z",
+   "mag": 5.3,
+   "magType": "mww",
+   "place": "188 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6995,
+   "lat": -13.9824,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3be"
+  },
+  {
+   "id": "us6000u3bi",
+   "ids": [
+    "us6000u3bi"
+   ],
+   "time": "2026-10-19T08:12:38.235Z",
+   "mag": 5.4,
+   "magType": "mb",
+   "place": "184 km WNW of Port-Olry, Vanuatu",
+   "lon": 165.6383,
+   "lat": -14.1387,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3bi"
+  },
+  {
+   "id": "us6000u3bk",
+   "ids": [
+    "us6000u3bk"
+   ],
+   "time": "2026-10-19T08:21:47.100Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "211 km WNW of Port-Olry, Vanuatu",
+   "lon": 165.3343,
+   "lat": -14.155,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3bk"
+  },
+  {
+   "id": "us6000u3c6",
+   "ids": [
+    "us6000u3c6"
+   ],
+   "time": "2026-10-19T10:40:21.108Z",
+   "mag": 5.4,
+   "magType": "mb",
+   "place": "196 km NW of Port-Olry, Vanuatu",
+   "lon": 165.5687,
+   "lat": -14.0378,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3c6"
+  },
+  {
+   "id": "us7000ttse",
+   "ids": [
+    "us7000ttse"
+   ],
+   "time": "2026-10-19T10:40:47.803Z",
+   "mag": 5.3,
+   "magType": "mb",
+   "place": "221 km NW of Port-Olry, Vanuatu",
+   "lon": 165.3727,
+   "lat": -13.9158,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttse"
+  },
+  {
+   "id": "us6000u3c7",
+   "ids": [
+    "us6000u3c7"
+   ],
+   "time": "2026-10-19T10:57:08.127Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "31 km NW of Jiangyou, China",
+   "lon": 104.4577,
+   "lat": 31.948,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3c7"
+  },
+  {
+   "id": "us6000u3ct",
+   "ids": [
+    "us6000u3ct"
+   ],
+   "time": "2026-10-19T14:44:24.015Z",
+   "mag": 5.3,
+   "magType": "mww",
+   "place": "116 km WNW of Höfn, Iceland",
+   "lon": -17.5136,
+   "lat": 64.5774,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3ct"
+  },
+  {
+   "id": "us6000u3ft",
+   "ids": [
+    "us6000u3ft"
+   ],
+   "time": "2026-10-19T17:45:50.479Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "South Sandwich Islands region",
+   "lon": -27.0851,
+   "lat": -56.3542,
+   "depth": 101.462,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3ft"
+  },
+  {
+   "id": "us6000u3ga",
+   "ids": [
+    "usauto6000u3ga",
+    "us6000u3ga"
+   ],
+   "time": "2026-10-19T18:52:36.659Z",
+   "mag": 5.7,
+   "magType": "mww",
+   "place": "198 km NW of Port-Olry, Vanuatu",
+   "lon": 165.5508,
+   "lat": -14.0371,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3ga"
+  },
+  {
+   "id": "us6000u3ge",
+   "ids": [
+    "us6000u3ge"
+   ],
+   "time": "2026-10-19T18:55:37.471Z",
+   "mag": 5.7,
+   "magType": "mb",
+   "place": "203 km WNW of Port-Olry, Vanuatu",
+   "lon": 165.4974,
+   "lat": -14.0266,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3ge"
+  },
+  {
+   "id": "us6000u3j1",
+   "ids": [
+    "us6000u3j1"
+   ],
+   "time": "2026-10-20T00:38:27.904Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "193 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6147,
+   "lat": -14.0283,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3j1"
+  },
+  {
+   "id": "us6000u3jd",
+   "ids": [
+    "us6000u3jd"
+   ],
+   "time": "2026-10-20T02:54:15.972Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "Pagan region, Northern Mariana Islands",
+   "lon": 146.0345,
+   "lat": 18.2529,
+   "depth": 129.361,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3jd"
+  },
+  {
+   "id": "us6000u3jl",
+   "ids": [
+    "attn6uqd",
+    "us6000u3jl",
+    "usauto6000u3jl",
+    "attn6uqj",
+    "pt26293000"
+   ],
+   "time": "2026-10-20T04:20:38.737Z",
+   "mag": 6.3,
+   "magType": "mww",
+   "place": "197 km NW of Port-Olry, Vanuatu",
+   "lon": 165.5892,
+   "lat": -13.9906,
+   "depth": 16,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 1,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3jl"
+  },
+  {
+   "id": "us6000u3k5",
+   "ids": [
+    "us6000u3k5"
+   ],
+   "time": "2026-10-20T06:29:22.432Z",
+   "mag": 5.2,
+   "magType": "mww",
+   "place": "206 km NW of Port-Olry, Vanuatu",
+   "lon": 165.5874,
+   "lat": -13.857,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3k5"
+  },
+  {
+   "id": "us6000u3ka",
+   "ids": [
+    "us6000u3ka"
+   ],
+   "time": "2026-10-20T06:41:23.116Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "263 km WSW of Yanglong, China",
+   "lon": 95.6436,
+   "lat": 37.9037,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3ka"
+  },
+  {
+   "id": "us6000u3lf",
+   "ids": [
+    "attn7cbt",
+    "us6000u3lf",
+    "aka2026uudtmd"
+   ],
+   "time": "2026-10-20T10:40:40.968Z",
+   "mag": 5,
+   "magType": "mwr",
+   "place": "81 km S of Sand Point, Alaska",
+   "lon": -160.3291,
+   "lat": 54.6088,
+   "depth": 35,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 1,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3lf"
+  },
+  {
+   "id": "us6000u3nc",
+   "ids": [
+    "us6000u3nc"
+   ],
+   "time": "2026-10-20T16:29:38.818Z",
+   "mag": 5,
+   "magType": "mww",
+   "place": "21 km SW of Meulaboh, Indonesia",
+   "lon": 95.993,
+   "lat": 4.0005,
+   "depth": 75.876,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3nc"
+  },
+  {
+   "id": "us6000u3nl",
+   "ids": [
+    "us6000u3nl"
+   ],
+   "time": "2026-10-20T17:05:48.338Z",
+   "mag": 5.4,
+   "magType": "mww",
+   "place": "192 km S of Burica, Panama",
+   "lon": -82.5693,
+   "lat": 6.3226,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3nl"
+  },
+  {
+   "id": "us6000u3p1",
+   "ids": [
+    "us6000u3p1"
+   ],
+   "time": "2026-10-20T18:07:18.131Z",
+   "mag": 5.1,
+   "magType": "mww",
+   "place": "39 km W of Mosteiros, Portugal",
+   "lon": -26.2588,
+   "lat": 37.9575,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3p1"
+  },
+  {
+   "id": "us6000u3rr",
+   "ids": [
+    "us6000u3rr"
+   ],
+   "time": "2026-10-21T01:20:02.961Z",
+   "mag": 5,
+   "magType": "mww",
+   "place": "south of Panama",
+   "lon": -82.7031,
+   "lat": 4.5985,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3rr"
+  },
+  {
+   "id": "us6000u3t4",
+   "ids": [
+    "us6000u3t4"
+   ],
+   "time": "2026-10-21T07:44:16.055Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "164 km NE of Lospalos, Timor Leste",
+   "lon": 128.1355,
+   "lat": -7.5619,
+   "depth": 122.687,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3t4"
+  },
+  {
+   "id": "us6000u3t6",
+   "ids": [
+    "us6000u3t6"
+   ],
+   "time": "2026-10-21T08:37:41.317Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "68 km NE of Cabatuan, Philippines",
+   "lon": 125.5898,
+   "lat": 13.0297,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3t6"
+  },
+  {
+   "id": "us6000u3ue",
+   "ids": [
+    "us6000u3ue"
+   ],
+   "time": "2026-10-21T14:56:27.447Z",
+   "mag": 5,
+   "magType": "mww",
+   "place": "194 km WNW of Port-Olry, Vanuatu",
+   "lon": 165.5402,
+   "lat": -14.105,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3ue"
+  },
+  {
+   "id": "us6000u3wh",
+   "ids": [
+    "us6000u3wh"
+   ],
+   "time": "2026-10-21T18:12:35.474Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "south of Africa",
+   "lon": 27.4604,
+   "lat": -52.8118,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3wh"
+  },
+  {
+   "id": "us6000u3xx",
+   "ids": [
+    "us6000u3xx"
+   ],
+   "time": "2026-10-21T18:41:04.960Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "190 km WNW of Port-Olry, Vanuatu",
+   "lon": 165.5779,
+   "lat": -14.1213,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3xx"
+  },
+  {
+   "id": "us6000u3x2",
+   "ids": [
+    "us6000u3x2"
+   ],
+   "time": "2026-10-21T19:06:05.512Z",
+   "mag": 5,
+   "magType": "mww",
+   "place": "Reykjanes Ridge",
+   "lon": -34.2256,
+   "lat": 56.9507,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3x2"
+  },
+  {
+   "id": "us6000u3yj",
+   "ids": [
+    "us6000u3yj"
+   ],
+   "time": "2026-10-21T21:38:54.747Z",
+   "mag": 5.3,
+   "magType": "mww",
+   "place": "Reykjanes Ridge",
+   "lon": -34.1891,
+   "lat": 56.7745,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3yj"
+  },
+  {
+   "id": "us6000u3yp",
+   "ids": [
+    "us6000u3yp"
+   ],
+   "time": "2026-10-21T21:58:47.808Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "Reykjanes Ridge",
+   "lon": -34.1158,
+   "lat": 56.8261,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3yp"
+  },
+  {
+   "id": "us6000u3zp",
+   "ids": [
+    "us6000u3zp"
+   ],
+   "time": "2026-10-22T00:25:38.898Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "South Sandwich Islands region",
+   "lon": -27.0602,
+   "lat": -55.9673,
+   "depth": 60.915,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u3zp"
+  },
+  {
+   "id": "us6000u43g",
+   "ids": [
+    "us6000u43g",
+    "usauto6000u43g",
+    "attnbcg6"
+   ],
+   "time": "2026-10-22T14:33:40.353Z",
+   "mag": 7,
+   "magType": "mww",
+   "place": "191 km ENE of Nagqu, China",
+   "lon": 93.7797,
+   "lat": 32.3805,
+   "depth": 18,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u43g"
+  },
+  {
+   "id": "us6000u44n",
+   "ids": [
+    "us6000u44n"
+   ],
+   "time": "2026-10-22T15:12:04.462Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "201 km ENE of Nagqu, China",
+   "lon": 93.8669,
+   "lat": 32.4401,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u44n"
+  },
+  {
+   "id": "us6000u45j",
+   "ids": [
+    "us6000u45j"
+   ],
+   "time": "2026-10-22T18:06:44.294Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "207 km ENE of Nagqu, China",
+   "lon": 93.9886,
+   "lat": 32.3707,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u45j"
+  },
+  {
+   "id": "us6000u473",
+   "ids": [
+    "us6000u473"
+   ],
+   "time": "2026-10-22T20:05:04.207Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "153 km S of Kokopo, Papua New Guinea",
+   "lon": 152.2646,
+   "lat": -5.728,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u473"
+  },
+  {
+   "id": "us6000u4bk",
+   "ids": [
+    "us6000u4bk",
+    "attncvc7"
+   ],
+   "time": "2026-10-23T10:19:16.729Z",
+   "mag": 5.7,
+   "magType": "mww",
+   "place": "61 km WNW of Leni, Italy",
+   "lon": 14.152,
+   "lat": 38.7199,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4bk"
+  },
+  {
+   "id": "us6000u4dc",
+   "ids": [
+    "us6000u4dc"
+   ],
+   "time": "2026-10-23T13:55:36.149Z",
+   "mag": 5.2,
+   "magType": "mww",
+   "place": "50 km WNW of Malfa, Italy",
+   "lon": 14.315,
+   "lat": 38.7787,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4dc"
+  },
+  {
+   "id": "us6000u4e2",
+   "ids": [
+    "us6000u4e2"
+   ],
+   "time": "2026-10-23T16:07:51.754Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "72 km ENE of Noda, Japan",
+   "lon": 142.572,
+   "lat": 40.4159,
+   "depth": 38.138,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4e2"
+  },
+  {
+   "id": "us6000u4h7",
+   "ids": [
+    "us6000u4h7"
+   ],
+   "time": "2026-10-23T22:05:10.711Z",
+   "mag": 5.1,
+   "magType": "mww",
+   "place": "203 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6172,
+   "lat": -13.8764,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4h7"
+  },
+  {
+   "id": "us6000u4j2",
+   "ids": [
+    "us6000u4j2",
+    "attne4d5",
+    "usauto6000u4j2"
+   ],
+   "time": "2026-10-24T02:31:28.641Z",
+   "mag": 6.9,
+   "magType": "mww",
+   "place": "197 km WNW of Port-Olry, Vanuatu",
+   "lon": 165.5455,
+   "lat": -14.0558,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 1,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4j2"
+  },
+  {
+   "id": "us6000u4jb",
+   "ids": [
+    "us6000u4jb"
+   ],
+   "time": "2026-10-24T02:35:57.362Z",
+   "mag": 6.3,
+   "magType": "mb",
+   "place": "170 km NW of Port-Olry, Vanuatu",
+   "lon": 165.8666,
+   "lat": -14.0424,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4jb"
+  },
+  {
+   "id": "us6000u4ji",
+   "ids": [
+    "us6000u4ji"
+   ],
+   "time": "2026-10-24T03:08:45.463Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "170 km NW of Port-Olry, Vanuatu",
+   "lon": 165.8052,
+   "lat": -14.1211,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4ji"
+  },
+  {
+   "id": "us6000u4jl",
+   "ids": [
+    "us6000u4jl"
+   ],
+   "time": "2026-10-24T03:17:55.755Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "202 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6161,
+   "lat": -13.8805,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4jl"
+  },
+  {
+   "id": "us6000u4ju",
+   "ids": [
+    "us6000u4ju"
+   ],
+   "time": "2026-10-24T04:05:36.800Z",
+   "mag": 5.7,
+   "magType": "mb",
+   "place": "205 km NW of Port-Olry, Vanuatu",
+   "lon": 165.5627,
+   "lat": -13.9084,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4ju"
+  },
+  {
+   "id": "us6000u4jw",
+   "ids": [
+    "us6000u4jw"
+   ],
+   "time": "2026-10-24T04:12:05.337Z",
+   "mag": 5.8,
+   "magType": "mb",
+   "place": "203 km NW of Port-Olry, Vanuatu",
+   "lon": 165.5967,
+   "lat": -13.9017,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4jw"
+  },
+  {
+   "id": "us6000u4jy",
+   "ids": [
+    "us6000u4jy"
+   ],
+   "time": "2026-10-24T04:19:38.628Z",
+   "mag": 5.3,
+   "magType": "mb",
+   "place": "216 km W of Sola, Vanuatu",
+   "lon": 165.551,
+   "lat": -13.7325,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4jy"
+  },
+  {
+   "id": "us6000u4k2",
+   "ids": [
+    "us6000u4k2"
+   ],
+   "time": "2026-10-24T04:44:45.324Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "161 km NW of Port-Olry, Vanuatu",
+   "lon": 165.8739,
+   "lat": -14.165,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4k2"
+  },
+  {
+   "id": "us6000u4k1",
+   "ids": [
+    "us6000u4k1"
+   ],
+   "time": "2026-10-24T04:49:21.707Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "217 km NW of Port-Olry, Vanuatu",
+   "lon": 165.4673,
+   "lat": -13.8521,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4k1"
+  },
+  {
+   "id": "us6000u4k6",
+   "ids": [
+    "us6000u4k6"
+   ],
+   "time": "2026-10-24T05:23:40.747Z",
+   "mag": 5.8,
+   "magType": "mb",
+   "place": "182 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6982,
+   "lat": -14.0833,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4k6"
+  },
+  {
+   "id": "us6000u4kj",
+   "ids": [
+    "us6000u4kj"
+   ],
+   "time": "2026-10-24T06:04:16.367Z",
+   "mag": 5.3,
+   "magType": "mb",
+   "place": "174 km NW of Port-Olry, Vanuatu",
+   "lon": 165.7535,
+   "lat": -14.1278,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4kj"
+  },
+  {
+   "id": "us6000u4kq",
+   "ids": [
+    "us6000u4kq"
+   ],
+   "time": "2026-10-24T06:43:09.602Z",
+   "mag": 5.5,
+   "magType": "mww",
+   "place": "55 km NNE of Port-Olry, Vanuatu",
+   "lon": 167.3063,
+   "lat": -14.5918,
+   "depth": 194.632,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4kq"
+  },
+  {
+   "id": "us6000u4ku",
+   "ids": [
+    "us6000u4ku"
+   ],
+   "time": "2026-10-24T06:52:04.142Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "219 km NW of Port-Olry, Vanuatu",
+   "lon": 165.4237,
+   "lat": -13.8777,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4ku"
+  },
+  {
+   "id": "us6000u4l9",
+   "ids": [
+    "us6000u4l9"
+   ],
+   "time": "2026-10-24T08:22:46.296Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "218 km NW of Port-Olry, Vanuatu",
+   "lon": 165.4664,
+   "lat": -13.833,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4l9"
+  },
+  {
+   "id": "us6000u4lc",
+   "ids": [
+    "us6000u4lc"
+   ],
+   "time": "2026-10-24T08:28:02.029Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "209 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6088,
+   "lat": -13.7972,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4lc"
+  },
+  {
+   "id": "us6000u4lg",
+   "ids": [
+    "us6000u4lg"
+   ],
+   "time": "2026-10-24T08:39:53.139Z",
+   "mag": 5.3,
+   "magType": "mb",
+   "place": "223 km ENE of Nagqu, China",
+   "lon": 94.048,
+   "lat": 32.5629,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4lg"
+  },
+  {
+   "id": "us6000u4lm",
+   "ids": [
+    "usauto6000u4lm",
+    "attnem67",
+    "us6000u4lm"
+   ],
+   "time": "2026-10-24T08:56:28.815Z",
+   "mag": 5.9,
+   "magType": "mww",
+   "place": "196 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6471,
+   "lat": -13.9418,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4lm"
+  },
+  {
+   "id": "us6000u4lp",
+   "ids": [
+    "us6000u4lp"
+   ],
+   "time": "2026-10-24T09:07:00.782Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "219 km WNW of Port-Olry, Vanuatu",
+   "lon": 165.2758,
+   "lat": -14.1064,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4lp"
+  },
+  {
+   "id": "us6000u4mn",
+   "ids": [
+    "attnf44p",
+    "us6000u4mn"
+   ],
+   "time": "2026-10-24T15:24:19.358Z",
+   "mag": 5.9,
+   "magType": "mwb",
+   "place": "Bouvet Island region",
+   "lon": 7.044,
+   "lat": -54.0337,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4mn"
+  },
+  {
+   "id": "us6000u4nv",
+   "ids": [
+    "us6000u4nv"
+   ],
+   "time": "2026-10-24T19:07:15.895Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "193 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6556,
+   "lat": -13.975,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4nv"
+  },
+  {
+   "id": "us6000u4pa",
+   "ids": [
+    "us6000u4pa"
+   ],
+   "time": "2026-10-24T20:35:04.576Z",
+   "mag": 5.3,
+   "magType": "mb",
+   "place": "101 km SSE of Vilyuchinsk, Russia",
+   "lon": 159.1963,
+   "lat": 52.1565,
+   "depth": 70.184,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4pa"
+  },
+  {
+   "id": "us6000u4q8",
+   "ids": [
+    "us6000u4q8"
+   ],
+   "time": "2026-10-24T22:47:08.577Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "210 km NW of Port-Olry, Vanuatu",
+   "lon": 165.534,
+   "lat": -13.8678,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4q8"
+  },
+  {
+   "id": "us6000u4qp",
+   "ids": [
+    "us6000u4qp"
+   ],
+   "time": "2026-10-24T23:44:57.729Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "192 km NW of Port-Olry, Vanuatu",
+   "lon": 165.7311,
+   "lat": -13.9002,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4qp"
+  },
+  {
+   "id": "us6000u4qq",
+   "ids": [
+    "us6000u4qq"
+   ],
+   "time": "2026-10-24T23:59:36.599Z",
+   "mag": 5.3,
+   "magType": "mb",
+   "place": "44 km ESE of Miyazaki, Japan",
+   "lon": 131.873,
+   "lat": 31.8226,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4qq"
+  },
+  {
+   "id": "us6000u4r3",
+   "ids": [
+    "us6000u4r3"
+   ],
+   "time": "2026-10-25T01:46:23.382Z",
+   "mag": 5.1,
+   "magType": "mww",
+   "place": "166 km WNW of Port-Olry, Vanuatu",
+   "lon": 165.6863,
+   "lat": -14.3846,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4r3"
+  },
+  {
+   "id": "us6000u4r7",
+   "ids": [
+    "us6000u4r7"
+   ],
+   "time": "2026-10-25T02:06:10.299Z",
+   "mag": 5.1,
+   "magType": "mww",
+   "place": "161 km WNW of Port-Olry, Vanuatu",
+   "lon": 165.7028,
+   "lat": -14.4542,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4r7"
+  },
+  {
+   "id": "us6000u4r9",
+   "ids": [
+    "us6000u4r9",
+    "attnfxzn",
+    "usauto6000u4r9"
+   ],
+   "time": "2026-10-25T02:09:23.818Z",
+   "mag": 6.5,
+   "magType": "mww",
+   "place": "Bonin Islands, Japan region",
+   "lon": 139.6184,
+   "lat": 27.7953,
+   "depth": 492.376,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 1,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4r9"
+  },
+  {
+   "id": "us6000u4rf",
+   "ids": [
+    "us6000u4rf",
+    "usauto6000u4rf"
+   ],
+   "time": "2026-10-25T02:24:00.476Z",
+   "mag": 6.1,
+   "magType": "mww",
+   "place": "25 km ENE of Port-Olry, Vanuatu",
+   "lon": 167.3039,
+   "lat": -14.9964,
+   "depth": 116,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4rf"
+  },
+  {
+   "id": "us6000u4s5",
+   "ids": [
+    "us6000u4s5"
+   ],
+   "time": "2026-10-25T03:29:10.551Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "63 km NNE of Lae, Papua New Guinea",
+   "lon": 147.1659,
+   "lat": -6.1737,
+   "depth": 80.779,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4s5"
+  },
+  {
+   "id": "us6000u4tc",
+   "ids": [
+    "us6000u4tc"
+   ],
+   "time": "2026-10-25T08:41:00.034Z",
+   "mag": 5.4,
+   "magType": "mww",
+   "place": "205 km NW of Port-Olry, Vanuatu",
+   "lon": 165.5769,
+   "lat": -13.8848,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4tc"
+  },
+  {
+   "id": "us6000u4tq",
+   "ids": [
+    "us6000u4tq"
+   ],
+   "time": "2026-10-25T10:30:27.588Z",
+   "mag": 5.4,
+   "magType": "mww",
+   "place": "33 km ESE of Ambunti, Papua New Guinea",
+   "lon": 143.0843,
+   "lat": -4.3644,
+   "depth": 72.349,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4tq"
+  },
+  {
+   "id": "us6000u4tx",
+   "ids": [
+    "us6000u4tx"
+   ],
+   "time": "2026-10-25T11:24:14.089Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "199 km ENE of Nagqu, China",
+   "lon": 93.8872,
+   "lat": 32.3695,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4tx"
+  },
+  {
+   "id": "us6000u4ty",
+   "ids": [
+    "us6000u4ty",
+    "usauto6000u4ty"
+   ],
+   "time": "2026-10-25T11:25:57.101Z",
+   "mag": 5.9,
+   "magType": "mww",
+   "place": "218 km ENE of Nagqu, China",
+   "lon": 94.0534,
+   "lat": 32.4625,
+   "depth": 7,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4ty"
+  },
+  {
+   "id": "us6000u4va",
+   "ids": [
+    "us6000u4va"
+   ],
+   "time": "2026-10-25T17:44:23.735Z",
+   "mag": 5.2,
+   "magType": "mww",
+   "place": "59 km SW of Ashkāsham, Afghanistan",
+   "lon": 71.1025,
+   "lat": 36.274,
+   "depth": 110.025,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4va"
+  },
+  {
+   "id": "us6000u4we",
+   "ids": [
+    "us6000u4we"
+   ],
+   "time": "2026-10-25T22:14:16.010Z",
+   "mag": 5.3,
+   "magType": "mww",
+   "place": "Bonin Islands, Japan region",
+   "lon": 139.6916,
+   "lat": 27.8572,
+   "depth": 485.13,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4we"
+  },
+  {
+   "id": "us6000u4y1",
+   "ids": [
+    "us6000u4y1"
+   ],
+   "time": "2026-10-26T04:53:40.479Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "45 km NNW of Ende, Indonesia",
+   "lon": 121.5729,
+   "lat": -8.443,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4y1"
+  },
+  {
+   "id": "us6000u4yr",
+   "ids": [
+    "us6000u4yr"
+   ],
+   "time": "2026-10-26T10:13:01.234Z",
+   "mag": 5.5,
+   "magType": "mww",
+   "place": "283 km E of Levuka, Fiji",
+   "lon": -178.0109,
+   "lat": -18.283,
+   "depth": 641.812,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4yr"
+  },
+  {
+   "id": "us6000u4z6",
+   "ids": [
+    "us6000u4z6"
+   ],
+   "time": "2026-10-26T11:17:55.055Z",
+   "mag": 5,
+   "magType": "mww",
+   "place": "218 km NW of Port-Olry, Vanuatu",
+   "lon": 165.3858,
+   "lat": -13.9396,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4z6"
+  },
+  {
+   "id": "us6000u4zb",
+   "ids": [
+    "us6000u4zb"
+   ],
+   "time": "2026-10-26T12:13:30.652Z",
+   "mag": 5.2,
+   "magType": "mww",
+   "place": "205 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6029,
+   "lat": -13.8613,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u4zb"
+  },
+  {
+   "id": "us7000ttfb",
+   "ids": [
+    "usauto7000ttfb",
+    "attnk64d",
+    "us7000ttfb"
+   ],
+   "time": "2026-10-27T08:55:23.290Z",
+   "mag": 5.8,
+   "magType": "mww",
+   "place": "196 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6671,
+   "lat": -13.9141,
+   "depth": 11,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttfb"
+  },
+  {
+   "id": "us7000ttfc",
+   "ids": [
+    "us7000ttfc"
+   ],
+   "time": "2026-10-27T09:07:45.122Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "95 km NNE of Hihifo, Tonga",
+   "lon": -173.4094,
+   "lat": -15.1739,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttfc"
+  },
+  {
+   "id": "us7000ttfe",
+   "ids": [
+    "us7000ttfe"
+   ],
+   "time": "2026-10-27T09:20:55.730Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "206 km NW of Port-Olry, Vanuatu",
+   "lon": 165.5556,
+   "lat": -13.9006,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttfe"
+  },
+  {
+   "id": "us7000ttfj",
+   "ids": [
+    "us7000ttfj"
+   ],
+   "time": "2026-10-27T10:06:31.916Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "184 km NW of Port-Olry, Vanuatu",
+   "lon": 165.7876,
+   "lat": -13.9437,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttfj"
+  },
+  {
+   "id": "us7000ttfk",
+   "ids": [
+    "us7000ttfk"
+   ],
+   "time": "2026-10-27T10:50:35.418Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "191 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6479,
+   "lat": -14.0067,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttfk"
+  },
+  {
+   "id": "us7000ttgf",
+   "ids": [
+    "us7000ttgf"
+   ],
+   "time": "2026-10-27T14:44:01.219Z",
+   "mag": 5.4,
+   "magType": "mb",
+   "place": "126 km S of Pundong, Indonesia",
+   "lon": 110.3861,
+   "lat": -9.0977,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttgf"
+  },
+  {
+   "id": "us7000ttgm",
+   "ids": [
+    "us7000ttgm"
+   ],
+   "time": "2026-10-27T15:26:03.024Z",
+   "mag": 5,
+   "magType": "mww",
+   "place": "29 km W of Río Grande, Panama",
+   "lon": -81.6012,
+   "lat": 7.684,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttgm"
+  },
+  {
+   "id": "us7000ttis",
+   "ids": [
+    "us7000ttis"
+   ],
+   "time": "2026-10-27T18:57:53.135Z",
+   "mag": 5.4,
+   "magType": "mb",
+   "place": "210 km ENE of Nagqu, China",
+   "lon": 93.9028,
+   "lat": 32.5388,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttis"
+  },
+  {
+   "id": "us7000ttke",
+   "ids": [
+    "us7000ttke"
+   ],
+   "time": "2026-10-27T23:14:17.420Z",
+   "mag": 5.4,
+   "magType": "mww",
+   "place": "193 km WSW of Merizo Village, Guam",
+   "lon": 142.9938,
+   "lat": 12.6676,
+   "depth": 100.998,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttke"
+  },
+  {
+   "id": "us7000ttkk",
+   "ids": [
+    "us7000ttkk"
+   ],
+   "time": "2026-10-27T23:43:51.480Z",
+   "mag": 5.1,
+   "magType": "mww",
+   "place": "7 km N of Balangonan, Philippines",
+   "lon": 125.3536,
+   "lat": 5.6402,
+   "depth": 57.848,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttkk"
+  },
+  {
+   "id": "us7000ttlc",
+   "ids": [
+    "us7000ttlc"
+   ],
+   "time": "2026-10-28T01:11:54.979Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "6 km NW of Balangonan, Philippines",
+   "lon": 125.3054,
+   "lat": 5.6079,
+   "depth": 45.941,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttlc"
+  },
+  {
+   "id": "us7000ttld",
+   "ids": [
+    "usauto7000ttld",
+    "attnlglb",
+    "us7000ttld"
+   ],
+   "time": "2026-10-28T01:39:11.004Z",
+   "mag": 5.5,
+   "magType": "mww",
+   "place": "221 km NW of Port-Olry, Vanuatu",
+   "lon": 165.389,
+   "lat": -13.8946,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttld"
+  },
+  {
+   "id": "us7000ttlk",
+   "ids": [
+    "us7000ttlk"
+   ],
+   "time": "2026-10-28T02:17:15.975Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "220 km NW of Port-Olry, Vanuatu",
+   "lon": 165.4612,
+   "lat": -13.8123,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttlk"
+  },
+  {
+   "id": "us7000ttlm",
+   "ids": [
+    "us7000ttlm",
+    "usauto7000ttlm",
+    "attnlikc"
+   ],
+   "time": "2026-10-28T02:21:45.806Z",
+   "mag": 6,
+   "magType": "mww",
+   "place": "214 km NW of Port-Olry, Vanuatu",
+   "lon": 165.446,
+   "lat": -13.9312,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttlm"
+  },
+  {
+   "id": "us7000ttlt",
+   "ids": [
+    "us7000ttlt"
+   ],
+   "time": "2026-10-28T02:59:48.387Z",
+   "mag": 5.6,
+   "magType": "mww",
+   "place": "174 km NW of Port-Olry, Vanuatu",
+   "lon": 165.8001,
+   "lat": -14.0693,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttlt"
+  },
+  {
+   "id": "us7000ttm2",
+   "ids": [
+    "us7000ttm2"
+   ],
+   "time": "2026-10-28T04:31:04.089Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "200 km W of Sola, Vanuatu",
+   "lon": 165.7007,
+   "lat": -13.7421,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttm2"
+  },
+  {
+   "id": "us7000ttmb",
+   "ids": [
+    "us7000ttmb"
+   ],
+   "time": "2026-10-28T06:12:47.777Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "205 km SSE of Vilyuchinsk, Russia",
+   "lon": 159.5373,
+   "lat": 51.2258,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttmb"
+  },
+  {
+   "id": "us7000ttnc",
+   "ids": [
+    "us7000ttnc",
+    "attnm8b7"
+   ],
+   "time": "2026-10-28T11:37:49.980Z",
+   "mag": 5.5,
+   "magType": "mww",
+   "place": "Reykjanes Ridge",
+   "lon": -32.1508,
+   "lat": 58.1005,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttnc"
+  },
+  {
+   "id": "us7000ttnk",
+   "ids": [
+    "us7000ttnk"
+   ],
+   "time": "2026-10-28T11:56:17.454Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "Reykjanes Ridge",
+   "lon": -32.2398,
+   "lat": 58.3556,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttnk"
+  },
+  {
+   "id": "us7000ttnz",
+   "ids": [
+    "us7000ttnz"
+   ],
+   "time": "2026-10-28T12:47:08.927Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "Reykjanes Ridge",
+   "lon": -32.3348,
+   "lat": 58.2153,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttnz"
+  },
+  {
+   "id": "us7000ttpe",
+   "ids": [
+    "us7000ttpe"
+   ],
+   "time": "2026-10-28T15:07:52.050Z",
+   "mag": 5.5,
+   "magType": "mww",
+   "place": "5 km ESE of Asahi, Japan",
+   "lon": 140.7059,
+   "lat": 35.7015,
+   "depth": 41.356,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttpe"
+  },
+  {
+   "id": "us7000ttth",
+   "ids": [
+    "us7000ttth"
+   ],
+   "time": "2026-10-28T19:45:32.912Z",
+   "mag": 5.2,
+   "magType": "mww",
+   "place": "Reykjanes Ridge",
+   "lon": -32.1058,
+   "lat": 58.1064,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttth"
+  },
+  {
+   "id": "us7000tttl",
+   "ids": [
+    "us7000tttl"
+   ],
+   "time": "2026-10-28T19:56:47.901Z",
+   "mag": 5.3,
+   "magType": "mb",
+   "place": "161 km WNW of Tobelo, Indonesia",
+   "lon": 126.7433,
+   "lat": 2.4345,
+   "depth": 35,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tttl"
+  },
+  {
+   "id": "us7000ttua",
+   "ids": [
+    "usauto7000ttua",
+    "us7000ttua"
+   ],
+   "time": "2026-10-28T22:06:45.820Z",
+   "mag": 5.7,
+   "magType": "mww",
+   "place": "271 km WSW of Tual, Indonesia",
+   "lon": 130.3957,
+   "lat": -6.3231,
+   "depth": 142,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttua"
+  },
+  {
+   "id": "us7000ttvf",
+   "ids": [
+    "us7000ttvf"
+   ],
+   "time": "2026-10-29T00:08:20.933Z",
+   "mag": 5.4,
+   "magType": "mww",
+   "place": "109 km ENE of Luganville, Vanuatu",
+   "lon": 168.0994,
+   "lat": -15.1213,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttvf"
+  },
+  {
+   "id": "us7000ttw2",
+   "ids": [
+    "us7000ttw2"
+   ],
+   "time": "2026-10-29T03:17:54.507Z",
+   "mag": 5.4,
+   "magType": "mb",
+   "place": "113 km ENE of Barcelona, Philippines",
+   "lon": 127.4427,
+   "lat": 8.3695,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttw2"
+  },
+  {
+   "id": "us7000ttw3",
+   "ids": [
+    "us7000ttw3",
+    "usauto7000ttw3"
+   ],
+   "time": "2026-10-29T03:19:05.288Z",
+   "mag": 5.8,
+   "magType": "mww",
+   "place": "110 km ENE of Barcelona, Philippines",
+   "lon": 127.4204,
+   "lat": 8.3638,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttw3"
+  },
+  {
+   "id": "us7000ttw5",
+   "ids": [
+    "us7000ttw5"
+   ],
+   "time": "2026-10-29T03:26:42.275Z",
+   "mag": 5.7,
+   "magType": "mb",
+   "place": "82 km NE of Kiunga, Papua New Guinea",
+   "lon": 141.9018,
+   "lat": -5.6991,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttw5"
+  },
+  {
+   "id": "us7000ttx0",
+   "ids": [
+    "us7000ttx0"
+   ],
+   "time": "2026-10-29T05:06:48.289Z",
+   "mag": 5.4,
+   "magType": "mww",
+   "place": "South Sandwich Islands region",
+   "lon": -27.9532,
+   "lat": -60.2079,
+   "depth": 8.561,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttx0"
+  },
+  {
+   "id": "us7000ttx8",
+   "ids": [
+    "us7000ttx8"
+   ],
+   "time": "2026-10-29T05:33:36.298Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "Balleny Islands region",
+   "lon": 161.1643,
+   "lat": -61.3277,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttx8"
+  },
+  {
+   "id": "us7000ttxn",
+   "ids": [
+    "us7000ttxn"
+   ],
+   "time": "2026-10-29T07:31:30.432Z",
+   "mag": 5.4,
+   "magType": "mww",
+   "place": "114 km ENE of Barcelona, Philippines",
+   "lon": 127.4269,
+   "lat": 8.4677,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttxn"
+  },
+  {
+   "id": "us7000ttxz",
+   "ids": [
+    "usauto7000ttxz",
+    "us7000ttxz"
+   ],
+   "time": "2026-10-29T07:49:50.928Z",
+   "mag": 6.4,
+   "magType": "mww",
+   "place": "southeast of Easter Island",
+   "lon": -98.0489,
+   "lat": -36.4058,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ttxz"
+  },
+  {
+   "id": "us7000tty7",
+   "ids": [
+    "us7000tty7"
+   ],
+   "time": "2026-10-29T08:49:42.448Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "218 km NNW of Bamboo Flat, India",
+   "lon": 91.6593,
+   "lat": 13.3785,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tty7"
+  },
+  {
+   "id": "us7000tu3j",
+   "ids": [
+    "us7000tu3j",
+    "aka2026vlnbyd"
+   ],
+   "time": "2026-10-29T20:14:32.548Z",
+   "mag": 5,
+   "magType": "mww",
+   "place": "143 km S of False Pass, Alaska",
+   "lon": -163.0279,
+   "lat": 53.5843,
+   "depth": 15.602,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tu3j"
+  },
+  {
+   "id": "us7000tu3u",
+   "ids": [
+    "us7000tu3u"
+   ],
+   "time": "2026-10-29T20:32:11.667Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "131 km NNW of Tual, Indonesia",
+   "lon": 132.4922,
+   "lat": -4.4698,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tu3u"
+  },
+  {
+   "id": "us7000tu4f",
+   "ids": [
+    "us7000tu4f",
+    "usauto7000tu4f"
+   ],
+   "time": "2026-10-29T21:46:44.786Z",
+   "mag": 6.2,
+   "magType": "mww",
+   "place": "43 km ESE of Port-Olry, Vanuatu",
+   "lon": 167.4523,
+   "lat": -15.1891,
+   "depth": 142.833,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tu4f"
+  },
+  {
+   "id": "us7000tu5q",
+   "ids": [
+    "us7000tu5q"
+   ],
+   "time": "2026-10-30T03:04:17.406Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "97 km NNE of Finschhafen, Papua New Guinea",
+   "lon": 148.3151,
+   "lat": -5.8137,
+   "depth": 116.297,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tu5q"
+  },
+  {
+   "id": "us7000tu7j",
+   "ids": [
+    "us7000tu7j"
+   ],
+   "time": "2026-10-30T10:12:28.219Z",
+   "mag": 5.1,
+   "magType": "mb",
+   "place": "Balleny Islands region",
+   "lon": 155.2618,
+   "lat": -62.4457,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tu7j"
+  },
+  {
+   "id": "us7000tuif",
+   "ids": [
+    "us7000tuif"
+   ],
+   "time": "2026-10-31T11:31:12.352Z",
+   "mag": 5,
+   "magType": "mww",
+   "place": "196 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6759,
+   "lat": -13.9069,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tuif"
+  },
+  {
+   "id": "us7000tujf",
+   "ids": [
+    "us7000tujf"
+   ],
+   "time": "2026-10-31T15:50:18.909Z",
+   "mag": 5.2,
+   "magType": "mww",
+   "place": "4 km S of Bajo Corral, Panama",
+   "lon": -80.2547,
+   "lat": 7.5692,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tujf"
+  },
+  {
+   "id": "us7000tukm",
+   "ids": [
+    "us7000tukm"
+   ],
+   "time": "2026-10-31T21:20:39.173Z",
+   "mag": 5,
+   "magType": "mb",
+   "place": "115 km SE of Bushehr, Iran",
+   "lon": 51.5076,
+   "lat": 28.114,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tukm"
+  },
+  {
+   "id": "us7000tuku",
+   "ids": [
+    "us7000tuku",
+    "usauto7000tuku"
+   ],
+   "time": "2026-10-31T22:15:02.901Z",
+   "mag": 6,
+   "magType": "mww",
+   "place": "58 km SSE of Shima, Japan",
+   "lon": 136.9854,
+   "lat": 33.822,
+   "depth": 352.449,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tuku"
+  },
+  {
+   "id": "us7000tuky",
+   "ids": [
+    "us7000tuky"
+   ],
+   "time": "2026-10-31T22:42:39.540Z",
+   "mag": 5.2,
+   "magType": "mb",
+   "place": "200 km NW of Port-Olry, Vanuatu",
+   "lon": 165.6456,
+   "lat": -13.8729,
+   "depth": 10,
+   "type": "earthquake",
+   "status": "reviewed",
+   "tsunami": 0,
+   "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000tuky"
+  }
+ ]
+}

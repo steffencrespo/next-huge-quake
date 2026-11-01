@@ -1,0 +1,297 @@
+{
+  "clips": [
+    {
+      "id": "hook",
+      "file": "audio/edu/c15e2981ce1c9b4b.mp3",
+      "start": 1,
+      "duration": 6.896,
+      "gain": 1.05
+    },
+    {
+      "id": "dots",
+      "file": "audio/edu/8ae2163f76075f82.mp3",
+      "start": 9.6,
+      "duration": 4.571,
+      "gain": 0.96
+    },
+    {
+      "id": "b0",
+      "file": "audio/edu/a2f84f0beaa299c4.mp3",
+      "start": 15.2,
+      "duration": 2.664,
+      "gain": 1.17
+    },
+    {
+      "id": "r0",
+      "file": "audio/edu/66424c455e29873c.mp3",
+      "start": 33,
+      "duration": 5.12,
+      "gain": 1.1
+    },
+    {
+      "id": "r1",
+      "file": "audio/edu/500c4ccdad972f56.mp3",
+      "start": 39.5,
+      "duration": 2.377,
+      "gain": 0.94
+    },
+    {
+      "id": "r2",
+      "file": "audio/edu/da513d551693a48b.mp3",
+      "start": 44,
+      "duration": 2.534,
+      "gain": 1.04
+    },
+    {
+      "id": "r3",
+      "file": "audio/edu/91d9b956a359d544.mp3",
+      "start": 48.5,
+      "duration": 4.023,
+      "gain": 1
+    },
+    {
+      "id": "r4",
+      "file": "audio/edu/90df9bc752ec4f0e.mp3",
+      "start": 53.5,
+      "duration": 3.37,
+      "gain": 1.06
+    },
+    {
+      "id": "rest",
+      "file": "audio/edu/1aa2334dcdce7ed6.mp3",
+      "start": 58.5,
+      "duration": 3.971,
+      "gain": 1
+    },
+    {
+      "id": "plate",
+      "file": "audio/edu/05ae8d4c5e1f674d.mp3",
+      "start": 64.5,
+      "duration": 3.265,
+      "gain": 1.11
+    },
+    {
+      "id": "c0",
+      "file": "audio/edu/e4468dae3627ec72.mp3",
+      "start": 70,
+      "duration": 6.792,
+      "gain": 0.92
+    },
+    {
+      "id": "c1",
+      "file": "audio/edu/c9d51a0a49062de7.mp3",
+      "start": 77.2,
+      "duration": 5.825,
+      "gain": 0.98
+    },
+    {
+      "id": "c2",
+      "file": "audio/edu/4922c1af17c189c5.mp3",
+      "start": 84.4,
+      "duration": 4.859,
+      "gain": 1.13
+    },
+    {
+      "id": "c3",
+      "file": "audio/edu/2a8717ce944eaccc.mp3",
+      "start": 91.6,
+      "duration": 5.277,
+      "gain": 0.95
+    },
+    {
+      "id": "deep",
+      "file": "audio/edu/48707447b98e8866.mp3",
+      "start": 99.4,
+      "duration": 6.113,
+      "gain": 1.09
+    },
+    {
+      "id": "s0",
+      "file": "audio/edu/3bed925c3677dbc6.mp3",
+      "start": 107.8,
+      "duration": 5.878,
+      "gain": 0.98
+    }
+  ],
+  "captions": [
+    {
+      "text": "October twenty twenty-six:",
+      "start": 1,
+      "end": 2.8
+    },
+    {
+      "text": "two hundred sixteen earthquakes of magnitude",
+      "start": 2.8,
+      "end": 5.145
+    },
+    {
+      "text": "five or greater, worldwide.",
+      "start": 5.145,
+      "end": 7.827
+    },
+    {
+      "text": "This is a historical record.",
+      "start": 9.6,
+      "end": 11.156
+    },
+    {
+      "text": "Each red dot marks one epicenter.",
+      "start": 11.539,
+      "end": 14.105
+    },
+    {
+      "text": "Watch them appear,",
+      "start": 15.2,
+      "end": 16.593
+    },
+    {
+      "text": "day by day.",
+      "start": 16.593,
+      "end": 17.801
+    },
+    {
+      "text": "The most active area was the Vanuatu",
+      "start": 33,
+      "end": 35.287
+    },
+    {
+      "text": "region, with fifty-seven earthquakes.",
+      "start": 35.287,
+      "end": 38.062
+    },
+    {
+      "text": "Central America recorded thirty.",
+      "start": 39.5,
+      "end": 41.822
+    },
+    {
+      "text": "The Indonesia region had twenty-four.",
+      "start": 44,
+      "end": 46.461
+    },
+    {
+      "text": "The Japan, Kuril and Kamchatka region",
+      "start": 48.5,
+      "end": 51.101
+    },
+    {
+      "text": "had sixteen.",
+      "start": 51.101,
+      "end": 52.447
+    },
+    {
+      "text": "And the China and Central Asia",
+      "start": 53.5,
+      "end": 55.021
+    },
+    {
+      "text": "region, fourteen.",
+      "start": 55.021,
+      "end": 56.797
+    },
+    {
+      "text": "The other seventy-five were spread across",
+      "start": 58.5,
+      "end": 60.95
+    },
+    {
+      "text": "the rest of the world.",
+      "start": 60.95,
+      "end": 62.401
+    },
+    {
+      "text": "Most cluster along the boundaries of",
+      "start": 64.5,
+      "end": 66.404
+    },
+    {
+      "text": "tectonic plates.",
+      "start": 66.404,
+      "end": 67.704
+    },
+    {
+      "text": "The strongest was magnitude seven point",
+      "start": 70,
+      "end": 72.299
+    },
+    {
+      "text": "seven, near Pitaloza Arriba,",
+      "start": 72.299,
+      "end": 74.307
+    },
+    {
+      "text": "Panama, on October ninth.",
+      "start": 74.307,
+      "end": 76.734
+    },
+    {
+      "text": "Next, magnitude seven point zero,",
+      "start": 77.2,
+      "end": 79.952
+    },
+    {
+      "text": "near Nagqu, China,",
+      "start": 79.952,
+      "end": 81.217
+    },
+    {
+      "text": "on October twenty-second.",
+      "start": 81.217,
+      "end": 82.959
+    },
+    {
+      "text": "Then magnitude six point nine,",
+      "start": 84.4,
+      "end": 86.316
+    },
+    {
+      "text": "near Ozernovskiy, Russia,",
+      "start": 86.316,
+      "end": 87.662
+    },
+    {
+      "text": "on October sixteenth.",
+      "start": 87.662,
+      "end": 89.183
+    },
+    {
+      "text": "And another six point nine,",
+      "start": 91.6,
+      "end": 93.144
+    },
+    {
+      "text": "near Port-Olry, Vanuatu,",
+      "start": 93.144,
+      "end": 95.048
+    },
+    {
+      "text": "on October twenty-fourth.",
+      "start": 95.048,
+      "end": 96.801
+    },
+    {
+      "text": "Seven were at least three hundred kilometers",
+      "start": 99.4,
+      "end": 101.734
+    },
+    {
+      "text": "deep, the largest magnitude six point five.",
+      "start": 101.734,
+      "end": 105.437
+    },
+    {
+      "text": "In all, twenty-one reached magnitude six or",
+      "start": 107.8,
+      "end": 110.447
+    },
+    {
+      "text": "greater, and two reached seven or greater.",
+      "start": 110.447,
+      "end": 113.605
+    }
+  ],
+  "narrationStart": 1,
+  "narrationEnd": 113.678,
+  "musicFile": "audio/ytal-deified-the-grey-room.mp3",
+  "musicCredit": "\"Deified\" by The Grey Room / Density & Time.\nSource: YouTube Audio Library."
+}

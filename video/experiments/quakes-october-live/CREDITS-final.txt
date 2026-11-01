@@ -1,0 +1,11 @@
+Earthquakes in October 2026 (Oct 1-31 UTC, worldwide, magnitude 5.0 or greater) - FINAL landscape live-loop video credits
+
+Earthquake data: U.S. Geological Survey (USGS) Earthquake Catalog, https://earthquake.usgs.gov/fdsnws/event/1/ (public domain).
+  Query: starttime=2026-10-01T00:00:00Z, endtime=2026-11-01T00:00:00Z, minmagnitude=5, eventtype=earthquake. Retrieved 2026-11-01 00:03:13 UTC.
+Map: Natural Earth land, coastline, borders (public domain), rendered with MapLibre GL.
+Narration: English text-to-speech, ElevenLabs voice "Daniel - Radio News Host".
+Music: "Deified" by The Grey Room / Density & Time.
+Source: YouTube Audio Library.
+Video: Next Huge Quake.
+
+Not published. For manual upload only; any public upload still needs the project's required description blocks (see publishing-attribution-requirement).
