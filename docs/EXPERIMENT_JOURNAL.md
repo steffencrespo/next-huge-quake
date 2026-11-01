@@ -412,6 +412,22 @@ These were reconstructed afterwards from manifests, state records and article ti
 
 ---
 
+## 2026-10-22 — First cross-platform distribution: California Myth vs Fact on Instagram Reels
+
+**Status:** Editorially approved; publication on Instagram pending (owner publishes manually). Account: [@nexthugequake](https://www.instagram.com/nexthugequake/). Instagram URL: _to be added_.
+
+**Hypothesis (untested):** an approved educational Short can reach an additional audience when re-cut as an Instagram Reel, with only the changes cross-platform publishing requires.
+
+**Implementation / evidence [repo]:** the published YouTube Short ([youtu.be/8Zke9Kf1128](https://youtu.be/8Zke9Kf1128)) re-rendered from its cached narration, with the YouTube like/subscribe closing removed and no music, because no available track is documented as cleared for Instagram (YouTube Audio Library terms are per track and the repo holds no receipts). Narration and the 8 claim-carrying clips are identical to the original; +3 dB audio gain; 38.0 s vs 43.0 s. Workflow: `video/experiments/instagram/`; notes: `docs/experiments/instagram-california-reel.md`. The YouTube video and its publication state are unchanged.
+
+**Observation [editorial]:** the music-free version was reviewed and approved by the owner. The owner confirmed the ElevenLabs narration was generated under a paid subscription. No audience data yet.
+
+**Decision:** narration plus original synthesized sound effects, AI-narration disclosure in the caption plus Instagram's AI label; no API publishing.
+
+**Follow-up:** add the Instagram URL, then compare views, completion and replays against the YouTube version as directional data only (different platforms and audiences).
+
+---
+
 ## Open questions and measurements
 
 - What measurable effect, if any, does `fast-beats` have on viewer retention versus natural pacing?

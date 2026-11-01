@@ -12,7 +12,7 @@ import { Backdrop, HOT, Pill, Txt, at, clamp, f1, lerp, prog, vis } from './kit.
 import { CTA_LINE, plan } from './episodes.js';
 import type { EpisodeMeta } from './episodes.js';
 import { SeriesTag, makeEduShort } from './EduShort.js';
-import type { EpisodeVisuals } from './EduShort.js';
+import type { EpisodeDefinition, EpisodeVisuals } from './EduShort.js';
 
 type B = Parameters<EpisodeVisuals>[0]['b'];
 
@@ -234,7 +234,8 @@ const Visuals: EpisodeVisuals = ( { t, b } ) => {
   );
 };
 
-export const MythCaliforniaOcean = makeEduShort( {
+/** The published episode's definition, exported so an experiment can re-use it with a different closing element. */
+export const CALIFORNIA_DEFINITION: EpisodeDefinition = {
   id: 'california',
   meta: CALIFORNIA,
   Visuals,
@@ -250,4 +251,6 @@ export const MythCaliforniaOcean = makeEduShort( {
     { sfx: 'tick', at: b.punch.start, dur: 0.3, volume: 0.5 },
     { sfx: 'whoosh', at: at( b, 'how', 0 ), dur: 1.4, volume: 0.25 }
   ]
-} );
+};
+
+export const MythCaliforniaOcean = makeEduShort( CALIFORNIA_DEFINITION );
