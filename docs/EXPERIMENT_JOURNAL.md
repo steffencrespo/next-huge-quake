@@ -280,6 +280,16 @@ These were reconstructed afterwards from manifests, state records and article ti
 
 **Follow-up:** Editorial review before any upload. The `yuvj420p` (full-range) tag on Remotion's output is worth checking if colour shifts appear on YouTube.
 
+## 2026-11-01 — Earthquakes in October 2026: 9:16 vertical edit (Shorts / TikTok)
+
+**Status:** Final local render, not published (manual upload only). `video/experiments/quakes-october-live/RECORD-vertical.md`, `CREDITS-vertical.txt`; MP4 `out/earthquakes-october-2026-vertical-final.mp4` (git-ignored).
+
+**Implementation / evidence [repo]:** Rebuilt the vertical version from the approved landscape snapshot (216 M5.0+, Oct 1–31 UTC) instead of the stale Oct 1–25 render (121 events above M5.0, missing the tied Vanuatu M6.9). `QuakesOctoberVertical.tsx`, `script-vertical.ts`, `audio-vertical.ts`, `render-vertical.ts`, `qa/facts-vertical.ts`. 63 s, 30.1 MB; 12 reused landscape lines paced with fast-beats; 0 new credits.
+
+**Observation (engineering):** Restricting the vertical script to lines that already exist in the landscape script made the edit free and guaranteed the same wording; regions 3–5 moved from narration to the on-screen ranking. Several first-draft labels were under the 30 px project minimum and were raised before the render.
+
+**Follow-up:** Check the safe-area placement on a phone after a manual upload; decide the TikTok music path (the project prefers music-free TikTok cuts).
+
 ## 2026-10-28 — Monthly compilation (proposed concept, not implemented)
 
 **Status:** Concept only. No code, script, manifest or render exists in the repository [repo: none found on `origin/master` at `77f1b85`]. The idea comes from project conversation [reported].

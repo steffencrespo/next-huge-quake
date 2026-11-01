@@ -1,0 +1,235 @@
+{
+  "clips": [
+    {
+      "id": "hook",
+      "file": "audio/edu/c15e2981ce1c9b4b-fast-beats.mp3",
+      "start": 0.25,
+      "duration": 5.127,
+      "gain": 1.06
+    },
+    {
+      "id": "dots",
+      "file": "audio/edu/8ae2163f76075f82-fast-beats.mp3",
+      "start": 5.877,
+      "duration": 3.173,
+      "gain": 0.98
+    },
+    {
+      "id": "b0",
+      "file": "audio/edu/a2f84f0beaa299c4-fast-beats.mp3",
+      "start": 9.35,
+      "duration": 1.567,
+      "gain": 1.19
+    },
+    {
+      "id": "r0",
+      "file": "audio/edu/66424c455e29873c-fast-beats.mp3",
+      "start": 17.417,
+      "duration": 3.897,
+      "gain": 1.12
+    },
+    {
+      "id": "r1",
+      "file": "audio/edu/500c4ccdad972f56-fast-beats.mp3",
+      "start": 21.814,
+      "duration": 1.716,
+      "gain": 0.95
+    },
+    {
+      "id": "plate",
+      "file": "audio/edu/05ae8d4c5e1f674d-fast-beats.mp3",
+      "start": 24.43,
+      "duration": 2.477,
+      "gain": 1.12
+    },
+    {
+      "id": "c0",
+      "file": "audio/edu/e4468dae3627ec72-fast-beats.mp3",
+      "start": 28.107,
+      "duration": 4.979,
+      "gain": 0.94
+    },
+    {
+      "id": "c1",
+      "file": "audio/edu/c9d51a0a49062de7-fast-beats.mp3",
+      "start": 34.086,
+      "duration": 4.314,
+      "gain": 1
+    },
+    {
+      "id": "c2",
+      "file": "audio/edu/4922c1af17c189c5-fast-beats.mp3",
+      "start": 39.4,
+      "duration": 3.78,
+      "gain": 1.15
+    },
+    {
+      "id": "c3",
+      "file": "audio/edu/2a8717ce944eaccc-fast-beats.mp3",
+      "start": 44.18,
+      "duration": 4.025,
+      "gain": 0.97
+    },
+    {
+      "id": "deep",
+      "file": "audio/edu/48707447b98e8866-fast-beats.mp3",
+      "start": 49.205,
+      "duration": 4.431,
+      "gain": 1.11
+    },
+    {
+      "id": "s0",
+      "file": "audio/edu/3bed925c3677dbc6-fast-beats.mp3",
+      "start": 54.636,
+      "duration": 4.454,
+      "gain": 1
+    }
+  ],
+  "captions": [
+    {
+      "text": "October twenty twenty-six:",
+      "start": 0.25,
+      "end": 1.653
+    },
+    {
+      "text": "two hundred sixteen earthquakes of magnitude",
+      "start": 1.653,
+      "end": 3.597
+    },
+    {
+      "text": "five or greater, worldwide.",
+      "start": 3.597,
+      "end": 5.377
+    },
+    {
+      "text": "This is a historical record.",
+      "start": 5.877,
+      "end": 7.108
+    },
+    {
+      "text": "Each red dot marks one epicenter.",
+      "start": 7.182,
+      "end": 9.05
+    },
+    {
+      "text": "Watch them appear,",
+      "start": 9.35,
+      "end": 10.227
+    },
+    {
+      "text": "day by day.",
+      "start": 10.227,
+      "end": 10.917
+    },
+    {
+      "text": "The most active area was the Vanuatu",
+      "start": 17.417,
+      "end": 19.32
+    },
+    {
+      "text": "region, with fifty-seven earthquakes.",
+      "start": 19.32,
+      "end": 21.314
+    },
+    {
+      "text": "Central America recorded thirty.",
+      "start": 21.814,
+      "end": 23.53
+    },
+    {
+      "text": "Most cluster along the boundaries of",
+      "start": 24.43,
+      "end": 26.025
+    },
+    {
+      "text": "tectonic plates.",
+      "start": 26.025,
+      "end": 26.907
+    },
+    {
+      "text": "The strongest was magnitude seven point",
+      "start": 28.107,
+      "end": 30.026
+    },
+    {
+      "text": "seven, near Pitaloza Arriba,",
+      "start": 30.026,
+      "end": 31.511
+    },
+    {
+      "text": "Panama, on October ninth.",
+      "start": 31.511,
+      "end": 33.086
+    },
+    {
+      "text": "Next, magnitude seven point zero,",
+      "start": 34.086,
+      "end": 36.265
+    },
+    {
+      "text": "near Nagqu, China,",
+      "start": 36.265,
+      "end": 37.235
+    },
+    {
+      "text": "on October twenty-second.",
+      "start": 37.235,
+      "end": 38.4
+    },
+    {
+      "text": "Then magnitude six point nine,",
+      "start": 39.4,
+      "end": 40.998
+    },
+    {
+      "text": "near Ozernovskiy, Russia,",
+      "start": 40.998,
+      "end": 42.121
+    },
+    {
+      "text": "on October sixteenth.",
+      "start": 42.121,
+      "end": 43.18
+    },
+    {
+      "text": "And another six point nine,",
+      "start": 44.18,
+      "end": 45.467
+    },
+    {
+      "text": "near Port-Olry, Vanuatu,",
+      "start": 45.467,
+      "end": 46.977
+    },
+    {
+      "text": "on October twenty-fourth.",
+      "start": 46.977,
+      "end": 48.205
+    },
+    {
+      "text": "Seven were at least three hundred kilometers",
+      "start": 49.205,
+      "end": 51.071
+    },
+    {
+      "text": "deep, the largest magnitude six point five.",
+      "start": 51.071,
+      "end": 53.636
+    },
+    {
+      "text": "In all, twenty-one reached magnitude six or",
+      "start": 54.636,
+      "end": 56.847
+    },
+    {
+      "text": "greater, and two reached seven or greater.",
+      "start": 56.847,
+      "end": 59.09
+    }
+  ],
+  "narrationStart": 0.25,
+  "narrationEnd": 59.09,
+  "musicFile": "audio/ytal-deified-the-grey-room.mp3",
+  "musicCredit": "\"Deified\" by The Grey Room / Density & Time.\nSource: YouTube Audio Library.",
+  "pacing": "fast-beats"
+}

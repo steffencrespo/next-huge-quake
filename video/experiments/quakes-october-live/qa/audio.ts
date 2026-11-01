@@ -1,4 +1,4 @@
-/** tsx experiments/quakes-october-live/qa/audio.ts <mp4> : decodes the mix with Remotion's ffmpeg to 16-bit WAV, then measures in Node:
+/** tsx experiments/quakes-october-live/qa/audio.ts <mp4> [audio manifest, default audio-final.json] : decodes the mix with Remotion's ffmpeg to 16-bit WAV, then measures in Node:
  * peak, clipped samples, per-narration-clip RMS in the mix, music-only RMS, and the loop seam (level and sample jump). Plus ffmpeg loudnorm (integrated LUFS, true peak). */
 import { execFileSync, spawnSync } from 'node:child_process';
 import { readFileSync, rmSync } from 'node:fs';
@@ -17,7 +17,7 @@ let peak = 0, clipped = 0;
 for ( let i = 0; i < n; i++ ) { const a = Math.max( Math.abs( L( i ) ), Math.abs( R( i ) ) ); peak = Math.max( peak, a ); if ( a >= 0.999 ) clipped++; }
 const rms = ( t0: number, t1: number ) => { let s = 0, c = 0; for ( let i = Math.max( 0, Math.floor( t0 * SR ) ); i < Math.min( n, Math.floor( t1 * SR ) ); i++ ) { s += L( i ) ** 2 + R( i ) ** 2; c += 2; } return 10 * Math.log10( s / Math.max( 1, c ) + 1e-12 ); };
 const db = ( x: number ) => ( 20 * Math.log10( x ) ).toFixed( 2 );
-const audio = JSON.parse( readFileSync( join( here, '..', 'audio-final.json' ), 'utf8' ) );
+const audio = JSON.parse( readFileSync( join( here, '..', process.argv[3] ?? 'audio-final.json' ), 'utf8' ) );
 const dur = n / SR;
 console.log( `audio ${dur.toFixed( 3 )} s, peak ${db( peak )} dBFS, clipped samples ${clipped}` );
 const clipRms = audio.clips.map( ( c: any ) => ( { id: c.id, start: c.start, end: c.start + c.duration, rms: rms( c.start, c.start + c.duration ) } ) );
