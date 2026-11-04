@@ -1,0 +1,195 @@
+{
+  "clips": [
+    {
+      "id": "hook",
+      "file": "audio/edu/178b399a702bb3b2-fast-beats.mp3",
+      "start": 0.2,
+      "duration": 1.229,
+      "gain": 0.87
+    },
+    {
+      "id": "how",
+      "file": "audio/edu/911c79215e34d8b0-fast-beats.mp3",
+      "start": 1.629,
+      "duration": 0.811,
+      "gain": 1.12
+    },
+    {
+      "id": "deep",
+      "file": "audio/edu/ab8098ccf68f2509-fast-beats.mp3",
+      "start": 2.74,
+      "duration": 3.595,
+      "gain": 0.94
+    },
+    {
+      "id": "pump",
+      "file": "audio/edu/304b30dcb3363f0a-fast-beats.mp3",
+      "start": 6.375,
+      "duration": 2.755,
+      "gain": 1
+    },
+    {
+      "id": "pressure",
+      "file": "audio/edu/92e31400ac822ec2-fast-beats.mp3",
+      "start": 9.17,
+      "duration": 3.338,
+      "gain": 0.95
+    },
+    {
+      "id": "slip",
+      "file": "audio/edu/e911cac1178aaa91-fast-beats.mp3",
+      "start": 12.658,
+      "duration": 1.857,
+      "gain": 1.02
+    },
+    {
+      "id": "pawnee",
+      "file": "audio/edu/f4e12eeb280b1e46-fast-beats.mp3",
+      "start": 14.815,
+      "duration": 4.513,
+      "gain": 0.89
+    },
+    {
+      "id": "linked",
+      "file": "audio/edu/98468169a46bdf1d-fast-beats.mp3",
+      "start": 19.368,
+      "duration": 2.442,
+      "gain": 1.09
+    },
+    {
+      "id": "wrong",
+      "file": "audio/edu/9caebd250760b080-fast-beats.mp3",
+      "start": 22.11,
+      "duration": 1.441,
+      "gain": 1.17
+    },
+    {
+      "id": "drill",
+      "file": "audio/edu/de09909bab9bb2ab-fast-beats.mp3",
+      "start": 23.801,
+      "duration": 1.737,
+      "gain": 1.03
+    },
+    {
+      "id": "after",
+      "file": "audio/edu/2c91eb0061ef6991-fast-beats.mp3",
+      "start": 25.578,
+      "duration": 2.097,
+      "gain": 0.94
+    },
+    {
+      "id": "end",
+      "file": "audio/edu/5dfd61c4ccf92bd4-fast-beats.mp3",
+      "start": 27.975,
+      "duration": 2.55,
+      "gain": 1.09
+    }
+  ],
+  "captions": [
+    {
+      "text": "We’re triggering earthquakes.",
+      "start": 0.2,
+      "end": 1.429
+    },
+    {
+      "text": "And we know how.",
+      "start": 1.629,
+      "end": 2.44
+    },
+    {
+      "text": "Deep beneath America’s oil fields,",
+      "start": 2.74,
+      "end": 4.804
+    },
+    {
+      "text": "something unexpected is happening.",
+      "start": 4.804,
+      "end": 6.335
+    },
+    {
+      "text": "Companies pump enormous amounts of",
+      "start": 6.375,
+      "end": 7.999
+    },
+    {
+      "text": "wastewater underground.",
+      "start": 7.999,
+      "end": 9.13
+    },
+    {
+      "text": "That fluid can increase pressure along",
+      "start": 9.17,
+      "end": 11.101
+    },
+    {
+      "text": "faults already under stress.",
+      "start": 11.101,
+      "end": 12.508
+    },
+    {
+      "text": "And sometimes, those faults slip.",
+      "start": 12.658,
+      "end": 14.515
+    },
+    {
+      "text": "In twenty sixteen,",
+      "start": 14.815,
+      "end": 15.917
+    },
+    {
+      "text": "a magnitude five point eight earthquake",
+      "start": 15.917,
+      "end": 17.855
+    },
+    {
+      "text": "struck near Pawnee, Oklahoma.",
+      "start": 17.855,
+      "end": 19.328
+    },
+    {
+      "text": "Researchers linked that sequence to",
+      "start": 19.368,
+      "end": 20.856
+    },
+    {
+      "text": "wastewater injection.",
+      "start": 20.856,
+      "end": 21.81
+    },
+    {
+      "text": "But here’s what most people get wrong.",
+      "start": 22.11,
+      "end": 23.551
+    },
+    {
+      "text": "It’s not usually the drilling itself.",
+      "start": 23.801,
+      "end": 25.538
+    },
+    {
+      "text": "It’s what happens deep",
+      "start": 25.578,
+      "end": 26.596
+    },
+    {
+      "text": "underground afterward.",
+      "start": 26.596,
+      "end": 27.675
+    },
+    {
+      "text": "And yes — humans really can",
+      "start": 27.975,
+      "end": 29.604
+    },
+    {
+      "text": "trigger earthquakes.",
+      "start": 29.604,
+      "end": 30.525
+    }
+  ],
+  "narrationStart": 0.2,
+  "narrationEnd": 30.525,
+  "musicFile": "audio/ytal-deified-the-grey-room.mp3",
+  "musicCredit": "\"Deified\" by The Grey Room / Density & Time.\nSource: YouTube Audio Library.",
+  "pacing": "fast-beats"
+}
