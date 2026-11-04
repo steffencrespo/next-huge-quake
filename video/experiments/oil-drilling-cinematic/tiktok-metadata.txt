@@ -1,0 +1,32 @@
+EP 02 OIL DRILLING: TIKTOK EDITION (manual upload by the owner; nothing has been uploaded)
+FILE: video/experiments/oil-drilling-cinematic/out/oil-drilling-tiktok-no-music-v1.mp4
+  32.34 s, 1080x1920, 30 fps. sha256 86048f13fdada8548695499d0aec53e596e746205fb333f43ca6c305a830109d
+  The video's own audio is narration plus sound effects only. There is no music, and the last 1.8 s are silent.
+
+=== CAPTION (paste as is) ===
+Humans can trigger earthquakes, and it usually isn't the drilling. Deep underground, wastewater injected by the oil and gas industry can raise pressure on faults already under stress. Researchers linked the 2016 M5.8 sequence near Pawnee, Oklahoma, to wastewater injection, though scientists are still working out its exact role. Most wells aren't linked to felt quakes. Did you know this? 👇
+
+Visuals are AI-generated illustrations; the underground scenes are schematic and not to scale. The narration is an AI voice.
+Sources: USGS; McGarr & Barbour (2017), Geophysical Research Letters.
+
+#earthquake #science #oklahoma #geology
+
+=== COVER TITLE ===
+HUMANS ARE TRIGGERING EARTHQUAKES!
+(Suggested cover frame: the very first frame at 0.0 s, the pumpjack against the storm sky, which has no burned-in title.)
+
+=== SYNTHETIC-MEDIA DISCLOSURE ===
+- Turn on TikTok's "AI-generated content" label when posting. All five stills are AI-generated (ElevenLabs web UI), and the narration is an ElevenLabs synthetic voice (Daniel).
+- The small "AI VISUALIZATION" mark shows whenever an AI image is on screen. It is hidden only on the Pawnee map, which uses real USGS and Natural Earth data.
+- Do not describe the images as photos or footage. The plains landscape is an illustration, not Pawnee.
+
+=== SCIENTIFIC SOURCES (for comments or replies) ===
+- USGS event us10006jxs: https://earthquake.usgs.gov/earthquakes/eventpage/us10006jxs
+- USGS, Myths and Misconceptions About Induced Earthquakes: https://www.usgs.gov/programs/earthquake-hazards/myths-and-misconceptions-about-induced-earthquakes
+- McGarr & Barbour (2017), Geophysical Research Letters: https://doi.org/10.1002/2017GL075258
+- Yeck et al. (2017), Geophysical Research Letters: https://doi.org/10.1002/2016GL071685
+- Chen et al. (2017), Scientific Reports: https://doi.org/10.1038/s41598-017-04992-z
+Keep replies to "linked" and "appears induced". Never say every well or all drilling causes earthquakes.
+
+=== MUSIC ===
+This cut has no music, as briefed. If you add licensed music in TikTok Studio, keep it low (earlier uploads used about -18 dB) so the narration stays clear.

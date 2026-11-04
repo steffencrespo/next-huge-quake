@@ -343,5 +343,14 @@
     "updatedAt": "2026-10-31T23:19:35.840Z",
     "videoId": "P1tpybP4CmU",
     "playlistItemId": "UExQc1I3NGxJaFdnSS4zMDg5MkQ5MEVDMEM1NTg2"
+  },
+  "oil-drilling-cinematic": {
+    "status": "scheduled",
+    "contentHash": "bf1296fe47411111ac167072331bc4a20ec6cab363247a0ce322bd1c930c69ad",
+    "fileSize": 30312347,
+    "updatedAt": "2026-11-04T14:18:00.488Z",
+    "videoId": "0fWQ3s-sbbg",
+    "playlistItemId": "UExEcXVIdXhaWnlTdy5ENDU4Q0M4RDExNzM1Mjcy",
+    "publishAt": "2026-11-19T21:00:00Z"
   }
 }

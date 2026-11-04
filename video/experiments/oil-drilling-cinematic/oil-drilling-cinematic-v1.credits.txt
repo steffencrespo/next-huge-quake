@@ -1,0 +1,10 @@
+Music: "Deified" by The Grey Room / Density & Time.
+Source: YouTube Audio Library.
+Narration: ElevenLabs text-to-speech (voice: Daniel).
+Sound effects: synthesized for this video.
+Images: AI-generated illustrations (GPT Image 2.5 Sunburst, through ElevenLabs). They are not photographs and do not show the 2016 Pawnee earthquake; the underground views are schematic and not to scale.
+Map: made with Natural Earth. Earthquake data: USGS.
+
+Production Technology
+Automated news and video production powered by Output.ai
+https://output.ai
